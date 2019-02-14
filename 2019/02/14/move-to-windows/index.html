@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="move hexo to another OSinstall on Windows download nodejs and install download git and install Win+R open cmd to the right direction  123456$ mkdir blog$ npm install hexo -g$ hexo -v  //check info$ np">
+<meta name="description" content="由于archlinux上出现了一些bug，而且因为跑SLAM，安装包占去了过多存储空间，临时决定将blog移植到Windows上来方便经常更新。 install necessary modules download nodejs and install download git and install Win+R open cmd to the right direction  123456$ m">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="move to windows">
 <meta property="og:url" content="https://hyqskevin.github.io/2019/02/14/move-to-windows/index.html">
 <meta property="og:site_name" content="MonoShow">
-<meta property="og:description" content="move hexo to another OSinstall on Windows download nodejs and install download git and install Win+R open cmd to the right direction  123456$ mkdir blog$ npm install hexo -g$ hexo -v  //check info$ np">
+<meta property="og:description" content="由于archlinux上出现了一些bug，而且因为跑SLAM，安装包占去了过多存储空间，临时决定将blog移植到Windows上来方便经常更新。 install necessary modules download nodejs and install download git and install Win+R open cmd to the right direction  123456$ m">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-14T13:20:56.642Z">
+<meta property="og:updated_time" content="2019-02-14T13:26:02.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="move to windows">
-<meta name="twitter:description" content="move hexo to another OSinstall on Windows download nodejs and install download git and install Win+R open cmd to the right direction  123456$ mkdir blog$ npm install hexo -g$ hexo -v  //check info$ np">
+<meta name="twitter:description" content="由于archlinux上出现了一些bug，而且因为跑SLAM，安装包占去了过多存储空间，临时决定将blog移植到Windows上来方便经常更新。 install necessary modules download nodejs and install download git and install Win+R open cmd to the right direction  123456$ m">
 
 
 
@@ -354,7 +354,8 @@
       
 
       
-        <h2 id="move-hexo-to-another-OS"><a href="#move-hexo-to-another-OS" class="headerlink" title="move hexo to another OS"></a>move hexo to another OS</h2><h3 id="install-on-Windows"><a href="#install-on-Windows" class="headerlink" title="install on Windows"></a>install on Windows</h3><ul>
+        <p>由于archlinux上出现了一些bug，而且因为跑SLAM，安装包占去了过多存储空间，临时决定将blog移植到Windows上来方便经常更新。</p>
+<h2 id="install-necessary-modules"><a href="#install-necessary-modules" class="headerlink" title="install necessary modules"></a>install necessary modules</h2><ul>
 <li>download <strong><a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">nodejs</a></strong> and install</li>
 <li>download <strong><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git</a></strong> and install</li>
 <li>Win+R open cmd to the right direction</li>
@@ -364,13 +365,13 @@
 <li>related modules</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npm install  //install necessary components</span><br><span class="line">$ npm install hexo-deployer-git --save  // deploy to git</span><br><span class="line">$ npm install hexo-generator-feed --save  // build RSS</span><br><span class="line">$ npm install hexo-generator-sitemap --save // build sitemap</span><br></pre></td></tr></table></figure>
-<h3 id="add-ssh-key"><a href="#add-ssh-key" class="headerlink" title="add ssh key"></a>add ssh key</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"your email address"</span></span><br><span class="line">$ cat /home/xxx/.ssh/id_rsa.pub  //check your key</span><br></pre></td></tr></table></figure>
+<h2 id="add-ssh-key"><a href="#add-ssh-key" class="headerlink" title="add ssh key"></a>add ssh key</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"your email address"</span></span><br><span class="line">$ cat /home/xxx/.ssh/id_rsa.pub  //check your key</span><br></pre></td></tr></table></figure>
 <ul>
 <li><strong>load key to Github (default on Github &amp; default you can use Github)</strong></li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-<h3 id="set-id-amp-email"><a href="#set-id-amp-email" class="headerlink" title="set id &amp; email"></a>set id &amp; email</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"your id"</span></span><br><span class="line">$ git config --global user.email <span class="string">"your email"</span></span><br></pre></td></tr></table></figure>
-<h3 id="copy-previous-files"><a href="#copy-previous-files" class="headerlink" title="copy previous files"></a>copy previous files</h3><ul>
+<h2 id="set-id-amp-email"><a href="#set-id-amp-email" class="headerlink" title="set id &amp; email"></a>set id &amp; email</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"your id"</span></span><br><span class="line">$ git config --global user.email <span class="string">"your email"</span></span><br></pre></td></tr></table></figure>
+<h2 id="copy-previous-files"><a href="#copy-previous-files" class="headerlink" title="copy previous files"></a>copy previous files</h2><ul>
 <li>copy source files to the new catalog (as follows)<ul>
 <li><code>_config.yml package.json node_modules scaffolds source themes</code></li>
 </ul>
@@ -570,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#move-hexo-to-another-OS"><span class="nav-number">1.</span> <span class="nav-text">move hexo to another OS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install-on-Windows"><span class="nav-number">1.1.</span> <span class="nav-text">install on Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add-ssh-key"><span class="nav-number">1.2.</span> <span class="nav-text">add ssh key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set-id-amp-email"><span class="nav-number">1.3.</span> <span class="nav-text">set id &amp; email</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy-previous-files"><span class="nav-number">1.4.</span> <span class="nav-text">copy previous files</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-necessary-modules"><span class="nav-number">1.</span> <span class="nav-text">install necessary modules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-ssh-key"><span class="nav-number">2.</span> <span class="nav-text">add ssh key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-id-amp-email"><span class="nav-number">3.</span> <span class="nav-text">set id &amp; email</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy-previous-files"><span class="nav-number">4.</span> <span class="nav-text">copy previous files</span></a></li></ol></div>
             
 
           </div>
