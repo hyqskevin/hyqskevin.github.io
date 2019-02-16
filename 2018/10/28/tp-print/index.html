@@ -45,6 +45,50 @@
 
 
 
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
 
 
 
@@ -81,18 +125,18 @@
 
 
 
-<meta name="description" content="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）1.Check your finger print device1lsusb  example in device ID: 138:0090 and show device ID (for me) Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.  here">
+<meta name="description" content="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）1.Check your finger print devicelsusb  example in device ID: 138:0090 and show device ID (for me) Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.  here a">
 <meta name="keywords" content="Linux device">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Thinkpad fingerprint device on Linux">
 <meta property="og:url" content="https://hyqskevin.github.io/2018/10/28/tp-print/index.html">
 <meta property="og:site_name" content="MonoShow">
-<meta property="og:description" content="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）1.Check your finger print device1lsusb  example in device ID: 138:0090 and show device ID (for me) Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.  here">
+<meta property="og:description" content="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）1.Check your finger print devicelsusb  example in device ID: 138:0090 and show device ID (for me) Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.  here a">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-10-28T12:04:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Thinkpad fingerprint device on Linux">
-<meta name="twitter:description" content="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）1.Check your finger print device1lsusb  example in device ID: 138:0090 and show device ID (for me) Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.  here">
+<meta name="twitter:description" content="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）1.Check your finger print devicelsusb  example in device ID: 138:0090 and show device ID (for me) Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.  here a">
 
 
 
@@ -102,7 +146,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -193,6 +237,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
           <a href="" rel="section">
             
@@ -219,16 +283,6 @@
               <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
             
             日程表
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
           </a>
         </li>
       
@@ -300,7 +354,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-28T20:04:56+08:00">
+                2018-10-28
+              </time>
             
           </span>
 
@@ -354,7 +420,7 @@
       
 
       
-        <h2 id="Thinkpad-在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）"><a href="#Thinkpad-在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）" class="headerlink" title="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）"></a>Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）</h2><h2 id="1-Check-your-finger-print-device"><a href="#1-Check-your-finger-print-device" class="headerlink" title="1.Check your finger print device"></a>1.Check your finger print device</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsusb</span><br></pre></td></tr></table></figure>
+        <h2 id="Thinkpad-在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）"><a href="#Thinkpad-在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）" class="headerlink" title="Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）"></a>Thinkpad 在Linux下新版本指纹识别驱动的安装与指纹实现管理员验证）</h2><h2 id="1-Check-your-finger-print-device"><a href="#1-Check-your-finger-print-device" class="headerlink" title="1.Check your finger print device"></a>1.Check your finger print device</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">lsusb</span><br></pre></td></tr></table></figure>
 <ul>
 <li>example in device ID: 138:0090</li>
 <li><p>and show device ID (for me) <code>Bus xxx Device xxx: ID 138a:0090 Validity Sensors, Inc.</code></p>
@@ -411,23 +477,23 @@
 <li><p>read the guide: <a href="https://github.com/nmikhailov/Validity90" target="_blank" rel="noopener">Validity</a> and <a href="https://github.com/3v1n0/libfprint" target="_blank" rel="noopener">libfprint</a> in github</p>
 </li>
 <li><p>for ubuntu/linuxmint</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install fpirntd</span><br><span class="line">sudo add-apt-repository -y ppa:3v1n0/libfprint-vfs0090</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install libpam-fprintd</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt install fpirntd</span><br><span class="line">sudo add-apt-repository -y ppa:3v1n0/libfprint-vfs0090</span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install libpam-fprintd</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>for archlinux</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S fprintd</span><br><span class="line">yaourt -S libfprint-vfs0090-git</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S fprintd</span><br><span class="line">yaourt -S libfprint-vfs0090-git</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="3-Enroll-your-finger-print"><a href="#3-Enroll-your-finger-print" class="headerlink" title="3.Enroll your finger print"></a>3.Enroll your finger print</h2><ul>
 <li><p>add your signature for a finger (touch your finger device)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fprintd-enroll</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fprintd-enroll</span><br></pre></td></tr></table></figure>
 <ul>
 <li>! use <code>sudo fprintd-enroll</code> may have some bug</li>
 </ul>
 </li>
 <li><p>if not work</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> finger <span class="keyword">in</span> &#123;left,right&#125;-&#123;thumb,&#123;index,middle,ring,little-finger&#125;; <span class="keyword">do</span> fprintd-enroll -f <span class="string">"<span class="variable">$finger</span>"</span> <span class="string">"<span class="variable">$USER</span>"</span>; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> finger <span class="keyword">in</span> &#123;left,right&#125;-&#123;thumb,&#123;index,middle,ring,little-finger&#125;; <span class="keyword">do</span> fprintd-enroll -f <span class="string">"<span class="variable">$finger</span>"</span> <span class="string">"<span class="variable">$USER</span>"</span>; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><p>e.g <code>for finger in {left,right}-{thumb,{index,middle,ring,little-finger}; do fprintd-enroll -f &quot;right-index-finger&quot; &quot;kevin&quot;; done</code></p>
 </li>
@@ -443,7 +509,7 @@
 <ul>
 <li>Add <code>pam_fprintd.so</code> as <code>sufficient</code> to the top of the auth section of <code>/etc/pam.d/runuser</code></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/pam.d/runuser</span><br><span class="line">---</span><br><span class="line">auth            sufficient      pam_fprintd.so</span><br><span class="line">auth            sufficient      pam_rootok.so</span><br><span class="line">session         optional        pam_keyinit.so revoke</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nano /etc/pam.d/runuser</span><br><span class="line">---</span><br><span class="line">auth            sufficient      pam_fprintd.so</span><br><span class="line">auth            sufficient      pam_rootok.so</span><br><span class="line">session         optional        pam_keyinit.so revoke</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>4.2 For archlinux</p>
 <ul>
@@ -624,9 +690,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="https://twitter.com/hyqs_kevin" target="_blank" title="Twitter">
+                    <a href="https://instagram.com/hyqskevin" target="_blank" title="Instagram">
                       
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
                   </span>
                 
             </div>
@@ -661,6 +727,13 @@
       <!--/noindex-->
       
 
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -708,11 +781,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -873,6 +941,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

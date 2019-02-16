@@ -45,6 +45,50 @@
 
 
 
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
 
 
 
@@ -102,7 +146,7 @@
     root: '/',
     scheme: 'Pisces',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -193,6 +237,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
           <a href="" rel="section">
             
@@ -219,16 +283,6 @@
               <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
             
             日程表
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            关于
           </a>
         </li>
       
@@ -300,7 +354,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-10-28T20:04:27+08:00">
+                2018-10-28
+              </time>
             
           </span>
 
@@ -371,23 +437,23 @@
 <h3 id="以下列举部分实验结果，具体实现步骤-gt-gt"><a href="#以下列举部分实验结果，具体实现步骤-gt-gt" class="headerlink" title="以下列举部分实验结果，具体实现步骤&gt;&gt;"></a>以下列举部分实验结果，<a href="https://hyqskevin.coding.me/2018/10/28/cancer-diagnose/breast-cancer-diagnose.html" target="_blank" rel="noopener">具体实现步骤&gt;&gt;</a></h3><ul>
 <li><a href="https://hyqskevin.coding.me/2018/10/28/cancer-diagnose/breast-cancer-diagnose.ipynb" target="_blank" rel="noopener">breast-cancer-diagnose.ipynb download</a><h4 id="LogisticRegression-逻辑斯蒂回归-分类器"><a href="#LogisticRegression-逻辑斯蒂回归-分类器" class="headerlink" title="LogisticRegression (逻辑斯蒂回归 分类器)"></a>LogisticRegression (逻辑斯蒂回归 分类器)</h4></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">LR = LogisticRegression()</span><br><span class="line">LR.fit(X_train, y_train)</span><br><span class="line">LR.predict(X_test)</span><br><span class="line">LR.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">LR = LogisticRegression()</span><br><span class="line">LR.fit(X_train, y_train)</span><br><span class="line">LR.predict(X_test)</span><br><span class="line">LR.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
 <p>Out: 0.9883040935672515</p>
 <ul>
 <li><strong>结论：</strong> 通过比较，逻辑斯蒂模型比随机梯度下降模型在测试集上表现有更高的准确性，因为逻辑斯蒂采用解析的方式精确计算模型参数，而随机梯度下降采用估计值</li>
 <li><strong>特点分析：</strong> 逻辑斯蒂对参数的计算采用精确解析的方法，计算时间长但是模型性能高，随机梯度下降采用随机梯度上升算法估计模型参数，计算时间短但产出的模型性能略低，一般而言，对于训练数据规模在10万量级以上的数据，考虑到时间的耗用，推荐使用随机梯度算法</li>
 </ul>
-<h4 id="SGDClassifier-梯度下降-分类器"><a href="#SGDClassifier-梯度下降-分类器" class="headerlink" title="SGDClassifier (梯度下降 分类器)"></a>SGDClassifier (梯度下降 分类器)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import SGDClassifier</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SGD = SGDClassifier(loss=&apos;hinge&apos;, penalty=&apos;l2&apos;, alpha=0.001, l1_ratio=0.15, fit_intercept=True, max_iter=None, tol=None, shuffle=True, verbose=0, epsilon=0.1, n_jobs=1, random_state=None, learning_rate=&apos;optimal&apos;, eta0=0.0, power_t=0.5, class_weight=None, warm_start=False, average=False, n_iter=None)</span><br><span class="line">SGD.fit(X_train,y_train)</span><br><span class="line">SGD.predict(X_test)</span><br><span class="line">SGD.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
+<h4 id="SGDClassifier-梯度下降-分类器"><a href="#SGDClassifier-梯度下降-分类器" class="headerlink" title="SGDClassifier (梯度下降 分类器)"></a>SGDClassifier (梯度下降 分类器)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import SGDClassifier</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SGD = SGDClassifier(loss=&apos;hinge&apos;, penalty=&apos;l2&apos;, alpha=0.001, l1_ratio=0.15, fit_intercept=True, max_iter=None, tol=None, shuffle=True, verbose=0, epsilon=0.1, n_jobs=1, random_state=None, learning_rate=&apos;optimal&apos;, eta0=0.0, power_t=0.5, class_weight=None, warm_start=False, average=False, n_iter=None)</span><br><span class="line">SGD.fit(X_train,y_train)</span><br><span class="line">SGD.predict(X_test)</span><br><span class="line">SGD.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
 <p>Out: 0.9824561403508771</p>
-<h4 id="LinearRegression-线性回归-分类器"><a href="#LinearRegression-线性回归-分类器" class="headerlink" title="LinearRegression (线性回归 分类器)"></a>LinearRegression (线性回归 分类器)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LR2 = LinearRegression(fit_intercept=True, normalize=False, copy_X=True, n_jobs=1)</span><br><span class="line">LR2.fit(X_train,y_train)</span><br><span class="line">LR2.predict(X_test)</span><br><span class="line">LR2.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
+<h4 id="LinearRegression-线性回归-分类器"><a href="#LinearRegression-线性回归-分类器" class="headerlink" title="LinearRegression (线性回归 分类器)"></a>LinearRegression (线性回归 分类器)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">LR2 = LinearRegression(fit_intercept=True, normalize=False, copy_X=True, n_jobs=1)</span><br><span class="line">LR2.fit(X_train,y_train)</span><br><span class="line">LR2.predict(X_test)</span><br><span class="line">LR2.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
 <p>Out: 0.8739645029687063</p>
-<h4 id="KNeighborsClassifier-k近邻-分类器"><a href="#KNeighborsClassifier-k近邻-分类器" class="headerlink" title="KNeighborsClassifier (k近邻 分类器)"></a>KNeighborsClassifier (k近邻 分类器)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KNN = KNeighborsClassifier(n_neighbors=5, weights=&apos;uniform&apos;, algorithm=&apos;auto&apos;, leaf_size=30, p=2, metric=&apos;minkowski&apos;, metric_params=None, n_jobs=1, **kwargs)</span><br><span class="line">KNN.fit(X_train,y_train)</span><br><span class="line">KNN.predict(X_test)</span><br><span class="line">KNN.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
+<h4 id="KNeighborsClassifier-k近邻-分类器"><a href="#KNeighborsClassifier-k近邻-分类器" class="headerlink" title="KNeighborsClassifier (k近邻 分类器)"></a>KNeighborsClassifier (k近邻 分类器)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">KNN = KNeighborsClassifier(n_neighbors=5, weights=&apos;uniform&apos;, algorithm=&apos;auto&apos;, leaf_size=30, p=2, metric=&apos;minkowski&apos;, metric_params=None, n_jobs=1, **kwargs)</span><br><span class="line">KNN.fit(X_train,y_train)</span><br><span class="line">KNN.predict(X_test)</span><br><span class="line">KNN.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
 <p>Out: 0.9883040935672515</p>
-<h4 id="GaussianNB-朴素贝叶斯-分类器"><a href="#GaussianNB-朴素贝叶斯-分类器" class="headerlink" title="GaussianNB (朴素贝叶斯 分类器)"></a>GaussianNB (朴素贝叶斯 分类器)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GNB = GaussianNB(priors=None)</span><br><span class="line">GNB.fit(X_train,y_train)</span><br><span class="line">GNB.predict(X_test)</span><br><span class="line">GNB.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
+<h4 id="GaussianNB-朴素贝叶斯-分类器"><a href="#GaussianNB-朴素贝叶斯-分类器" class="headerlink" title="GaussianNB (朴素贝叶斯 分类器)"></a>GaussianNB (朴素贝叶斯 分类器)</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GNB = GaussianNB(priors=None)</span><br><span class="line">GNB.fit(X_train,y_train)</span><br><span class="line">GNB.predict(X_test)</span><br><span class="line">GNB.score(X_test,y_test)</span><br></pre></td></tr></table></figure>
 <p>Out: 0.9766081871345029</p>
 
       
@@ -557,9 +623,9 @@
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="https://twitter.com/hyqs_kevin" target="_blank" title="Twitter">
+                    <a href="https://instagram.com/hyqskevin" target="_blank" title="Instagram">
                       
-                        <i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
                   </span>
                 
             </div>
@@ -594,6 +660,13 @@
       <!--/noindex-->
       
 
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -641,11 +714,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -806,6 +874,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
