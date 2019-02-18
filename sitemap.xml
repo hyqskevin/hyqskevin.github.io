@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/tags.html</loc>
+    <loc>https://hyqskevin.github.io/tags/index.html</loc>
     
-    <lastmod>2019-02-18T09:23:53.417Z</lastmod>
+    <lastmod>2019-02-18T10:53:45.628Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/categories/categories.html</loc>
+    <loc>https://hyqskevin.github.io/categories/index.html</loc>
     
-    <lastmod>2019-02-18T09:23:00.506Z</lastmod>
+    <lastmod>2019-02-18T10:41:36.271Z</lastmod>
     
   </url>
   
@@ -26,20 +26,6 @@
     <loc>https://hyqskevin.github.io/2018/11/18/layoutit/</loc>
     
     <lastmod>2019-02-18T08:39:24.444Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/pic/index.html</loc>
-    
-    <lastmod>2019-02-16T06:13:36.630Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/about/index.html</loc>
-    
-    <lastmod>2019-02-16T04:26:09.582Z</lastmod>
     
   </url>
   
