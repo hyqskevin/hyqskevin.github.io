@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="../lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="../css/main.css?v=7.0.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32-next.png?v=7.0.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16x16-next.png?v=7.0.0">
+
+
+  <link rel="mask-icon" href="../images/logo.svg?v=7.0.0" color="#222">
+
+
+  <link rel="manifest" href="../images/manifest.json">
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.0.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="安装hexo的笔记">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tips about building blog">
+<meta property="og:url" content="https://hyqskevin.github.io/2018/10/20/tips-about-building-blog/index.html">
+<meta property="og:site_name" content="MonoShow">
+<meta property="og:description" content="安装hexo的笔记">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-14T13:37:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tips about building blog">
+<meta name="twitter:description" content="安装hexo的笔记">
+
+
+
+  <link rel="alternate" href="../../../../atom.xml" title="MonoShow" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="https://hyqskevin.github.io/2018/10/20/tips-about-building-blog/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>tips about building blog | MonoShow</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MonoShow</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Monologue from kevin</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-picture">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a rel="section"><i class="menu-item-icon fa fa-fw fa-camera"></i> <br>picture</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a rel="section"><i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>Schedule</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="about" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hyqskevin.github.io">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Kevin W">
+      <meta itemprop="description" content="Kevin W build this air-castle to collect infos & photos">
+      <meta itemprop="image" content="../../../../images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MonoShow">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">tips about building blog
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-20 16:44:04" itemprop="dateCreated datePublished" datetime="2018-10-20T16:44:04+08:00">2018-10-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-02-14 21:37:00" itemprop="dateModified" datetime="2019-02-14T21:37:00+08:00">2019-02-14</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="../../../../categories/notes/" itemprop="url" rel="index"><span itemprop="name">notes</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+            <div class="post-description">安装hexo的笔记</div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="install-nodejs-npm-git-hexo-安装和部署必要模组"><a href="#install-nodejs-npm-git-hexo-安装和部署必要模组" class="headerlink" title="install nodejs npm git hexo 安装和部署必要模组"></a>install nodejs npm git hexo 安装和部署必要模组</h2><h3 id="install-on-Linux"><a href="#install-on-Linux" class="headerlink" title="install on Linux"></a>install on Linux</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y nodejs</span><br><span class="line">sudo apt-get install -y build-essential</span><br><span class="line">sudo apt-get install -y npm</span><br><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>related modules</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install  //install necessary components</span><br><span class="line">npm install hexo-deployer-git --save  // deploy to git</span><br><span class="line">npm install hexo-generator-feed --save  // build RSS</span><br><span class="line">npm install hexo-generator-sitemap --save // build sitemap</span><br></pre></td></tr></table></figure>
+<h4 id="deploy-hexo"><a href="#deploy-hexo" class="headerlink" title="deploy hexo"></a>deploy hexo</h4><ul>
+<li>open terminal &amp; <code>cd</code> to the right direction</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">npm install hexo -g</span><br><span class="line">hexo -v  //check info</span><br><span class="line">hexo init  //initialize folder</span><br><span class="line">hexo g  //Start processing</span><br></pre></td></tr></table></figure>
+<h4 id="add-ssh-key"><a href="#add-ssh-key" class="headerlink" title="add ssh key"></a>add ssh key</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"your email address"</span></span><br><span class="line">cat /home/xxx/.ssh/id_rsa.pub  //check your key</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>load key to Github (default on Github &amp; default you can use Github)</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<h4 id="set-id-amp-email"><a href="#set-id-amp-email" class="headerlink" title="set id &amp; email"></a>set id &amp; email</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">"your id"</span></span><br><span class="line">git config --global user.email <span class="string">"your email"</span></span><br></pre></td></tr></table></figure>
+<h3 id="install-on-Windows"><a href="#install-on-Windows" class="headerlink" title="install on Windows"></a>install on Windows</h3><ul>
+<li>download <strong><a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">nodejs</a></strong> and install</li>
+<li>download <strong><a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git</a></strong> and install</li>
+<li>Win+R open cmd to the right direction</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">npm install hexo -g</span><br><span class="line">hexo -v  //check info</span><br><span class="line">npm install  //install necessary components</span><br><span class="line">hexo init  //initialize folder</span><br><span class="line">hexo g  //Start processing</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>add related module &amp; ssh key &amp; set id+email (the same as linux)</strong></li>
+</ul>
+<hr>
+<h2 id="template-模板"><a href="#template-模板" class="headerlink" title="template 模板"></a>template 模板</h2><ul>
+<li>各页面相对应的模板名称</li>
+</ul>
+<table><br>  <thead><br>    <tr><br>      <th>模板</th><br>      <th>用途</th><br>      <th>回退</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <td><code>index</code></td><br>      <td>首页</td><br>      <td></td><br>    </tr><br>    <tr><br>      <td><code>post</code></td><br>      <td>文章</td><br>      <td><code>index</code></td><br>    </tr><br>    <tr><br>      <td><code>page</code></td><br>      <td>分页</td><br>      <td><code>index</code></td><br>    </tr><br>    <tr><br>      <td><code>archive</code></td><br>      <td>归档</td><br>      <td><code>index</code></td><br>    </tr><br>    <tr><br>      <td><code>category</code></td><br>      <td>分类归档</td><br>      <td><code>archive</code></td><br>    </tr><br>    <tr><br>      <td><code>tag</code></td><br>      <td>标签归档</td><br>      <td><code>archive</code></td><br>    </tr><br>  </tbody><br></table>
+
+<hr>
+<h2 id="write-pages-写文章"><a href="#write-pages-写文章" class="headerlink" title="write pages 写文章"></a>write pages 写文章</h2><h3 id="init-page"><a href="#init-page" class="headerlink" title="init page"></a>init page</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new post <span class="string">"post_name"</span></span><br></pre></td></tr></table></figure>
+<h3 id="edit"><a href="#edit" class="headerlink" title="edit"></a>edit</h3>  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">categories:</span><br><span class="line">tags:</span><br><span class="line">description:</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment">###</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>tags 目前的标签</p>
+<ul>
+<li>| Kaggle | Linux device | hexo | php | mysql | others |</li>
+</ul>
+</li>
+<li><p>categories 目前的分类</p>
+<ul>
+<li>Adobe: about any update &amp; crack of CC software</li>
+<li>notes: personal thoughts &amp; ideas</li>
+<li>others: just others</li>
+<li>study: study notes</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="local-server-amp-deploy-本地查看和部署"><a href="#local-server-amp-deploy-本地查看和部署" class="headerlink" title="local server &amp; deploy 本地查看和部署"></a>local server &amp; deploy 本地查看和部署</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean  //clean cache</span><br><span class="line">hexo generate  //generate static files</span><br><span class="line">hexo seserver  //localhost:4000</span><br><span class="line">hexo deploy  //open server</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="update-notes"><a href="#update-notes" class="headerlink" title="update notes"></a>update notes</h2><ul>
+<li><strong>2019.2.14 更新</strong></li>
+</ul>
+<h3 id="categories-amp-tags-分类和标签须知"><a href="#categories-amp-tags-分类和标签须知" class="headerlink" title="categories &amp; tags 分类和标签须知"></a>categories &amp; tags 分类和标签须知</h3><ul>
+<li>只有文章支持分类和标签</li>
+<li>分类具有顺序性和层次性,标签没有顺序和层次</li>
+<li>Hexo不支持指定多个同级分类</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">categories:</span><br><span class="line">- Diary</span><br><span class="line">tags:</span><br><span class="line">- PS3</span><br><span class="line">- Games</span><br></pre></td></tr></table></figure>
+<h2 id="Tag-Plugins-标签插件"><a href="#Tag-Plugins-标签插件" class="headerlink" title="Tag Plugins 标签插件"></a>Tag Plugins 标签插件</h2><h3 id="quote"><a href="#quote" class="headerlink" title="quote"></a>quote</h3><ul>
+<li>在文章中插入引言，可包含作者、来源和标题</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;% blockquote [author[, <span class="built_in">source</span>]] [link] [source_link_title] %&#125;</span><br><span class="line">content</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>example</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;% blockquote David Levithan, Wide Awake %&#125;</span><br><span class="line">Do not just seek happiness <span class="keyword">for</span> yourself. Seek happiness <span class="keyword">for</span> all. Through kindness. Through mercy.</span><br><span class="line">&#123;% endblockquote %&#125;</span><br></pre></td></tr></table></figure>
+<blockquote><p>Do not just seek happiness for yourself. Seek happiness for all. Through kindness. Through mercy.</p>
+<footer><strong>David Levithan</strong><cite>Wide Awake</cite></footer></blockquote>
+<h3 id="code-插入代码"><a href="#code-插入代码" class="headerlink" title="code 插入代码"></a>code 插入代码</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;% codeblock [title] [lang:language] [url] [link text] %&#125;</span><br><span class="line">code snippet</span><br><span class="line">&#123;% endcodeblock %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="image-插入图片"><a href="#image-插入图片" class="headerlink" title="image 插入图片"></a>image 插入图片</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;% img [class names] /path/to/image [width] [height] [title text [alt text]] %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="link-插入链接"><a href="#link-插入链接" class="headerlink" title="link 插入链接"></a>link 插入链接</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;% link text url [external] [title] %&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Assert-fold-资源文件夹"><a href="#Assert-fold-资源文件夹" class="headerlink" title="Assert fold 资源文件夹"></a>Assert fold 资源文件夹</h2><ul>
+<li>如果需要插入图片,最简单的方法就是将它们放在 source/pic 文件夹中。然后通过类似于 <code>![](/images/image.jpg)</code> 的方法访问它们.</li>
+<li>通过常规的 markdown 语法和相对路径来引用图片和其它资源可能会导致它们在存档页或者主页上显示不正确。<strong>需要使用标签插件</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;% asset_img example.jpg This is an example image %&#125;</span><br><span class="line">&#123;% asset_path slug %&#125;</span><br><span class="line">&#123;% asset_img slug [title] %&#125;</span><br><span class="line">&#123;% asset_link slug [title] %&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<hr>
+<hr>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><strong><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo.io</a></strong></li>
+<li><strong><a href="https://www.cnblogs.com/fengxiongZz/p/7707219.html" target="_blank" rel="noopener">cnblogs: hexo+Github搭建自己的博客</a></strong></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="../../../../tags/hexo/" rel="tag"># hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="../../26/hello-world/" rel="prev" title="Welcome to Kevin_W's attic,filled with whispers & murmurs">
+                Welcome to Kevin_W's attic,filled with whispers & murmurs <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Kevin W</p>
+              <p class="site-description motion-element" itemprop="description">Kevin W build this air-castle to collect infos & photos</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="../../../../archives/">
+                
+                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="../../../../atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-nodejs-npm-git-hexo-安装和部署必要模组"><span class="nav-number">1.</span> <span class="nav-text">install nodejs npm git hexo 安装和部署必要模组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install-on-Linux"><span class="nav-number">1.1.</span> <span class="nav-text">install on Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#deploy-hexo"><span class="nav-number">1.1.1.</span> <span class="nav-text">deploy hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#add-ssh-key"><span class="nav-number">1.1.2.</span> <span class="nav-text">add ssh key</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#set-id-amp-email"><span class="nav-number">1.1.3.</span> <span class="nav-text">set id &amp; email</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#install-on-Windows"><span class="nav-number">1.2.</span> <span class="nav-text">install on Windows</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#template-模板"><span class="nav-number">2.</span> <span class="nav-text">template 模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#write-pages-写文章"><span class="nav-number">3.</span> <span class="nav-text">write pages 写文章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#init-page"><span class="nav-number">3.1.</span> <span class="nav-text">init page</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#edit"><span class="nav-number">3.2.</span> <span class="nav-text">edit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#local-server-amp-deploy-本地查看和部署"><span class="nav-number">4.</span> <span class="nav-text">local server &amp; deploy 本地查看和部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#update-notes"><span class="nav-number">5.</span> <span class="nav-text">update notes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#categories-amp-tags-分类和标签须知"><span class="nav-number">5.1.</span> <span class="nav-text">categories &amp; tags 分类和标签须知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tag-Plugins-标签插件"><span class="nav-number">6.</span> <span class="nav-text">Tag Plugins 标签插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#quote"><span class="nav-number">6.1.</span> <span class="nav-text">quote</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-插入代码"><span class="nav-number">6.2.</span> <span class="nav-text">code 插入代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#image-插入图片"><span class="nav-number">6.3.</span> <span class="nav-text">image 插入图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#link-插入链接"><span class="nav-number">6.4.</span> <span class="nav-text">link 插入链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assert-fold-资源文件夹"><span class="nav-number">7.</span> <span class="nav-text">Assert fold 资源文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kevin W</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.0.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="../../../../lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="../../../../lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="../../../../lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="../../../../js/src/utils.js?v=7.0.0"></script>
+
+  <script src="../../../../js/src/motion.js?v=7.0.0"></script>
+
+
+
+  
+  
+
+
+  <script src="../../../../js/src/affix.js?v=7.0.0"></script>
+
+  <script src="../../../../js/src/schemes/pisces.js?v=7.0.0"></script>
+
+
+
+  
+  <script src="../../../../js/src/scrollspy.js?v=7.0.0"></script>
+<script src="../../../../js/src/post-details.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  <script src="../../../../js/src/bootstrap.js?v=7.0.0"></script>
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
