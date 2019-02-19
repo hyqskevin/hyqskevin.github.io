@@ -2,6 +2,83 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2018/10/28/tp-print/</loc>
+    
+    <lastmod>2019-02-19T02:15:08.870Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/11/05/php-notes/</loc>
+    
+    <lastmod>2019-02-19T02:14:45.936Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/14/move-to-windows/</loc>
+    
+    <lastmod>2019-02-19T02:14:32.480Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/11/18/layoutit/</loc>
+    
+    <lastmod>2019-02-19T02:14:17.683Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/10/hello-world/</loc>
+    
+    <lastmod>2019-02-19T02:14:06.969Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/28/hello-hexo/</loc>
+    
+    <lastmod>2019-02-19T02:13:32.970Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/28/cancer-diagnose/</loc>
+    
+    <lastmod>2019-02-19T02:13:04.934Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/16/book-list/</loc>
+    
+    <lastmod>2019-02-19T02:12:32.513Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/11/01/Adobe2019/</loc>
+    
+    <lastmod>2019-02-19T02:10:39.269Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/about/index.html</loc>
+    
+    <lastmod>2019-02-19T02:09:10.126Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/28/w3school-php/</loc>
+    
+    <lastmod>2019-02-19T02:08:27.625Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/index.html</loc>
     
     <lastmod>2019-02-18T10:53:45.628Z</lastmod>
@@ -16,79 +93,9 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2018/11/05/php-notes/</loc>
-    
-    <lastmod>2019-02-18T08:39:35.004Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/11/18/layoutit/</loc>
-    
-    <lastmod>2019-02-18T08:39:24.444Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/02/16/book-list/</loc>
-    
-    <lastmod>2019-02-16T03:24:11.724Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/28/w3school-php/</loc>
-    
-    <lastmod>2019-02-15T13:45:05.031Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2018/10/20/tips-about-building-blog/</loc>
     
     <lastmod>2019-02-14T13:37:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/26/hello-world/</loc>
-    
-    <lastmod>2019-02-14T13:36:17.771Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/02/14/move-to-windows/</loc>
-    
-    <lastmod>2019-02-14T13:26:02.686Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/11/01/Adobe2019/</loc>
-    
-    <lastmod>2019-02-14T07:44:38.487Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/28/tp-print/</loc>
-    
-    <lastmod>2018-10-28T12:04:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/28/cancer-diagnose/</loc>
-    
-    <lastmod>2018-10-28T12:04:27.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/28/hello-hexo/</loc>
-    
-    <lastmod>2018-10-27T23:07:10.000Z</lastmod>
     
   </url>
   
