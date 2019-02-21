@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hyqskevin.github.io/2018/10/28/tp-print/</loc>
+    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
     
-    <lastmod>2019-02-19T02:15:08.870Z</lastmod>
+    <lastmod>2019-02-21T09:09:16.857Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://hyqskevin.github.io/2018/11/05/php-notes/</loc>
     
-    <lastmod>2019-02-19T02:14:45.936Z</lastmod>
+    <lastmod>2019-02-21T09:02:59.700Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/about/index.html</loc>
+    
+    <lastmod>2019-02-19T09:30:01.063Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/11/01/Adobe2019/</loc>
+    
+    <lastmod>2019-02-19T02:34:48.739Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/28/tp-print/</loc>
+    
+    <lastmod>2019-02-19T02:15:08.870Z</lastmod>
     
   </url>
   
@@ -58,20 +79,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2018/11/01/Adobe2019/</loc>
-    
-    <lastmod>2019-02-19T02:10:39.269Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/about/index.html</loc>
-    
-    <lastmod>2019-02-19T02:09:10.126Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2018/10/28/w3school-php/</loc>
     
     <lastmod>2019-02-19T02:08:27.625Z</lastmod>
@@ -96,6 +103,20 @@
     <loc>https://hyqskevin.github.io/2018/10/20/tips-about-building-blog/</loc>
     
     <lastmod>2019-02-14T13:37:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/21/lib/upload/</loc>
+    
+    <lastmod>2016-12-17T06:57:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/21/lib/downLoad/</loc>
+    
+    <lastmod>2016-12-17T05:22:18.000Z</lastmod>
     
   </url>
   
