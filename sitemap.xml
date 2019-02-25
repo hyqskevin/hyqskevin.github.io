@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2019/01/10/slam-rgbd/</loc>
+    
+    <lastmod>2019-02-25T12:40:30.001Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/01/15/ml-api/</loc>
+    
+    <lastmod>2019-02-25T12:07:32.457Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
+    
+    <lastmod>2019-02-25T11:21:03.981Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/02/15/mysql/</loc>
     
-    <lastmod>2019-02-25T10:42:50.993Z</lastmod>
+    <lastmod>2019-02-25T11:19:11.806Z</lastmod>
     
   </url>
   
@@ -19,13 +40,6 @@
     <loc>https://hyqskevin.github.io/2018/10/28/tp-print/</loc>
     
     <lastmod>2019-02-22T07:12:36.327Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
-    
-    <lastmod>2019-02-22T06:23:08.636Z</lastmod>
     
   </url>
   
