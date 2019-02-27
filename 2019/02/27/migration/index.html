@@ -14,11 +14,11 @@
 <li><p>运行迁移表到数据库<br><code>php artisan migrate</code></p>
 <p>强制运行这些命令而不被提示，可以使用–force（不推荐）<br><code>php artisan migrate --force</code></p>
 <p>在MySQL中可以看到Database下有新的表</p>
-<img src="/laraveltest](https:/hyqskevin.github.io/pic/laravel/laraveltest.png)" class="[database">
+<img src="https://hyqskevin.github.io/pic/laravel/laraveltest.png" class="[database laraveltest]">
 </li>
 <li><p>执行回滚</p>
 <p>在Database下有migration表，使得laravel可以回滚</p>
-<img src="/rollback](https:/hyqskevin.github.io/pic/laravel/migration.png)" class="[migration">
+<img src="https://hyqskevin.github.io/pic/laravel/migration.png" class="[migration rollback]">
 <p>执行文件中的<code>public function down()</code>,回滚最后一批运行的迁移<br><code>php artisan migrate:rollback</code><br>回滚所有的应用迁移<br><code>php artisan migrate:reset</code><br>先回滚所有数据库迁移<br><code>php artisan migrate:refresh</code><br>回滚或重建指定数量的迁移,refresh命令提供的step选项<br><code>php artisan migrate:refresh --step=5</code></p>
 </li>
 <li><p>在迁移之前进行试验<br><code>php artisan migrate --pretend</code></p>
