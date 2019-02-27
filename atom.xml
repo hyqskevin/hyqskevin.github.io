@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://hyqskevin.github.io/"/>
-  <updated>2019-02-19T02:12:32.513Z</updated>
+  <updated>2019-02-26T11:51:16.755Z</updated>
   <id>https://hyqskevin.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>fund_flow</title>
+    <link href="https://hyqskevin.github.io/2019/02/20/fund-flow/"/>
+    <id>https://hyqskevin.github.io/2019/02/20/fund-flow/</id>
+    <published>2019-02-20T07:41:56.000Z</published>
+    <updated>2019-02-26T11:51:16.755Z</updated>
+    
+    <content type="html"><![CDATA[<p>-服务外包项目-<br>资金流入流出问题的研究笔记，数据来自蚂蚁金服大数据赛题<br><a id="more"></a></p><h2 id="研究现状"><a href="#研究现状" class="headerlink" title="研究现状"></a>研究现状</h2><h3 id="资金流入流出问题"><a href="#资金流入流出问题" class="headerlink" title="资金流入流出问题"></a>资金流入流出问题</h3><ol><li><strong>时间序列模型分析</strong>：启动时间短，训练数据量不大，成本低<br>自回归算法 AR：呈现过去时刻对预测的直接影响<br>移动平均算法 MA：预测意料之外的事<br>自回归+移动平均 ARMA：综合以上的平衡<br>齐次非平稳 ARIMA：针对非平稳序列</li></ol><ul><li>时间序列可较好的预测短期价格变动，时期增长会导致误差率增高</li></ul><ol start="2"><li>投资分析：长期分析法，利用经济学角度分析内在价值</li></ol><ul><li>基本分析：宏观经济分析，行业分析和公司分析<br>应用不够直观，市场反应不够敏锐</li><li>技术分析：根据图标信息，技术指标记录推断变化趋势<br>技术指标滞后，无法把控整体趋势  </li></ul><ol start="3"><li>混沌动力学</li><li>神经网络<br>利用探索数据间的交叉关系建立模型<br>契合资金波动的高度非线性特点</li><li>定性预测：专家意见，德尔菲法</li><li>因果预测：回归分析，定性和定量分析</li></ol><h3 id="组合算法"><a href="#组合算法" class="headerlink" title="组合算法"></a>组合算法</h3><ol><li>统计学+机器学习</li></ol><ul><li>灰色系统+神经网络</li><li>时间序列+神经网络</li></ul><ol start="2"><li>集成学习 ensemble learning</li></ol><ul><li>串行思路：采用串行的方式生成多个学习器目的在于减少偏差（bias），使用多个弱分类器组合成为一个强分类器，代表算法Bagging，boosting，GBDT</li><li>并行思路：通过使用并行的学习，得到多个学习模型然后取其平均结果目的在于减少方差，代表算法 Random Forest</li></ul><h3 id="因子分解机-Factorization-Machine-loading…"><a href="#因子分解机-Factorization-Machine-loading…" class="headerlink" title="因子分解机 Factorization Machine (loading…)"></a>因子分解机 Factorization Machine (loading…)</h3><p>通过特征向量去模拟因子分解模型，利用特征抽取的方法构造出特征并借助因子分解模型对不同变量间的相互作用进行建模</p><p>FM算法常用来解决二分类，回归，排序问题</p><h2 id="模型构建"><a href="#模型构建" class="headerlink" title="模型构建"></a>模型构建</h2><p>数据集–&gt;数据预处理–&gt;特征抽取–&gt;预测算法设计–&gt;误差分析–&gt;优化</p><p>数据预处理：剔除异常值，表格间数据集成<br>特征抽取：时间特征，用户特征，利率特征<br>预测算法设计(loading…)<br>误差分析：用均方根误差评价</p><h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><h3 id="余额宝用户数据"><a href="#余额宝用户数据" class="headerlink" title="余额宝用户数据"></a>余额宝用户数据</h3><p>基本信息数据 user_profile：</p><table><thead><tr><th>列名</th><th>类型</th><th style="text-align:center">含义</th><th>示例</th></tr></thead><tbody><tr><td>user_id</td><td>bigint</td><td style="text-align:center">用户</td><td>ID</td><td>1234</td></tr><tr><td>Sex</td><td>bigint</td><td style="text-align:center">用户性别（ 1 ：男， 0：女 ）</td><td>0</td></tr><tr><td>City</td><td>bigint</td><td style="text-align:center">所在城市</td><td>6081949</td></tr><tr><td>constellation</td><td>string</td><td style="text-align:center">星座</td><td>射手座</td></tr></tbody></table><p>申购赎回数据 user_balance：</p><table><thead><tr><th>列名</th><th>类型</th><th style="text-align:center">含义</th><th>示例</th></tr></thead><tbody><tr><td>user_id</td><td>bigint</td><td style="text-align:center">用户 id</td><td>1234</td></tr><tr><td>report_date</td><td>string</td><td style="text-align:center">日期</td><td>20140407</td></tr><tr><td>tBalance</td><td>bigint</td><td style="text-align:center">今日余额</td><td>109004</td></tr><tr><td>yBalance</td><td>bigint</td><td style="text-align:center">昨日余额</td><td>97389</td></tr><tr><td>total_purchase_amt</td><td>bigint</td><td style="text-align:center">今日总购买量 = 直接购买 + 收益</td><td>21876</td></tr><tr><td>direct_purchase_amt</td><td>bigint</td><td style="text-align:center">今日直接购买量</td><td>21863</td></tr><tr><td>purchase_bal_amt</td><td>bigint</td><td style="text-align:center">今日支付宝余额购买量</td><td>0</td></tr><tr><td>purchase_bank_amt</td><td>bigint</td><td style="text-align:center">今日银行卡购买量</td><td>21863</td></tr><tr><td>total_redeem_amt</td><td>bigint</td><td style="text-align:center">今日总赎回量 = 消费 + 转出</td><td>10261</td></tr><tr><td>consume_amt</td><td>bigint</td><td style="text-align:center">今日消费总量</td><td>0</td></tr><tr><td>transfer_amt</td><td>bigint</td><td style="text-align:center">今日转出总量</td><td>10261</td></tr><tr><td>tftobal_amt</td><td>bigint</td><td style="text-align:center">今日转出到支付宝余额总量</td><td>0</td></tr><tr><td>tftocard_amt</td><td>bigint</td><td style="text-align:center">今日转出到银行卡总量</td><td>10261</td></tr><tr><td>share_amt</td><td>bigint</td><td style="text-align:center">今日收益</td><td>13</td></tr><tr><td>category1</td><td>bigint</td><td style="text-align:center">今日类目 1 消费总额</td><td>0</td></tr><tr><td>category2</td><td>bigint</td><td style="text-align:center">今日类目 2 消费总额</td><td>0</td></tr><tr><td>category3</td><td>bigint</td><td style="text-align:center">今日类目 3 消费总额</td><td>0</td></tr><tr><td>category4</td><td>bigint</td><td style="text-align:center">今日类目 4 消费总额</td><td>0</td></tr></tbody></table><p>收益率数据 mfd_day_share_interest：</p><table><thead><tr><th>列名</th><th>类型</th><th style="text-align:center">含义</th><th>示例</th></tr></thead><tbody><tr><td>mfd_date</td><td>string</td><td style="text-align:center">日期</td><td>20140102</td></tr><tr><td>mfd_daily_yield</td><td>double</td><td style="text-align:center">万份收益，即 1 万块钱的收益。</td><td>1.5787</td></tr><tr><td>mfd_7daily_yield</td><td>double</td><td style="text-align:center">七日年化收益率（ % ）</td><td>6.307</td></tr></tbody></table><p>银行拆借利率数据 mfd_bank_shibor：</p><table><thead><tr><th>列名</th><th>类型</th><th style="text-align:center">含义</th><th>示例</th></tr></thead><tbody><tr><td>mfd_date</td><td>String</td><td style="text-align:center">日期</td><td>20140102</td></tr><tr><td>Interest_O_N</td><td>Double</td><td style="text-align:center">隔夜利率（%）</td><td>2.8</td></tr><tr><td>Interest_1_W</td><td>Double</td><td style="text-align:center">1周利率（%）</td><td>4.25</td></tr><tr><td>Interest_2_W</td><td>Double</td><td style="text-align:center">2周利率（%）</td><td>4.9</td></tr><tr><td>Interest_1_M</td><td>Double</td><td style="text-align:center">1个月利率（%）</td><td>5.04</td></tr><tr><td>Interest_3_M</td><td>Double</td><td style="text-align:center">3个月利率（%）</td><td>4.91</td></tr><tr><td>Interest_6_M</td><td>Double</td><td style="text-align:center">6个月利率（%）</td><td>4.79</td></tr><tr><td>Interest_9_M</td><td>Double</td><td style="text-align:center">9个月利率（%）</td><td>4.76</td></tr><tr><td>Interest_1_Y</td><td>Double</td><td style="text-align:center">1年利率（%）</td><td>4.78</td></tr></tbody></table><h3 id="数据关系"><a href="#数据关系" class="headerlink" title="数据关系"></a>数据关系</h3><p>今日余额 = 昨日余额 + 今日申购 - 今日赎回<br>今日余额 = 昨日余额 + [直接购买(支付宝+银行)+ 收益] - [消费 + 支出(支付宝+银行)]<br>tBalance = yBalance + (direct_purchase_amt + share_amt) - (consume_amt + transfer_amt)</p><h2 id="抽取特征"><a href="#抽取特征" class="headerlink" title="抽取特征"></a>抽取特征</h2><h2 id="资金流预测"><a href="#资金流预测" class="headerlink" title="资金流预测"></a>资金流预测</h2><p>采用时间序列预测的ARIMA模型，BP神经网络，集成学习来进行预测，并结合不同的算法进行组合预测</p><h3 id="ARIMA"><a href="#ARIMA" class="headerlink" title="ARIMA"></a>ARIMA</h3><h3 id="BP"><a href="#BP" class="headerlink" title="BP"></a>BP</h3><h3 id="ARIMA-BP"><a href="#ARIMA-BP" class="headerlink" title="ARIMA+BP"></a>ARIMA+BP</h3><h3 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h3><h3 id="Random-Forest"><a href="#Random-Forest" class="headerlink" title="Random Forest"></a>Random Forest</h3>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;-服务外包项目-&lt;br&gt;资金流入流出问题的研究笔记，数据来自蚂蚁金服大数据赛题&lt;br&gt;
+    
+    </summary>
+    
+      <category term="practice" scheme="https://hyqskevin.github.io/categories/practice/"/>
+    
+    
+      <category term="time_series" scheme="https://hyqskevin.github.io/tags/time-series/"/>
+    
+      <category term="ensemble_learning" scheme="https://hyqskevin.github.io/tags/ensemble-learning/"/>
+    
+      <category term="bp_nn" scheme="https://hyqskevin.github.io/tags/bp-nn/"/>
+    
+  </entry>
   
   <entry>
     <title>book-list</title>
