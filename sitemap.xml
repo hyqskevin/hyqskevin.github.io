@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2019/02/28/session-cookie/</loc>
+    
+    <lastmod>2019-03-03T14:02:50.694Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
+    
+    <lastmod>2019-03-03T13:55:01.182Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/photo/index.html</loc>
+    
+    <lastmod>2019-03-03T12:30:43.870Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/02/19/pandas%20compare%20with%20SQL/</loc>
     
     <lastmod>2019-03-03T12:21:19.006Z</lastmod>
@@ -68,20 +89,6 @@
     <loc>https://hyqskevin.github.io/2019/01/15/ml-api/</loc>
     
     <lastmod>2019-02-25T12:07:32.457Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
-    
-    <lastmod>2019-02-25T11:21:03.981Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/photo/index.html</loc>
-    
-    <lastmod>2019-02-22T07:22:59.851Z</lastmod>
     
   </url>
   
