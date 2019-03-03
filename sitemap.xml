@@ -2,16 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/27/migration/</loc>
+    <loc>https://hyqskevin.github.io/2019/02/23/mysql-regular/</loc>
     
-    <lastmod>2019-02-27T16:49:51.738Z</lastmod>
+    <lastmod>2019-03-03T08:52:10.768Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/03/php-notes3/</loc>
+    
+    <lastmod>2019-03-03T08:23:01.401Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/15/mysql/</loc>
+    
+    <lastmod>2019-03-03T08:21:20.998Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/28/w3school-php/</loc>
+    
+    <lastmod>2019-03-03T07:10:41.535Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/03/mysql%E8%AE%BE%E8%AE%A1%E8%A7%84%E8%8C%83/</loc>
+    
+    <lastmod>2019-03-03T05:58:54.210Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/03/mysql-function/</loc>
+    
+    <lastmod>2019-03-03T04:04:33.699Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://hyqskevin.github.io/2019/02/20/fund-flow/</loc>
     
-    <lastmod>2019-02-26T11:51:16.755Z</lastmod>
+    <lastmod>2019-02-27T16:59:53.903Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/27/migration/</loc>
+    
+    <lastmod>2019-02-27T16:49:51.738Z</lastmod>
     
   </url>
   
@@ -37,13 +79,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/15/mysql/</loc>
-    
-    <lastmod>2019-02-25T11:19:11.806Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/photo/index.html</loc>
     
     <lastmod>2019-02-22T07:22:59.851Z</lastmod>
@@ -54,13 +89,6 @@
     <loc>https://hyqskevin.github.io/2018/10/28/tp-print/</loc>
     
     <lastmod>2019-02-22T07:12:36.327Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/28/w3school-php/</loc>
-    
-    <lastmod>2019-02-22T06:14:32.351Z</lastmod>
     
   </url>
   
