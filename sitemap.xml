@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2019/02/19/pandas%20compare%20with%20SQL/</loc>
+    
+    <lastmod>2019-03-03T12:21:19.006Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/16/book-list/</loc>
+    
+    <lastmod>2019-03-03T09:06:30.005Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/02/23/mysql-regular/</loc>
     
     <lastmod>2019-03-03T08:52:10.768Z</lastmod>
@@ -145,13 +159,6 @@
     <loc>https://hyqskevin.github.io/2018/10/28/cancer-diagnose/</loc>
     
     <lastmod>2019-02-19T02:13:04.934Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/02/16/book-list/</loc>
-    
-    <lastmod>2019-02-19T02:12:32.513Z</lastmod>
     
   </url>
   
