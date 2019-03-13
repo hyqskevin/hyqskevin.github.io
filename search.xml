@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[看论文了嘛]]></title>
+    <url>%2F2019%2F03%2F13%2Fpaper%2F</url>
+    <content type="text"><![CDATA[paper page test.]]></content>
+      <categories>
+        <category>paper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[好耶 是python -- 那些神奇的py代码]]></title>
+    <url>%2F2019%2F03%2F13%2Fnice-python%2F</url>
+    <content type="text"><![CDATA[nice python page test.]]></content>
+      <categories>
+        <category>github-repo</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[这周上Github了吗 -- 那些有意思的项目收集]]></title>
     <url>%2F2019%2F03%2F13%2Fgithub-repo%2F</url>
     <content type="text"><![CDATA[gtihub repository page test.]]></content>
