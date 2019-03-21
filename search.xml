@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[分治和递归基础算法]]></title>
+    <url>%2F2019%2F03%2F21%2Fdivide%2F</url>
+    <content type="text"><![CDATA[写分治和贪心时，习惯性地会去思索程序的全局，而一旦展开去想，基本上就大脑溢出了目前还是无法把握递归式和递归边界，这算法终将是一生之敌。 Fibonacci用Fibonacci数列简单熟悉一下算法 #include&lt;cstdio&gt;int Fibonacci(int n)&#123; if(n==0 | n==1) return 1; //递归边界 else return Fibonacci(n-1) + Fibonacci(n-2); //递归式&#125;int main()&#123; int n; scanf("%d",&amp;n); printf("%d",Fibonacci(n)); return 0;&#125; 全排列按照字典顺序从小到大顺序输出1-n全排列 思路：数组P存放当前排列，hashTable 置为 true 存放已在P中的数字递归式：P按位处理，数字x不在P中，将x填入P，P处理下一位递归边界：处理完n位，输出排列，hashTable[x]=false 还原 #include&lt;cstdio&gt;const int maxn = 1024;int P[maxn],hashTable[maxn] = &#123;false&#125;,n;//处理第index位void generateP(int index)&#123; if(index == n+1) //到达递归边界 &#123; for(int i=0; i&lt;n; i++) printf("%d ",P[i]); &#125; printf("\n"); return; else &#123; for(int x=1; x&lt;=n; x++) &#123; if(hashTable[x] == false) //递归式逻辑 &#123; P[index] = x; hashTable[x] = true; generateP(index+1); hashTable[x] = false; &#125; &#125; &#125;&#125;int main()&#123; scanf("%d",&amp;n); //输入有几个数 generateP(1)； //从1开始递归 return 0;&#125; n皇后问题皇后两两不在同行同列同对角线 思路：到达递归边界时，遍历任意两个皇后查看是否满足条件递归边界：列index到达n，满足八皇后条件，count+1递归式：行x不在hashTable中，此列放置皇后，index移动到下一列 int count = 0;void generateP(int index)&#123; bool flag = true; if(index == n+1) //到达递归边界，判断是否合法 &#123; for(int i=1; i&lt;=n; i++) for(int j=i+1; j&lt;=n; j++) if(abs(P[i]-P[j]) == abs(i-j)) flag = false; if(flag) count++; return; &#125; else &#123; for(int x=1; x&lt;=n; x++) &#123; if(hashTable[x] == false) //递归式 &#123; P[index] = x; hashTable[x] = true; generateP(index+1); hashTable[x] = false; &#125; &#125; &#125;&#125;- 枚举所有情况会比较耗时间，可以在放置皇后的同时遍历之前的，判断是否有冲突``` cppint count = 0;void generateP(int index)&#123; if(inedx == n+1) //到达递归边界 count++; return; else &#123; for(int x=1; x&lt;=n; x++) &#123; if(hashTable[x] == false) &#123; bool flag = true; for(int pre=1; pre&lt;index; pre++) &#123; if(abs(P[index]-P[pre]) == abs(index-pre)) &#123; flag == false; break; &#125; &#125; if(flag) &#123; P[index] = x; hashTable[x] = true; generateP(index+1); hashTable[x] = false; &#125; &#125; &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>github-repo</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[散列表基础算法]]></title>
     <url>%2F2019%2F03%2F19%2Fhashtable%2F</url>
     <content type="text"><![CDATA[-散列基础-散列（hash）是常用的算法思想之一，它使用空间换时间的思想在我第一次碰到时就感觉巧妙如魔法一般。特别是在进行一些大量数字和字符串比较方面，hash能瞬间将O(n^2)的复杂度降到O(n),单次查询的复杂度降到O(1)，靠的就是数组下标与查询的元素之间建立的唯一转换关系。 常用hash线性变换函数：H(key) = a*key+b除留余数：h(key) = key%mod 除留余数法会出现冲突的情况，需要解决多个hash值相同的情况 线性探测法：从当前位置检查相邻地址是否被占用，如果都被占用，循环检查下一个位置 平方探测法：从当前位置检查+1，-1，+4，-4，+9，-9……如果检查中+k^2超过表长（Tablesize），[H(key)+k^2]%Tablesize 链地址法：把hash相同的key连接成单链表 整数hash查询数组M中的数在数组N中是否出现过常规思路：遍历所有N，要遍历M次，时间复杂度O(MN)hash思路：bool hashTable[maxn]={false}，先读入N，N中出现的数x，hashTable[x]=true,再查询M，时间复杂度O(M+N) 示例 #include&lt;cstdio&gt;const int maxn = 1024;bool hashTable[maxn] = &#123;false&#125;;int main()&#123; int n[10] = &#123;2,6,8,12,23,5,15,5,0,1&#125;; int m[3] = &#123;8,22,5&#125;; int x; for(int i=0; i&lt;10; i++) hashTable&#123;n[i]&#125; = true; for(int j=0; j&lt;3;j++) &#123; if(hashTable&#123;m[j]]&#125; == true) printf("%d,yes\n",m[j]); else printf("%d,no\n",m[j]); &#125; return 0;&#125; 查询M中的数在N中出现的次数将hashTable 替换为int类型进行计数 示例 #include&lt;cstdio&gt;const int maxn = 1024;int hashTable[maxn] = &#123;0&#125;;int main()&#123; int n[10] = &#123;2,6,8,12,8,5,15,5,0,1&#125;; int m[3] = &#123;8,12,5&#125;; int x; for(int i=0; i&lt;10; i++) hashTable&#123;n[i]&#125;++; for(int j=0; j&lt;3;j++) &#123; printf("%d\n",hashTable&#123;m[j]&#125;); &#125; return 0;&#125; 字符串hash需要将字符串和整数唯一对应，可以直接对应或使用hash函数对应：A-Z 0~25，a-z 26~51 //将字符串S转换为整数int hashFunc(char S[], int len)&#123; int hashID = 0; for(int i=0; i&lt;len; i++) &#123; if(S[i]&gt;='A' &amp;&amp; S[i]&lt;='Z') hashID = hashID*52 + S[i] - 'A'; else if(S[i]&gt;='a' &amp;&amp; S[i]&lt;='z') hashID = hashID*52 + S[i]-'a'+ 26; &#125; return id;&#125;int id = hashFunc(P[i],52);hashTable[id] = P[i]; 查询N个字符串中M个字符串出现的次数，每个字符串长度固定为5#include&lt;cstdio&gt;const int maxn = 100;char S[maxn][5],temp[5];int hashTable[26*26*26+10];//每个字符串拥有唯一idint hashFunc(char S[], int len)&#123; int id = 0; for(int i=0; i&lt;len; i++) &#123; id = id*26 + (S[i]-'A'); &#125; return id;&#125;int main()&#123; int n, m; scanf("%d%d", &amp;n, &amp;m); for(int i=0; i&lt;n; i++) &#123; sacnf("%s", S[i]); int id = hashFunc(s[i], 3); hashTable[id]++; &#125; for(int i=0; i&lt;m; i++) &#123; sacnf("%s",temp); int id = hashFunc(temp, 3); printf("%d",hashTable[id]); &#125; return 0;&#125;]]></content>
@@ -8,7 +19,7 @@
         <category>github-repo</category>
       </categories>
       <tags>
-        <tag>hash</tag>
+        <tag>algorithm</tag>
       </tags>
   </entry>
   <entry>
