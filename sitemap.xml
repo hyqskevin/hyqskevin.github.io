@@ -2,9 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
+    
+    <lastmod>2019-03-27T15:41:04.383Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/24/bintree2/</loc>
+    
+    <lastmod>2019-03-24T04:28:23.705Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/24/bintree/</loc>
+    
+    <lastmod>2019-03-24T04:05:35.587Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/17/sort/</loc>
+    
+    <lastmod>2019-03-23T14:26:55.445Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/21/two-divide/</loc>
+    
+    <lastmod>2019-03-23T12:21:23.800Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/03/21/divide/</loc>
     
-    <lastmod>2019-03-21T03:28:24.421Z</lastmod>
+    <lastmod>2019-03-21T03:30:23.441Z</lastmod>
     
   </url>
   
@@ -75,13 +110,6 @@
     <loc>https://hyqskevin.github.io/2019/02/28/session-cookie/</loc>
     
     <lastmod>2019-03-03T14:02:50.694Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/01/21/php-notes2/</loc>
-    
-    <lastmod>2019-03-03T13:55:01.182Z</lastmod>
     
   </url>
   
