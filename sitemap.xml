@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2019/04/11/flask-learning2/</loc>
+    
+    <lastmod>2019-04-11T08:34:04.249Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/31/flask-learning1/</loc>
+    
+    <lastmod>2019-04-11T08:29:53.739Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/03/25/cpp-oop/</loc>
     
-    <lastmod>2019-04-11T01:23:09.379Z</lastmod>
+    <lastmod>2019-04-11T02:51:17.061Z</lastmod>
     
   </url>
   
