@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/07/30/scikit-learn-note/</loc>
+    <loc>https://hyqskevin.github.io/2018/10/20/tips-about-building-blog/</loc>
     
-    <lastmod>2019-07-30T08:43:29.345Z</lastmod>
+    <lastmod>2019-07-30T13:37:00.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/19/pandas%20compare%20with%20SQL/</loc>
+    <loc>https://hyqskevin.github.io/2019/07/30/scikit-learn-note/</loc>
     
-    <lastmod>2019-07-30T07:57:09.988Z</lastmod>
+    <lastmod>2019-07-30T08:51:24.857Z</lastmod>
     
   </url>
   
@@ -26,6 +26,13 @@
     <loc>https://hyqskevin.github.io/about/index.html</loc>
     
     <lastmod>2019-07-30T01:25:54.470Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/19/pandas%20compare%20with%20SQL/</loc>
+    
+    <lastmod>2019-07-28T16:00:00.000Z</lastmod>
     
   </url>
   
@@ -306,13 +313,6 @@
     <loc>https://hyqskevin.github.io/categories/index.html</loc>
     
     <lastmod>2019-02-18T10:41:36.271Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/20/tips-about-building-blog/</loc>
-    
-    <lastmod>2019-02-14T13:37:00.000Z</lastmod>
     
   </url>
   
