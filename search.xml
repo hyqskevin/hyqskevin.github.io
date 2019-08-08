@@ -67,9 +67,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[二叉树的相关操作]]></title>
-    <url>%2F2019%2F03%2F24%2Fbintree%2F</url>
-    <content type="text"><![CDATA[二叉树的笔记 loading… 存储结构基本操作创建插入查找四种遍历方法二叉树静态实现二叉查找树平衡二叉树一般意义上的树深度优先搜索广度优先搜索]]></content>
+    <title><![CDATA[基于二叉树的衍生算法]]></title>
+    <url>%2F2019%2F03%2F24%2Fbintree2%2F</url>
+    <content type="text"><![CDATA[二叉树衍生算法 loading… 并查集堆哈夫曼树]]></content>
       <categories>
         <category>github-repo</category>
       </categories>
@@ -78,9 +78,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[基于二叉树的衍生算法]]></title>
-    <url>%2F2019%2F03%2F24%2Fbintree2%2F</url>
-    <content type="text"><![CDATA[二叉树衍生算法 loading… 并查集堆哈夫曼树]]></content>
+    <title><![CDATA[二叉树的相关操作]]></title>
+    <url>%2F2019%2F03%2F24%2Fbintree%2F</url>
+    <content type="text"><![CDATA[二叉树的笔记 loading… 存储结构基本操作创建插入查找四种遍历方法二叉树静态实现二叉查找树平衡二叉树一般意义上的树深度优先搜索广度优先搜索]]></content>
       <categories>
         <category>github-repo</category>
       </categories>
