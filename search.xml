@@ -83,7 +83,7 @@
     <url>%2F2019%2F03%2F24%2Fbintree%2F</url>
     <content type="text"><![CDATA[二叉树的笔记 loading… 存储结构基本操作创建插入查找四种遍历方法二叉树静态实现二叉查找树平衡二叉树一般意义上的树深度优先搜索广度优先搜索]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -94,7 +94,7 @@
     <url>%2F2019%2F03%2F24%2Fbintree2%2F</url>
     <content type="text"><![CDATA[二叉树衍生算法 loading… 并查集堆哈夫曼树]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -105,7 +105,7 @@
     <url>%2F2019%2F03%2F21%2Ftwo-divide%2F</url>
     <content type="text"><![CDATA[需要一个严格单调的序列，就能将O(n)的复杂度降到O(logn)的优秀算法非常适合有序数列的查找二分的思想也可以用来逼近准确值和降幂求值 二分查找思路设left，right，mid，查找数x查找的数 &gt; mid，left = mid + 1查找的数 &lt; mid，right = mid - 1直到查找的数 = mid，程序结束 #include&lt;cstdio&gt;int binSearch(int array[], int left, int right, int x)&#123; int mid; while(left&lt;=right) &#123; mid = (left + right) / 2; if(array[mid] == x) return mid; else if(array[mid] &gt; x) right = mid - 1; else left = mid + 1; &#125; return false; //查找失败则返回false&#125;int main()&#123; const int n = 10; //序列元素个数 int array[n] = &#123;1,2,3,4,5,6,7,8,9,10&#125;; int result = binSearch(array,0,n-1,6); printf("%d",result); return 0;&#125; mid = (left + right) / 2 可能会导致int类型溢出，可以改成 mid = left + (right - left) / 2 当序列中有相同的元素求解序列中第一个等于x的元素和最后一个等于x的元素 int lower_bound(int array[], int left, int right, int x)&#123; int mid; while(left &lt; right) &#123; mid = (left + right) / 2; if(array[mid] &gt;= x) right = mid; else left = mid + 1; &#125; return left; // left==right 循环停止&#125; int upper_bound(int array[], int left, int right, int x)&#123; int mid; while(left &lt; right) &#123; mid = (left + right) / 2; if(array[mid] &gt; x) right = mid; else left = mid + 1; &#125; return left; // left==right 循环停止&#125; 逼近无理数近似值计算f(x)中x的值 const double eps = 1e-5;double func(double x)&#123; return ...; // f(x)的公式&#125;double solve(double L, double R)&#123; double left = L, right = R, mid; while(right - left &gt; eps) &#123; mid = (left + right) / 2; if(func(mid)&gt;0) right = mid; else left = mid &#125; return mid;&#125; 快速求幂二分幂的思想可以用来降低时间复杂度若b为奇数，a^b = a a^b-1若b为偶数，a^b = a^b/2 a^b/2直到a^0 =1，依次退回计算 快速幂递归写法求解 a^b%m的递归写法 typedef long long LL;LL binFunc(LL a, LL b, LL m)&#123; if(b == 0) return 1; // a^0 == 1 if(b % 2 ==1) return a* binFunc(a, b-1, m) % m; else &#123; LL mul = binFunc(a, b/2, m); return mul * mul % m; &#125;&#125; b % 2 ==1可以写成b&amp;1,将b和1进行按位与操作，判断b末尾是否为1 快速幂非递归写法将b写成若干2次幂之和，将a^b表示成若干项乘积 typedef long long LL;LL binFunc(LL a, LL b, LL m)&#123; LL ans = 1; while(b&gt;0) &#123; if(b&amp;1) ans = ans * a % m; //判断2进制末尾是否为1，是的话*a a = a * a % m; b &gt;&gt;= 1; &#125; return ans;&#125;]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -116,7 +116,7 @@
     <url>%2F2019%2F03%2F21%2Fdivide%2F</url>
     <content type="text"><![CDATA[写分治和贪心时，习惯性地会去思索程序的全局，而一旦展开去想，基本上就大脑溢出了目前还是无法把握递归式和递归边界，这算法终将是一生之敌。 Fibonacci用Fibonacci数列简单熟悉一下算法 #include&lt;cstdio&gt;int Fibonacci(int n)&#123; if(n==0 | n==1) return 1; //递归边界 else return Fibonacci(n-1) + Fibonacci(n-2); //递归式&#125;int main()&#123; int n; scanf("%d",&amp;n); printf("%d",Fibonacci(n)); return 0;&#125; 全排列按照字典顺序从小到大顺序输出1-n全排列 思路：数组P存放当前排列，hashTable 置为 true 存放已在P中的数字递归式：P按位处理，数字x不在P中，将x填入P，P处理下一位递归边界：处理完n位，输出排列，hashTable[x]=false 还原 #include&lt;cstdio&gt;const int maxn = 1024;int P[maxn],hashTable[maxn] = &#123;false&#125;,n;//处理第index位void generateP(int index)&#123; if(index == n+1) //到达递归边界 &#123; for(int i=0; i&lt;n; i++) printf("%d ",P[i]); &#125; printf("\n"); return; else &#123; for(int x=1; x&lt;=n; x++) &#123; if(hashTable[x] == false) //递归式逻辑 &#123; P[index] = x; hashTable[x] = true; generateP(index+1); hashTable[x] = false; &#125; &#125; &#125;&#125;int main()&#123; scanf("%d",&amp;n); //输入有几个数 generateP(1)； //从1开始递归 return 0;&#125; n皇后问题皇后两两不在同行同列同对角线 思路：到达递归边界时，遍历任意两个皇后查看是否满足条件递归边界：列index到达n，满足八皇后条件，count+1递归式：行x不在hashTable中，此列放置皇后，index移动到下一列 int count = 0;void generateP(int index)&#123; bool flag = true; if(index == n+1) //到达递归边界，判断是否合法 &#123; for(int i=1; i&lt;=n; i++) for(int j=i+1; j&lt;=n; j++) if(abs(P[i]-P[j]) == abs(i-j)) flag = false; if(flag) count++; return; &#125; else &#123; for(int x=1; x&lt;=n; x++) &#123; if(hashTable[x] == false) //递归式 &#123; P[index] = x; hashTable[x] = true; generateP(index+1); hashTable[x] = false; &#125; &#125; &#125;&#125; 枚举所有情况会比较耗时间，可以在放置皇后的同时遍历之前的，判断是否有冲突 int count = 0;void generateP(int index)&#123; if(inedx == n+1) //到达递归边界 count++; return; else &#123; for(int x=1; x&lt;=n; x++) &#123; if(hashTable[x] == false) &#123; bool flag = true; for(int pre=1; pre&lt;index; pre++) &#123; if(abs(P[index]-P[pre]) == abs(index-pre)) &#123; flag == false; break; &#125; &#125; if(flag) &#123; P[index] = x; hashTable[x] = true; generateP(index+1); hashTable[x] = false; &#125; &#125; &#125; &#125;&#125;]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -138,7 +138,7 @@
     <url>%2F2019%2F03%2F19%2Fhashtable%2F</url>
     <content type="text"><![CDATA[-散列基础-散列（hash）是常用的算法思想之一，它使用空间换时间的思想在我第一次碰到时就感觉巧妙如魔法一般。特别是在进行一些大量数字和字符串比较方面，hash能瞬间将O(n^2)的复杂度降到O(n),单次查询的复杂度降到O(1)，靠的就是数组下标与查询的元素之间建立的唯一转换关系。 常用hash线性变换函数：H(key) = a*key+b除留余数：h(key) = key%mod 除留余数法会出现冲突的情况，需要解决多个hash值相同的情况 线性探测法：从当前位置检查相邻地址是否被占用，如果都被占用，循环检查下一个位置 平方探测法：从当前位置检查+1，-1，+4，-4，+9，-9……如果检查中+k^2超过表长（Tablesize），[H(key)+k^2]%Tablesize 链地址法：把hash相同的key连接成单链表 整数hash查询数组M中的数在数组N中是否出现过常规思路：遍历所有N，要遍历M次，时间复杂度O(MN)hash思路：bool hashTable[maxn]={false}，先读入N，N中出现的数x，hashTable[x]=true,再查询M，时间复杂度O(M+N) 示例 #include&lt;cstdio&gt;const int maxn = 1024;bool hashTable[maxn] = &#123;false&#125;;int main()&#123; int n[10] = &#123;2,6,8,12,23,5,15,5,0,1&#125;; int m[3] = &#123;8,22,5&#125;; int x; for(int i=0; i&lt;10; i++) hashTable&#123;n[i]&#125; = true; for(int j=0; j&lt;3;j++) &#123; if(hashTable&#123;m[j]]&#125; == true) printf("%d,yes\n",m[j]); else printf("%d,no\n",m[j]); &#125; return 0;&#125; 查询M中的数在N中出现的次数将hashTable 替换为int类型进行计数 示例 #include&lt;cstdio&gt;const int maxn = 1024;int hashTable[maxn] = &#123;0&#125;;int main()&#123; int n[10] = &#123;2,6,8,12,8,5,15,5,0,1&#125;; int m[3] = &#123;8,12,5&#125;; int x; for(int i=0; i&lt;10; i++) hashTable&#123;n[i]&#125;++; for(int j=0; j&lt;3;j++) &#123; printf("%d\n",hashTable&#123;m[j]&#125;); &#125; return 0;&#125; 字符串hash需要将字符串和整数唯一对应，可以直接对应或使用hash函数对应：A-Z 0~25，a-z 26~51 //将字符串S转换为整数int hashFunc(char S[], int len)&#123; int hashID = 0; for(int i=0; i&lt;len; i++) &#123; if(S[i]&gt;='A' &amp;&amp; S[i]&lt;='Z') hashID = hashID*52 + S[i] - 'A'; else if(S[i]&gt;='a' &amp;&amp; S[i]&lt;='z') hashID = hashID*52 + S[i]-'a'+ 26; &#125; return id;&#125;int id = hashFunc(P[i],52);hashTable[id] = P[i]; 查询N个字符串中M个字符串出现的次数，每个字符串长度固定为5#include&lt;cstdio&gt;const int maxn = 100;char S[maxn][5],temp[5];int hashTable[26*26*26+10];//每个字符串拥有唯一idint hashFunc(char S[], int len)&#123; int id = 0; for(int i=0; i&lt;len; i++) &#123; id = id*26 + (S[i]-'A'); &#125; return id;&#125;int main()&#123; int n, m; scanf("%d%d", &amp;n, &amp;m); for(int i=0; i&lt;n; i++) &#123; sacnf("%s", S[i]); int id = hashFunc(s[i], 3); hashTable[id]++; &#125; for(int i=0; i&lt;m; i++) &#123; sacnf("%s",temp); int id = hashFunc(temp, 3); printf("%d",hashTable[id]); &#125; return 0;&#125;]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -157,7 +157,7 @@
     <url>%2F2019%2F03%2F17%2Fsort%2F</url>
     <content type="text"><![CDATA[比较重要的基础算法，简单罗列一下一些排序的实践过程 冒泡排序选择排序从待排序部分a[i,m]选择最小元素，与待排序部分的第一个元素a[i]交换，形成新的有序区间a[1,i+1]选择排序总体实践复杂度O(n^2) void selectSout()&#123; for(int i=1; i&lt;=n; i++) &#123; int flag = i; for(int j=i; j&lt;=n; j++) &#123; if(a[j] &lt; a[flag]) flag = j; &#125; // 交换a[i]和a[flag] int temp = a[i]; a[i] = a[flag]; a[flag] = temp; &#125;&#125; 插入排序 归并排序快速排序sort函数运用]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
       <tags>
         <tag>algorithm</tag>
@@ -196,7 +196,7 @@
     <url>%2F2019%2F03%2F01%2Fnice-python%2F</url>
     <content type="text"><![CDATA[nice python page test.]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
   </entry>
   <entry>
@@ -204,7 +204,7 @@
     <url>%2F2019%2F03%2F01%2Fgithub-repo%2F</url>
     <content type="text"><![CDATA[gtihub repository page test.]]></content>
       <categories>
-        <category>github-repo</category>
+        <category>code</category>
       </categories>
   </entry>
   <entry>
