@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://hyqskevin.github.io/"/>
-  <updated>2019-08-23T08:51:09.880Z</updated>
+  <updated>2019-08-26T06:10:57.499Z</updated>
   <id>https://hyqskevin.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>imblearn API</title>
+    <link href="https://hyqskevin.github.io/2019/08/20/imbalanced_data_analysis/"/>
+    <id>https://hyqskevin.github.io/2019/08/20/imbalanced_data_analysis/</id>
+    <published>2019-08-20T01:31:47.000Z</published>
+    <updated>2019-08-26T06:10:57.499Z</updated>
+    
+    <content type="html"><![CDATA[<p>imblearn 是python的第三方库，用于处理不平衡数据(imbalanced data)的分类，一般分为降采样，过采样和综合采样<br><a id="more"></a></p><h2 id="imblearn-under-sampling-降采样"><a href="#imblearn-under-sampling-降采样" class="headerlink" title="imblearn.under_sampling 降采样"></a>imblearn.under_sampling 降采样</h2><p>使用<code>imblearn.under_sampling.prototype_generation</code>来生成新样本</p><h3 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h3><p>sampling_strategy<br>return_indices<br>random_state<br>n_neighbors<br>n_seeds_S<br>kind_sel<br>n_jobs<br>ratio</p><h3 id="原型选择"><a href="#原型选择" class="headerlink" title="原型选择"></a>原型选择</h3><p><code>CondensedNearestNeighbour(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_neighbors=None, n_seeds_S=1, n_jobs=1, ratio=None)</code><br>基于压缩最近邻方法执行欠采样<br><code>EditedNearestNeighbours(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_neighbors=3, kind_sel=&#39;all&#39;, n_jobs=1, ratio=None)</code><br>基于编辑的最近邻居方法执行欠采样<br><code>RepeatedEditedNearestNeighbours(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_neighbors=3, max_iter=100, kind_sel=&#39;all&#39;, n_jobs=1, ratio=None)</code><br>基于重复编辑的最近邻居方法执行欠采样<br><code>AllKNN(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_neighbors=3, kind_sel=&#39;all&#39;, allow_minority=False, n_jobs=1, ratio=None)</code><br>基于AllKNN方法执行欠采样<br><code>InstanceHardnessThreshold(estimator=None, sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, cv=5, n_jobs=1, ratio=None)</code><br>根据实例硬度阈值执行欠采样<br><code>NearMiss(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, version=1, n_neighbors=3, n_neighbors_ver3=3, n_jobs=1, ratio=None)</code><br>基于NearMiss方法执行欠采样<br><code>NeighbourhoodCleaningRule(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_neighbors=3, kind_sel=&#39;all&#39;, threshold_cleaning=0.5, n_jobs=1, ratio=None)</code><br>根据邻居清洁规则进行欠采样<br><code>OneSidedSelection(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_neighbors=None, n_seeds_S=1, n_jobs=1, ratio=None)</code><br>基于单侧选择方法执行欠采样<br><code>RandomUnderSampler(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, replacement=False, ratio=None)[source]</code><br>用于执行随机欠采样<br><code>TomekLinks(sampling_strategy=&#39;auto&#39;, return_indices=False, random_state=None, n_jobs=1, ratio=None)</code><br>通过删除Tomek的链接来执行欠采样s</p><h2 id="imblearn-over-sampling-过采样"><a href="#imblearn-over-sampling-过采样" class="headerlink" title="imblearn.over_sampling 过采样"></a>imblearn.over_sampling 过采样</h2><p>ADASYN（[sampling_strategy，…]）    使用自适应合成（ADASYN）采样方法对不平衡数据集执行过采样。<br>BorderlineSMOTE（[…]）    使用Borderline SMOTE进行过采样。<br>KMeansSMOTE（[…]）    在使用SMOTE进行过采样之前应用KMeans聚类。<br>RandomOverSampler（[…]）    用于执行随机过采样的类。<br>SMOTE（[sampling_strategy，…]）    使用SMOTE执行过采样的类。<br>SMOTENC（categorical_features）    标称和连续的合成少数过采样技术（SMOTE-NC）。<br>SVMSMOTE（[sampling_strategy，…]）    使用SVM-SMOTE进行过采样。</p><h2 id="imblearn-combine-组合采样"><a href="#imblearn-combine-组合采样" class="headerlink" title="imblearn.combine 组合采样"></a>imblearn.combine 组合采样</h2><p>SMOTEENN（[sampling_strategy，…]）    使用SMOTE执行过采样并使用ENN进行清洁的类。<br>SMOTETomek（[sampling_strategy，…]）    使用SMOTE执行过采样并使用Tomek链接进行清洁的类。</p><h2 id="imblearn-ensemble-方法整合"><a href="#imblearn-ensemble-方法整合" class="headerlink" title="imblearn.ensemble 方法整合"></a>imblearn.ensemble 方法整合</h2><p>BalancedBaggingClassifier（[…]）    Bagging分级机，具​​有额外的平衡功能。<br>BalancedRandomForestClassifier（[…]）    平衡的随机森林分类器。<br>EasyEnsemble（** kwargs）    通过迭代应用随机欠采样来创建集合集。<br>EasyEnsembleClassifier（[…]）    一袋平衡的提升学习者也被称为EasyEnsemble。<br>RUSBoostClassifier（[…]）    随机欠采样集成在AdaBoost分类器的学习中。</p><hr><p>参考资料：<br><a href="https://imbalanced-learn.org/en/stable/index.html" target="_blank" rel="noopener">https://imbalanced-learn.org/en/stable/index.html</a><br><a href="https://github.com/scikit-learn-contrib/imbalanced-learn" target="_blank" rel="noopener">https://github.com/scikit-learn-contrib/imbalanced-learn</a><br><a href="https://blog.csdn.net/qq_31813549/article/details/79964973" target="_blank" rel="noopener">https://blog.csdn.net/qq_31813549/article/details/79964973</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;imblearn 是python的第三方库，用于处理不平衡数据(imbalanced data)的分类，一般分为降采样，过采样和综合采样&lt;br&gt;
+    
+    </summary>
+    
+      <category term="repo" scheme="https://hyqskevin.github.io/categories/repo/"/>
+    
+    
+      <category term="python" scheme="https://hyqskevin.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>tip:决策树、随机森林结果可视化</title>
+    <link href="https://hyqskevin.github.io/2019/08/10/decision-tree-visualization/"/>
+    <id>https://hyqskevin.github.io/2019/08/10/decision-tree-visualization/</id>
+    <published>2019-08-10T08:56:30.000Z</published>
+    <updated>2019-08-26T01:38:22.935Z</updated>
+    
+    <content type="html"><![CDATA[<p>scikit-learn决策树结果的可视化,方便观察模型，以及发现模型中的问题。<br>需要安装 <code>graphviz</code><br><a id="more"></a></p><h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="安装graphviz"><a href="#安装graphviz" class="headerlink" title="安装graphviz"></a>安装graphviz</h3><p>linux：<code>sudo apt install graphviz</code><br>windows: 去官网下载 <a href="http://www.graphviz.org/" target="_blank" rel="noopener">http://www.graphviz.org/</a></p><p>设置环境变量：将graphviz的bin目录加到PATH</p><p>安装python库graphviz，pydotplus：<br><code>pip install graphviz, pydotplus</code></p><h2 id="可视化模型"><a href="#可视化模型" class="headerlink" title="可视化模型"></a>可视化模型</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">clf = DecisionTreeClassifier(max_depth=max_depth_val)</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用graphviz提取出节点数据</span></span><br><span class="line">dot_data = tree.export_graphviz(clf, out_file=<span class="keyword">None</span>, feature_names=feature_names, class_names=target_names, filled=<span class="keyword">True</span>, rounded=<span class="keyword">True</span>, special_characters=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure><h2 id="生成可视化文件"><a href="#生成可视化文件" class="headerlink" title="生成可视化文件"></a>生成可视化文件</h2><p>可利用pydotplus生成pdf文件</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">graph = pydotplus.graph_from_dot_data(dot_data)</span><br><span class="line">graph.write_pdf(<span class="string">"dataset.pdf"</span>)</span><br></pre></td></tr></table></figure><p>也可以利用Ipython的图片显示功能</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> Image</span><br><span class="line">graph = pydotplus.graph_from_dot_data(dot_data)  </span><br><span class="line">Image(graph.create_png())</span><br></pre></td></tr></table></figure><hr><p>参考资料：<br><a href="https://blog.csdn.net/ydyang1126/article/details/78842952" target="_blank" rel="noopener">https://blog.csdn.net/ydyang1126/article/details/78842952</a><br><a href="https://github.com/ljpzzz/machinelearning/blob/master/classic-machine-learning/decision_tree_classifier.ipynb" target="_blank" rel="noopener">https://github.com/ljpzzz/machinelearning/blob/master/classic-machine-learning/decision_tree_classifier.ipynb</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;scikit-learn决策树结果的可视化,方便观察模型，以及发现模型中的问题。&lt;br&gt;需要安装 &lt;code&gt;graphviz&lt;/code&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="notes" scheme="https://hyqskevin.github.io/categories/notes/"/>
+    
+    
+      <category term="sklearn" scheme="https://hyqskevin.github.io/tags/sklearn/"/>
+    
+  </entry>
   
   <entry>
     <title>如何写日志</title>
@@ -67,7 +111,7 @@
     <link href="https://hyqskevin.github.io/2019/07/30/scikit-learn-note/"/>
     <id>https://hyqskevin.github.io/2019/07/30/scikit-learn-note/</id>
     <published>2019-07-30T01:31:47.000Z</published>
-    <updated>2019-08-02T01:45:50.325Z</updated>
+    <updated>2019-08-26T02:52:02.746Z</updated>
     
     <content type="html"><![CDATA[<p><strong>—loading …—</strong><br>scikit-learn 基于 Python 语言,建立在 NumPy ，SciPy 和 matplotlib 上,是简单高效的数据挖掘和数据分析工具<br>文章记录 scikit-learn API的使用方法，包括监督学习、无监督学习，模型的选择和评估，数据集的加载和转换<br>学习笔记(1) 为监督学习的内容，解决回归和分类问题。包括线性回归，逻辑回归，梯度下降，最近邻，贝叶斯，决策树，支持向量机，集成方法，半监督学习等<br>API只给出函数结构，参数具体使用参考<a href="https://scikit-learn.org/stable/user_guide.html" target="_blank" rel="noopener">scikit-learn官方文档</a><br><a id="more"></a></p><h2 id="监督学习"><a href="#监督学习" class="headerlink" title="监督学习"></a>监督学习</h2><h3 id="线性回归模型"><a href="#线性回归模型" class="headerlink" title="线性回归模型"></a>线性回归模型</h3><p>目标值 y 是输入变量 x 的线性组合 $y(w,x) = w_0 +w_1x_1 + … + w_px_p$ 其中w为系数(coef) $w_0$ 为截距(intercept)。</p><p><strong>1. 普通最小二乘法 LinearRegression</strong><br>拟合一个带有系数 $w = (w_1, …, w_p)$ 的线性模型，使得数据集实际观测数据和预测数据（估计值）之间的残差平方和最小。<br>$\underset{w}{min\,} {|| X w - y||_2}^2$</p><p><code>sklearn.linear_model.LinearRegression(fit_intercept=True, normalize=False, copy_X=True, n_jobs=None)</code></p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br><span class="line">reg = LinearRegression().fit(X,y) <span class="comment"># 模型拟合</span></span><br><span class="line">reg.cof_  <span class="comment"># 得到系数矩阵</span></span><br><span class="line">reg.intercept_ <span class="comment"># 得到截距矩阵</span></span><br><span class="line">reg.score(X,y) <span class="comment"># 误差</span></span><br><span class="line">reg.predict(X) <span class="comment"># 预测</span></span><br></pre></td></tr></table></figure><p><strong>2. 岭回归 Ridge</strong><br>回归通过对系数的大小<strong>施加惩罚</strong>来解决普通最小二乘法的一些问题。 岭系数最小化的是带罚项的残差平方和。<br>$\underset{w}{min\,} {||X w - y||_2^2 + \alpha ||w||_2^2}$，其中$\alpha \geq 0$ 是控制系数收缩量的复杂性参数(超参数)</p><p><code>sklearn.linear_model.Ridge(alpha=1.0, fit_intercept=True, normalize=False, copy_X=True, max_iter=None, tol=0.001, solver=’auto’, random_state=None)</code></p><p>// alpha 可以设超参数大小<br>// tol 设置迭代最小边界<br>// solver : {‘auto’, ‘svd’, ‘cholesky’, ‘lsqr’, ‘sparse_cg’, ‘sag’, ‘saga’} 设置求解器，拟合数据时使用的算法</p><ul><li><code>sklearn.linear_model.RidgeCV( )</code> 内置对$\alpha$的交叉验证实现岭回归</li></ul><p><strong>3. 套索回归 Lasso</strong><br>用于拟合<strong>稀疏系数</strong>的线性模型，使用了 coordinate descent （坐标下降算法）来拟合系数，罚项 为L1 范数。<br>$\underset{w}{min\,} { \frac{1}{2n_{samples}} ||X w - y||_2 ^ 2 + \alpha ||w||_1}$</p><p><code>sklearn.linear_model.Lasso(alpha=1.0, fit_intercept=True, normalize=False, precompute=False, copy_X=True, max_iter=1000, tol=0.0001, warm_start=False, positive=False, random_state=None, selection=’cyclic’)</code></p><ul><li><code>sklearn.linear_model.LassoCV()</code> // 对超参数$\alpha$采用交叉验证</li><li><code>sklearn.linear_model.LassoLars()</code> // 采用的是最小角回归法，而不是坐标下降法进行优化</li><li><code>sklearn.linear_model.LassoLarsCV()</code> //同时采用不同的验证和优化方法</li><li><p><code>sklearn.linear_model.LassoLarsIC()</code> //对超参数$\alpha$采用 Akaike 信息准则(AIC)和贝叶斯信息准则(BIC),需要假设模型是正确的，对大样本（渐近结果）进行导出</p></li><li><p>LassoLarsCV 在寻找 $\alpha$ 参数值上更具有优势，而且如果样本数量比特征数量少得多时，通常 LassoLarsCV 比 LassoCV 要快</p></li></ul><p><strong>4. 弹性网络 ElasticNet</strong><br>Lasso和Ridge结合，对普通的线性回归做了正则化，但是它的损失函数既不全是L1的正则化，也不全是L2的正则化，而是用一个权重参数ρ来平衡L1和L2正则化的比重<br>适合只有少量参数是非零稀疏的模型<br>$\underset{w}{min\,} { \frac{1}{2n_{samples}} ||X w - y||_2 ^ 2 + \alpha \rho ||w||_1 +\frac{\alpha(1-\rho)}{2} ||w||_2 ^ 2}$</p><p><code>sklearn.linear_model.ElasticNet(alpha=1.0, l1_ratio=0.5, fit_intercept=True, normalize=False, precompute=False, max_iter=1000, copy_X=True, tol=0.0001, warm_start=False, positive=False, random_state=None, selection=’cyclic’)</code></p><ul><li><code>ElasticNetCV()</code> 可以通过交叉验证来设置参数 $\alpha$ 和 $\rho$</li></ul><p><strong>5. Multitask 多任务</strong><br>可以实现多元回归稀疏模型的预测，即多个线性模型共同拟合<br>有<code>MultiTaskLasso()</code>,<code>MultiTaskLassoCV()</code>,<code>MultiTaskElasticNet()</code>,<code>MultiTaskElasticNetCV()</code></p><p><strong>6. 正交匹配追踪法（OMP）</strong><br><code>OrthogonalMatchingPursuit( )</code><br><code>OrthogonalMatchingPursuitCV( )</code></p><p><strong>7. 贝叶斯回归</strong></p><p><strong>8. 稳健回归</strong></p><p><strong>9. 多项式回归</strong></p><h3 id="logistic-线性分类模型"><a href="#logistic-线性分类模型" class="headerlink" title="logistic 线性分类模型"></a>logistic 线性分类模型</h3><p>解决分类问题的线性模型，将单次实验的结果输出为概率进行分类<br>$C \sum_{i=1}^n \log(\exp(- y_i (X_i^T w + c)) + 1) $<br>可以选择L1，L2或Elastic-Net正则化进行约束</p><p><code>sklearn.linear_model.LogisticRegression(penalty=’l2’, dual=False, tol=0.0001, C=1.0, fit_intercept=True, intercept_scaling=1, class_weight=None, random_state=None, solver=’warn’, max_iter=100, multi_class=’warn’, verbose=0, warm_start=False, n_jobs=None, l1_ratio=None)</code><br>// penalty 参数可以设置正则化参数<br>// C 用$1/{\lambda}$表示的正则化强度参数<br>// solver : str, {‘newton-cg’, ‘lbfgs’, ‘liblinear’, ‘sag’, ‘saga’} 选择优化算法，详细使用说明见官方文档<br>// class_weight 可以设置各类型的权重<br>// l1_ration 设置Elastic-Net中ρ控制正则化L1与正则化L2的强度</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line">reg = LogisticRegression().fit(X,y) <span class="comment"># 模型拟合</span></span><br><span class="line">reg.cof_  <span class="comment"># 得到系数矩阵</span></span><br><span class="line">reg.intercept_ <span class="comment"># 得到截距矩阵</span></span><br><span class="line">reg.score(X,y) <span class="comment"># 误差</span></span><br><span class="line">reg.predict(X) <span class="comment"># 得到预测的分类矩阵</span></span><br><span class="line">reg.predict_proba(X) <span class="comment"># 得到预测的概率</span></span><br></pre></td></tr></table></figure><ul><li><code>LogisticRegressionCV( )</code> 实现了内置交叉验证，可以找出最优的C和l1_ratio参数</li></ul><h3 id="SGD-随机梯度下降"><a href="#SGD-随机梯度下降" class="headerlink" title="SGD 随机梯度下降"></a>SGD 随机梯度下降</h3><p>可以拟合线性的回归和分类模型，在样本量很大时尤为有用，选择和函数时要避免过拟合。<br><code>SGDClassifier()</code> 和 <code>SGDRegressor()</code> 分别用于拟合分类问题和回归问题的线性模型，可使用不同的（凸）损失函数，支持不同的惩罚项。</p><h3 id="最近邻"><a href="#最近邻" class="headerlink" title="最近邻"></a>最近邻</h3><p>能够应用于决策边界非常不规则的分类情景</p><p>NearestNeighbors<br>BallTree<br>KDTree</p><p>最近邻分类属于<strong>基于实例的学习</strong>或<strong>非泛化学习</strong>：它不会去构造一个泛化的内部模型，而是简单地存储训练数据的实例。</p><h3 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h3><p>决策树便于理解和解释，能够处理数值型数据和分类数据；但是容易产生一个过于复杂的模型，泛化性能会很差，结果不稳定，可以通过决策树的集成来得到缓解。如果某些类在问题中占主导地位会使得创建的决策树有偏差，建议在拟合前先对数据集进行平衡。</p><p>分类标准为最小化交叉熵（ID3），熵增益（C4.5）或基尼系数（Cart）</p><p><code>sklearn.tree.DecisionTreeClassifier(criterion=’gini’, splitter=’best’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=None, random_state=None, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, class_weight=None, presort=False)</code><br>// criterion 选择分类标准，可以使用”gini”或者”entropy”<br>// splitter 设置特征划分标准<br>// max_feature 划分的最大特征数<br>// max_depth 选择树的最大深度<br>// min_sample_split 设置最小样本分类<br>// min_sample_leaf 设置最小样本叶子数<br>// max_leaf_nodes 最大叶子节点数<br>// class_weight 设置类别权重<br>// presort 设置数据预排序</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line">clf = DecisionTreeClassifier().fit(X,y)</span><br><span class="line">clf.n_class_ <span class="comment"># 分类数量</span></span><br><span class="line">clf.n_features_ <span class="comment"># 特征数量</span></span><br><span class="line">clf.n_outputs_ <span class="comment"># 输出数量</span></span><br><span class="line">clf.tree_ <span class="comment"># 得到分类树</span></span><br><span class="line">clf.get_depth() <span class="comment"># 得到分类深度</span></span><br><span class="line">clf.get_n_leaves() <span class="comment"># 得到叶子节点数</span></span><br><span class="line">clf.predict(X) <span class="comment"># 返回预测矩阵</span></span><br><span class="line">clf.predict_proba(X) <span class="comment"># 返回预测的概率</span></span><br><span class="line">clf.score(X,y) <span class="comment"># 返回训练分数</span></span><br></pre></td></tr></table></figure><ul><li><p>决策树回归模型 <code>sklearn.tree.DecisionTreeRegressor()</code> （不常用）</p></li><li><p>可以使用 export_graphviz 导出器以 Graphviz 格式导出决策树,结果保存为pdf；Jupyter notebook也可以自动内联式渲染这些绘制节点</p></li></ul><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># output</span></span><br><span class="line"><span class="keyword">import</span> graphviz</span><br><span class="line">dot_data = tree.export_graphviz(clf, out_file=<span class="keyword">None</span>,\</span><br><span class="line">                    feature_names=iris.feature_names,\  </span><br><span class="line">                    class_names=iris.target_names,  \</span><br><span class="line">                    filled=<span class="keyword">True</span>, rounded=<span class="keyword">True</span>,  \</span><br><span class="line">                    special_characters=<span class="keyword">True</span>)  </span><br><span class="line">graph = graphviz.Source(dot_data)</span><br><span class="line">graph.render(<span class="string">"classification_result"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># show in Jupyter</span></span><br><span class="line">graph</span><br></pre></td></tr></table></figure><h3 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h3><p>可用于分类，回归和异常检测，在高维空间中非常高效，<br>SVC, NuSVC 和 LinearSV</p><p>内核岭回归<br>核函数</p><h3 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h3><p>GaussianNB<br>MultinomialNB<br>ComplementNB<br>BernoulliNB</p><h3 id="集成方法"><a href="#集成方法" class="headerlink" title="集成方法"></a>集成方法</h3><p><strong>1. Bagging</strong><br>在原始训练集的随机子集上构建一类黑盒估计器的多个实例，然后把这些估计器的预测结果结合起来形成最终的预测结果，在构建模型的过程中引入随机性，来减少基估计器的方差。</p><p><code>sklearn.ensemble.BaggingClassifier(base_estimator=None, n_estimators=10, max_samples=1.0, max_features=1.0, bootstrap=True, bootstrap_features=False, oob_score=False, warm_start=False, n_jobs=None, random_state=None, verbose=0)</code><br>// base_estimator 设置分类估计器，默认为决策树，可设置其它分类模型<br>// n_estimators 设置估计器的数量<br>// bootstrap 设置样例抽取是否放回<br>// bootstrap_features 设置特征抽取是否有放回<br>// oob_score 设置是否用额外的样本来评估泛化精度</p><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> BaggingClassifier</span><br><span class="line">clf = BaggingClassifier().fit(X,y)</span><br><span class="line">clf.predict(X)</span><br><span class="line">predict_proba(X)</span><br><span class="line">score(X, y)</span><br></pre></td></tr></table></figure><p><strong>2. 随机森林</strong><br>随机森林中的每棵树构建时的样本都是由训练集经过有放回抽样得到。在构建树的过程中进行结点分割时，选择的分割点不再是所有特征中最佳分割点，而是特征的一个随机子集中的最佳分割点，偏差通常会有略微的增大；但由于取了平均，总体上模型的泛化能力会更好。</p><p><code>sklearn.ensemble.RandomForestClassifier(n_estimators=’warn’, criterion=’gini’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=’auto’, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, bootstrap=True, oob_score=False, n_jobs=None, random_state=None, verbose=0, warm_start=False, class_weight=None)</code><br>// n_estimators 调整森林里树的数量<br>// max_features 分割节点时考虑的特征的随机子集的大小。使用 max_features = sqrt(n_features)是比较好的默认值<br>// max_depth = None 和 min_samples_split = 2 结合可以生成完全树</p><ul><li>极限随机树 <code>ExtraTreesClassifier()</code></li><li>完全随机树构成森林 <code>RandomTreesEmbedding()</code></li></ul><p><strong>2. 梯度提升回归树(GBRT)</strong><br>GBRT保证迭代的每一个阶段中选择损失最小的决策树，达到全局的最小损失<br>$F<em>m(x) = F</em>{m-1}(x) + \arg\min<em>{h} \sum</em>{i=1}^{n} L(y<em>i,F</em>{m-1}(x_i) - h(x))$<br>GBRT具有强大的预测能力和鲁棒性，但是扩展性不够好</p><p><code>GradientBoostingClassifier(loss=’deviance’, learning_rate=0.1, n_estimators=100, subsample=1.0, criterion=’friedman_mse’, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_depth=3, min_impurity_decrease=0.0, min_impurity_split=None, init=None, random_state=None, max_features=None, verbose=0, max_leaf_nodes=None, warm_start=False, presort=’auto’, validation_fraction=0.1, n_iter_no_change=None, tol=0.0001)</code><br>// loss 设置损失函数，默认为deviance（$-log_2$ 似然损失函数）<br>// learning_rate 设置学习步长<br>// subsample 设置每次子训练集的采样，1为全采样，一般可设置为0.5</p><p><strong>3. AdaBoost</strong><br>通过反复修改数据权重来训练一些弱学习器，由这些弱学习器的预测结果通过加权投票(或加权求和)的方式组合, 得到最终的预测结果。<br>$F<em>m(x) = F</em>{m-1}(x) + \gamma<em>m \sum</em>{i=1}^{n} \nabla<em>F L(y_i, F</em>{m-1}(x<em>i))$<br>$\gamma_m$代表学习步长，通过计算损失最小的梯度下降$\gamma_m = \arg\min</em>{\gamma} \sum<em>{i=1}^{n} L(y_i, F</em>{m-1}(x<em>i) - \gamma \frac{\partial L(y_i, F</em>{m-1}(x<em>i))}{\partial F</em>{m-1}(x_i)})$得出</p><p>初始化时，将所有弱学习器的权重都设置为 $w_i = 1/N$ ,接下来的连续迭代中，样本的权重逐个地被修改。上一轮迭代中被预测为错误结果的样本的权重将会被增加，而那些被预测为正确结果的样本的权重将会被降低。通过不断得到最快梯度下降的权重来减小损失函数。</p><p><code>sklearn.ensemble.AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)</code><br>// base_estimator 设置弱学习器，默认DecisionTreeClassifier(max_depth=1)<br>// n_estimator 设置最大集成数量<br>// learning_rate 设置学习速率</p><p><strong>4. 投票分类器</strong></p><h2 id="—"><a href="#—" class="headerlink" title="—-"></a>—-</h2><ul><li>最小角回归（LARS）：逐步寻找与响应最有关联的预测。当有很多预测有相同的关联时，它并不会继续利用相同的预测，而是在这些预测中找出应该等角的方向。高效但对噪声敏感。</li></ul>]]></content>
     
@@ -77,7 +121,7 @@
     
     </summary>
     
-      <category term="study" scheme="https://hyqskevin.github.io/categories/study/"/>
+      <category term="repo" scheme="https://hyqskevin.github.io/categories/repo/"/>
     
     
       <category term="python" scheme="https://hyqskevin.github.io/tags/python/"/>
@@ -411,54 +455,6 @@
     </summary>
     
       <category term="paper" scheme="https://hyqskevin.github.io/categories/paper/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>好耶 是python -- 那些神奇的py代码</title>
-    <link href="https://hyqskevin.github.io/2019/03/01/nice-python/"/>
-    <id>https://hyqskevin.github.io/2019/03/01/nice-python/</id>
-    <published>2019-03-01T15:46:41.000Z</published>
-    <updated>2019-08-26T01:50:09.769Z</updated>
-    
-    <content type="html"><![CDATA[<p>nice python page test.</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;nice python page test.&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="code" scheme="https://hyqskevin.github.io/categories/code/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>这周上Github了吗 -- 那些有意思的项目收集</title>
-    <link href="https://hyqskevin.github.io/2019/03/01/github-repo/"/>
-    <id>https://hyqskevin.github.io/2019/03/01/github-repo/</id>
-    <published>2019-03-01T15:33:15.000Z</published>
-    <updated>2019-08-26T01:48:33.233Z</updated>
-    
-    <content type="html"><![CDATA[<p>gtihub repository page test.</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;gtihub repository page test.&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="code" scheme="https://hyqskevin.github.io/categories/code/"/>
     
     
   </entry>
