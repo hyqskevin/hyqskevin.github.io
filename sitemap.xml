@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/about/index.html</loc>
+    
+    <lastmod>2020-11-13T02:03:16.535Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2020/05/10/js%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5/</loc>
+    
+    <lastmod>2020-11-12T07:16:39.971Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/code/index.html</loc>
+    
+    <lastmod>2020-11-12T06:29:02.434Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/11/01/Adobe2019/</loc>
+    
+    <lastmod>2020-11-12T02:37:43.527Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/photo/index.html</loc>
+    
+    <lastmod>2020-05-16T06:16:55.793Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/08/20/imbalanced_data_analysis/</loc>
     
     <lastmod>2019-08-26T06:10:57.499Z</lastmod>
@@ -100,13 +135,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2018/11/01/Adobe2019/</loc>
-    
-    <lastmod>2019-08-23T07:47:46.785Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2019/08/01/boosting/</loc>
     
     <lastmod>2019-08-02T09:02:01.570Z</lastmod>
@@ -131,13 +159,6 @@
     <loc>https://hyqskevin.github.io/2019/02/20/fund-flow/</loc>
     
     <lastmod>2019-07-30T01:39:22.920Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/about/index.html</loc>
-    
-    <lastmod>2019-07-30T01:25:54.470Z</lastmod>
     
   </url>
   
@@ -226,13 +247,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/photo/index.html</loc>
-    
-    <lastmod>2019-03-03T12:30:43.870Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2019/02/16/book-list/</loc>
     
     <lastmod>2019-03-03T09:06:30.005Z</lastmod>
@@ -299,13 +313,6 @@
     <loc>https://hyqskevin.github.io/pic/index.html</loc>
     
     <lastmod>2019-02-21T09:22:18.297Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/code/index.html</loc>
-    
-    <lastmod>2019-02-21T09:19:17.838Z</lastmod>
     
   </url>
   
