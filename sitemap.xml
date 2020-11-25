@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://hyqskevin.github.io/2020/11/10/vue-notes/</loc>
+    
+    <lastmod>2020-11-23T05:38:22.078Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2020/05/28/better-scroll/</loc>
     
     <lastmod>2020-11-19T09:17:47.822Z</lastmod>
@@ -313,13 +320,6 @@
     <loc>https://hyqskevin.github.io/2019/03/21/two-divide/</loc>
     
     <lastmod>2020-11-19T06:55:24.473Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2020/11/10/vue-notes/</loc>
-    
-    <lastmod>2020-11-19T06:55:23.157Z</lastmod>
     
   </url>
   
