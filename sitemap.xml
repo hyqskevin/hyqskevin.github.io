@@ -2,16 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hyqskevin.github.io/2020/11/10/vue-notes/</loc>
+    <loc>https://hyqskevin.github.io/2020/06/28/Webpack_1/</loc>
     
-    <lastmod>2020-12-05T09:47:25.044Z</lastmod>
+    <lastmod>2020-12-16T07:09:04.174Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2020/07/13/Webpack_3/</loc>
+    
+    <lastmod>2020-12-16T07:09:03.349Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2020/07/05/Webpack_2/</loc>
+    
+    <lastmod>2020-12-16T07:09:03.242Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/05/21/fantasy-top100/</loc>
+    
+    <lastmod>2020-12-16T06:41:22.133Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/16/book-list-2018/</loc>
+    
+    <lastmod>2020-12-16T06:32:25.184Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://hyqskevin.github.io/2020/11/26/EDH-combo/</loc>
     
-    <lastmod>2020-12-01T08:41:16.732Z</lastmod>
+    <lastmod>2020-12-16T06:29:38.138Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2020/11/10/vue-notes/</loc>
+    
+    <lastmod>2020-12-05T09:47:25.044Z</lastmod>
     
   </url>
   
@@ -61,13 +96,6 @@
     <loc>https://hyqskevin.github.io/2019/03/24/bintree/</loc>
     
     <lastmod>2020-11-19T06:56:09.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/02/16/book-list/</loc>
-    
-    <lastmod>2020-11-19T06:56:08.415Z</lastmod>
     
   </url>
   
