@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Maven 项目构建笔记 | MonoShow</title><link rel="stylesheet" type="text/css" href="../../../../css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.3.1/jquery.min.js"></script><link rel="icon" mask sizes="any" href="../../../../favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="../../../../favicon.ico"><link rel="apple-touch-icon" href="../../../../apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="../../../../apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="../../../../atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Maven 项目构建笔记</h1><a id="logo" href="../../../../.">MonoShow</a><p class="description">Monologue from Kevin_W</p></div><div id="nav-menu"><a class="current" href="../../../../."><i class="fa fa-home"> 时间线</i></a><a href="../../../../archives/"><i class="fa fa-archive"> 档案袋</i></a><a href="../../../../categories/repo/"><i class="fa fa-file-text"> 知识仓库</i></a><a href="../../../../photo/"><i class="fa fa-camera"> Ins摄影集</i></a><a href="../../../../about/"><i class="fa fa-user"> 我是谁我在哪</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Maven 项目构建笔记</h1><div class="post-meta">Oct 13, 2019<span> | </span><span class="category"><a href="../../../../categories/repo/">repo</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-hourglass-half"></i><span class="post-count"> 8</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven-配置文件"><span class="toc-number">1.</span> <span class="toc-text">Maven 配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#编写和激活配置文件"><span class="toc-number">1.1.</span> <span class="toc-text">编写和激活配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-配置文件中设置"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.配置文件中设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-通过-maven-设置"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.通过 maven 设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-基于环境变量设置"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.基于环境变量设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-操作系统设置"><span class="toc-number">1.1.4.</span> <span class="toc-text">4.操作系统设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-文件的存在或者缺失时触发"><span class="toc-number">1.1.5.</span> <span class="toc-text">5.文件的存在或者缺失时触发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#maven-生命周期"><span class="toc-number">2.</span> <span class="toc-text">maven 生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-clean"><span class="toc-number">2.1.</span> <span class="toc-text">1.clean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-default-build"><span class="toc-number">2.2.</span> <span class="toc-text">2.default / build</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-site"><span class="toc-number">2.3.</span> <span class="toc-text">3.site</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maven-项目构建"><span class="toc-number">3.</span> <span class="toc-text">Maven 项目构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#命令行方法"><span class="toc-number">3.1.</span> <span class="toc-text">命令行方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pom-xml-中添加插件"><span class="toc-number">3.2.</span> <span class="toc-text">pom.xml 中添加插件</span></a></li></ol></li></ol></div></div><div class="post-content"><p>Maven 可以统一集中管理所有的依赖包，并且能够自动解决重复和冲突问题。Maven 作为一个开放的架构，方便同第三方插件集成。</p>
+<a id="more"></a>
+<h2 id="Maven-配置文件"><a href="#Maven-配置文件" class="headerlink" title="Maven 配置文件"></a>Maven 配置文件</h2><p>构建配置文件可以用来设置或者覆盖 Maven 构建默认值，可以为不同的生产环境（Production）和开发（Development）环境定制构建方式。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>配置文件定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>项目级（Per Project）</td>
+<td>定义在项目的 POM 文件 pom.xml 中</td>
+</tr>
+<tr>
+<td>用户级 （Per User）</td>
+<td>定义在 Maven 的设置 xml 文件中 (%USER_HOME%/.m2/settings.xml)</td>
+</tr>
+<tr>
+<td>全局（Global）</td>
+<td>定义在 Maven 全局的设置 xml 文件中 (%M2_HOME%/conf/settings.xml)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="编写和激活配置文件"><a href="#编写和激活配置文件" class="headerlink" title="编写和激活配置文件"></a>编写和激活配置文件</h3><p>在 src/main/resources 文件夹下有三个配置，env.properties 为默认配置，env.test.properties 为测试配置文件，env.prod.properties 为生产配置。<br>配置文件在 pom.xml 文件中使用 activeProfiles 或者 profiles 元素指定，并且可以通过各种方式触发。</p>
+<h4 id="1-配置文件中设置"><a href="#1-配置文件中设置" class="headerlink" title="1.配置文件中设置"></a>1.配置文件中设置</h4><p>可以使用 pom.xml 来定义不同的 profile，并在命令控制台中使用 maven 命令激活 profile。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!--默认配置构建，开发和测试配置格式也相同， &lt;id&gt; 区分不同的 &lt;profiles&gt; 执行不同的 AntRun 任务--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>normal<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-antrun-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">phase</span>&gt;</span>test<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>run<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">tasks</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">echo</span>&gt;</span>Using env.properties<span class="tag">&lt;/<span class="name">echo</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">copy</span> <span class="attr">file</span>=<span class="string">"src/main/resources/env.properties"</span> <span class="attr">tofile</span>=<span class="string">"$&#123;project.build.outputDirectory&#125;/env.properties"</span> <span class="attr">overwrite</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">tasks</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                  <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-通过-maven-设置"><a href="#2-通过-maven-设置" class="headerlink" title="2.通过 maven 设置"></a>2.通过 maven 设置</h4><p>打开 %USER_HOME%/.m2 目录下的 settings.xml 文件配置 setting.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">   ...</span><br><span class="line">   <span class="tag">&lt;<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">activeProfile</span>&gt;</span>test<span class="tag">&lt;/<span class="name">activeProfile</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">activeProfiles</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-基于环境变量设置"><a href="#3-基于环境变量设置" class="headerlink" title="3.基于环境变量设置"></a>3.基于环境变量设置</h4><p>在 pom.xml 里面的 <code>&lt;id&gt;</code> 为 test 的 <code>&lt;profile&gt;</code> 节点，加入 <code>&lt;activation&gt;</code> 节点</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">profiles</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">profile</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>test<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">name</span>&gt;</span>env<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">value</span>&gt;</span>test<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">build</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-操作系统设置"><a href="#4-操作系统设置" class="headerlink" title="4.操作系统设置"></a>4.操作系统设置</h4><p>在 activation 元素里包含操作系统信息</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">os</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Windows XP<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">family</span>&gt;</span>Windows<span class="tag">&lt;/<span class="name">family</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">arch</span>&gt;</span>x86<span class="tag">&lt;/<span class="name">arch</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.1.2600<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">os</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="5-文件的存在或者缺失时触发"><a href="#5-文件的存在或者缺失时触发" class="headerlink" title="5.文件的存在或者缺失时触发"></a>5.文件的存在或者缺失时触发</h4><p>在 activation 里设置缺失条件时触发配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">activation</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">file</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">missing</span>&gt;</span>target/generated-sources/...<span class="tag">&lt;/<span class="name">missing</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">file</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">activation</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="maven-生命周期"><a href="#maven-生命周期" class="headerlink" title="maven 生命周期"></a>maven 生命周期</h2><p>Maven 三个标准的生命周期：clean 项目清理的处理；default 项目部署的处理；site 项目站点文档创建的处理<br>在一个 Maven 生命周期中，运行某个阶段的时候，它之前的所有阶段都会被运行。</p>
+<h3 id="1-clean"><a href="#1-clean" class="headerlink" title="1.clean"></a>1.clean</h3><p>pre-clean：执行一些需要在 clean 之前完成的工作<br>clean：移除所有上一次构建生成的文件<br>post-clean：执行一些需要在 clean 之后立刻完成的工作</p>
+<p>目标在生命周期中执行</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- pre-clean配置, clean, post-clean格式相同 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">id</span>&gt;</span>id.pre-clean<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">phase</span>&gt;</span>pre-clean<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>run<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">tasks</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">echo</span>&gt;</span>pre-clean phase<span class="tag">&lt;/<span class="name">echo</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">tasks</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-default-build"><a href="#2-default-build" class="headerlink" title="2.default / build"></a>2.default / build</h3><p>Maven 的主要生命周期，被用于构建应用，包括 23 个构建阶段</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>生命周期阶段</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>validate（校验）</td>
+<td>校验项目是否正确并且所有必要的信息可以完成项目的构建过程。</td>
+</tr>
+<tr>
+<td>initialize（初始化）</td>
+<td>初始化构建状态，比如设置属性值。</td>
+</tr>
+<tr>
+<td>generate-sources（生成源代码）</td>
+<td>生成包含在编译阶段中的任何源代码。</td>
+</tr>
+<tr>
+<td>process-sources（处理源代码）</td>
+<td>处理源代码，比如说，过滤任意值。</td>
+</tr>
+<tr>
+<td>generate-resources（生成资源文件）</td>
+<td>生成将会包含在项目包中的资源文件。</td>
+</tr>
+<tr>
+<td>process-resources （处理资源文件）</td>
+<td>复制和处理资源到目标目录，为打包阶段最好准备。</td>
+</tr>
+<tr>
+<td>compile（编译）</td>
+<td>编译项目的源代码。</td>
+</tr>
+<tr>
+<td>process-classes（处理类文件）</td>
+<td>处理编译生成的文件，比如说对 Java class 文件做字节码改善优化。</td>
+</tr>
+<tr>
+<td>generate-test-sources（生成测试源代码）</td>
+<td>生成包含在编译阶段中的任何测试源代码。</td>
+</tr>
+<tr>
+<td>process-test-sources（处理测试源代码）</td>
+<td>处理测试源代码，比如说，过滤任意值。</td>
+</tr>
+<tr>
+<td>generate-test-resources（生成测试资源文件）</td>
+<td>为测试创建资源文件。</td>
+</tr>
+<tr>
+<td>process-test-resources（处理测试资源文件）</td>
+<td>复制和处理测试资源到目标目录。</td>
+</tr>
+<tr>
+<td>test-compile（编译测试源码）</td>
+<td>编译测试源代码到测试目标目录.</td>
+</tr>
+<tr>
+<td>process-test-classes（处理测试类文件）</td>
+<td>处理测试源码编译生成的文件。</td>
+</tr>
+<tr>
+<td>test（测试）</td>
+<td>使用合适的单元测试框架运行测试（Juint 是其中之一）。</td>
+</tr>
+<tr>
+<td>prepare-package（准备打包）</td>
+<td>在实际打包之前，执行任何的必要的操作为打包做准备。</td>
+</tr>
+<tr>
+<td>package（打包）</td>
+<td>将编译后的代码打包成可分发格式的文件，比如 JAR、WAR 或者 EAR 文件。</td>
+</tr>
+<tr>
+<td>pre-integration-test（集成测试前）</td>
+<td>在执行集成测试前进行必要的动作。比如说，搭建需要的环境。</td>
+</tr>
+<tr>
+<td>integration-test（集成测试）</td>
+<td>处理和部署项目到可以运行集成测试环境中。</td>
+</tr>
+<tr>
+<td>post-integration-test（集成测试后）</td>
+<td>在执行集成测试完成后进行必要的动作。比如说，清理集成测试环境。</td>
+</tr>
+<tr>
+<td>verify （验证）</td>
+<td>运行任意的检查来验证项目包有效且达到质量标准。</td>
+</tr>
+<tr>
+<td>install（安装）</td>
+<td>安装项目包到本地仓库，这样项目包可以用作其他本地项目的依赖。</td>
+</tr>
+<tr>
+<td>deploy（部署）</td>
+<td>将最终的项目包复制到远程仓库中与其他开发者和项目共享。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>添加执行的方法同 clean</p>
+<h3 id="3-site"><a href="#3-site" class="headerlink" title="3.site"></a>3.site</h3><p>Maven Site 插件一般用来创建新的报告文档、部署站点等</p>
+<p>pre-site：执行一些需要在生成站点文档之前完成的工作<br>site：生成项目的站点文档<br>post-site： 执行一些需要在生成站点文档之后完成的工作，并且为部署做准备<br>site-deploy：将生成的站点文档部署到特定的服务器上</p>
+<p>添加执行的方法同 clean</p>
+<h2 id="Maven-项目构建"><a href="#Maven-项目构建" class="headerlink" title="Maven 项目构建"></a>Maven 项目构建</h2><h3 id="命令行方法"><a href="#命令行方法" class="headerlink" title="命令行方法"></a>命令行方法</h3><p>Maven 使用原型 archetype 插件创建项目 <code>mvn archetype:generate</code><br>清理目标目录 <code>mvn clean</code><br>编译源代码 <code>mvn compile</code><br>运行测试案例 <code>mvn test</code><br>打包项目构建的输出为 jar（package）文件 <code>mvn clean package</code><br>安装 <code>mvn install</code><br>创建项目文档 <code>mvn site</code>，在 \target\site 文件夹。点击 index.html 查看文档<br>生成 API Doc 文档 <code>mvn javadoc:javadoc</code>，工程中自动产生 target\site\apidocs 目录，index.html 查看文档</p>
+<h3 id="pom-xml-中添加插件"><a href="#pom-xml-中添加插件" class="headerlink" title="pom.xml 中添加插件"></a>pom.xml 中添加插件</h3><p>常用项目构建插件</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>插件名称</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>maven-clean-plugin</td>
+<td>清理项目</td>
+</tr>
+<tr>
+<td>maven-compile-plugin</td>
+<td>编译项目</td>
+</tr>
+<tr>
+<td>maven-deploy-pligin</td>
+<td>发布项目</td>
+</tr>
+<tr>
+<td>maven-site-plugin</td>
+<td>生成站点</td>
+</tr>
+<tr>
+<td>maven-surefire-plugin</td>
+<td>运行测试</td>
+</tr>
+<tr>
+<td>maven-jar-plugin</td>
+<td>构建 jar 项目</td>
+</tr>
+<tr>
+<td>maven-javadoc-plugin</td>
+<td>生成 javadoc 文件</td>
+</tr>
+<tr>
+<td>maven-surefire-report-plugin</td>
+<td>生成测试报告</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>用浏览器打开 <a href="http://mvnrepository.com/" target="_blank" rel="noopener">Maven Repository</a> 可以查看插件的最新版本，单击 Search 按钮，然后在 pom.xml 中添加 build 标签，描述插件信息</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-xxx-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 设置包含的类 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">include</span>&gt;</span>....<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 设置不执行的类 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">              <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>...<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>KevinW</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2019/10/13/maven-lifecycle/">https://hyqskevin.github.io/2019/10/13/maven-lifecycle/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0 CN</a> 许可协议。转载请注明出处！</li></ul></div><br><div class="tags"><a href="../../../../tags/Maven/">Maven</a></div><div class="post-nav"><a class="pre" href="../../28/maven-pom/">Maven POM 学习笔记</a><a class="next" href="../../../09/20/iview-note-3/">iview_note 学习笔记(3) —— 布局</a></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 学习分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="../../../../categories/code/">code</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/language-learning/">language-learning</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/notes/">notes</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/paper/">paper</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/repo/">repo</a><span class="category-list-count">11</span></li><li class="category-list-item"><a class="category-list-link" href="../../../../categories/study/">study</a><span class="category-list-count">29</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="../../../../tags/others/" style="font-size: 15px;">others</a> <a href="../../../../tags/MTG/" style="font-size: 15px;">MTG</a> <a href="../../../../tags/Babel/" style="font-size: 15px;">Babel</a> <a href="../../../../tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="../../../../tags/book/" style="font-size: 15px;">book</a> <a href="../../../../tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="../../../../tags/Vue/" style="font-size: 15px;">Vue</a> <a href="../../../../tags/boosting/" style="font-size: 15px;">boosting</a> <a href="../../../../tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="../../../../tags/c/" style="font-size: 15px;">c++</a> <a href="../../../../tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="../../../../tags/flask/" style="font-size: 15px;">flask</a> <a href="../../../../tags/time-series/" style="font-size: 15px;">time_series</a> <a href="../../../../tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="../../../../tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="../../../../tags/iview/" style="font-size: 15px;">iview</a> <a href="../../../../tags/hexo/" style="font-size: 15px;">hexo</a> <a href="../../../../tags/python/" style="font-size: 15px;">python</a> <a href="../../../../tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="../../../../tags/Maven/" style="font-size: 15px;">Maven</a> <a href="../../../../tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="../../../../tags/php/" style="font-size: 15px;">php</a> <a href="../../../../tags/laravel/" style="font-size: 15px;">laravel</a> <a href="../../../../tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="../../../../tags/mysql/" style="font-size: 15px;">mysql</a> <a href="../../../../tags/pandas/" style="font-size: 15px;">pandas</a> <a href="../../../../tags/session/" style="font-size: 15px;">session</a> <a href="../../../../tags/cookie/" style="font-size: 15px;">cookie</a> <a href="../../../../tags/slam/" style="font-size: 15px;">slam</a> <a href="../../../../tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="../../../../tags/log/" style="font-size: 15px;">log</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="../../../../2020/12/16/web-api/">Web API 接口参考</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/11/26/EDH-combo/">Temer EDH combo</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/11/10/vue-notes/">Vue功能实现和使用技巧</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/07/13/Webpack_3/">Webpack程序打包学习笔记(3) —— Babel</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/07/05/Webpack_2/">Webpack程序打包学习笔记(2)</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/06/28/Webpack_1/">Webpack程序打包学习笔记(1)</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/05/28/better-scroll/">BetterScroll插件实现页面滚动效果</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/05/12/swiper/">swiper滑动插件</a></li><li class="post-list-item"><a class="post-list-link" href="../../../../2020/05/10/js同步和异步/">javascript异步，消息队列和事件循环</a></li><li class="post-list-item"><a class="post-list-link" href="../../../11/10/json-server/">json数据模拟</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="../../../../." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="../../../../js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.js" async></script><script type="text/javascript" src="../../../../js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.2/jquery.fancybox.min.css"><script type="text/javascript" src="../../../../js/search.js?v=0.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+   search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zindex="-2" count="50" src="//lib.baomitu.com/canvas-nest.js/2.0.3/canvas-nest.umd.js"></script><script type="text/javascript" src="../../../../js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="../../../../js/smartresize.js?v=0.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"log":false});</script></body></html>
