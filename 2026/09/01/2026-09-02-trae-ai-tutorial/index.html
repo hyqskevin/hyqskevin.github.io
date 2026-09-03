@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Trae AI 实战 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Trae AI 实战</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Trae AI 实战</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 4.2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 17</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>最近一个月主力用 Trae IDE 做日常开发，从最初的”试用一下”到现在的”离不开”，踩过几个明显的坑。这篇把使用经验系统整理出来，给考虑上手的工程师一个参考。</p>
+<h2 id="一、Trae-AI-是什么"><a href="#一、Trae-AI-是什么" class="headerlink" title="一、Trae AI 是什么"></a>一、Trae AI 是什么</h2><p>Trae AI 是字节跳动出品的智能编程 IDE，<strong>把 AI 对话能力直接嵌进代码编辑器</strong>。和 GitHub Copilot 的补全模式不同，它把对话面板、终端、Git 都整合到一起，更像一个”AI 协作工作台”——你在同一个窗口里让 AI 写代码、看代码、改代码、跑测试。</p>
+<div class="mermaid">
+<svg id="mermaid-svg-dff2c337121f204d" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 368.671875 366" style="max-width:368.671875px;"><style>
+  .mermaid .label{font-family:trebuchet ms,verdana,arial;color:#333}.node circle,.node ellipse,.node polygon,.node rect{fill:#cde498;stroke:#13540c;stroke-width:1px}.node.clickable{cursor:pointer}.arrowheadPath{fill:green}.edgePath .path{stroke:green;stroke-width:1.5px}.edgeLabel{background-color:#e8e8e8}.cluster rect{fill:#cdffb2!important;rx:4!important;stroke:#6eaa49!important;stroke-width:1px!important}.cluster text{fill:#333}.actor{stroke:#13540c;fill:#cde498}text.actor{fill:#000;stroke:none}.actor-line{stroke:grey}.messageLine0{marker-end:"url(#arrowhead)"}.messageLine0,.messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#arrowhead{fill:#333}#crosshead path{fill:#333!important;stroke:#333!important}.messageText{fill:#333;stroke:none}.labelBox{stroke:#326932;fill:#cde498}.labelText,.loopText{fill:#000;stroke:none}.loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#326932}.note{stroke:#6eaa49;fill:#fff5ad}.noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}.section{stroke:none;opacity:.2}.section0,.section2{fill:#6eaa49}.section1,.section3{fill:#fff;opacity:.2}.sectionTitle0,.sectionTitle1,.sectionTitle2,.sectionTitle3{fill:#333}.sectionTitle{text-anchor:start;font-size:11px;text-height:14px}.grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}.grid path{stroke-width:0}.today{fill:none;stroke:red;stroke-width:2px}.task{stroke-width:2}.taskText{text-anchor:middle;font-size:11px}.taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}.taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}.taskText0,.taskText1,.taskText2,.taskText3{fill:#fff}.task0,.task1,.task2,.task3{fill:#487e3a;stroke:#13540c}.taskTextOutside0,.taskTextOutside1,.taskTextOutside2,.taskTextOutside3{fill:#000}.active0,.active1,.active2,.active3{fill:#cde498;stroke:#13540c}.activeText0,.activeText1,.activeText2,.activeText3{fill:#000!important}.done0,.done1,.done2,.done3{stroke:grey;fill:#d3d3d3;stroke-width:2}.doneText0,.doneText1,.doneText2,.doneText3{fill:#000!important}.crit0,.crit1,.crit2,.crit3{stroke:#f88;fill:red;stroke-width:2}.activeCrit0,.activeCrit1,.activeCrit2,.activeCrit3{stroke:#f88;fill:#cde498;stroke-width:2}.doneCrit0,.doneCrit1,.doneCrit2,.doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}.activeCritText0,.activeCritText1,.activeCritText2,.activeCritText3,.doneCritText0,.doneCritText1,.doneCritText2,.doneCritText3{fill:#000!important}.titleText{text-anchor:middle;font-size:18px;fill:#000}g.classGroup text{fill:#13540c;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}g.classGroup rect{fill:#cde498;stroke:#13540c}g.classGroup line{stroke:#13540c;stroke-width:1}svg .classLabel .box{stroke:none;stroke-width:0;fill:#cde498;opacity:.5}svg .classLabel .label{fill:#13540c;font-size:10px}.relation{stroke:#13540c;stroke-width:1;fill:none}#compositionEnd,#compositionStart,.composition{fill:#13540c;stroke:#13540c;stroke-width:1}#aggregationEnd,#aggregationStart,.aggregation{fill:#cde498;stroke:#13540c;stroke-width:1}#dependencyEnd,#dependencyStart,#extensionEnd,#extensionStart{fill:#13540c;stroke:#13540c;stroke-width:1}.node text{font-size:14px}.node text,div.mermaidTooltip{font-family:trebuchet ms,verdana,arial}div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:#cdffb2;border:1px solid #6eaa49;border-radius:2px;pointer-events:none;z-index:100}
+svg {
+  color: rgb(0, 0, 0);
+  font: normal normal 400 normal 16px / normal "Times New Roman";
+}
+  </style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M52.30337078651685,153.5L95,39.5L130.4453125,39.5" marker-end="url(#arrowhead18)" style="fill:none"></path><defs><marker id="arrowhead18" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M66.91011235955057,153.5L95,128.5L120,128.5" marker-end="url(#arrowhead19)" style="fill:none"></path><defs><marker id="arrowhead19" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M66.91011235955057,192.5L95,217.5L140.4453125,217.5" marker-end="url(#arrowhead20)" style="fill:none"></path><defs><marker id="arrowhead20" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M52.30337078651685,192.5L95,306.5L128.21875,306.5" marker-end="url(#arrowhead21)" style="fill:none"></path><defs><marker id="arrowhead21" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M190.4453125,39.5L225.890625,39.5L280.4489115168539,153.5" marker-end="url(#arrowhead22)" style="fill:none"></path><defs><marker id="arrowhead22" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M200.890625,128.5L225.890625,128.5L261.7842345505618,153.5" marker-end="url(#arrowhead23)" style="fill:none"></path><defs><marker id="arrowhead23" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M180.4453125,217.5L225.890625,217.5L261.7842345505618,192.5" marker-end="url(#arrowhead24)" style="fill:none"></path><defs><marker id="arrowhead24" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M192.671875,306.5L225.890625,306.5L280.4489115168539,192.5" marker-end="url(#arrowhead25)" style="fill:none"></path><defs><marker id="arrowhead25" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g></g><g class="nodes"><g class="node" id="A" transform="translate(45,173)" style="opacity: 1;"><rect rx="0" ry="0" x="-25" y="-19.5" width="50" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-15,-9.5)"><foreignObject width="30" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">编辑器</div></foreignObject></g></g></g><g class="node" id="B" transform="translate(160.4453125,39.5)" style="opacity: 1;"><rect rx="0" ry="0" x="-30" y="-19.5" width="60" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-20,-9.5)"><foreignObject width="40" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">代码补全</div></foreignObject></g></g></g><g class="node" id="C" transform="translate(160.4453125,128.5)" style="opacity: 1;"><rect rx="0" ry="0" x="-40.4453125" y="-19.5" width="80.890625" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30.4453125,-9.5)"><foreignObject width="60.890625" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">AI 对话面板</div></foreignObject></g></g></g><g class="node" id="D" transform="translate(160.4453125,217.5)" style="opacity: 1;"><rect rx="0" ry="0" x="-20" y="-19.5" width="40" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-10,-9.5)"><foreignObject width="20" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">终端</div></foreignObject></g></g></g><g class="node" id="E" transform="translate(160.4453125,306.5)" style="opacity: 1;"><rect rx="0" ry="0" x="-32.2265625" y="-19.5" width="64.453125" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-22.2265625,-9.5)"><foreignObject width="44.453125" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">Git 集成</div></foreignObject></g></g></g><g class="node" id="F" transform="translate(289.78125,173)" style="opacity: 1;"><rect rx="0" ry="0" x="-38.890625" y="-19.5" width="77.78125" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-28.890625,-9.5)"><foreignObject width="57.78125" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">LLM 后端</div></foreignObject></g></g></g></g></g></g></svg>
+</div>
+
+<p>四个面板共享同一份上下文，AI 知道当前选中什么、终端跑过什么命令、Git 改动了什么。这点比单点 AI 工具体验好很多。</p>
+<p><strong>支持的 LLM 后端</strong>：DeepSeek、OpenAI、Claude、Qwen、Gemini、Kimi、MiniMax、GLM 等 8 个国内主流模型。</p>
+<p><strong>支持的 IDE 功能</strong>：自动补全、AI 对话、代码解释、bug 修复、代码重构、多语言支持（Python、JS、Java、Go、Rust 等）。</p>
+<h2 id="二、系统要求"><a href="#二、系统要求" class="headerlink" title="二、系统要求"></a>二、系统要求</h2><table>
+<thead>
+<tr>
+<th></th>
+<th>最小</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>操作系统</td>
+<td>macOS 11+ &#x2F; Win 10+ &#x2F; Ubuntu 20.04+</td>
+<td>macOS 13+ &#x2F; Win 11 &#x2F; Ubuntu 22.04</td>
+</tr>
+<tr>
+<td>内存</td>
+<td>8 GB</td>
+<td>16 GB+</td>
+</tr>
+<tr>
+<td>磁盘</td>
+<td>5 GB</td>
+<td>20 GB SSD</td>
+</tr>
+<tr>
+<td>网络</td>
+<td>稳定互联网</td>
+<td>5 Mbps+</td>
+</tr>
+</tbody></table>
+<p><strong>低于最小配置</strong>会被卡在模型加载阶段（亲测 8GB 内存跑本地模型很吃力，建议直接用云端模型）。</p>
+<h2 id="三、5-大核心功能详解"><a href="#三、5-大核心功能详解" class="headerlink" title="三、5 大核心功能详解"></a>三、5 大核心功能详解</h2><h3 id="1-代码补全"><a href="#1-代码补全" class="headerlink" title="1. 代码补全"></a>1. 代码补全</h3><p>按 Tab 接受建议，Esc 取消，Ctrl+Space 手动触发。</p>
+<p>和 VSCode 自带补全的<strong>关键区别</strong>：Trae 会基于<strong>整个项目上下文</strong>给建议，不只是当前文件。</p>
+<p><strong>实测体感</strong>：</p>
+<ul>
+<li>写 React 组件时，能根据 props 类型推断正确写法</li>
+<li>写 SQL 时，根据表名和字段名推荐 JOIN</li>
+<li>写 Python 时，根据上下文推荐 import 顺序</li>
+</ul>
+<p><strong>调优设置</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// settings.json</span></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;ai.completion.enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ai.completion.triggerOnType&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span>  <span class="comment">// 输入时实时触发</span></span><br><span class="line">  <span class="attr">&quot;ai.completion.maxLines&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span>        <span class="comment">// 建议最多 10 行</span></span><br><span class="line">  <span class="attr">&quot;ai.completion.debounceMs&quot;</span><span class="punctuation">:</span> <span class="number">300</span>      <span class="comment">// 300ms 延迟避免抖动</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-AI-对话（最常用）"><a href="#2-AI-对话（最常用）" class="headerlink" title="2. AI 对话（最常用）"></a>2. AI 对话（最常用）</h3><p>四个场景的 prompt 模板：</p>
+<p><strong>生成代码</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">请帮我写一个 Python 函数，用于批量重命名文件夹中的图片文件，按序号命名。要求：</span><br><span class="line">- 支持自定义起始编号</span><br><span class="line">- 处理中文文件名</span><br><span class="line">- 跳过隐藏文件</span><br><span class="line">- 返回重命名数量</span><br></pre></td></tr></table></figure>
+
+<p><strong>解释代码</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请解释这段代码的作用，包括：</span><br><span class="line">1. 主要逻辑</span><br><span class="line">2. 时间/空间复杂度</span><br><span class="line">3. 潜在问题</span><br><span class="line">4. 改进建议</span><br><span class="line"></span><br><span class="line">[粘贴你的代码]</span><br></pre></td></tr></table></figure>
+
+<p><strong>优化代码</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请帮我优化这段性能并加错误处理：</span><br><span class="line">- 把同步操作改异步</span><br><span class="line">- 加 retry 机制（最多 3 次）</span><br><span class="line">- 失败时记录日志</span><br><span class="line">- 加类型注解</span><br><span class="line"></span><br><span class="line">[粘贴你的代码]</span><br></pre></td></tr></table></figure>
+
+<p><strong>修复 Bug</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这段代码运行时报错 &quot;TypeError: Cannot read property &#x27;length&#x27; of undefined&quot;，请帮我修复：</span><br><span class="line">- 定位问题行</span><br><span class="line">- 说明原因</span><br><span class="line">- 给出修复版本</span><br><span class="line">- 加防御性检查避免复发</span><br><span class="line"></span><br><span class="line">[粘贴你的代码 + 完整错误堆栈]</span><br></pre></td></tr></table></figure>
+
+<p><strong>经验</strong>：把<strong>报错信息完整贴上</strong>比描述”它报错了”有效得多。AI 是模式匹配，不是心理医生。</p>
+<h3 id="3-代码解释"><a href="#3-代码解释" class="headerlink" title="3. 代码解释"></a>3. 代码解释</h3><p>选中代码 → 右键”解释代码”或 <code>Ctrl+Shift+C</code>。</p>
+<p><strong>对读老代码（特别是别人的）特别有用</strong>——比从零读快 5 倍。</p>
+<p><strong>典型场景</strong>：</p>
+<ul>
+<li>接手离职同事的项目</li>
+<li>看 3 年前的祖传代码</li>
+<li>读开源库源码</li>
+</ul>
+<p><strong>解释深度调节</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 简要说明</span><br><span class="line">请用 3 句话解释这段代码</span><br><span class="line"></span><br><span class="line">// 详细分析</span><br><span class="line">请详细解释这段代码，包括：</span><br><span class="line">- 每一行的作用</span><br><span class="line">- 用到的设计模式</span><br><span class="line">- 性能瓶颈</span><br><span class="line">- 改进建议</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-代码重构"><a href="#4-代码重构" class="headerlink" title="4. 代码重构"></a>4. 代码重构</h3><p>自动识别重复代码块、嵌套 if-else、长函数，给出重构建议。</p>
+<p><strong>注意</strong>：它会建议拆函数，但有时拆得过于细——结合自己的项目规范取舍。</p>
+<p><strong>实战例子</strong>：把一个 200 行的 controller 拆成 5 个 service，AI 会在 30 秒内给出方案，自己手动调整依赖注入。</p>
+<h3 id="5-终端-AI（意外好用）"><a href="#5-终端-AI（意外好用）" class="headerlink" title="5. 终端 AI（意外好用）"></a>5. 终端 AI（意外好用）</h3><p>终端输入 <code>??</code> + 自然语言，AI 自动生成 shell 命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">?? 查找当前目录下大于 100MB 的 <span class="built_in">log</span> 文件</span><br><span class="line">find . -name <span class="string">&quot;*.log&quot;</span> -size +100M</span><br><span class="line"></span><br><span class="line">?? 查 8080 端口谁在用</span><br><span class="line">lsof -i :8080</span><br><span class="line"></span><br><span class="line">?? 看今天 nginx 错误日志</span><br><span class="line">grep <span class="string">&quot;<span class="subst">$(date +%Y-%m-%d)</span>&quot;</span> /var/log/nginx/error.log</span><br></pre></td></tr></table></figure>
+
+<p><strong>省得去翻 stackoverflow 查命令参数</strong>。</p>
+<p><strong>安全警告</strong>：终端 AI 的命令<strong>自动执行前会确认</strong>（默认是 <code>n</code>），不要无脑回车。先看再执行，特别是 <code>rm</code> &#x2F; <code>chmod</code> &#x2F; <code>kill</code> 这类命令。</p>
+<h2 id="四、4-类常见问题"><a href="#四、4-类常见问题" class="headerlink" title="四、4 类常见问题"></a>四、4 类常见问题</h2><h3 id="4-1-补全反应慢"><a href="#4-1-补全反应慢" class="headerlink" title="4.1 补全反应慢"></a>4.1 补全反应慢</h3><p>按优先级排查：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 网络延迟 → ping 一下 LLM 后端</span><br><span class="line">2. 文件过大（&gt; 2000 行）→ 拆分文件</span><br><span class="line">3. 后台程序抢占 CPU → 关不必要的程序</span><br><span class="line">4. 设置里降低 AI 响应速度档（快但建议少）</span><br><span class="line">5. 切换 LLM（DeepSeek 比 Claude 便宜且快）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-AI-生成的代码有-bug"><a href="#4-2-AI-生成的代码有-bug" class="headerlink" title="4.2 AI 生成的代码有 bug"></a>4.2 AI 生成的代码有 bug</h3><p>AI 输出<strong>仅供参考</strong>，必须做到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 逐行读完理解再 copy</span><br><span class="line">2. 测试环境跑过再上生产</span><br><span class="line">3. 有疑问继续对话问 AI（它能解释自己写的代码）</span><br><span class="line">4. 关键代码（支付、权限）必须人工 review</span><br></pre></td></tr></table></figure>
+
+<p><strong>血泪教训</strong>：曾直接用 AI 生成的 SQL 有 N+1 查询问题，上线后数据库 CPU 100%，查了一下午才发现。<strong>AI 不知道你的数据量级</strong>。</p>
+<h3 id="4-3-隐私顾虑"><a href="#4-3-隐私顾虑" class="headerlink" title="4.3 隐私顾虑"></a>4.3 隐私顾虑</h3><ul>
+<li><strong>本地模型版本</strong>：全部在本地跑，不上传任何代码（需要 ≥16GB 内存 + 较新 CPU）</li>
+<li><strong>云端版本</strong>：只传当前编辑上下文，加密传输，<strong>不存储用户代码</strong></li>
+</ul>
+<p>团队用云端前最好先确认公司合规政策。</p>
+<p><strong>敏感代码处理</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">请帮我写一个 [功能]，但不要上传到云端，告诉我大概思路就好</span><br></pre></td></tr></table></figure>
+
+<p>AI 会切换到本地模式或仅给伪代码。</p>
+<h3 id="4-4-网络-模型加载失败"><a href="#4-4-网络-模型加载失败" class="headerlink" title="4.4 网络&#x2F;模型加载失败"></a>4.4 网络&#x2F;模型加载失败</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理模型缓存重试</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.trae/models/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看具体错误</span></span><br><span class="line"><span class="built_in">cat</span> ~/Library/Application\ Support/Trae/logs/ai-engine.log</span><br></pre></td></tr></table></figure>
+
+<p>90% 的加载失败是缓存文件损坏，删了重下就好。</p>
+<h2 id="五、3-条高效使用建议"><a href="#五、3-条高效使用建议" class="headerlink" title="五、3 条高效使用建议"></a>五、3 条高效使用建议</h2><h3 id="5-1-分块迭代"><a href="#5-1-分块迭代" class="headerlink" title="5.1 分块迭代"></a>5.1 分块迭代</h3><p><strong>不要让 AI 一次写 500 行代码</strong>。拆成 5–10 个小函数，挨个让 AI 实现 + 测试，比一次性生成靠谱得多。</p>
+<p><strong>示例</strong>：开发一个用户管理 API</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Step 1: 让 AI 写数据模型</span><br><span class="line">请定义 User 模型，包含 id, name, email, created_at 字段</span><br><span class="line"></span><br><span class="line"># Step 2: 让 AI 写创建用户</span><br><span class="line">请实现 create_user 函数，参数是 name, email，返回 User 对象</span><br><span class="line"></span><br><span class="line"># Step 3: 让 AI 写查询</span><br><span class="line">请实现 get_user_by_id 函数，参数是 user_id</span><br><span class="line"></span><br><span class="line"># Step 4-N: 继续分步</span><br></pre></td></tr></table></figure>
+
+<p>每步都能 review、测试，再走下一步。</p>
+<h3 id="5-2-先骨架后细节"><a href="#5-2-先骨架后细节" class="headerlink" title="5.2 先骨架后细节"></a>5.2 先骨架后细节</h3><p>先生成<strong>函数签名 + docstring 框架</strong>，再让 AI 填实现。这样 AI 能聚焦、你也容易 review。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">请先给这个模块设计接口（不写实现），包括：</span><br><span class="line">- 函数签名</span><br><span class="line">- 参数说明</span><br><span class="line">- 返回值</span><br><span class="line">- 异常情况</span><br><span class="line"></span><br><span class="line">确认后再实现</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-配置-settings-json"><a href="#5-3-配置-settings-json" class="headerlink" title="5.3 配置 settings.json"></a>5.3 配置 settings.json</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;ai.completion.enabled&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ai.completion.maxLines&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ai.conversation.contextLines&quot;</span><span class="punctuation">:</span> <span class="number">50</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;ai.model.temperature&quot;</span><span class="punctuation">:</span> <span class="number">0.3</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.formatOnSave&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;editor.wordWrap&quot;</span><span class="punctuation">:</span> <span class="string">&quot;on&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>temperature: 0.3</code> 是代码生成的甜点值（默认 0.7 太发散）。<code>contextLines: 50</code> 让 AI 看到足够上下文但不过长。</p>
+<h2 id="六、付费与替代"><a href="#六、付费与替代" class="headerlink" title="六、付费与替代"></a>六、付费与替代</h2><h3 id="Trae-Pro-vs-免费"><a href="#Trae-Pro-vs-免费" class="headerlink" title="Trae Pro vs 免费"></a>Trae Pro vs 免费</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>免费版</th>
+<th>Pro（¥29&#x2F;月 或 ¥299&#x2F;年）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>基础代码补全</td>
+<td>每日次数限制</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>AI 对话</td>
+<td>限速</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>Claude &#x2F; GPT 高级模型</td>
+<td>不可用</td>
+<td>可用</td>
+</tr>
+<tr>
+<td>高级重构 &#x2F; Bug 修复</td>
+<td>限次数</td>
+<td>无限制</td>
+</tr>
+<tr>
+<td>团队协作</td>
+<td>单机</td>
+<td>团队版</td>
+</tr>
+</tbody></table>
+<p><strong>值不值看使用强度</strong>。我一个月重度用下来 Pro 版的 ROI 明显——光解释老代码省的时间就够本了。</p>
+<h3 id="Trae-vs-Cursor-Copilot-Codeium"><a href="#Trae-vs-Cursor-Copilot-Codeium" class="headerlink" title="Trae vs Cursor &#x2F; Copilot &#x2F; Codeium"></a>Trae vs Cursor &#x2F; Copilot &#x2F; Codeium</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>优势</th>
+<th>劣势</th>
+<th>价格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Trae</strong></td>
+<td>中文友好、Kimi 内置、字节系</td>
+<td>海外用户少、生态小</td>
+<td>免费 &#x2F; Pro ¥29&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>Cursor</strong></td>
+<td>功能最全、AI 体验最好</td>
+<td>$20&#x2F;月贵、国内访问慢</td>
+<td>$20&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot</strong></td>
+<td>补全最强、生态成熟</td>
+<td>对话弱</td>
+<td>$10&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>Codeium</strong></td>
+<td>免费个人用、速度快</td>
+<td>中文支持差</td>
+<td>免费</td>
+</tr>
+</tbody></table>
+<p><strong>选择建议</strong>：</p>
+<ul>
+<li>中文项目、字节系技术栈 → Trae</li>
+<li>英文项目、追求极致 AI 体验 → Cursor</li>
+<li>已有 GitHub 生态、团队大 → Copilot</li>
+<li>预算紧、个人用 → Codeium</li>
+</ul>
+<h2 id="七、Trae-适合谁"><a href="#七、Trae-适合谁" class="headerlink" title="七、Trae 适合谁"></a>七、Trae 适合谁</h2><p><strong>适合</strong>：</p>
+<ul>
+<li>中文母语开发者</li>
+<li>字节系生态（飞书 &#x2F; 抖音 &#x2F; 掘金）的用户</li>
+<li>个人 &#x2F; 小团队（不需要企业级 SSO）</li>
+<li>经常写 JS &#x2F; TS &#x2F; Python &#x2F; Vue &#x2F; React</li>
+</ul>
+<p><strong>不太适合</strong>：</p>
+<ul>
+<li>纯英文 &#x2F; 海外团队</li>
+<li>写底层 C &#x2F; C++ &#x2F; Rust（补全质量不如 Cursor）</li>
+<li>需要严格审计（金融 &#x2F; 医疗）</li>
+<li>大企业（需要私有部署 &#x2F; SSO &#x2F; 审计日志）</li>
+</ul>
+<h2 id="八、5-条进阶小贴士"><a href="#八、5-条进阶小贴士" class="headerlink" title="八、5 条进阶小贴士"></a>八、5 条进阶小贴士</h2><ol>
+<li><strong>保存常用 prompt 为 snippet</strong>——重复劳动降到最低</li>
+<li><strong>重要代码用 #important 标记</strong>——AI 会优先保留</li>
+<li><strong>commit message 让 AI 写</strong>——<code>Ctrl+I</code> 一键生成</li>
+<li><strong>多文件搜索让 AI 做</strong>——比 grep 智能</li>
+<li><strong>终端 ?? 偶尔用即可</strong>——形成依赖会忘记基础命令</li>
+</ol>
+<h2 id="九、与同公司产品对比"><a href="#九、与同公司产品对比" class="headerlink" title="九、与同公司产品对比"></a>九、与同公司产品对比</h2><p>字节系 AI 编程工具不只 Trae 一个：</p>
+<ul>
+<li><strong>Trae</strong>：桌面 IDE，类似 Cursor</li>
+<li><strong>Coze &#x2F; 扣子</strong>：可视化 Agent 编排，类似 Dify</li>
+<li><strong>火山方舟 &#x2F; 豆包</strong>：LLM API 服务，类似 OpenAI</li>
+<li><strong>方舟 Coding SDK</strong>：嵌入式代码补全，类似 Copilot 插件</li>
+</ul>
+<p><strong>Trae 在字节系的位置</strong>：消费级 AI 编程 IDE，主打个人和小团队。如果企业级需求（私有部署、SSO、审计），看火山方舟 + Coding SDK。</p>
+<h2 id="十、版本演进（2026）"><a href="#十、版本演进（2026）" class="headerlink" title="十、版本演进（2026）"></a>十、版本演进（2026）</h2><p>Trae 还在快速迭代：</p>
+<ul>
+<li><strong>2026 Q1</strong>：v1.0 发布，主打基础 IDE + AI 对话</li>
+<li><strong>2026 Q2</strong>：v1.5，加入自定义 Skill 框架</li>
+<li><strong>2026 Q3</strong>：v2.0，多 Agent 协作、Terminal AI 完善</li>
+<li><strong>2026 Q4</strong>：v2.5，企业版（私有部署）</li>
+</ul>
+<p><strong>跟着官方更新</strong>——每 1-2 月一次 minor release，新功能值得尝鲜，但<strong>别在生产项目激进升级</strong>。</p>
+<h2 id="十一、参考"><a href="#十一、参考" class="headerlink" title="十一、参考"></a>十一、参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.trae.cn/">trae.cn</a> — 官网</li>
+<li><a target="_blank" rel="noopener" href="https://docs.trae.cn/">trae.cn&#x2F;docs</a> — 官方文档</li>
+<li><a target="_blank" rel="noopener" href="https://www.cursor.com/">Cursor 官网</a> — 对比工具</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/features/copilot">GitHub Copilot</a> — 对比工具</li>
+<li><a target="_blank" rel="noopener" href="https://codeium.com/">Codeium</a> — 对比工具</li>
+<li><a target="_blank" rel="noopener" href="https://platform.moonshot.cn/">Kimi 平台</a> — 国产 LLM</li>
+</ul>
+<h2 id="十二、多文件重构实战"><a href="#十二、多文件重构实战" class="headerlink" title="十二、多文件重构实战"></a>十二、多文件重构实战</h2><p>AI 写多文件时，<strong>分文件让 AI 写比一次性给所有 context 强 10 倍</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># Step 1: 列接口</span><br><span class="line">请描述 [模块名] 的接口设计：</span><br><span class="line">- 需要哪些文件</span><br><span class="line">- 每个文件的职责</span><br><span class="line">- 文件之间的依赖关系</span><br><span class="line">- 数据流向</span><br><span class="line"></span><br><span class="line"># Step 2: 写类型定义（types.ts / index.ts）</span><br><span class="line">请先实现 [模块名] 的类型定义文件</span><br><span class="line"></span><br><span class="line"># Step 3: 写主逻辑（service.ts）</span><br><span class="line">请基于 types 实现 [主功能] 服务</span><br><span class="line"></span><br><span class="line"># Step 4: 写 API 路由（router.ts / controller.ts）</span><br><span class="line">请基于 service 实现 HTTP 路由</span><br><span class="line"></span><br><span class="line"># Step 5: 写测试（*.test.ts）</span><br><span class="line">请为 [主功能] 写单元测试，覆盖主要场景</span><br></pre></td></tr></table></figure>
+
+<p>每步之间<strong>等 AI 完成、跑测试</strong>，再走下一步。<strong>不要让 AI 一次写 5 个文件</strong>——容易引入不必要复杂度。</p>
+<h2 id="十三、自定义-Skill-编写"><a href="#十三、自定义-Skill-编写" class="headerlink" title="十三、自定义 Skill 编写"></a>十三、自定义 Skill 编写</h2><p>Trae v1.5+ 支持自定义 Skill（类似 Agent 的”专属能力”）。一个 Skill &#x3D; 一组 prompt 模板 + 工具调用。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># my-project/.trae/skill/code-review.yaml</span></span><br><span class="line"><span class="attr">name:</span> <span class="string">&quot;项目代码审查&quot;</span></span><br><span class="line"><span class="attr">description:</span> <span class="string">&quot;按团队规范审查代码&quot;</span></span><br><span class="line"><span class="attr">prompts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;review-style&quot;</span></span><br><span class="line">    <span class="attr">content:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      请按以下规范审查代码：</span></span><br><span class="line"><span class="string">      - ESLint Airbnb 规范</span></span><br><span class="line"><span class="string">      - 函数不超过 50 行</span></span><br><span class="line"><span class="string">      - 命名用 camelCase</span></span><br><span class="line"><span class="string">      - 注释率不低于 20%</span></span><br><span class="line"><span class="string"></span>  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;review-test&quot;</span></span><br><span class="line">    <span class="attr">content:</span> <span class="string">|</span></span><br><span class="line"><span class="string">      请审查测试代码：</span></span><br><span class="line"><span class="string">      - 覆盖率不低于 80%</span></span><br><span class="line"><span class="string">      - 边界条件覆盖</span></span><br><span class="line"><span class="string">      - mock 用得是否合理</span></span><br><span class="line"><span class="string"></span><span class="attr">tools:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;read_file&quot;</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&quot;run_lint&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 IDE 里 <code>@code-review</code> 就能调起。</p>
+<p><strong>Skill vs 普通 prompt</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>普通 Prompt</th>
+<th>Skill</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>复用</td>
+<td>每次手输</td>
+<td>一次配置</td>
+</tr>
+<tr>
+<td>上下文</td>
+<td>单次对话</td>
+<td>跨项目</td>
+</tr>
+<tr>
+<td>工具调用</td>
+<td>无</td>
+<td>可绑定工具</td>
+</tr>
+<tr>
+<td>团队共享</td>
+<td>困难</td>
+<td>文件级</td>
+</tr>
+</tbody></table>
+<p><strong>项目级 Skill 放在</strong> <code>.trae/skill/</code> 目录，提交 git 团队共享。</p>
+<h2 id="十四、调试工作流"><a href="#十四、调试工作流" class="headerlink" title="十四、调试工作流"></a>十四、调试工作流</h2><p><strong>遇到复杂 bug</strong>时的工作流：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Step 1: 复现</span><br><span class="line">请描述这个 bug 的完整复现步骤：</span><br><span class="line">- 触发条件</span><br><span class="line">- 预期行为</span><br><span class="line">- 实际行为</span><br><span class="line">- 错误堆栈</span><br><span class="line"></span><br><span class="line">Step 2: 定位</span><br><span class="line">请基于以下信息定位问题：</span><br><span class="line">- 错误堆栈</span><br><span class="line">- 相关代码</span><br><span class="line">- 输入数据</span><br><span class="line">定位到具体行号</span><br><span class="line"></span><br><span class="line">Step 3: 分析</span><br><span class="line">请分析这个 bug 的根因：</span><br><span class="line">- 为什么会出现</span><br><span class="line">- 是设计缺陷还是实现 bug</span><br><span class="line">- 是否有其他类似问题</span><br><span class="line"></span><br><span class="line">Step 4: 修复</span><br><span class="line">请给出修复方案：</span><br><span class="line">- 最小改动版本</span><br><span class="line">- 完整重构版本</span><br><span class="line">- 测试用例</span><br><span class="line"></span><br><span class="line">Step 5: 验证</span><br><span class="line">请写测试用例验证修复：</span><br><span class="line">- 单元测试</span><br><span class="line">- 边界条件</span><br><span class="line">- 回归测试</span><br></pre></td></tr></table></figure>
+
+<p>每步都让 AI 输出<strong>可粘贴的代码</strong>或<strong>具体命令</strong>，不是抽象描述。</p>
+<h2 id="十五、Trae-Git-工作流"><a href="#十五、Trae-Git-工作流" class="headerlink" title="十五、Trae + Git 工作流"></a>十五、Trae + Git 工作流</h2><p>把 AI 和 Git 结合用：</p>
+<h3 id="智能-commit"><a href="#智能-commit" class="headerlink" title="智能 commit"></a>智能 commit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add -A</span><br><span class="line"><span class="comment"># 按 Cmd+I，AI 自动分析 diff 生成 commit message</span></span><br><span class="line"><span class="comment"># 例：feat: add user authentication with JWT</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="自动-PR-描述"><a href="#自动-PR-描述" class="headerlink" title="自动 PR 描述"></a>自动 PR 描述</h3><p>在 GitHub PR 页面粘 diff 链接给 AI，让它生成 PR 描述：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">这是我的 PR diff：[链接]</span><br><span class="line">请生成 PR 描述，包括：</span><br><span class="line">- 改动概述</span><br><span class="line">- 关键决策</span><br><span class="line">- 测试覆盖</span><br><span class="line">- 截图建议</span><br></pre></td></tr></table></figure>
+
+<h3 id="Code-review-自动化"><a href="#Code-review-自动化" class="headerlink" title="Code review 自动化"></a>Code review 自动化</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># .github/workflows/trae-review.yml</span><br><span class="line">name: AI Code Review</span><br><span class="line">on: pull_request</span><br><span class="line">jobs:</span><br><span class="line">  review:</span><br><span class="line">    runs-on: ubuntu-latest</span><br><span class="line">    steps:</span><br><span class="line">      - uses: actions/checkout@v4</span><br><span class="line">      - uses: trae-ai/review-action@v1</span><br><span class="line">        with:</span><br><span class="line">          api-key: $&#123;&#123; secrets.TRAE_API_KEY &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="十六、跨平台对比"><a href="#十六、跨平台对比" class="headerlink" title="十六、跨平台对比"></a>十六、跨平台对比</h2><p>Trae vs Cursor vs Copilot 在 5 个维度的对比：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Trae</th>
+<th>Cursor</th>
+<th>Copilot</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>中文支持</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>AI 对话</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>代码补全</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>终端 AI</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐</td>
+</tr>
+<tr>
+<td>团队协作</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>价格</td>
+<td>¥29&#x2F;月</td>
+<td>$20&#x2F;月</td>
+<td>$10&#x2F;月</td>
+</tr>
+</tbody></table>
+<p><strong>经验之谈</strong>：</p>
+<ul>
+<li>纯中文项目 → Trae（中文理解和飞书集成是优势）</li>
+<li>英文 + 复杂项目 → Cursor（补全 + 重构最强）</li>
+<li>已有 GitHub 生态 + 大团队 → Copilot（集成最广）</li>
+<li>预算紧 → Trae 免费版（够用）</li>
+</ul>
+<h2 id="十七、未来-1-2-年的趋势"><a href="#十七、未来-1-2-年的趋势" class="headerlink" title="十七、未来 1-2 年的趋势"></a>十七、未来 1-2 年的趋势</h2><p>AI 编程工具接下来会怎么发展：</p>
+<ul>
+<li><strong>更强的多模态</strong>：能看设计稿、读日志截图、理解架构图</li>
+<li><strong>团队级知识</strong>：自动学习团队代码规范、业务术语</li>
+<li><strong>更深入的测试</strong>：AI 自动写测试 + 自动跑测试 + 自动修测试</li>
+<li><strong>代码审查民主化</strong>：新手也能写出生产级代码</li>
+<li><strong>AI Native 编程语言</strong>：专为 AI 协作设计的语言可能涌现</li>
+</ul>
+<p><strong>给工程师的建议</strong>：</p>
+<ul>
+<li>不要把 AI 当万能工具，<strong>它是放大器</strong>，放大你的能力或缺陷</li>
+<li>基本功（算法、设计、调试）<strong>永远不会过时</strong></li>
+<li>学 1-2 个 AI 工具到精通，<strong>比浅尝 5 个强</strong></li>
+<li>持续关注 AI 编程进展，但<strong>别被 FOMO 驱动</strong></li>
+</ul>
+<p><strong>最后</strong>：选工具是为了解决问题，不是为了追新。<strong>先用起来</strong>比选完美重要——今天就用 Trae 写一个真实功能，比纠结”Cursor 是不是更好”三个月强。</p>
+<hr>
+<blockquote>
+<p><strong>本文基于 Trae v2.1+</strong>（2026 年 8 月）。功能迭代快，部分细节可能过时，遇到问题以官方文档为准。<strong>欢迎在评论区反馈</strong>实战中遇到的坑。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI-%E7%BC%96%E7%A8%8B/" rel="tag">AI 编程</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Cursor/" rel="tag">Cursor</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Trae-AI/" rel="tag">Trae AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AF%B9%E6%AF%94/" rel="tag">对比</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" rel="tag">效率工具</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-skill-plugin-mcp-dify/">Skill / Plugin / MCP / Dify 区分</a><a class="next" href="/2026/09/01/2026-09-02-vue-nuxt-nest-stack/">Vue/Nuxt/Nest 全栈实战</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-node-beginner/">Node.js 起步必知</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-npmrc-cheatsheet/">.npmrc 配置实战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
