@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>ai-news-radar 技术调研 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">ai-news-radar 技术调研</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">ai-news-radar 技术调研</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 5</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>最近调研了 <a target="_blank" rel="noopener" href="https://github.com/LearnPrompt/ai-news-radar">LearnPrompt&#x2F;ai-news-radar</a>——一个自动聚合 AI 新闻的开源项目，跑在 GitHub Actions 上、产出 8 个 JSON 文件、能装成 Agent Skill 读。本文是技术调研笔记。</p>
+<h2 id="一、三层使用模型"><a href="#一、三层使用模型" class="headerlink" title="一、三层使用模型"></a>一、三层使用模型</h2><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>用户角色</th>
+<th>产物</th>
+<th>门槛</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>看报</strong></td>
+<td>普通读者</td>
+<td><a target="_blank" rel="noopener" href="https://learnprompt.github.io/ai-news-radar/">https://learnprompt.github.io/ai-news-radar/</a></td>
+<td>零门槛（直接访问）</td>
+</tr>
+<tr>
+<td><strong>读报</strong></td>
+<td>Agent 用户</td>
+<td>装 <code>ai-radar</code> Skill，自然语言读 JSON</td>
+<td>会装 Skill</td>
+</tr>
+<tr>
+<td><strong>办报</strong></td>
+<td>Fork 者</td>
+<td>fork + 改”伯乐 Skill”信源</td>
+<td>了解 OPML &#x2F; feed 配置</td>
+</tr>
+</tbody></table>
+<p><strong>对宁波本地社群的建议</strong>：第三层最有价值——fork 后改成”宁波 AI 活动 + 706 社群动态”信源，能搭出本地日报。</p>
+<h2 id="二、5-步数据流"><a href="#二、5-步数据流" class="headerlink" title="二、5 步数据流"></a>二、5 步数据流</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">collect_all() → 15 个内置 fetcher</span><br><span class="line">  ↓</span><br><span class="line">[OPML RSS] + [AgentMail] + [X API] + [SocialData] + [TikHub]</span><br><span class="line">  ↓</span><br><span class="line">[WaytoAGI 7d]</span><br><span class="line">  ↓</span><br><span class="line">raw_items → archive.json（21 天滑动窗口）</span><br><span class="line">  ↓</span><br><span class="line">24h 时间窗过滤 → AI 评分 → 双语翻译 → 故事合并 → 8 个 JSON 产物</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键节点</strong>：</p>
+<ul>
+<li><strong>collect_all()</strong> 拉取 15 个信源（OPML、AgentMail、X、SocialData、TikHub 等）</li>
+<li><strong>raw_items 进 archive</strong> 维护 21 天滑动窗口</li>
+<li><strong>24h 时间窗过滤</strong> 缩到当天内容</li>
+<li><strong>AI 评分</strong> 对每条打分（相关性、热度）</li>
+<li><strong>双语翻译</strong> 中英对照</li>
+<li><strong>故事合并</strong> 把多条相关报道聚合成 1 个故事</li>
+<li><strong>8 个 JSON 产物</strong> 输出到 data&#x2F; 目录</li>
+</ul>
+<h2 id="三、20-个信源体系"><a href="#三、20-个信源体系" class="headerlink" title="三、20 个信源体系"></a>三、20 个信源体系</h2><p>按抓取方式分 4 类：</p>
+<table>
+<thead>
+<tr>
+<th>抓取方式</th>
+<th>代表信源</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RSS&#x2F;Atom + 页面解析</strong></td>
+<td>official_ai、curated_media、aihubtoday、aibase</td>
+<td>5+</td>
+</tr>
+<tr>
+<td><strong>JSON API</strong></td>
+<td>aihot、bestblogs、techurls、buzzing、zeli、newsnow</td>
+<td>6+</td>
+</tr>
+<tr>
+<td><strong>Jina Reader &#x2F; GitHub raw</strong></td>
+<td>aibreakfast、followbuilders</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>特殊爬虫</strong></td>
+<td>iris（JS 渲染）、waytoagi（飞书 Wiki）、tophub（HTML + 编码探测）</td>
+<td>3+</td>
+</tr>
+</tbody></table>
+<p><strong>几个有意思的源</strong>：</p>
+<ul>
+<li><code>tophub</code>：抓 3033 条&#x2F;次，HTML 解析 + 编码探测，国内 TopHub 媒体</li>
+<li><code>iris</code>：375 条但延迟 15.7 秒（JS 渲染慢）</li>
+<li><code>waytoagi</code>：飞书 Wiki 解析，国内 AI 圈最权威</li>
+<li><code>newsnow</code>：SPA bundle + POST API 抓取，反爬技术</li>
+</ul>
+<p><strong>信源配置看 <code>feeds/follow.opml</code></strong>，OPML 格式标准，Fork 后改这个文件就能换信源。</p>
+<h2 id="四、10-个-JSON-输出产物"><a href="#四、10-个-JSON-输出产物" class="headerlink" title="四、10 个 JSON 输出产物"></a>四、10 个 JSON 输出产物</h2><table>
+<thead>
+<tr>
+<th>文件</th>
+<th>大小</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>latest-24h.json</code></td>
+<td>1.8 MB</td>
+<td><strong>24h AI 强相关消息</strong>（主数据）</td>
+</tr>
+<tr>
+<td><code>latest-24h-all.json</code></td>
+<td>11 MB</td>
+<td>24h 全量消息</td>
+</tr>
+<tr>
+<td><code>source-status.json</code></td>
+<td>11 KB</td>
+<td>各源抓取状态（监控用）</td>
+</tr>
+<tr>
+<td><code>daily-brief.json</code></td>
+<td>56 KB</td>
+<td>伯乐精选 Top3 候选</td>
+</tr>
+<tr>
+<td><code>stories-merged.json</code></td>
+<td>1.2 MB</td>
+<td>故事合并完整池（637 故事）</td>
+</tr>
+<tr>
+<td><code>merge-log.json</code></td>
+<td>9 KB</td>
+<td>合并审计日志</td>
+</tr>
+<tr>
+<td><code>archive.json</code></td>
+<td>56 MB</td>
+<td><strong>21 天原始归档</strong></td>
+</tr>
+<tr>
+<td><code>waytoagi-7d.json</code></td>
+<td>20 KB</td>
+<td>WaytoAGI 7 天更新</td>
+</tr>
+<tr>
+<td><code>title-zh-cache.json</code></td>
+<td>3.9 MB</td>
+<td>翻译缓存（避免重复调用 LLM）</td>
+</tr>
+<tr>
+<td><code>paid-source-state.json</code></td>
+<td>412 B</td>
+<td>付费源调度状态</td>
+</tr>
+</tbody></table>
+<p><strong>用 Skill 读 <code>latest-24h.json</code></strong>（1.8 MB，Agent 单次 context 装得下）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">读取 https://raw.githubusercontent.com/LearnPrompt/ai-news-radar/main/data/latest-24h.json，</span><br><span class="line">分析今日 AI 圈最热的 3 件事，每条给一句话总结。</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、GitHub-Actions-调度"><a href="#五、GitHub-Actions-调度" class="headerlink" title="五、GitHub Actions 调度"></a>五、GitHub Actions 调度</h2><ul>
+<li><strong>频率</strong>：每 30 分钟跑一次</li>
+<li><strong>超时</strong>：15 分钟</li>
+<li><strong>入口</strong>：<code>scripts/update_news.py:5225</code></li>
+<li><strong>核心命令</strong>：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python scripts/update_news.py \</span><br><span class="line">  --output-dir data \</span><br><span class="line">  --window-hours 24 \</span><br><span class="line">  --archive-days 21 \</span><br><span class="line">  --rss-opml feeds/follow.opml</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>可白嫖</strong> GitHub Actions 免费额度（2000 分钟&#x2F;月，足够 30 分钟 × 30 天 &#x3D; 900 分钟）</li>
+<li>Fork 后<strong>改成 cron 或自部署</strong>也行，commands 都开源</li>
+</ul>
+<h2 id="六、变现能力"><a href="#六、变现能力" class="headerlink" title="六、变现能力"></a>六、变现能力</h2><p>我没仔细看付费层，但发现 <code>paid-source-state.json</code> 文件——说明：</p>
+<ul>
+<li><strong>免费层</strong>：20 个内置信源（已够用）</li>
+<li><strong>付费层</strong>：扩展信源（如 Twitter API v2 月费 $100+、新闻付费墙绕过）</li>
+</ul>
+<p><strong>判断</strong>：<strong>对个人 &#x2F; 小社群够用</strong>；要商业化（如做宁波日报）需要付费信源支持 + 算力成本。</p>
+<h2 id="七、给本地运行的改造建议"><a href="#七、给本地运行的改造建议" class="headerlink" title="七、给本地运行的改造建议"></a>七、给本地运行的改造建议</h2><p>Fork 后要跑起来改哪些：</p>
+<ol>
+<li><strong>改信源</strong> <code>feeds/follow.opml</code>：换成本地 AI 社群、活动博客、媒体源</li>
+<li><strong>改 prompt</strong>：在 <code>prompts/</code> 目录下调整 AI 评分的 prompt（更看重本地相关）</li>
+<li><strong>改 cron 频率</strong>：本地跑可以 5 分钟一次（GitHub Actions 30 分钟是省免费额度）</li>
+<li><strong>加本地数据源</strong>：写个 fetcher 抓宁波本地公众号、706 活动</li>
+<li><strong>改主题</strong>（看报层）：默认的 maupassant 主题不漂亮，可以改 next 或自写</li>
+</ol>
+<h2 id="八、5-条踩坑提醒"><a href="#八、5-条踩坑提醒" class="headerlink" title="八、5 条踩坑提醒"></a>八、5 条踩坑提醒</h2><ul>
+<li><strong>OPML 文件路径要写对</strong>——<code>feeds/follow.opml</code> 是相对路径，跑脚本时 cwd 要对</li>
+<li><strong>付费源 token 必填</strong>——漏填直接报 401，整条 pipeline 失败</li>
+<li><strong>Jina Reader 限速</strong>——免费版 1000 次&#x2F;日，超了换 RSS 源</li>
+<li><strong>waytoagi 飞书 API 经常变</strong>——<code>requests.post</code> 失败时 fallback 到 <code>api</code> 而不是 <code>api/v1</code></li>
+<li><strong>故事合并阈值</strong>——默认合并相似度 &gt; 0.85，宁波本地用可以降到 0.7（合并更激进）</li>
+</ul>
+<h2 id="九、给-Skill-编写者的启示"><a href="#九、给-Skill-编写者的启示" class="headerlink" title="九、给 Skill 编写者的启示"></a>九、给 Skill 编写者的启示</h2><p><code>ai-radar</code> 这个 Skill 的设计很值得学：</p>
+<ul>
+<li><strong>Skill 把”读 JSON”封装成自然语言</strong>——用户不用学 JSON schema</li>
+<li><strong>数据由 Actions 自动更新</strong>——Skill 是无状态读取</li>
+<li><strong>fallback 设计</strong>——付费源挂了免费源补</li>
+</ul>
+<p><strong>自己写 Skill 时</strong>：</p>
+<ul>
+<li>优先<strong>只读操作</strong>（读文件 &#x2F; 读 API），不要让 Skill 写</li>
+<li>状态外置到文件 &#x2F; DB，Skill 是 stateless 的</li>
+<li>错误信息要友好（”源 X 挂了，看 Y 替代”）</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>本文基于 v0.7（2026-06-30）</strong>。仓库仍在活跃迭代，跑前看 README 更新。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent-Skill/" rel="tag">Agent Skill</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub-Actions/" rel="tag">GitHub Actions</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RSS/" rel="tag">RSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" rel="tag">信息聚合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" rel="tag">工具调研</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a><a class="next" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Tailscale/" style="font-size: 15px;">Tailscale</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/VNC/" style="font-size: 15px;">VNC</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" style="font-size: 15px;">远程桌面</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" style="font-size: 15px;">小红书</a> <a href="/tags/API/" style="font-size: 15px;">API</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15px;">爬虫</a> <a href="/tags/%E5%90%88%E8%A7%84/" style="font-size: 15px;">合规</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

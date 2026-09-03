@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>ai-news-radar vs RSS Cron 信源对比 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">ai-news-radar vs RSS Cron 信源对比</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">ai-news-radar vs RSS Cron 信源对比</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.7k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 8</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>最近想把本地跑的 RSS Cron（用 <code>rss-fetcher.js</code> + <code>rss-sources.json</code>）和社区流行的 <a target="_blank" rel="noopener" href="https://github.com/LearnPrompt/ai-news-radar">ai-news-radar</a> 合并优化。两个方案各有强项，本文是信源对比 + 合并建议。</p>
+<h2 id="一、两个方案概览"><a href="#一、两个方案概览" class="headerlink" title="一、两个方案概览"></a>一、两个方案概览</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>ai-news-radar</th>
+<th>本地 RSS Cron</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>运行位置</strong></td>
+<td>GitHub Actions 每 30 分钟</td>
+<td>自部署 cron（5-30 分钟）</td>
+</tr>
+<tr>
+<td><strong>存储</strong></td>
+<td>GitHub 仓库 data&#x2F; 目录 JSON</td>
+<td>本地文件系统</td>
+</tr>
+<tr>
+<td><strong>信源数</strong></td>
+<td>20 个内置 fetcher</td>
+<td>22 个 RSS 源（20 启用）</td>
+</tr>
+<tr>
+<td><strong>AI 处理</strong></td>
+<td>评分 + 双语翻译 + 故事合并</td>
+<td>关键词过滤 + 去重</td>
+</tr>
+<tr>
+<td><strong>可读产物</strong></td>
+<td>8 个 JSON + 1 个 daily brief</td>
+<td>1 个 JSON + 1 个 Markdown 日报</td>
+</tr>
+<tr>
+<td><strong>Skill 集成</strong></td>
+<td>官方 <code>ai-radar</code> Skill</td>
+<td>无</td>
+</tr>
+<tr>
+<td><strong>资源消耗</strong></td>
+<td>GitHub Actions 免费额度</td>
+<td>自己的服务器</td>
+</tr>
+</tbody></table>
+<h2 id="二、20-个信源分类"><a href="#二、20-个信源分类" class="headerlink" title="二、20 个信源分类"></a>二、20 个信源分类</h2><h3 id="ai-news-radar-官方源（7-个）"><a href="#ai-news-radar-官方源（7-个）" class="headerlink" title="ai-news-radar 官方源（7 个）"></a>ai-news-radar 官方源（7 个）</h3><p>OpenAI News &#x2F; Google DeepMind &#x2F; Google AI Blog &#x2F; Hugging Face Blog &#x2F; GitHub AI &amp; ML &#x2F; GitHub Changelog &#x2F; OpenAI Skills</p>
+<h3 id="ai-news-radar-聚合源（13-个-fetcher）"><a href="#ai-news-radar-聚合源（13-个-fetcher）" class="headerlink" title="ai-news-radar 聚合源（13 个 fetcher）"></a>ai-news-radar 聚合源（13 个 fetcher）</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>数据来源</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fetch_techurls</code></td>
+<td>techurls.com</td>
+<td>多源科技链接聚合</td>
+</tr>
+<tr>
+<td><code>fetch_buzzing</code></td>
+<td>buzzing.cc</td>
+<td>全球热点，无需翻墙</td>
+</tr>
+<tr>
+<td><code>fetch_iris</code></td>
+<td>iris.findtruman.io</td>
+<td>信息流订阅聚合</td>
+</tr>
+<tr>
+<td><code>fetch_bestblogs</code></td>
+<td>bestblogs.dev</td>
+<td>每周精选 Newsletter</td>
+</tr>
+<tr>
+<td><code>fetch_tophub</code></td>
+<td>tophub.today</td>
+<td>中国热点排行榜</td>
+</tr>
+<tr>
+<td><code>fetch_zeli</code></td>
+<td>zeli.app</td>
+<td>Hacker News 24h 最热</td>
+</tr>
+<tr>
+<td><code>fetch_waytoagi_recent_7d</code></td>
+<td>飞书知识库</td>
+<td>WaytoAGI 近 7 日</td>
+</tr>
+<tr>
+<td><code>fetch_official_ai_updates</code></td>
+<td>官方站点</td>
+<td>Anthropic + OpenAI Changelog</td>
+</tr>
+<tr>
+<td><code>fetch_ai_breakfast</code></td>
+<td>Newsletter</td>
+<td>AI Breakfast</td>
+</tr>
+<tr>
+<td><code>fetch_follow_builders</code></td>
+<td>GitHub JSON</td>
+<td>Builder 动态（X + 博客 + 播客）</td>
+</tr>
+<tr>
+<td><code>fetch_ai_hubtoday</code></td>
+<td>Web Scrape</td>
+<td>AI 资讯日报</td>
+</tr>
+<tr>
+<td><code>fetch_aibase</code></td>
+<td>aibase.com</td>
+<td>AIbase 新闻</td>
+</tr>
+<tr>
+<td><code>fetch_newsnow</code></td>
+<td>newsnow.busiyi.world</td>
+<td>HN&#x2F;PH&#x2F;GitHub&#x2F;掘金&#x2F;少数派 聚合</td>
+</tr>
+</tbody></table>
+<h3 id="本地-RSS-Cron-源（22-个）"><a href="#本地-RSS-Cron-源（22-个）" class="headerlink" title="本地 RSS Cron 源（22 个）"></a>本地 RSS Cron 源（22 个）</h3><p><strong>默认 4 个</strong>：Bloomberg Technology &#x2F; 36 氪 &#x2F; 少数派 &#x2F; Solidot</p>
+<p><strong>AI 模式 14 个</strong>：VentureBeat AI &#x2F; Wired AI &#x2F; MIT Tech Review &#x2F; OSCHINA &#x2F; 钛媒体 &#x2F; 36 氪 &#x2F; 爱范儿 &#x2F; 知乎日报 &#x2F; 机器之心 &#x2F; 量子位 &#x2F; 甲子光年 &#x2F; GitHub Trending (Python&#x2F;JS&#x2F;TS)</p>
+<p><strong>额外 12 个</strong>：Hugging Face Blog &#x2F; Interconnects AI &#x2F; The Gradient &#x2F; Import AI &#x2F; The Batch &#x2F; Last Week in AI &#x2F; AI News &#x2F; Ben’s Bites &#x2F; VentureBeat AI &#x2F; Hacker News &#x2F; Dev.to &#x2F; ArXiv cs.AI &#x2F; Linux.do &#x2F; 今日头条热榜 &#x2F; B 站热搜 &#x2F; HelloGitHub 月刊 &#x2F; TechCrunch</p>
+<h2 id="三、重叠与互补"><a href="#三、重叠与互补" class="headerlink" title="三、重叠与互补"></a>三、重叠与互补</h2><p><strong>完全重叠（6 个）</strong>：Hugging Face Blog &#x2F; Wired AI &#x2F; 36 氪 &#x2F; VentureBeat AI &#x2F; TechCrunch &#x2F; GitHub Trending</p>
+<p><strong>ai-news-radar 独有</strong>（RSS Cron 没的）：</p>
+<ul>
+<li><strong>OpenAI &#x2F; DeepMind &#x2F; Google AI &#x2F; Anthropic 一手源</strong>（P0 重要）</li>
+<li><strong>AI Breakfast</strong> 精选日报</li>
+<li><strong>AI HOT</strong> 每日 AI 热点聚合</li>
+<li><strong>WaytoAGI</strong> 飞书知识库</li>
+<li><strong>AI HubToday &#x2F; AIbase</strong> 中文 AI 资讯</li>
+</ul>
+<p><strong>本地 RSS Cron 独有</strong>：</p>
+<ul>
+<li><strong>Import AI &#x2F; Ben’s Bites &#x2F; The Batch &#x2F; Last Week in AI</strong>（高质量 Newsletter 4 连）</li>
+<li><strong>ArXiv cs.AI</strong>（学术论文入口）</li>
+<li><strong>机器之心 &#x2F; 量子位 &#x2F; 钛媒体 &#x2F; 甲子光年</strong>（中文 AI 媒体 4 连）</li>
+<li><strong>Hacker News &#x2F; Dev.to</strong>（开发者实战）</li>
+<li><strong>Bloomberg Technology</strong>（商业科技）</li>
+</ul>
+<h2 id="四、5-层分层架构"><a href="#四、5-层分层架构" class="headerlink" title="四、5 层分层架构"></a>四、5 层分层架构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Layer 1: AI Newsletter / 官方动态</span><br><span class="line">  ai-news-radar 强 → 引入 RSS Cron</span><br><span class="line">Layer 2: 技术社区 / 开发者生态</span><br><span class="line">  RSS Cron 强 → 扩充 HN/Dev.to/ArXiv</span><br><span class="line">Layer 3: 中文媒体 / 热点聚合</span><br><span class="line">  两者各有覆盖 → 去重+扩充</span><br><span class="line">Layer 4: 飞书文档 / 特殊源</span><br><span class="line">  ai-news-radar 独有 → 保持</span><br><span class="line">Layer 5: 学术 / ArXiv</span><br><span class="line">  RSS Cron 已有</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、合并优化方案"><a href="#五、合并优化方案" class="headerlink" title="五、合并优化方案"></a>五、合并优化方案</h2><h3 id="5-1-RSS-Cron-引入-ai-news-radar-的高价值信源"><a href="#5-1-RSS-Cron-引入-ai-news-radar-的高价值信源" class="headerlink" title="5.1 RSS Cron 引入 ai-news-radar 的高价值信源"></a>5.1 RSS Cron 引入 ai-news-radar 的高价值信源</h3><p><strong>P0 官方源</strong>（强烈建议）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;OpenAI News&quot;</span><span class="punctuation">,</span>     <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://openai.com/news/rss.xml&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;openai&quot;</span><span class="punctuation">,</span><span class="string">&quot;官方&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Google DeepMind&quot;</span><span class="punctuation">,</span>  <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://deepmind.google/blog/rss.xml&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;google&quot;</span><span class="punctuation">,</span><span class="string">&quot;deepmind&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Google AI Blog&quot;</span><span class="punctuation">,</span>   <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://blog.google/innovation-and-ai/technology/ai/rss/&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;google&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Anthropic News&quot;</span><span class="punctuation">,</span>   <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://www.anthropic.com/news&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;anthropic&quot;</span><span class="punctuation">,</span><span class="string">&quot;claude&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="attr">&quot;scrape&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI HOT&quot;</span><span class="punctuation">,</span>           <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://aihot.virxact.com/feed.xml&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;热点&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>P1 Newsletter &#x2F; 优质源</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI Breakfast&quot;</span><span class="punctuation">,</span>     <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://r.jina.ai/https://aibreakfast.beehiiv.com/&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;scrape&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;InfoQ CN&quot;</span><span class="punctuation">,</span>         <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://www.infoq.cn/feed&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;技术媒体&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;infoq&quot;</span><span class="punctuation">,</span><span class="string">&quot;中文&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Microsoft AI Blog&quot;</span><span class="punctuation">,</span><span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://blogs.microsoft.com/ai/feed/&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;microsoft&quot;</span><span class="punctuation">,</span><span class="string">&quot;copilot&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;NVIDIA Gen AI&quot;</span><span class="punctuation">,</span>    <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://developer.nvidia.com/blog/category/generative-ai/feed/&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;nvidia&quot;</span><span class="punctuation">,</span><span class="string">&quot;gpu&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-强化-RSS-Cron-中文媒体覆盖"><a href="#5-2-强化-RSS-Cron-中文媒体覆盖" class="headerlink" title="5.2 强化 RSS Cron 中文媒体覆盖"></a>5.2 强化 RSS Cron 中文媒体覆盖</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;机器之心&quot;</span><span class="punctuation">,</span>     <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://feed.jiqizhixin.com/rss&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ai&quot;</span><span class="punctuation">,</span><span class="string">&quot;中文&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;量子位&quot;</span><span class="punctuation">,</span>       <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://www.qubit.cn/rss&quot;</span><span class="punctuation">,</span>         <span class="attr">&quot;category&quot;</span><span class="punctuation">:</span> <span class="string">&quot;AI&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;tags&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;ai&quot;</span><span class="punctuation">,</span><span class="string">&quot;中文&quot;</span><span class="punctuation">]</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-合并后的推荐信源（RSS-Cron-增强版）"><a href="#5-3-合并后的推荐信源（RSS-Cron-增强版）" class="headerlink" title="5.3 合并后的推荐信源（RSS Cron 增强版）"></a>5.3 合并后的推荐信源（RSS Cron 增强版）</h3><p><strong>核心 AI 官方（7 个）</strong>：OpenAI &#x2F; DeepMind &#x2F; Google AI &#x2F; Hugging Face &#x2F; Anthropic &#x2F; Microsoft AI &#x2F; NVIDIA</p>
+<p><strong>AI Newsletter（5 个）</strong>：AI Breakfast &#x2F; Import AI &#x2F; Ben’s Bites &#x2F; The Batch &#x2F; Last Week in AI</p>
+<p><strong>技术社区（5 个）</strong>：Hacker News &#x2F; ArXiv cs.AI &#x2F; Dev.to &#x2F; GitHub Trending (3 语言) &#x2F; 掘金</p>
+<p><strong>中文技术媒体（6 个）</strong>：36 氪 &#x2F; 机器之心 &#x2F; 量子位 &#x2F; 钛媒体 &#x2F; 甲子光年 &#x2F; InfoQ CN</p>
+<p><strong>聚合 &#x2F; 热点（5 个）</strong>：AI HOT &#x2F; TechURLs &#x2F; Buzzing &#x2F; 今日头条热榜 &#x2F; B 站热搜</p>
+<p><strong>开发者工具 &#x2F; 开源（3 个）</strong>：HelloGitHub 月刊 &#x2F; OSCHINA &#x2F; Linux.do</p>
+<p><strong>英文科技媒体（3 个）</strong>：Wired AI &#x2F; VentureBeat AI &#x2F; TechCrunch</p>
+<h2 id="六、4-条去重与精简建议"><a href="#六、4-条去重与精简建议" class="headerlink" title="六、4 条去重与精简建议"></a>六、4 条去重与精简建议</h2><ul>
+<li><strong>去重 36 氪 &#x2F; Wired AI &#x2F; Hugging Face Blog</strong>：两端都有，<strong>只保留 RSS Cron 端</strong>（自己控制更稳）</li>
+<li><strong>NewsNow 替代知乎日报</strong>：<code>newsnow.busiyi.world</code> 聚合更全</li>
+<li><strong>TechCrunch 重新启用</strong>：本地 RSS Cron 之前禁用，ai-news-radar 也没，<strong>RSS Cron 重新加回来</strong></li>
+<li><strong>tophub 与 RSS Cron 今日头条二选一</strong>：保留 RSS Cron 的（更新更稳）</li>
+</ul>
+<h2 id="七、4-条落地建议"><a href="#七、4-条落地建议" class="headerlink" title="七、4 条落地建议"></a>七、4 条落地建议</h2><ol>
+<li><strong>先合并 5 个 P0 官方源</strong>——补齐 OpenAI &#x2F; DeepMind &#x2F; Anthropic 等关键缺口</li>
+<li><strong>中文媒体优先</strong>——机器之心 &#x2F; 量子位 国内 AI 圈最权威</li>
+<li><strong>AI Newsletter 选 2-3 个就够</strong>——Import AI + Ben’s Bites 覆盖 80% 高质量内容</li>
+<li><strong>ai-news-radar 保留作为 Skill 来源</strong>——本地 RSS Cron 跑日报，它出 Skill 友好的 JSON</li>
+</ol>
+<h2 id="八、3-条避坑"><a href="#八、3-条避坑" class="headerlink" title="八、3 条避坑"></a>八、3 条避坑</h2><ul>
+<li><strong>去重要分阶段</strong>——一次性合并会丢历史数据，建议先 1 周观察再切换</li>
+<li><strong>重复源加白名单</strong>——两端都有 <code>Hugging Face Blog</code> 时，给 ai-news-radar 加 <code>@type: ignore</code> 标签</li>
+<li><strong>定期审计</strong>——每季度看一次 <code>source-status.json</code>（ai-news-radar 提供的），发现连续失败的源就换</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>本文结论</strong>：两者<strong>不是替代关系</strong>。ai-news-radar 强在”AI 官方+ 飞书+ 中文精选”，本地 RSS Cron 强在”Newsletter + 学术 + 中文技术媒体”。<strong>分层合并</strong>（5 层架构）比二选一更稳。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RSS/" rel="tag">RSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ai-news-radar/" rel="tag">ai-news-radar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" rel="tag">信息聚合</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AF%B9%E6%AF%94/" rel="tag">对比</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-obsidian-llm-wiki/">Obsidian LLM Wiki 多端协同</a><a class="next" href="/2026/09/01/2026-09-02-skill-plugin-mcp-dify/">Skill / Plugin / MCP / Dify 区分</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Tailscale/" style="font-size: 15px;">Tailscale</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/VNC/" style="font-size: 15px;">VNC</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" style="font-size: 15px;">远程桌面</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" style="font-size: 15px;">小红书</a> <a href="/tags/API/" style="font-size: 15px;">API</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15px;">爬虫</a> <a href="/tags/%E5%90%88%E8%A7%84/" style="font-size: 15px;">合规</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

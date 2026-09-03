@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Tailscale + frp 远程组网 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Tailscale + frp 远程组网</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Tailscale + frp 远程组网</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2.1k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 9</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>macbook-air 想远程连 mac-mini 时，Tailscale 直连经常失败——<code>MappingVariesByDestIP: true</code> 是对称 NAT、UDP 打洞不通，加上 Stash TUN 模式劫持所有出站流量，最后只能走 DERP 中继（香港节点，延迟 450ms）。本文记录<strong>用 frp 内网穿透降到 &lt;100ms</strong> 的实战方案。</p>
+<h2 id="一、问题诊断"><a href="#一、问题诊断" class="headerlink" title="一、问题诊断"></a>一、问题诊断</h2><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>位置</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对称 NAT</td>
+<td>两端</td>
+<td><code>MappingVariesByDestIP: true</code>，UDP 打洞失败</td>
+</tr>
+<tr>
+<td>Stash TUN 劫持</td>
+<td>mac-mini</td>
+<td><code>StashTunnel.appex</code> 创建 <code>utun7 (198.18.0.1)</code>，拦截所有出站流量</td>
+</tr>
+<tr>
+<td>只能走 DERP 中继</td>
+<td>两端</td>
+<td>mac-mini 分配到 hkg（香港），延迟 400-500ms</td>
+</tr>
+<tr>
+<td>高分辨率传输</td>
+<td>mac-mini</td>
+<td>Retina 2560×1600 + 外接 2560×1080，VNC 像素量巨大</td>
+</tr>
+<tr>
+<td>运营商无 IPv6</td>
+<td>mac-mini</td>
+<td>路由器无 IPv6 前缀下发，无法 IPv6 直连绕过 NAT</td>
+</tr>
+</tbody></table>
+<p><strong>最终方案</strong>：frp 内网穿透（mac-mini → 阿里云服务器 → macbook-air），延迟从 450ms 降到 &lt;100ms。</p>
+<h2 id="二、网络环境"><a href="#二、网络环境" class="headerlink" title="二、网络环境"></a>二、网络环境</h2><table>
+<thead>
+<tr>
+<th>设备</th>
+<th>关键信息</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>macbook-air</strong>（本地）</td>
+<td>Tailscale: 100.124.133.75 &#x2F; 电信对称 NAT &#x2F; frp VNC 客户端</td>
+</tr>
+<tr>
+<td><strong>mac-mini</strong>（远程）</td>
+<td>Tailscale: 100.80.71.18 &#x2F; 小米路由器 &#x2F; 局域网 192.168.31.67 &#x2F; 装 Stash</td>
+</tr>
+<tr>
+<td><strong>阿里云 ECS</strong>（中继）</td>
+<td>公网 121.43.122.77 &#x2F; Ubuntu 22.04 &#x2F; 开放 7000 + 5900</td>
+</tr>
+</tbody></table>
+<p><strong>关键</strong>：mac-mini 上 Stash TUN 模式必须关闭，否则 Tailscale 流量全被劫持。</p>
+<h2 id="三、Tailscale-排查"><a href="#三、Tailscale-排查" class="headerlink" title="三、Tailscale 排查"></a>三、Tailscale 排查</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 Tailscale 状态</span></span><br><span class="line">tailscale status</span><br><span class="line">tailscale netcheck</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试对端延迟</span></span><br><span class="line">tailscale ping macbook-air</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键诊断指标</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正常直连（目标）</span></span><br><span class="line">UDP: <span class="literal">true</span></span><br><span class="line">MappingVariesByDestIP: <span class="literal">false</span>   <span class="comment"># 全锥 NAT 才能打洞</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 异常（需排查）</span></span><br><span class="line">UDP: <span class="literal">false</span>                     <span class="comment"># 防火墙/VPN 拦截</span></span><br><span class="line">MappingVariesByDestIP: <span class="literal">true</span>   <span class="comment"># 对称 NAT</span></span><br><span class="line">Relay: hkg/sfo/...             <span class="comment"># 只能走中继</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Stash-冲突处理（mac-mini）"><a href="#Stash-冲突处理（mac-mini）" class="headerlink" title="Stash 冲突处理（mac-mini）"></a>Stash 冲突处理（mac-mini）</h3><p><strong>问题</strong>：Stash TUN 模式创建 <code>utun7 (198.18.0.1)</code>，劫持 Tailscale UDP。</p>
+<p><strong>排查</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ifconfig | grep utun</span><br><span class="line">pgrep -l StashTunnel</span><br><span class="line"><span class="built_in">sudo</span> lsof | grep utun | awk <span class="string">&#x27;&#123;print $1, $2&#125;&#x27;</span> | <span class="built_in">sort</span> -u</span><br></pre></td></tr></table></figure>
+
+<p><strong>方案 A：关 Stash TUN</strong>（推荐）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">osascript -e <span class="string">&#x27;quit app &quot;Stash&quot;&#x27;</span></span><br><span class="line"><span class="built_in">sudo</span> killall -9 StashTunnel</span><br><span class="line">ifconfig | grep utun        <span class="comment"># utun7 应消失</span></span><br><span class="line">tailscale netcheck           <span class="comment"># UDP: true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方案 B：Stash 规则排除 Tailscale</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR,100.64.0.0/10,DIRECT,no-resolve</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">IP-CIDR6,fd7a:115c:a1e0::/48,DIRECT,no-resolve</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、frp-内网穿透（核心配置）"><a href="#四、frp-内网穿透（核心配置）" class="headerlink" title="四、frp 内网穿透（核心配置）"></a>四、frp 内网穿透（核心配置）</h2><h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mac-mini ─frpc─→ 阿里云 frps:7000 ←frpc─ macbook-air</span><br><span class="line">127.0.0.1:5900   121.43.122.77       VNC 客户端</span><br></pre></td></tr></table></figure>
+
+<p>frps 是”接线员”——在公网监听，被动等 frpc 连入；frpc 是”翻译官”——从内网主动连出，把本地端口暴露成公网端口。</p>
+<h3 id="服务器-frps（阿里云）"><a href="#服务器-frps（阿里云）" class="headerlink" title="服务器 frps（阿里云）"></a>服务器 frps（阿里云）</h3><p><code>~/frp_0.61.1_linux_amd64/frps.toml</code>：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">bindPort</span> = <span class="number">7000</span></span><br><span class="line"></span><br><span class="line"><span class="section">[transport]</span></span><br><span class="line"><span class="attr">heartbeatTimeout</span> = <span class="number">30</span>   <span class="comment"># 默认 90s 改成 30s，避免断联 90s 内复用代理名冲突</span></span><br></pre></td></tr></table></figure>
+
+<p>systemd 服务 <code>/etc/systemd/system/frps.service</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=FRP Server</span><br><span class="line"><span class="attr">After</span>=network.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">ExecStart</span>=/home/ecs-user/frp_0.<span class="number">61.1</span>_linux_amd64/frps -c /home/ecs-user/frp_0.<span class="number">61.1</span>_linux_amd64/frps.toml</span><br><span class="line"><span class="attr">Restart</span>=always</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=multi-user.target</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> systemctl start frps</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> frps</span><br><span class="line"><span class="built_in">sudo</span> ss -tlnp | grep 7000     <span class="comment"># 验证 LISTEN</span></span><br><span class="line"><span class="built_in">sudo</span> ufw allow 7000/tcp</span><br><span class="line"><span class="built_in">sudo</span> ufw allow 5900/tcp</span><br></pre></td></tr></table></figure>
+
+<p><strong>阿里云安全组</strong>：入方向 TCP 7000 + 5900，授权 <code>0.0.0.0/0</code>。</p>
+<h3 id="客户端-frpc（mac-mini）"><a href="#客户端-frpc（mac-mini）" class="headerlink" title="客户端 frpc（mac-mini）"></a>客户端 frpc（mac-mini）</h3><p><code>~/frpc.toml</code>：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">serverAddr</span> = <span class="string">&quot;121.43.122.77&quot;</span></span><br><span class="line"><span class="attr">serverPort</span> = <span class="number">7000</span></span><br><span class="line"><span class="attr">transport.heartbeatInterval</span> = <span class="number">10</span>   <span class="comment"># 10s 心跳，配合 frps 30s 超时</span></span><br><span class="line"></span><br><span class="line"><span class="section">[[proxies]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;mac-mini-vnc&quot;</span></span><br><span class="line"><span class="attr">type</span> = <span class="string">&quot;tcp&quot;</span></span><br><span class="line"><span class="attr">localIP</span> = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line"><span class="attr">localPort</span> = <span class="number">5900</span></span><br><span class="line"><span class="attr">remotePort</span> = <span class="number">5900</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>手动运行</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/opt/homebrew/bin/frpc -c ~/frpc.toml</span><br><span class="line"><span class="comment"># 成功输出：login to server success, get run id [xxx]</span></span><br><span class="line"><span class="comment">#          [mac-mini-vnc] start proxy success</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="持久化（macOS-launchd）"><a href="#持久化（macOS-launchd）" class="headerlink" title="持久化（macOS launchd）"></a>持久化（macOS launchd）</h3><p><code>~/Library/LaunchAgents/com.fatedier.frpc.plist</code>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">plist</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//Apple//DTD PLIST 1.0//EN&quot;</span> <span class="string">&quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plist</span> <span class="attr">version</span>=<span class="string">&quot;1.0&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dict</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>Label<span class="tag">&lt;/<span class="name">key</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>com.fatedier.frpc<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>ProgramArguments<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>/opt/homebrew/bin/frpc<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>-c<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">string</span>&gt;</span>/Users/hanamaki_mac_mini/frpc.toml<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>RunAtLoad<span class="tag">&lt;/<span class="name">key</span>&gt;</span><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>KeepAlive<span class="tag">&lt;/<span class="name">key</span>&gt;</span><span class="tag">&lt;<span class="name">true</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>StandardOutPath<span class="tag">&lt;/<span class="name">key</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>/Users/hanamaki_mac_mini/frpc.log<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">key</span>&gt;</span>StandardErrorPath<span class="tag">&lt;/<span class="name">key</span>&gt;</span><span class="tag">&lt;<span class="name">string</span>&gt;</span>/Users/hanamaki_mac_mini/frpc-error.log<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">launchctl load ~/Library/LaunchAgents/com.fatedier.frpc.plist</span><br><span class="line">launchctl list | grep com.fatedier.frpc</span><br><span class="line"><span class="built_in">tail</span> -f ~/frpc.log</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、VNC-连接（最终目标）"><a href="#五、VNC-连接（最终目标）" class="headerlink" title="五、VNC 连接（最终目标）"></a>五、VNC 连接（最终目标）</h2><p><strong>通过 frp</strong>（主方案）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># macbook-air 上</span></span><br><span class="line">open vnc://121.43.122.77:5900</span><br></pre></td></tr></table></figure>
+
+<p>凭据：mac-mini 的系统用户名和密码。</p>
+<p><strong>通过 Tailscale</strong>（备用，受限中继延迟）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">open vnc://100.80.71.18</span><br></pre></td></tr></table></figure>
+
+<h2 id="六、11-个常见问题速查"><a href="#六、11-个常见问题速查" class="headerlink" title="六、11 个常见问题速查"></a>六、11 个常见问题速查</h2><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dial tcp ... i/o timeout</code></td>
+<td>frps 未运行 &#x2F; 端口未放行</td>
+<td><code>systemctl status frps</code> + <code>ss -tlnp | grep 7000</code></td>
+</tr>
+<tr>
+<td><code>Couldn&#39;t connect to server 127.0.0.1:7890</code></td>
+<td>Stash 代理环境变量残留</td>
+<td><code>unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY</code></td>
+</tr>
+<tr>
+<td>Tailscale <code>UDP: false</code></td>
+<td>Stash TUN 模式劫持 UDP</td>
+<td><code>killall -9 StashTunnel</code> + 关 Stash</td>
+</tr>
+<tr>
+<td>frpc Homebrew 装不上</td>
+<td>brew 源问题</td>
+<td>手动下二进制：<code>curl -L -o frp.tar.gz https://github.com/fatedier/frp/releases/...</code></td>
+</tr>
+<tr>
+<td>开 Stash 后 frpc 连不上</td>
+<td>Stash 劫持 frpc 出站</td>
+<td>Stash 加 <code>IP-CIDR,121.43.122.77/32,DIRECT</code></td>
+</tr>
+<tr>
+<td><code>proxy already exists</code></td>
+<td>frp 0.61.1 默认 <code>heartbeatTimeout=90s</code>，断联后 90s 内复用名冲突</td>
+<td>双方加心跳：frps 30s + frpc 10s</td>
+</tr>
+<tr>
+<td>Windows frpc 连上但 RDP 连不上</td>
+<td>3389 没监听 &#x2F; Win Home 版不支持 RDP &#x2F; 防火墙 &#x2F; ECS 未放行</td>
+<td><code>netstat -ano | findstr :3389</code> + 升级 Windows 版本</td>
+</tr>
+<tr>
+<td>Windows 重启后 frpc 没起</td>
+<td>任务计划或 nssm 未注册</td>
+<td><code>Get-ScheduledTask -TaskName &quot;frpc&quot;</code></td>
+</tr>
+<tr>
+<td>Windows SSH 连不上</td>
+<td>sshd 未起 &#x2F; 账户没密码 &#x2F; 端口未放行</td>
+<td><code>Get-Service sshd</code> + <code>Start-Service sshd</code> + 设账户密码</td>
+</tr>
+<tr>
+<td>Windows VNC 连不上</td>
+<td>本机没装 VNC Server</td>
+<td><code>netstat -ano | findstr :5900</code> + 装 RealVNC&#x2F;TightVNC</td>
+</tr>
+<tr>
+<td>Windows SMB 连不上</td>
+<td>共享未启用 &#x2F; 权限不足 &#x2F; 60445 未放行</td>
+<td><code>Get-SmbShare</code> + 验证账户能访问共享</td>
+</tr>
+</tbody></table>
+<h2 id="七、Windows-远程桌面补充（可选）"><a href="#七、Windows-远程桌面补充（可选）" class="headerlink" title="七、Windows 远程桌面补充（可选）"></a>七、Windows 远程桌面补充（可选）</h2><p>如果还要连家里 Windows PC，frp 配置加：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># C:\frp\frpc.toml</span></span><br><span class="line"><span class="attr">serverAddr</span> = <span class="string">&quot;121.43.122.77&quot;</span></span><br><span class="line"><span class="attr">serverPort</span> = <span class="number">7000</span></span><br><span class="line"><span class="attr">transport.heartbeatInterval</span> = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="section">[[proxies]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;winpc-rdp&quot;</span></span><br><span class="line"><span class="attr">type</span> = <span class="string">&quot;tcp&quot;</span></span><br><span class="line"><span class="attr">localIP</span> = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line"><span class="attr">localPort</span> = <span class="number">3389</span></span><br><span class="line"><span class="attr">remotePort</span> = <span class="number">3389</span>   <span class="comment"># 或改成 6002 自定义</span></span><br><span class="line"></span><br><span class="line"><span class="section">[[proxies]]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;winpc-ssh&quot;</span></span><br><span class="line"><span class="attr">type</span> = <span class="string">&quot;tcp&quot;</span></span><br><span class="line"><span class="attr">localIP</span> = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line"><span class="attr">localPort</span> = <span class="number">22</span></span><br><span class="line"><span class="attr">remotePort</span> = <span class="number">6001</span></span><br></pre></td></tr></table></figure>
+
+<p>Windows PowerShell 启 OpenSSH Server + 远程桌面 + 放行防火墙 + 持久化（任务计划程序或 nssm）—— 跟 mac-mini 的 launchd 类似。</p>
+<p><strong>macbook-air 上连 Windows</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># RDP</span></span><br><span class="line">open rdp://121.43.122.77:3389</span><br><span class="line"></span><br><span class="line"><span class="comment"># SSH</span></span><br><span class="line">ssh 你的Windows用户名@121.43.122.77 -p 6001</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ SMB 不建议长期暴露公网（即使是改了端口）。长期用建议走 Tailscale 或其他 VPN。</p>
+</blockquote>
+<h2 id="八、frp-工作原理详解（5-步流程）"><a href="#八、frp-工作原理详解（5-步流程）" class="headerlink" title="八、frp 工作原理详解（5 步流程）"></a>八、frp 工作原理详解（5 步流程）</h2><p>理解 frp 怎么跑的，对排查问题至关重要：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 启动 → mac-mini frpc 连 ECS frps:7000</span><br><span class="line">2. 注册 → frpc 告诉 frps：「mac-mini-vnc = 我本地 127.0.0.1:5900，请用公网 :5900 收流量」</span><br><span class="line">3. 心跳 → frpc 每 10s 报一次心跳（heartbeatInterval），告知自己还活着</span><br><span class="line">4. 断联检测 → frps 30s 没收到心跳就清掉这个代理（heartbeatTimeout）</span><br><span class="line">5. 流量转发 → 用户连 ECS:5900 → frps 找到对应 frpc → 通过 7000 通道把数据塞给 frpc → frpc 转到本地 5900（VNC）</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键</strong>：第 5 步走的是<strong>同一条 7000 控制连接</strong>（多路复用），不是新开 5900 连接。所以 frps 的 5900 是”客户端看到的入口”，<strong>实际数据还是跑在 7000 这条长连接上</strong>。</p>
+<p><strong>frps &#x2F; frpc 角色对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>全称</th>
+<th>跑在哪</th>
+<th>主要职责</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>frps</td>
+<td>frp <strong>server</strong></td>
+<td>阿里云 ECS（公网 IP）</td>
+<td>监听控制端口 + 代理端口；等 frpc 主动连接；按规则做流量转发</td>
+</tr>
+<tr>
+<td>frpc</td>
+<td>frp <strong>client</strong></td>
+<td>内网机器（mac-mini）</td>
+<td>主动连出到 frps；声明本地哪个端口暴露成公网哪个端口；维护心跳</td>
+</tr>
+</tbody></table>
+<h2 id="九、5-条安全建议"><a href="#九、5-条安全建议" class="headerlink" title="九、5 条安全建议"></a>九、5 条安全建议</h2><p>frp 默认是<strong>明文传输</strong>——VNC 流量在公网上是裸的。生产环境务必加层：</p>
+<ol>
+<li><strong>frp 启用 TLS</strong>（v0.50+ 支持）：<code>frps.toml</code> 加 <code>transport.tls.force = true</code>，流量加密</li>
+<li><strong>frp 启用身份认证</strong>：<code>token = your-strong-password</code> 在 frps 配置，frpc 必须带相同 token 才能连</li>
+<li><strong>VNC 改 SSH + X11 转发</strong>：VNC 协议不安全，远程桌面用 RDP（Windows）&#x2F;SSH+X11（Linux&#x2F;Mac）更稳</li>
+<li><strong>服务器安全组最小化</strong>：只放行 7000（控制）+ 5900&#x2F;3389（具体代理端口），不开无关端口</li>
+<li><strong>启用 fail2ban</strong>：frps 配 iptables 规则，连续失败 5 次封 IP 一小时</li>
+</ol>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frps.toml 加 token 认证</span></span><br><span class="line"><span class="attr">auth.method</span> = <span class="string">&quot;token&quot;</span></span><br><span class="line"><span class="attr">auth.token</span> = <span class="string">&quot;your-strong-random-password-here&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># frpc.toml 同步</span></span><br><span class="line"><span class="attr">auth.method</span> = <span class="string">&quot;token&quot;</span></span><br><span class="line"><span class="attr">auth.token</span> = <span class="string">&quot;your-strong-random-password-here&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十、维护建议"><a href="#十、维护建议" class="headerlink" title="十、维护建议"></a>十、维护建议</h2><ol>
+<li><strong>定期看日志</strong>：<code>tail -f ~/frpc.log</code>，断联第一时间发现</li>
+<li><strong>Stash 升级后重检</strong>：新版本可能自动开 TUN 模式，要重新关</li>
+<li><strong>服务器安全组最小化</strong>：只放行 7000（控制）+ 必要的 remotePort（5900&#x2F;3389&#x2F;22&#x2F;445）</li>
+<li><strong>VNC&#x2F;SMB 别长期暴露</strong>：临时用可以，长期用走 Tailscale&#x2F;ZeroTier</li>
+<li><strong>配置备份</strong>：所有 toml &#x2F; plist &#x2F; systemd 单元文件都该进 Git，机器坏了能快速恢复</li>
+</ol>
+<hr>
+<blockquote>
+<p>实战中 frp 比 Tailscale 稳定（特别是在国内 NAT 环境）。如果只需要连 1-2 台机器，frp 简单够用；如果设备多 &#x2F; 经常变，Tailscale 更省心。<strong>两者结合（frp 主、TS 备）是最稳的方案</strong>。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tailscale/" rel="tag">Tailscale</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VNC/" rel="tag">VNC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/frp/" rel="tag">frp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="tag">内网穿透</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" rel="tag">远程桌面</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-skill-plugin-mcp-dify/">Skill / Plugin / MCP / Dify 区分</a><a class="next" href="/2026/09/01/2026-09-02-vue-nuxt-nest-stack/">Vue/Nuxt/Nest 全栈实战</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Tailscale/" style="font-size: 15px;">Tailscale</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/VNC/" style="font-size: 15px;">VNC</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" style="font-size: 15px;">远程桌面</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" style="font-size: 15px;">小红书</a> <a href="/tags/API/" style="font-size: 15px;">API</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15px;">爬虫</a> <a href="/tags/%E5%90%88%E8%A7%84/" style="font-size: 15px;">合规</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
