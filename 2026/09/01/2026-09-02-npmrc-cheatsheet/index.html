@@ -1,0 +1,659 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>.npmrc 配置实战 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">.npmrc 配置实战</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">.npmrc 配置实战</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 5.2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 23</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p><code>.npmrc</code> 官方有 21 个配置项，但日常用到的就 10 来个。这篇是按使用频次排序的实战指南——<strong>每个配置都配可直接复制的 .ini 块</strong>，最后给 4 类典型场景的完整 .npmrc 模板、5 个错误码速查、10 条 FAQ、npm vs pnpm vs yarn 对比。</p>
+<h2 id="一、文件位置与优先级"><a href="#一、文件位置与优先级" class="headerlink" title="一、文件位置与优先级"></a>一、文件位置与优先级</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 项目级（仅当前项目生效，提交到 git 给整个团队用）</span></span><br><span class="line">项目根/.npmrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户级（所有项目生效，只对自己）</span></span><br><span class="line">~/.npmrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全局级（系统级，所有用户的兜底）</span></span><br><span class="line">/etc/npmrc</span><br></pre></td></tr></table></figure>
+
+<p><strong>优先级</strong>：项目级 &gt; 用户级 &gt; 全局级。同一字段多处定义时，项目级赢。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前生效的所有配置（合并后）</span></span><br><span class="line">npm config list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 含默认值的所有项（以 ; 开头的就是默认值）</span></span><br><span class="line">npm config list -l | grep <span class="string">&quot;^;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>实战建议</strong>：项目级 <code>.npmrc</code> 必须提交到 git；用户级只放”个人偏好”（如 <code>init-author-email</code>），不要放会影响团队构建的设置（如 <code>registry</code>、proxy）；全局级基本不用。</p>
+<h2 id="二、12-个高频配置详解"><a href="#二、12-个高频配置详解" class="headerlink" title="二、12 个高频配置详解"></a>二、12 个高频配置详解</h2><h3 id="1-registry-—-npm-镜像源"><a href="#1-registry-—-npm-镜像源" class="headerlink" title="1. registry — npm 镜像源"></a>1. <code>registry</code> — npm 镜像源</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">registry</span>=https://registry.npmmirror.com/</span><br></pre></td></tr></table></figure>
+
+<p>国内项目<strong>必加</strong>。默认 <code>https://registry.npmjs.org/</code> 在国内经常 30 秒超时。</p>
+<table>
+<thead>
+<tr>
+<th>镜像</th>
+<th>URL</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阿里</td>
+<td><code>https://registry.npmmirror.com/</code></td>
+<td>速度最快，淘宝团队维护</td>
+</tr>
+<tr>
+<td>腾讯</td>
+<td><code>https://mirrors.cloud.tencent.com/npm/</code></td>
+<td>偶尔更稳</td>
+</tr>
+<tr>
+<td>中科大</td>
+<td><code>https://mirrors.ustc.edu.cn/npm/</code></td>
+<td>学术网首选</td>
+</tr>
+<tr>
+<td>npm 官方</td>
+<td><code>https://registry.npmjs.org/</code></td>
+<td>海外服务器无障碍</td>
+</tr>
+</tbody></table>
+<p><strong>scope 镜像</strong>（只对 <code>@scope/</code> 包换源，私有包常用）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@my-company:<span class="attr">registry</span>=https://npm.internal.company.com/</span><br><span class="line">@types:<span class="attr">registry</span>=https://registry.npmmirror.com/</span><br><span class="line">@babel:<span class="attr">registry</span>=https://registry.npmmirror.com/</span><br></pre></td></tr></table></figure>
+
+<p><strong>临时切换</strong>（不写文件）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install xxx --registry=https://registry.npmmirror.com/</span><br><span class="line"><span class="comment"># 一次性用，不影响其他命令</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-save-exact-—-锁版本"><a href="#2-save-exact-—-锁版本" class="headerlink" title="2. save-exact — 锁版本"></a>2. <code>save-exact</code> — 锁版本</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><code>npm install xxx</code> 默认写 <code>&quot;xxx&quot;: &quot;^1.2.3&quot;</code>（范围），团队里两台机器可能装到不同次版本。<code>save-exact=true</code> 写精确版本 <code>&quot;xxx&quot;: &quot;1.2.3&quot;</code>，避免”我本地能跑你跑不了”。</p>
+<p><strong>注意</strong>：开了 <code>save-exact</code> 后 <code>npm install</code> 不带版本时仍会装 latest。<strong>建议同步加</strong>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">fund</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">audit</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-legacy-peer-deps-—-跳过-peer-依赖检查"><a href="#3-legacy-peer-deps-—-跳过-peer-依赖检查" class="headerlink" title="3. legacy-peer-deps — 跳过 peer 依赖检查"></a>3. <code>legacy-peer-deps</code> — 跳过 peer 依赖检查</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">legacy-peer-deps</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>npm 7+ 严格检查 peer dependencies，老项目升级时常常报：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm error ERESOLVE could not resolve</span><br><span class="line">npm error While resolving: react@18.2.0</span><br><span class="line">npm error Found: react@17.0.2</span><br></pre></td></tr></table></figure>
+
+<p><code>legacy-peer-deps=true</code> 回到 npm 6 的宽松模式。<strong>仅在确认依赖没问题时用</strong>——它会隐藏真正的版本冲突。</p>
+<p><strong>对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>行为</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>npm 6</td>
+<td>宽松 peer 检查</td>
+<td>维护老项目</td>
+</tr>
+<tr>
+<td>npm 7+ 默认</td>
+<td>严格 peer 检查</td>
+<td>新项目</td>
+</tr>
+<tr>
+<td><code>legacy-peer-deps=true</code></td>
+<td>强制宽松</td>
+<td>npm 7+ 跑老项目</td>
+</tr>
+<tr>
+<td><code>strict-peer-deps=true</code></td>
+<td>强制严格</td>
+<td>锁版本严格</td>
+</tr>
+</tbody></table>
+<h3 id="4-engine-strict-—-强制-Node-版本"><a href="#4-engine-strict-—-强制-Node-版本" class="headerlink" title="4. engine-strict — 强制 Node 版本"></a>4. <code>engine-strict</code> — 强制 Node 版本</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 <code>package.json</code> 写了：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span> <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=18&quot;</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>不开这个，Node 16 装时<strong>只警告</strong>；开了就直接报错。<strong>生产项目必开</strong>，本地开发可以不开。</p>
+<h3 id="5-ignore-scripts-—-跳过-install-钩子"><a href="#5-ignore-scripts-—-跳过-install-钩子" class="headerlink" title="5. ignore-scripts — 跳过 install 钩子"></a>5. <code>ignore-scripts</code> — 跳过 install 钩子</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ignore-scripts</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><code>postinstall</code>、<code>preinstall</code> 等脚本可能跑恶意代码（历史上 <code>event-stream</code> 事件就是被攻击的）。在不可信环境下装包时开它。</p>
+<p><strong>典型场景</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># CI 里跑陌生 PR 的依赖装包时</span></span><br><span class="line">npm ci --ignore-scripts</span><br><span class="line"></span><br><span class="line"><span class="comment"># 本地装某个可疑包</span></span><br><span class="line">npm install some-pkg --ignore-scripts</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：开了之后<strong>很多包的关键功能会失效</strong>：</p>
+<ul>
+<li>husky（git hooks）</li>
+<li>patch-package</li>
+<li>prisma generate</li>
+<li>electron-rebuild</li>
+<li>任何用 <code>postinstall</code> 跑构建脚本的包</li>
+</ul>
+<p><strong>生产构建别开</strong>。</p>
+<h3 id="6-proxy-https-proxy-—-代理"><a href="#6-proxy-https-proxy-—-代理" class="headerlink" title="6. proxy &#x2F; https-proxy — 代理"></a>6. <code>proxy</code> &#x2F; <code>https-proxy</code> — 代理</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">proxy</span>=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">7890</span></span><br><span class="line"><span class="attr">https-proxy</span>=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">7890</span></span><br></pre></td></tr></table></figure>
+
+<p>公司内网访问 npm 仓库需要代理。或用 <code>npm config get proxy</code> 先确认默认值。</p>
+<p><strong>noproxy 排除</strong>（内网仓库不走代理）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">proxy</span>=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">7890</span></span><br><span class="line"><span class="attr">https-proxy</span>=http://<span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">7890</span></span><br><span class="line"><span class="attr">noproxy</span>=localhost,<span class="number">127.0</span>.<span class="number">0.1</span>,.internal.company.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>踩坑</strong>：proxy 配错会导致”卡在 <code>idealTree:building: sill idealTree buildDeps</code>“长时间无响应。建议先 <code>curl -I https://registry.npmjs.org/</code> 测试代理可达性。</p>
+<h3 id="7-audit-audit-level-—-关漏洞审计"><a href="#7-audit-audit-level-—-关漏洞审计" class="headerlink" title="7. audit &#x2F; audit-level — 关漏洞审计"></a>7. <code>audit</code> &#x2F; <code>audit-level</code> — 关漏洞审计</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">audit</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">audit-level</span>=high   <span class="comment"># 只报 high/critical</span></span><br></pre></td></tr></table></figure>
+
+<p><code>npm install</code> 默认会跑 <code>npm audit</code> 查漏洞，<strong>有时要 30+ 秒</strong>。CI 上跑一次还好，本地反复装包时累。</p>
+<p><strong>建议配置</strong>：</p>
+<ul>
+<li><code>audit=high</code>：只显示 high&#x2F;critical，跳过 moderate&#x2F;low</li>
+<li><code>audit=false</code>：完全关掉（自己另跑 <code>npm audit</code>）</li>
+</ul>
+<p><strong>audit 报告解读</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm audit --json</span><br><span class="line"><span class="comment"># 看具体漏洞</span></span><br><span class="line">npm audit fix              <span class="comment"># 自动升级补丁版本</span></span><br><span class="line">npm audit fix --force      <span class="comment"># 升级 major（破坏性变更，慎用）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-prefer-offline-cache-—-优先用缓存"><a href="#8-prefer-offline-cache-—-优先用缓存" class="headerlink" title="8. prefer-offline &#x2F; cache — 优先用缓存"></a>8. <code>prefer-offline</code> &#x2F; <code>cache</code> — 优先用缓存</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">prefer-offline</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">cache</span>=~/.npm-cache</span><br></pre></td></tr></table></figure>
+
+<p>网络差的时候救命。<code>prefer-offline</code> 让 npm 先查本地缓存，没命中再走网络。<code>cache</code> 指定缓存目录到 SSD 或大硬盘。</p>
+<p><strong>验证缓存命中</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> ~/.npm-cache/_cacache/content-v2/sha512/ | <span class="built_in">wc</span> -l</span><br><span class="line"><span class="comment"># 1000+ 说明缓存有不少</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>清理缓存</strong>（磁盘不够时）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm cache clean --force</span><br><span class="line"><span class="comment"># 删 ~/.npm 整个目录也行</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/.npm</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-loglevel-—-控制日志噪音"><a href="#9-loglevel-—-控制日志噪音" class="headerlink" title="9. loglevel — 控制日志噪音"></a>9. <code>loglevel</code> — 控制日志噪音</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">loglevel</span>=warn</span><br></pre></td></tr></table></figure>
+
+<p>可选值：<code>silent</code> &#x2F; <code>error</code> &#x2F; <code>warn</code> &#x2F; <code>info</code> &#x2F; <code>http</code> &#x2F; <code>verbose</code>。日常 <code>warn</code> 够安静，CI 跑 verbose 看细节。</p>
+<p><strong>调试网络问题</strong>时改 <code>http</code>，看完整的 HTTP 请求：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">loglevel</span>=http</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-package-lock-—-锁文件"><a href="#10-package-lock-—-锁文件" class="headerlink" title="10. package-lock — 锁文件"></a>10. <code>package-lock</code> — 锁文件</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">package-lock</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>默认 true，<strong>别关</strong>。包锁文件能保证团队装的版本一致。</p>
+<p><code>.gitignore</code> 别忽略它（默认就不忽略）。如果 <code>package-lock.json</code> 提交后 PR 频繁冲突，<strong>说明团队没装好依赖</strong>，先 <code>npm ci</code> 同步再开发。</p>
+<h3 id="11-dry-run-yes-—-自动确认"><a href="#11-dry-run-yes-—-自动确认" class="headerlink" title="11. dry-run &#x2F; yes — 自动确认"></a>11. <code>dry-run</code> &#x2F; <code>yes</code> — 自动确认</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">yes</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><code>npm init</code> &#x2F; <code>npm create</code> 时的 <code>Are you sure?</code> 自动 yes。<strong>谨慎开</strong>——只在自己熟悉的场景。</p>
+<h3 id="12-init-—-项目初始化默认值"><a href="#12-init-—-项目初始化默认值" class="headerlink" title="12. init-* — 项目初始化默认值"></a>12. <code>init-*</code> — 项目初始化默认值</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">init-author-name</span>=Kevin</span><br><span class="line"><span class="attr">init-author-email</span>=kevin@example.com</span><br><span class="line"><span class="attr">init-author-url</span>=https://kevin.com</span><br><span class="line"><span class="attr">init-license</span>=MIT</span><br><span class="line"><span class="attr">init-version</span>=<span class="number">0.0</span>.<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p><code>npm init -y</code> 时自动填这些，避免每次手输。</p>
+<h2 id="三、4-类典型-npmrc-完整模板"><a href="#三、4-类典型-npmrc-完整模板" class="headerlink" title="三、4 类典型 .npmrc 完整模板"></a>三、4 类典型 .npmrc 完整模板</h2><h3 id="模板-1：国内小团队"><a href="#模板-1：国内小团队" class="headerlink" title="模板 1：国内小团队"></a>模板 1：国内小团队</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># registry 镜像</span></span><br><span class="line"><span class="attr">registry</span>=https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 版本严格</span></span><br><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># CI 友好</span></span><br><span class="line"><span class="attr">audit</span>=high</span><br><span class="line"><span class="attr">loglevel</span>=warn</span><br><span class="line"><span class="attr">fund</span>=<span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># scope 镜像（私有包走自己的源）</span></span><br><span class="line">@my-company:<span class="attr">registry</span>=https://npm.internal.company.com/</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板-2：企业内网"><a href="#模板-2：企业内网" class="headerlink" title="模板 2：企业内网"></a>模板 2：企业内网</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 强制走公司内网仓库</span></span><br><span class="line"><span class="attr">registry</span>=https://npm.internal.company.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 代理出内网</span></span><br><span class="line"><span class="attr">proxy</span>=http://proxy.internal:<span class="number">8080</span></span><br><span class="line"><span class="attr">https-proxy</span>=http://proxy.internal:<span class="number">8080</span></span><br><span class="line"><span class="attr">noproxy</span>=localhost,<span class="number">127.0</span>.<span class="number">0.1</span>,.internal.company.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 严格审计</span></span><br><span class="line"><span class="attr">audit</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">always-auth</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自签证书（内网常遇到）</span></span><br><span class="line"><span class="attr">strict-ssl</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="模板-3：前端项目（多框架混用）"><a href="#模板-3：前端项目（多框架混用）" class="headerlink" title="模板 3：前端项目（多框架混用）"></a>模板 3：前端项目（多框架混用）</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">legacy-peer-deps</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加快 install</span></span><br><span class="line"><span class="attr">prefer-offline</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">audit</span>=high</span><br><span class="line"></span><br><span class="line"><span class="comment"># 包锁文件必提交</span></span><br><span class="line"><span class="attr">package-lock</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="模板-4：CI-CD（GitHub-Actions）"><a href="#模板-4：CI-CD（GitHub-Actions）" class="headerlink" title="模板 4：CI&#x2F;CD（GitHub Actions）"></a>模板 4：CI&#x2F;CD（GitHub Actions）</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 严格模式</span></span><br><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">audit</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">fund</span>=<span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 npm ci 更快（要求 lock 文件存在）</span></span><br><span class="line"><span class="attr">package-lock</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>对应 GitHub Actions 片段：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">node-version:</span> <span class="string">&#x27;20&#x27;</span></span><br><span class="line">    <span class="attr">cache:</span> <span class="string">&#x27;npm&#x27;</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">  <span class="attr">env:</span></span><br><span class="line">    <span class="attr">NODE_AUTH_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.NPM_TOKEN</span> <span class="string">&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、5-个常见错误码速查"><a href="#四、5-个常见错误码速查" class="headerlink" title="四、5 个常见错误码速查"></a>四、5 个常见错误码速查</h2><table>
+<thead>
+<tr>
+<th>错误</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ETARGET</code></td>
+<td>package.json engine 字段与当前 Node 不符</td>
+<td>升级 Node 或设 <code>engine-strict=false</code></td>
+</tr>
+<tr>
+<td><code>ERESOLVE peer dep</code></td>
+<td>npm 7+ 严格 peer 检查</td>
+<td>加 <code>legacy-peer-deps=true</code></td>
+</tr>
+<tr>
+<td><code>EACCES permissions</code></td>
+<td>全局安装需要 sudo</td>
+<td>改用 nvm 管理 Node，或 <code>chown</code> 全局目录</td>
+</tr>
+<tr>
+<td><code>ECONNRESET</code> &#x2F; <code>ETIMEDOUT</code></td>
+<td>网络问题或镜像源挂了</td>
+<td>换镜像 &#x2F; 开 <code>prefer-offline</code> &#x2F; 检查代理</td>
+</tr>
+<tr>
+<td><code>EPEERINVALID</code></td>
+<td>装的两个包 peer 要求冲突</td>
+<td>升级冲突的包，或装 <code>--legacy-peer-deps</code></td>
+</tr>
+</tbody></table>
+<p><strong>调试流程</strong>（错误时按顺序）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 清除缓存</span></span><br><span class="line"><span class="built_in">rm</span> -rf node_modules package-lock.json</span><br><span class="line">npm cache clean --force</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 验证网络</span></span><br><span class="line">curl -I https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 详细日志</span></span><br><span class="line">npm install xxx --loglevel=verbose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 跳过问题</span></span><br><span class="line">npm install xxx --legacy-peer-deps --force</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、CI-集成模板（GitHub-Actions）"><a href="#五、CI-集成模板（GitHub-Actions）" class="headerlink" title="五、CI 集成模板（GitHub Actions）"></a>五、CI 集成模板（GitHub Actions）</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">name:</span> <span class="string">CI</span></span><br><span class="line"><span class="attr">on:</span> [<span class="string">push</span>, <span class="string">pull_request</span>]</span><br><span class="line"></span><br><span class="line"><span class="attr">jobs:</span></span><br><span class="line">  <span class="attr">test:</span></span><br><span class="line">    <span class="attr">runs-on:</span> <span class="string">ubuntu-latest</span></span><br><span class="line">    <span class="attr">steps:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/checkout@v4</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">        <span class="attr">with:</span></span><br><span class="line">          <span class="attr">node-version:</span> <span class="string">&#x27;20&#x27;</span></span><br><span class="line">          <span class="attr">cache:</span> <span class="string">&#x27;npm&#x27;</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># 用 npm ci 走 lock 文件，install 速度比 npm install 快 2-3 倍</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">          <span class="comment"># 私有包需要 token</span></span><br><span class="line">          <span class="attr">NODE_AUTH_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.NPM_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line"></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">build</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">test</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>npm ci</code> vs <code>npm install</code></strong>：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>行为</th>
+<th>速度</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>npm ci</code></td>
+<td>删 <code>node_modules</code> 后按 lock 重装</td>
+<td>快 2-3 倍</td>
+<td>CI 必用</td>
+</tr>
+<tr>
+<td><code>npm install</code></td>
+<td>按 lock 增量装</td>
+<td>慢</td>
+<td>本地开发</td>
+</tr>
+<tr>
+<td><code>npm install pkg</code></td>
+<td>装新包</td>
+<td>中</td>
+<td>加依赖时</td>
+</tr>
+</tbody></table>
+<p><strong>私有 registry token 配置</strong>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .npmrc（项目级）</span></span><br><span class="line">@my-company:<span class="attr">registry</span>=https://npm.internal.company.com/</span><br><span class="line">//npm.internal.company.com/:<span class="attr">_authToken</span>=<span class="variable">$&#123;NPM_TOKEN&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>GitHub Secrets 配置 <code>NPM_TOKEN</code>，env 注入到 <code>npm ci</code> 即可。</p>
+<h2 id="六、npm-vs-pnpm-vs-yarn-配置差异"><a href="#六、npm-vs-pnpm-vs-yarn-配置差异" class="headerlink" title="六、npm vs pnpm vs yarn 配置差异"></a>六、npm vs pnpm vs yarn 配置差异</h2><table>
+<thead>
+<tr>
+<th>配置</th>
+<th>npm</th>
+<th>pnpm</th>
+<th>yarn</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>锁文件</td>
+<td><code>package-lock.json</code></td>
+<td><code>pnpm-lock.yaml</code></td>
+<td><code>yarn.lock</code></td>
+</tr>
+<tr>
+<td>镜像源</td>
+<td><code>registry=</code></td>
+<td><code>registry=</code></td>
+<td><code>registry=https://registry.npmmirror.com/</code></td>
+</tr>
+<tr>
+<td>锁版本</td>
+<td><code>save-exact=true</code></td>
+<td><code>save-exact=true</code></td>
+<td><code>--save-exact</code> flag</td>
+</tr>
+<tr>
+<td>peer 依赖</td>
+<td><code>legacy-peer-deps</code></td>
+<td><code>auto-install-peers=true</code></td>
+<td><code>nodeLinker: node-modules</code>（Yarn Berry）</td>
+</tr>
+<tr>
+<td>离线缓存</td>
+<td><code>prefer-offline</code></td>
+<td><code>offline=true</code></td>
+<td><code>--prefer-offline</code> flag</td>
+</tr>
+<tr>
+<td>安装速度</td>
+<td>慢（npm 7+ 改进）</td>
+<td>最快（硬链接复用）</td>
+<td>快（Yarn 3+）</td>
+</tr>
+</tbody></table>
+<p><strong>多 package manager 团队</strong>的 <code>.npmrc</code> 和 <code>pnpm-workspace.yaml</code> 要并行维护，写好注释避免混淆。<strong>项目里只能用一种</strong>（<code>engines</code> + <code>packageManager</code> 字段锁住）。</p>
+<h2 id="七、10-条常见-FAQ"><a href="#七、10-条常见-FAQ" class="headerlink" title="七、10 条常见 FAQ"></a>七、10 条常见 FAQ</h2><p><strong>Q1：项目级 .npmrc 要不要提交到 git？</strong><br>要。团队共享。</p>
+<p><strong>Q2：改了 .npmrc 不生效？</strong></p>
+<ul>
+<li>看 <code>npm config list</code> 输出，确认生效的是哪一份</li>
+<li>大小写敏感（Windows 上）</li>
+<li><code>npm config get registry</code> 测一下</li>
+</ul>
+<p><strong>Q3：私有 registry 的 token 安全吗？</strong></p>
+<ul>
+<li>.npmrc 里的 <code>_authToken</code> <strong>别提交</strong>到 git</li>
+<li>用 <code>.npmrc</code> 全局 + <code>~/.npmrc</code>，加到 <code>.gitignore</code>（项目级 .npmrc 也别含 token）</li>
+<li>CI 用 <code>NODE_AUTH_TOKEN</code> 环境变量</li>
+</ul>
+<p><strong>Q4：.npmrc 和 package-lock.json 哪个优先？</strong></p>
+<ul>
+<li><code>.npmrc</code> 控制 npm 行为（registry&#x2F;proxy&#x2F;版本策略）</li>
+<li><code>package-lock.json</code> 记录依赖树</li>
+<li>两者都该有，互补</li>
+</ul>
+<p><strong>Q5：怎么知道某个包从哪个 registry 装的？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config get registry</span><br><span class="line">npm <span class="built_in">ls</span> --all  <span class="comment"># 看依赖树</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q6：npm install 卡在 sill idealTree 很久？</strong><br>网络问题。开 <code>prefer-offline</code> 或换镜像。</p>
+<p><strong>Q7：能多个 registry 混用吗？</strong><br>能，用 scope 镜像：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@scope-a:<span class="attr">registry</span>=https://reg-a.com/</span><br><span class="line">@scope-b:<span class="attr">registry</span>=https://reg-b.com/</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q8：怎么清缓存里某个包？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm cache clean &lt;pkg-name&gt;  <span class="comment"># npm 不支持</span></span><br><span class="line"><span class="comment"># 实际只能全清</span></span><br><span class="line">npm cache clean --force</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q9：可以用 yarn.lock 替换 package-lock.json 吗？</strong><br>不能直接换。需要：</p>
+<ol>
+<li>删 <code>package-lock.json</code> 和 <code>node_modules</code></li>
+<li>跑 <code>yarn install</code> 生成 <code>yarn.lock</code></li>
+<li>团队统一改用 yarn</li>
+</ol>
+<p><strong>Q10：.npmrc 在 Docker 镜像里怎么处理？</strong></p>
+<ul>
+<li>在 <code>Dockerfile</code> 里 <code>COPY .npmrc ./</code> 后再 <code>RUN npm ci</code></li>
+<li>私有 token 用 <code>docker build --build-arg NPM_TOKEN=xxx</code> 注入</li>
+<li>别在镜像里留 .npmrc（含 token），用 multi-stage build 在最终 stage 删掉</li>
+</ul>
+<h2 id="八、查所有可用项"><a href="#八、查所有可用项" class="headerlink" title="八、查所有可用项"></a>八、查所有可用项</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm config list                    <span class="comment"># 当前生效</span></span><br><span class="line">npm config list -l | grep <span class="string">&quot;^;&quot;</span>      <span class="comment"># 含默认的所有项</span></span><br><span class="line">man npmrc                          <span class="comment"># 完整文档</span></span><br></pre></td></tr></table></figure>
+
+<p>完整文档：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/v10/configuring-npm/npmrc">docs.npmjs.com&#x2F;cli&#x2F;v10&#x2F;configuring-npm&#x2F;npmrc</a>。</p>
+<h2 id="九、推荐配置（生产用）"><a href="#九、推荐配置（生产用）" class="headerlink" title="九、推荐配置（生产用）"></a>九、推荐配置（生产用）</h2><p>把它当默认起点，项目里根据自己的情况微调：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ===== registry =====</span></span><br><span class="line"><span class="attr">registry</span>=https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 版本严格 =====</span></span><br><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">package-lock</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== install 优化 =====</span></span><br><span class="line"><span class="attr">prefer-offline</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">audit</span>=high</span><br><span class="line"><span class="attr">fund</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">loglevel</span>=warn</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 团队协作 =====</span></span><br><span class="line"><span class="attr">init-author-name</span>=Your Team</span><br><span class="line"><span class="attr">init-license</span>=MIT</span><br></pre></td></tr></table></figure>
+
+<p>国内项目用它起步，出问题再针对具体场景调（如老项目加 <code>legacy-peer-deps</code>，企业内网换 registry）。</p>
+<h2 id="十、-npmrc-全-21-项速查表"><a href="#十、-npmrc-全-21-项速查表" class="headerlink" title="十、.npmrc 全 21 项速查表"></a>十、.npmrc 全 21 项速查表</h2><table>
+<thead>
+<tr>
+<th>项</th>
+<th>默认</th>
+<th>何时用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>registry</code></td>
+<td><code>https://registry.npmjs.org/</code></td>
+<td>换镜像&#x2F;私有源</td>
+</tr>
+<tr>
+<td><code>save-exact</code></td>
+<td>false</td>
+<td>团队项目必开</td>
+</tr>
+<tr>
+<td><code>save-prefix</code></td>
+<td><code>^</code></td>
+<td>改 <code>~</code> 或精确版本</td>
+</tr>
+<tr>
+<td><code>save-prod</code></td>
+<td>true</td>
+<td>装 dev 依赖时改 false</td>
+</tr>
+<tr>
+<td><code>save-dev</code></td>
+<td>false</td>
+<td>命令行 <code>npm i -D</code></td>
+</tr>
+<tr>
+<td><code>legacy-peer-deps</code></td>
+<td>false</td>
+<td>npm 7+ 跑老项目</td>
+</tr>
+<tr>
+<td><code>strict-peer-deps</code></td>
+<td>false</td>
+<td>锁版本严格</td>
+</tr>
+<tr>
+<td><code>engine-strict</code></td>
+<td>false</td>
+<td>生产项目必开</td>
+</tr>
+<tr>
+<td><code>ignore-scripts</code></td>
+<td>false</td>
+<td>不可信环境装包</td>
+</tr>
+<tr>
+<td><code>proxy</code> &#x2F; <code>https-proxy</code></td>
+<td>无</td>
+<td>内网代理</td>
+</tr>
+<tr>
+<td><code>noproxy</code></td>
+<td>无</td>
+<td>代理排除</td>
+</tr>
+<tr>
+<td><code>strict-ssl</code></td>
+<td>true</td>
+<td>自签证书改 false</td>
+</tr>
+<tr>
+<td><code>audit</code></td>
+<td>true</td>
+<td>CI 跑、本地关</td>
+</tr>
+<tr>
+<td><code>audit-level</code></td>
+<td>low</td>
+<td>high&#x3D;只报高危</td>
+</tr>
+<tr>
+<td><code>prefer-offline</code></td>
+<td>false</td>
+<td>网络差</td>
+</tr>
+<tr>
+<td><code>offline</code></td>
+<td>false</td>
+<td>强制离线</td>
+</tr>
+<tr>
+<td><code>cache</code></td>
+<td><code>~/.npm</code></td>
+<td>改到大盘</td>
+</tr>
+<tr>
+<td><code>loglevel</code></td>
+<td><code>info</code></td>
+<td>warn &#x2F; http &#x2F; verbose</td>
+</tr>
+<tr>
+<td><code>package-lock</code></td>
+<td>true</td>
+<td>别关</td>
+</tr>
+<tr>
+<td><code>dry-run</code></td>
+<td>false</td>
+<td>CI 测试用</td>
+</tr>
+<tr>
+<td><code>yes</code></td>
+<td>false</td>
+<td>自动化初始化</td>
+</tr>
+<tr>
+<td><code>init-author-*</code></td>
+<td>无</td>
+<td>配 <code>npm init</code> 默认值</td>
+</tr>
+<tr>
+<td><code>fund</code></td>
+<td>true</td>
+<td>关闭打赏提示</td>
+</tr>
+<tr>
+<td><code>workspaces-update</code></td>
+<td>true</td>
+<td>monorepo 时</td>
+</tr>
+<tr>
+<td><code>update-notifier</code></td>
+<td>true</td>
+<td>关闭升级提示</td>
+</tr>
+</tbody></table>
+<h2 id="十一、-npmrc-vs-package-json-engines-字段"><a href="#十一、-npmrc-vs-package-json-engines-字段" class="headerlink" title="十一、.npmrc vs package.json engines 字段"></a>十一、.npmrc vs package.json <code>engines</code> 字段</h2><p>很多人搞混这两者：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th><code>.npmrc</code></th>
+<th><code>package.json engines</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>作用对象</strong></td>
+<td>npm CLI 行为</td>
+<td>包对运行环境的要求</td>
+</tr>
+<tr>
+<td><strong>谁能改</strong></td>
+<td>项目维护者（自己写）</td>
+<td>项目维护者（写进 dependencies）</td>
+</tr>
+<tr>
+<td><strong>影响范围</strong></td>
+<td>当前项目（项目级）或用户所有项目（用户级）</td>
+<td>任何安装本包的项目</td>
+</tr>
+<tr>
+<td><strong>被谁读</strong></td>
+<td>npm CLI</td>
+<td>npm install 时校验</td>
+</tr>
+<tr>
+<td><strong>示例</strong></td>
+<td><code>registry=...</code></td>
+<td><code>&quot;engines&quot;: {&quot;node&quot;: &quot;&gt;=18&quot;}</code></td>
+</tr>
+</tbody></table>
+<p><strong>关系</strong>：<code>.npmrc</code> 决定<strong>怎么装</strong>，<code>engines</code> 决定<strong>能不能装</strong>。两者互补。</p>
+<p><strong><code>engines</code> 完整示例</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=18.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;npm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=9.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;pnpm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=8.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>volta</code> &#x2F; <code>nvm</code> 替代</strong>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;volta&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;20.10.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;npm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10.2.3&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Volta 在团队里更流行（自动切换版本）。<code>.nvmrc</code> 也是常见选择（<code>node -v &gt; .nvmrc</code>）。</p>
+<h2 id="十二、故障排查完整流程"><a href="#十二、故障排查完整流程" class="headerlink" title="十二、故障排查完整流程"></a>十二、故障排查完整流程</h2><p>遇到 <code>npm install</code> 错误时按这个顺序查：</p>
+<h3 id="第一步：清缓存"><a href="#第一步：清缓存" class="headerlink" title="第一步：清缓存"></a>第一步：清缓存</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf node_modules package-lock.json</span><br><span class="line">npm cache clean --force</span><br><span class="line">npm install --loglevel=verbose 2&gt;&amp;1 | <span class="built_in">tee</span> /tmp/npm-install.log</span><br></pre></td></tr></table></figure>
+
+<p><code>tee</code> 把日志存下来，方便贴到 issue。</p>
+<h3 id="第二步：检查网络"><a href="#第二步：检查网络" class="headerlink" title="第二步：检查网络"></a>第二步：检查网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 直接 curl 测镜像源</span></span><br><span class="line">curl -I https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果用代理，测试代理可达</span></span><br><span class="line">curl -I --proxy http://127.0.0.1:7890 https://registry.npmjs.org/</span><br></pre></td></tr></table></figure>
+
+<h3 id="第三步：单包测试"><a href="#第三步：单包测试" class="headerlink" title="第三步：单包测试"></a>第三步：单包测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用最小 package.json 试</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#123;&#125;&#x27;</span> &gt; /tmp/test.json</span><br><span class="line"><span class="built_in">cd</span> /tmp &amp;&amp; npm install lodash --loglevel=verbose</span><br></pre></td></tr></table></figure>
+
+<p>如果单包能装，是项目配置问题；不能装是环境问题。</p>
+<h3 id="第四步：检查-Node-npm-版本"><a href="#第四步：检查-Node-npm-版本" class="headerlink" title="第四步：检查 Node&#x2F;npm 版本"></a>第四步：检查 Node&#x2F;npm 版本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line">npm -v</span><br><span class="line"><span class="built_in">which</span> node</span><br><span class="line"><span class="built_in">which</span> npm</span><br></pre></td></tr></table></figure>
+
+<p><strong>版本不匹配</strong>最常见：用 nvm 装多版本，按项目切：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nvm install 18</span><br><span class="line">nvm install 20</span><br><span class="line">nvm use 20  <span class="comment"># 当前 shell</span></span><br><span class="line">nvm <span class="built_in">alias</span> default 20  <span class="comment"># 默认</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.nvmrc</code> 自动切换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 项目根 .nvmrc 写 20</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;20&quot;</span> &gt; .nvmrc</span><br><span class="line">nvm use  <span class="comment"># 自动读 .nvmrc</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="第五步：检查权限"><a href="#第五步：检查权限" class="headerlink" title="第五步：检查权限"></a>第五步：检查权限</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -la /usr/local/lib/node_modules</span><br><span class="line"><span class="built_in">ls</span> -la ~/.npm</span><br></pre></td></tr></table></figure>
+
+<p>全局包权限问题多发。<strong>别 sudo</strong>——用 nvm 把 Node 装在用户目录。</p>
+<h2 id="十三、monorepo-实战"><a href="#十三、monorepo-实战" class="headerlink" title="十三、monorepo 实战"></a>十三、monorepo 实战</h2><p><code>pnpm</code> 是 monorepo 的事实标准，但 npm workspaces 也够用：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my-monorepo&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;workspaces&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;packages/*&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;apps/*&quot;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .npmrc（项目级）</span></span><br><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">link-workspace-packages</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">prefer-workspace-packages</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 monorepo 根目录装包</span></span><br><span class="line">npm install lodash -w @my-company/web</span><br><span class="line">npm install typescript -D -w @my-company/shared</span><br></pre></td></tr></table></figure>
+
+<p><strong>monorepo 专有 .npmrc</strong>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 npm 7+ 自带 workspace（不用 pnpm/yarn）</span></span><br><span class="line"><span class="attr">workspaces-update</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">workspaces-experimental</span>=<span class="literal">true</span>  <span class="comment"># 早期实验功能</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决 workspace 间 hoisting 问题</span></span><br><span class="line"><span class="attr">install-strategy</span>=nested</span><br><span class="line"><span class="attr">install-links</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十四、3-个真实案例"><a href="#十四、3-个真实案例" class="headerlink" title="十四、3 个真实案例"></a>十四、3 个真实案例</h2><h3 id="案例-1：老-React-项目升级-React-18"><a href="#案例-1：老-React-项目升级-React-18" class="headerlink" title="案例 1：老 React 项目升级 React 18"></a>案例 1：老 React 项目升级 React 18</h3><p>错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm error While resolving: react@18.2.0</span><br><span class="line">npm error Found: react@17.0.2</span><br></pre></td></tr></table></figure>
+
+<p>解决：加 <code>legacy-peer-deps=true</code>，然后逐步升级 peer 依赖。</p>
+<h3 id="案例-2：内网-Nexus-私有仓库"><a href="#案例-2：内网-Nexus-私有仓库" class="headerlink" title="案例 2：内网 Nexus 私有仓库"></a>案例 2：内网 Nexus 私有仓库</h3><p><code>.npmrc</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">registry</span>=https://nexus.internal.company.com/repository/npm-hosted/</span><br><span class="line">@nexus-internal:<span class="attr">registry</span>=https://nexus.internal.company.com/repository/npm-private/</span><br><span class="line"><span class="attr">strict-ssl</span>=<span class="literal">false</span>  <span class="comment"># 内网自签证书</span></span><br><span class="line"><span class="attr">always-auth</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><code>nexus.internal.company.com</code> 的 token 配在 <code>.npmrc</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//nexus.internal.company.com/repository/npm-hosted/:<span class="attr">_authToken</span>=YOUR_TOKEN</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例-3：CI-跑陌生-PR-防供应链攻击"><a href="#案例-3：CI-跑陌生-PR-防供应链攻击" class="headerlink" title="案例 3：CI 跑陌生 PR 防供应链攻击"></a>案例 3：CI 跑陌生 PR 防供应链攻击</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Install</span> <span class="string">with</span> <span class="string">script-blocking</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span> <span class="string">--ignore-scripts</span> <span class="string">--no-audit</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Run</span> <span class="string">audit</span> <span class="string">only</span> <span class="string">on</span> <span class="string">direct</span> <span class="string">deps</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">npm</span> <span class="string">audit</span> <span class="string">--omit=dev</span></span><br></pre></td></tr></table></figure>
+
+<p><code>--ignore-scripts</code> 防恶意 postinstall；<code>--omit=dev</code> 只审计生产依赖，跳过 devDependencies 减少噪音。</p>
+<h2 id="十五、性能调优"><a href="#十五、性能调优" class="headerlink" title="十五、性能调优"></a>十五、性能调优</h2><h3 id="用-pnpm-替代-npm（提速-3-5-倍）"><a href="#用-pnpm-替代-npm（提速-3-5-倍）" class="headerlink" title="用 pnpm 替代 npm（提速 3-5 倍）"></a>用 pnpm 替代 npm（提速 3-5 倍）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g pnpm</span><br><span class="line">pnpm install  <span class="comment"># 直接用，硬链接复用</span></span><br></pre></td></tr></table></figure>
+
+<p>不需要 <code>.npmrc</code> 改任何东西。pnpm 自己的配置在 <code>~/.pnpmrc</code> 或 <code>pnpm-workspace.yaml</code>。</p>
+<h3 id="用-corepack-锁定-package-manager"><a href="#用-corepack-锁定-package-manager" class="headerlink" title="用 corepack 锁定 package manager"></a>用 corepack 锁定 package manager</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">corepack <span class="built_in">enable</span></span><br><span class="line"><span class="comment"># package.json 里加</span></span><br><span class="line"><span class="string">&quot;packageManager&quot;</span>: <span class="string">&quot;pnpm@8.15.0&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>团队用 <code>corepack prepare pnpm@8.15.0 --activate</code> 装指定版本，<strong>避免 pnpm&#x2F;npm&#x2F;yarn 混用</strong>导致的 lock 文件不兼容。</p>
+<h3 id="增量安装（适合-monorepo）"><a href="#增量安装（适合-monorepo）" class="headerlink" title="增量安装（适合 monorepo）"></a>增量安装（适合 monorepo）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只装某 workspace 的依赖</span></span><br><span class="line">npm install --workspace @my-company/web</span><br><span class="line"></span><br><span class="line"><span class="comment"># 增量装单包</span></span><br><span class="line">npm install lodash --save --workspace @my-company/api</span><br></pre></td></tr></table></figure>
+
+<h2 id="十六、最容易踩的-5-个坑"><a href="#十六、最容易踩的-5-个坑" class="headerlink" title="十六、最容易踩的 5 个坑"></a>十六、最容易踩的 5 个坑</h2><ol>
+<li><strong>proxy 配错导致卡死</strong>——<code>loglevel=http</code> 看到 CONNECT 阶段就知道代理问题</li>
+<li><strong>.npmrc 留了 token 提交到 git</strong>——<code>git log -p .npmrc</code> 查历史</li>
+<li><strong><code>save-exact=true</code> 没生效</strong>——<code>engines</code> 字段不写版本号也无效</li>
+<li><strong><code>engine-strict=true</code> 严格度过高</strong>——本地 Node 18 跑 Node 20 项目会失败，可临时 <code>engine-strict=false</code></li>
+<li><strong>多 .npmrc 嵌套</strong>——项目级被用户级覆盖是常见问题，用 <code>npm config get &lt;key&gt;</code> 确认实际生效值</li>
+</ol>
+<h2 id="十七、参考资源"><a href="#十七、参考资源" class="headerlink" title="十七、参考资源"></a>十七、参考资源</h2><ul>
+<li>官方文档：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/v10/configuring-npm/npmrc">docs.npmjs.com&#x2F;cli&#x2F;v10&#x2F;configuring-npm&#x2F;npmrc</a></li>
+<li>npm config 命令：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/cli/v10/commands/npm-config">docs.npmjs.com&#x2F;cli&#x2F;v10&#x2F;commands&#x2F;npm-config</a></li>
+<li>pnpm 对比：<a target="_blank" rel="noopener" href="https://pnpm.io/">pnpm.io</a></li>
+<li>corepack：<a target="_blank" rel="noopener" href="https://nodejs.org/api/corepack.html">nodejs.org&#x2F;api&#x2F;corepack</a></li>
+<li>镜像源列表：<a target="_blank" rel="noopener" href="https://npmmirror.com/mirrors/npm/">npmmirror.com&#x2F;mirrors&#x2F;npm</a></li>
+</ul>
+<hr>
+<p><strong>总结</strong>：<code>.npmrc</code> 配置 90% 的项目只需 5 项（registry &#x2F; save-exact &#x2F; engine-strict &#x2F; audit &#x2F; cache），剩下的按需加。CI 上多开 <code>audit=true</code>，本地多开 <code>prefer-offline</code>，团队统一 <code>.npmrc</code> 提交 git。</p>
+<h2 id="十八、4-个补充场景配置"><a href="#十八、4-个补充场景配置" class="headerlink" title="十八、4 个补充场景配置"></a>十八、4 个补充场景配置</h2><h3 id="场景-1：lock-文件冲突解决"><a href="#场景-1：lock-文件冲突解决" class="headerlink" title="场景 1：lock 文件冲突解决"></a>场景 1：lock 文件冲突解决</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 团队里 lock 冲突了，强制统一</span></span><br><span class="line"><span class="built_in">rm</span> package-lock.json</span><br><span class="line">npm install</span><br><span class="line">git add package-lock.json</span><br><span class="line">git commit -m <span class="string">&quot;chore: regenerate lock&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>预防：合并 PR 时先 <code>npm ci</code> 一遍，确认 lock 一致再合。</p>
+<h3 id="场景-2：私有-npm-包发布"><a href="#场景-2：私有-npm-包发布" class="headerlink" title="场景 2：私有 npm 包发布"></a>场景 2：私有 npm 包发布</h3><p>自己组织内发布 <code>@my-company/utils</code> 类的私有包：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .npmrc（项目级）</span></span><br><span class="line"><span class="attr">registry</span>=https://registry.npmjs.org/</span><br><span class="line">@my-company:<span class="attr">registry</span>=https://npm.pkg.github.com/</span><br><span class="line">//npm.pkg.github.com/:<span class="attr">_authToken</span>=<span class="variable">$&#123;GITHUB_TOKEN&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>发布命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm login --registry=https://npm.pkg.github.com/ --scope=@my-company</span><br><span class="line">npm publish</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景-3：Docker-多阶段构建"><a href="#场景-3：Docker-多阶段构建" class="headerlink" title="场景 3：Docker 多阶段构建"></a>场景 3：Docker 多阶段构建</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 阶段 1：装依赖</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span>-alpine AS deps</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json .npmrc ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm ci --ignore-scripts</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 阶段 2：构建</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span>-alpine AS build</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=deps /app/node_modules ./node_modules</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 阶段 3：生产镜像</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span>-alpine</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build /app/dist ./dist</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=deps /app/node_modules ./node_modules</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">USER</span> node</span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;dist/index.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：构建阶段和运行阶段都装 <code>.npmrc</code>（含 token 用 build-arg 注入），但最终镜像用 multi-stage 把 .npmrc 留在 deps 阶段不复制到 final。</p>
+<h3 id="场景-4：GitHub-Packages-公共-npm-混用"><a href="#场景-4：GitHub-Packages-公共-npm-混用" class="headerlink" title="场景 4：GitHub Packages + 公共 npm 混用"></a>场景 4：GitHub Packages + 公共 npm 混用</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认公共 registry</span></span><br><span class="line"><span class="attr">registry</span>=https://registry.npmjs.org/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自己的 scope 走 GitHub Packages</span></span><br><span class="line">@my-org:<span class="attr">registry</span>=https://npm.pkg.github.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 必要认证</span></span><br><span class="line">//npm.pkg.github.com/:<span class="attr">_authToken</span>=<span class="variable">$&#123;GITHUB_TOKEN&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>安装时自动从对应 registry 拉取：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install @my-org/utils  <span class="comment"># 走 GitHub Packages</span></span><br><span class="line">npm install lodash          <span class="comment"># 走 npm 公共</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十九、给新手的-5-个起步配置"><a href="#十九、给新手的-5-个起步配置" class="headerlink" title="十九、给新手的 5 个起步配置"></a>十九、给新手的 5 个起步配置</h2><p>完全没设过 <code>.npmrc</code>？从这 5 项开始：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 国内镜像（速度）</span></span><br><span class="line"><span class="attr">registry</span>=https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 锁版本（团队一致）</span></span><br><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 严格 Node 版本（防环境差异）</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 包锁文件必提交</span></span><br><span class="line"><span class="attr">package-lock</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. CI 友好</span></span><br><span class="line"><span class="attr">audit</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>贴到项目根 <code>.npmrc</code>，提交 git，团队所有人 <code>npm ci</code> 一次就同步了。<strong>别从 .gitignore 排除 .npmrc</strong>。</p>
+<h2 id="二十、最后的小贴士"><a href="#二十、最后的小贴士" class="headerlink" title="二十、最后的小贴士"></a>二十、最后的小贴士</h2><ul>
+<li><strong>复制别人项目的 .npmrc 时</strong>，先把 <code>registry</code> 改成自己团队的（特别是私有 registry）</li>
+<li><strong>加了 .npmrc 但效果不对</strong>，先 <code>npm config get &lt;key&gt;</code> 查实际生效值（合并后）</li>
+<li><strong>Node.js 升级后</strong> npm 也会自动升级，跨大版本后建议删 lock 重装</li>
+<li><strong>多 <code>.npmrc</code> 嵌套</strong> 项目里用 <code>npm config get registry</code> 看实际生效的是哪一份</li>
+<li><strong>lock 文件大</strong>（&gt;5MB）通常是 monorepo 或装太多包，正常</li>
+</ul>
+<h2 id="二十一、npm-install-4-个阶段解析"><a href="#二十一、npm-install-4-个阶段解析" class="headerlink" title="二十一、npm install 4 个阶段解析"></a>二十一、<code>npm install</code> 4 个阶段解析</h2><p>知道这 4 阶段能帮你定位 install 卡在哪：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. idealTree:building    # 解析依赖树，下载 package.json</span><br><span class="line">2. reify:create          # 创建 node_modules 目录</span><br><span class="line">3. reify:resolve         # 解析所有包的实际版本</span><br><span class="line">4. reify:extract         # 解压包到 node_modules</span><br></pre></td></tr></table></figure>
+
+<p><strong>常见卡点</strong>：</p>
+<ul>
+<li>卡在 <code>idealTree: sill idealTree buildDeps</code> → 网络&#x2F;registry 问题</li>
+<li>卡在 <code>reify:extract</code> → 磁盘慢（SSD vs HDD 差 10 倍）</li>
+<li>卡在 <code>reify:resolve</code> → peer deps 冲突，开 <code>legacy-peer-deps</code></li>
+</ul>
+<p><strong>加速技巧</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 npm ci 代替 npm install（CI 必用）</span></span><br><span class="line">npm ci --prefer-offline --no-audit --no-fund</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看具体哪一步慢</span></span><br><span class="line">npm install --timing  <span class="comment"># 输出每步耗时</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二十二、完整项目-npmrc-实战示例"><a href="#二十二、完整项目-npmrc-实战示例" class="headerlink" title="二十二、完整项目 .npmrc 实战示例"></a>二十二、完整项目 .npmrc 实战示例</h2><p>一个中型 Node.js + TypeScript 项目的完整 .npmrc：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ===== registry =====</span></span><br><span class="line"><span class="attr">registry</span>=https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 镜像 scope =====</span></span><br><span class="line">@my-company:<span class="attr">registry</span>=https://npm.internal.company.com/</span><br><span class="line">@types:<span class="attr">registry</span>=https://registry.npmmirror.com/</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 版本控制 =====</span></span><br><span class="line"><span class="attr">save-exact</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">engine-strict</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">package-lock</span>=<span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 安装优化 =====</span></span><br><span class="line"><span class="attr">prefer-offline</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">cache</span>=~/.npm-cache</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== 行为 =====</span></span><br><span class="line"><span class="attr">audit</span>=high</span><br><span class="line"><span class="attr">fund</span>=<span class="literal">false</span></span><br><span class="line"><span class="attr">loglevel</span>=warn</span><br><span class="line"></span><br><span class="line"><span class="comment"># ===== CI 特殊 =====</span></span><br><span class="line"><span class="comment"># 在 CI 环境变量里加 NPM_CONFIG_FUND=false</span></span><br><span class="line"><span class="comment"># 关闭打赏提示加速</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>对应的 GitHub Actions</strong>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">uses:</span> <span class="string">actions/setup-node@v4</span></span><br><span class="line">  <span class="attr">with:</span></span><br><span class="line">    <span class="attr">node-version-file:</span> <span class="string">&#x27;.nvmrc&#x27;</span></span><br><span class="line">    <span class="attr">cache:</span> <span class="string">&#x27;npm&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> <span class="attr">run:</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">  <span class="attr">env:</span></span><br><span class="line">    <span class="attr">NODE_AUTH_TOKEN:</span> <span class="string">$&#123;&#123;</span> <span class="string">secrets.NPM_TOKEN</span> <span class="string">&#125;&#125;</span></span><br><span class="line">    <span class="attr">NPM_CONFIG_AUDIT:</span> <span class="string">&#x27;true&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>engines</code> 字段</strong>（<code>package.json</code>）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=20.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;npm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=10.0.0&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>volta</code> 字段</strong>（自动切换 Node 版本）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;volta&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;20.10.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;npm&quot;</span><span class="punctuation">:</span> <span class="string">&quot;10.2.3&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>这套组合拳让团队开发体验<strong>统一且稳定</strong>：</p>
+<ul>
+<li><code>.nvmrc</code> 或 <code>volta</code> 决定 Node 版本</li>
+<li><code>engines</code> 校验</li>
+<li><code>.npmrc</code> 决定 npm 行为</li>
+<li><code>package-lock.json</code> 锁依赖</li>
+<li>CI 用 <code>npm ci</code> 严格按 lock 装</li>
+</ul>
+<h2 id="二十三、版本演进历史"><a href="#二十三、版本演进历史" class="headerlink" title="二十三、版本演进历史"></a>二十三、版本演进历史</h2><p>了解 <code>.npmrc</code> 演变能理解为什么有些配置看起来多余：</p>
+<ul>
+<li><strong>npm 5 之前</strong>：没有 <code>.npmrc.lock</code> 概念，所有依赖范围都允许</li>
+<li><strong>npm 7（2021）</strong>：引入 strict peer deps，破坏了大量老项目</li>
+<li><strong>npm 7+</strong>：引入 <code>overrides</code> 字段（<code>package.json</code> 里），可以强制覆盖子依赖版本</li>
+<li><strong>npm 9（2022）</strong>：默认开启 <code>audit</code>，引入 <code>overrides</code> 文档</li>
+<li><strong>npm 10（2023）</strong>：改进 lockfile 性能，引入 <code>install-strategy=hoisted/nested/shallow</code></li>
+</ul>
+<p><strong><code>overrides</code> 示例</strong>（<code>package.json</code> 里强制覆盖子依赖）：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;overrides&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;lodash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;4.17.21&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;axios&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;follow-redirects&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.15.0&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>当某个传递依赖有安全漏洞，但顶层包没更新时，用 <code>overrides</code> 强制升级。</p>
+<p><strong><code>overrides</code> vs <code>.npmrc</code> 的 <code>legacy-peer-deps</code></strong>：</p>
+<ul>
+<li><code>overrides</code>：精确控制子依赖版本（推荐）</li>
+<li><code>legacy-peer-deps</code>：跳过 peer 检查（粗放）</li>
+</ul>
+<p>新项目用 <code>overrides</code> 解决依赖冲突，老项目临时用 <code>legacy-peer-deps</code> 续命。</p>
+<h2 id="二十四、最后一句"><a href="#二十四、最后一句" class="headerlink" title="二十四、最后一句"></a>二十四、最后一句</h2><p><code>.npmrc</code> 看似琐碎，但<strong>它是项目从”我机器能跑”变成”团队都能跑”的关键一步</strong>。花 10 分钟配好它，能省下未来无数次”为什么你跑得起来我跑不起来”的调试时间。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npmrc/" rel="tag">.npmrc</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CI-CD/" rel="tag">CI&#x2F;CD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Node-js/" rel="tag">Node.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/" rel="tag">npm</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a><a class="next" href="/2026/09/01/2026-09-02-skill-plugin-mcp-dify/">Skill / Plugin / MCP / Dify 区分</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-node-beginner/">Node.js 起步必知</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-npmrc-cheatsheet/">.npmrc 配置实战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

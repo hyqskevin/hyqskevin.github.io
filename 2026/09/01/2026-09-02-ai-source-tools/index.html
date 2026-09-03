@@ -1,0 +1,545 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>AI 信源获取工具地图 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AI 信源获取工具地图</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AI 信源获取工具地图</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 4.1k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 19</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>做 AI Agent 项目最大的坑不是 prompt，而是<strong>怎么让 agent 拿到正确的数据</strong>。同一个目标——“读完这篇文章”——用对的工具可能 200ms + 几美分，用错的工具可能 30 秒 + 几块钱。这篇是我整理的工具分类与决策框架。</p>
+<h2 id="一、六类工具，一句话区分"><a href="#一、六类工具，一句话区分" class="headerlink" title="一、六类工具，一句话区分"></a>一、六类工具，一句话区分</h2><p>按”轻 → 重”排列，遇到问题逐级升级：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>解决什么</th>
+<th>轻的代表</th>
+<th>重的代表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>单页获取</strong></td>
+<td>已知 URL，拿正文</td>
+<td><code>web_fetch</code>、Jina Reader</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>搜索增强</strong></td>
+<td>不知道 URL，先搜来源</td>
+<td>Exa Search、Tavily Search</td>
+<td>内置 web search</td>
+</tr>
+<tr>
+<td><strong>浏览器操作</strong></td>
+<td>登录、点击、JS 渲染</td>
+<td><code>agent-browser</code></td>
+<td><code>browser-act</code>、Stagehand</td>
+</tr>
+<tr>
+<td><strong>爬虫与遍历</strong></td>
+<td>从入口批量抓整站</td>
+<td>Crawl4AI、Crawlee</td>
+<td>AnyCrawl</td>
+</tr>
+<tr>
+<td><strong>网页数据平台</strong></td>
+<td>search+scrape+crawl 统一 API</td>
+<td>Tavily</td>
+<td>Firecrawl</td>
+</tr>
+<tr>
+<td><strong>垂直数据网关</strong></td>
+<td>不抓网页，直接接结构化数据</td>
+<td>学术 &#x2F; 金融 &#x2F; 企业 API SDK</td>
+<td><code>agent-gw</code> 类聚合</td>
+</tr>
+</tbody></table>
+<p>核心原则：<strong>先用最轻的能力，只有不够时才升级</strong>。90% 的需求 <code>web_fetch</code> + Exa&#x2F;Tavily 就能解决，剩下 10% 才是爬虫和浏览器的战场。</p>
+<h2 id="二、决策流程图"><a href="#二、决策流程图" class="headerlink" title="二、决策流程图"></a>二、决策流程图</h2><div class="mermaid">
+<svg id="mermaid-svg-9d9d58c6717973d8" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 781.71875 776.2249984741211" style="max-width:781.71875px;"><style>
+  .mermaid .label{font-family:trebuchet ms,verdana,arial;color:#333}.node circle,.node ellipse,.node polygon,.node rect{fill:#cde498;stroke:#13540c;stroke-width:1px}.node.clickable{cursor:pointer}.arrowheadPath{fill:green}.edgePath .path{stroke:green;stroke-width:1.5px}.edgeLabel{background-color:#e8e8e8}.cluster rect{fill:#cdffb2!important;rx:4!important;stroke:#6eaa49!important;stroke-width:1px!important}.cluster text{fill:#333}.actor{stroke:#13540c;fill:#cde498}text.actor{fill:#000;stroke:none}.actor-line{stroke:grey}.messageLine0{marker-end:"url(#arrowhead)"}.messageLine0,.messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#arrowhead{fill:#333}#crosshead path{fill:#333!important;stroke:#333!important}.messageText{fill:#333;stroke:none}.labelBox{stroke:#326932;fill:#cde498}.labelText,.loopText{fill:#000;stroke:none}.loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#326932}.note{stroke:#6eaa49;fill:#fff5ad}.noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}.section{stroke:none;opacity:.2}.section0,.section2{fill:#6eaa49}.section1,.section3{fill:#fff;opacity:.2}.sectionTitle0,.sectionTitle1,.sectionTitle2,.sectionTitle3{fill:#333}.sectionTitle{text-anchor:start;font-size:11px;text-height:14px}.grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}.grid path{stroke-width:0}.today{fill:none;stroke:red;stroke-width:2px}.task{stroke-width:2}.taskText{text-anchor:middle;font-size:11px}.taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}.taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}.taskText0,.taskText1,.taskText2,.taskText3{fill:#fff}.task0,.task1,.task2,.task3{fill:#487e3a;stroke:#13540c}.taskTextOutside0,.taskTextOutside1,.taskTextOutside2,.taskTextOutside3{fill:#000}.active0,.active1,.active2,.active3{fill:#cde498;stroke:#13540c}.activeText0,.activeText1,.activeText2,.activeText3{fill:#000!important}.done0,.done1,.done2,.done3{stroke:grey;fill:#d3d3d3;stroke-width:2}.doneText0,.doneText1,.doneText2,.doneText3{fill:#000!important}.crit0,.crit1,.crit2,.crit3{stroke:#f88;fill:red;stroke-width:2}.activeCrit0,.activeCrit1,.activeCrit2,.activeCrit3{stroke:#f88;fill:#cde498;stroke-width:2}.doneCrit0,.doneCrit1,.doneCrit2,.doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}.activeCritText0,.activeCritText1,.activeCritText2,.activeCritText3,.doneCritText0,.doneCritText1,.doneCritText2,.doneCritText3{fill:#000!important}.titleText{text-anchor:middle;font-size:18px;fill:#000}g.classGroup text{fill:#13540c;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}g.classGroup rect{fill:#cde498;stroke:#13540c}g.classGroup line{stroke:#13540c;stroke-width:1}svg .classLabel .box{stroke:none;stroke-width:0;fill:#cde498;opacity:.5}svg .classLabel .label{fill:#13540c;font-size:10px}.relation{stroke:#13540c;stroke-width:1;fill:none}#compositionEnd,#compositionStart,.composition{fill:#13540c;stroke:#13540c;stroke-width:1}#aggregationEnd,#aggregationStart,.aggregation{fill:#cde498;stroke:#13540c;stroke-width:1}#dependencyEnd,#dependencyStart,#extensionEnd,#extensionStart{fill:#13540c;stroke:#13540c;stroke-width:1}.node text{font-size:14px}.node text,div.mermaidTooltip{font-family:trebuchet ms,verdana,arial}div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:#cdffb2;border:1px solid #6eaa49;border-radius:2px;pointer-events:none;z-index:100}
+svg {
+  color: rgb(0, 0, 0);
+  font: normal normal 400 normal 16px / normal "Times New Roman";
+}
+  </style><g><g class="output"><g class="clusters"></g><g class="edgePaths"><g class="edgePath" style="opacity: 1;"><path class="path" d="M374.640625,59L374.640625,84L375.140625,109.5" marker-end="url(#arrowhead43)" style="fill:none"></path><defs><marker id="arrowhead43" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M341.3991175911166,173.44599259111658L188.43359375,241.1875L188.93359375,276.1875007629394" marker-end="url(#arrowhead44)" style="fill:none"></path><defs><marker id="arrowhead44" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M409.88037778796576,172.44774721203427L579.92578125,241.1875L580.42578125,284.0125022888181" marker-end="url(#arrowhead45)" style="fill:none"></path><defs><marker id="arrowhead45" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M161.00147817138074,348.7928836584414L82.4296875,410.7249984741211L82.4296875,445.2249984741211" marker-end="url(#arrowhead46)" style="fill:none"></path><defs><marker id="arrowhead46" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M216.8657101764825,348.792884336457L294.4375,410.7249984741211L294.4375,445.2249984741211" marker-end="url(#arrowhead47)" style="fill:none"></path><defs><marker id="arrowhead47" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M558.9372916780641,347.4115096651242L493,410.7249984741211L493,445.2249984741211" marker-end="url(#arrowhead48)" style="fill:none"></path><defs><marker id="arrowhead48" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M601.9142723669851,347.41151117183335L666.8515625,410.7249984741211L666.8515625,445.2249984741211" marker-end="url(#arrowhead49)" style="fill:none"></path><defs><marker id="arrowhead49" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M82.4296875,502.2249984741211L82.4296875,536.7249984741211L425.796875,589.4130086733485" marker-end="url(#arrowhead50)" style="stroke: #333; fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead50" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M493,502.2249984741211L493,536.7249984741211L493,571.2249984741211" marker-end="url(#arrowhead51)" style="stroke: #333; fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead51" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M666.8515625,502.2249984741211L666.8515625,536.7249984741211L560.203125,575.3720572976505" marker-end="url(#arrowhead52)" style="stroke: #333; fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead52" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g><g class="edgePath" style="opacity: 1;"><path class="path" d="M493,628.2249984741211L493,662.7249984741211L493,697.2249984741211" marker-end="url(#arrowhead53)" style="stroke: #333; fill:none;stroke-width:2px;stroke-dasharray:3;"></path><defs><marker id="arrowhead53" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="strokeWidth" markerWidth="8" markerHeight="6" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" class="arrowheadPath" style="stroke-width: 1; stroke-dasharray: 1, 0;"></path></marker></defs></g></g><g class="edgeLabels"><g class="edgeLabel" transform="" style="opacity: 1;"><g transform="translate(0,0)" class="label"><foreignObject width="0" height="0"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(188.43359375,241.1875)" style="opacity: 1;"><g transform="translate(-5,-9.5)" class="label"><foreignObject width="10" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">是</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(579.92578125,241.1875)" style="opacity: 1;"><g transform="translate(-5,-9.5)" class="label"><foreignObject width="10" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">否</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(82.4296875,410.7249984741211)" style="opacity: 1;"><g transform="translate(-5,-9.5)" class="label"><foreignObject width="10" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">否</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(294.4375,410.7249984741211)" style="opacity: 1;"><g transform="translate(-5,-9.5)" class="label"><foreignObject width="10" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">是</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(493,410.7249984741211)" style="opacity: 1;"><g transform="translate(-5,-9.5)" class="label"><foreignObject width="10" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">否</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(666.8515625,410.7249984741211)" style="opacity: 1;"><g transform="translate(-5,-9.5)" class="label"><foreignObject width="10" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">是</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(82.4296875,536.7249984741211)" style="opacity: 1;"><g transform="translate(-35,-9.5)" class="label"><foreignObject width="70" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">需要结构化数据</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(493,536.7249984741211)" style="opacity: 1;"><g transform="translate(-25,-9.5)" class="label"><foreignObject width="50" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">需要一体化</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(666.8515625,536.7249984741211)" style="opacity: 1;"><g transform="translate(-25,-9.5)" class="label"><foreignObject width="50" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">需要后端化</span></div></foreignObject></g></g><g class="edgeLabel" transform="translate(493,662.7249984741211)" style="opacity: 1;"><g transform="translate(-42.2265625,-9.5)" class="label"><foreignObject width="84.453125" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;"><span class="edgeLabel">需要学术/金融字段</span></div></foreignObject></g></g></g><g class="nodes"><g class="node" id="Start" transform="translate(374.640625,39.5)" style="opacity: 1;"><rect rx="0" ry="0" x="-47.4453125" y="-19.5" width="94.890625" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-37.4453125,-9.5)"><foreignObject width="74.890625" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">需要 AI 拿数据</div></foreignObject></g></g></g><g class="node" id="Q1" transform="translate(374.640625,157.84375)" style="opacity: 1;"><polygon points="48.84375,0 97.6875,-48.84375 48.84375,-97.6875 0,-48.84375" rx="5" ry="5" transform="translate(-48.84375,48.84375)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-31.5546875,-9.5)"><foreignObject width="63.109375" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">已知 URL?</div></foreignObject></g></g></g><g class="node" id="Q2" transform="translate(188.43359375,325.95624923706055)" style="opacity: 1;"><polygon points="50.268750000000004,0 100.53750000000001,-50.268750000000004 50.268750000000004,-100.53750000000001 0,-50.268750000000004" rx="5" ry="5" transform="translate(-50.268750000000004,50.268750000000004)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-33.3359375,-9.5)"><foreignObject width="66.671875" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">需要登录/JS?</div></foreignObject></g></g></g><g class="node" id="Q3" transform="translate(579.92578125,325.95624923706055)" style="opacity: 1;"><polygon points="42.44375,0 84.8875,-42.44375 42.44375,-84.8875 0,-42.44375" rx="5" ry="5" transform="translate(-42.44375,42.44375)"></polygon><g class="label" transform="translate(0,0)"><g transform="translate(-23.5546875,-9.5)"><foreignObject width="47.109375" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">批量多页?</div></foreignObject></g></g></g><g class="node" id="A1" transform="translate(82.4296875,473.7249984741211)" style="opacity: 1;"><rect rx="0" ry="0" x="-62.4296875" y="-28.5" width="124.859375" height="57"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-52.4296875,-18.5)"><foreignObject width="104.859375" height="37"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">单页获取<br>web_fetch / Jina</div></foreignObject></g></g></g><g class="node" id="A2" transform="translate(294.4375,473.7249984741211)" style="opacity: 1;"><rect rx="0" ry="0" x="-99.578125" y="-28.5" width="199.15625" height="57"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-89.578125,-18.5)"><foreignObject width="179.15625" height="37"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">浏览器操作<br>agent-browser / browser-act</div></foreignObject></g></g></g><g class="node" id="A3" transform="translate(493,473.7249984741211)" style="opacity: 1;"><rect rx="0" ry="0" x="-48.984375" y="-28.5" width="97.96875" height="57"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-38.984375,-18.5)"><foreignObject width="77.96875" height="37"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">搜索增强<br>Exa / Tavily</div></foreignObject></g></g></g><g class="node" id="A4" transform="translate(666.8515625,473.7249984741211)" style="opacity: 1;"><rect rx="0" ry="0" x="-74.8671875" y="-28.5" width="149.734375" height="57"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-64.8671875,-18.5)"><foreignObject width="129.734375" height="37"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">爬虫遍历<br>Crawl4AI / Crawlee</div></foreignObject></g></g></g><g class="node" id="A5" transform="translate(493,599.7249984741211)" style="opacity: 1;"><rect rx="0" ry="0" x="-67.203125" y="-28.5" width="134.40625" height="57"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-57.203125,-18.5)"><foreignObject width="114.40625" height="37"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">网页数据平台<br>Firecrawl / Tavily</div></foreignObject></g></g></g><g class="node" id="A6" transform="translate(493,716.7249984741211)" style="opacity: 1;"><rect rx="0" ry="0" x="-40" y="-19.5" width="80" height="39"></rect><g class="label" transform="translate(0,0)"><g transform="translate(-30,-9.5)"><foreignObject width="60" height="19"><div xmlns="http://www.w3.org/1999/xhtml" style="display: inline-block; white-space: nowrap;">垂直数据网关</div></foreignObject></g></g></g></g></g></g></svg>
+</div>
+
+<h2 id="三、关键工具横评"><a href="#三、关键工具横评" class="headerlink" title="三、关键工具横评"></a>三、关键工具横评</h2><h3 id="3-1-单页获取（最轻）"><a href="#3-1-单页获取（最轻）" class="headerlink" title="3.1 单页获取（最轻）"></a>3.1 单页获取（最轻）</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>强项</th>
+<th>弱项</th>
+<th>npm 包</th>
+<th>API key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>web_fetch</code></td>
+<td>最快、最便宜</td>
+<td>不处理复杂前端</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Jina Reader</td>
+<td>极简 URL→文本</td>
+<td>不是完整搜索体系</td>
+<td>—</td>
+<td>免费 1000 次&#x2F;日</td>
+</tr>
+<tr>
+<td>Exa Contents</td>
+<td>跟 Exa 搜索闭环</td>
+<td>依赖 Exa 体系</td>
+<td><code>exa-js</code></td>
+<td>$5&#x2F;月起</td>
+</tr>
+<tr>
+<td>Tavily Extract</td>
+<td>跟 Tavily 工作流串联</td>
+<td>偏平台化</td>
+<td><code>@tavily/core</code></td>
+<td>$0.001&#x2F;次</td>
+</tr>
+</tbody></table>
+<p><strong>推荐</strong>：</p>
+<ul>
+<li>已知 URL → 先试 <code>web_fetch</code></li>
+<li>极简 URL → Jina Reader</li>
+<li>已在 Exa 体系 → Exa Contents</li>
+<li>已在 Tavily 体系 → Tavily Extract</li>
+</ul>
+<h3 id="3-2-浏览器操作（最重）"><a href="#3-2-浏览器操作（最重）" class="headerlink" title="3.2 浏览器操作（最重）"></a>3.2 浏览器操作（最重）</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>控制对象</th>
+<th>强项</th>
+<th>何时选</th>
+<th>API key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Kimi WebBridge</td>
+<td><strong>你真实的浏览器</strong></td>
+<td>复用真实登录态</td>
+<td>你已登录想复用状态</td>
+<td>免费</td>
+</tr>
+<tr>
+<td><code>agent-browser</code></td>
+<td>自动化 Chromium</td>
+<td>简洁、适合页面交互</td>
+<td>标准点击 &#x2F; 输入 &#x2F; 截图</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>browser-act</code></td>
+<td>自起浏览器 + 直连 Chrome</td>
+<td>stealth、代理、验证码</td>
+<td>复杂自动化 &#x2F; 反爬</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>browser-use</code></td>
+<td>浏览器 agent 框架</td>
+<td>让 LLM 自主操作</td>
+<td>agent 编排</td>
+<td>开源</td>
+</tr>
+<tr>
+<td>Stagehand</td>
+<td>Browserbase SDK</td>
+<td>适合集成到产品</td>
+<td>嵌入产品</td>
+<td>需 Browserbase 账号</td>
+</tr>
+</tbody></table>
+<p><strong>经验法则</strong>：</p>
+<ul>
+<li><strong>已登录</strong> → Kimi WebBridge</li>
+<li><strong>要自动化 + stealth</strong> → <code>browser-act</code></li>
+<li><strong>给 agent 用</strong> → <code>browser-use</code> &#x2F; Stagehand</li>
+<li><strong>做测试</strong> → Playwright</li>
+</ul>
+<h3 id="3-3-爬虫与遍历"><a href="#3-3-爬虫与遍历" class="headerlink" title="3.3 爬虫与遍历"></a>3.3 爬虫与遍历</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>生态</th>
+<th>强项</th>
+<th>何时选</th>
+<th>包</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Crawl4AI</td>
+<td>Python</td>
+<td>Markdown、RAG 清洗</td>
+<td>Python + RAG 管道</td>
+<td><code>crawl4ai</code></td>
+</tr>
+<tr>
+<td>Crawlee</td>
+<td>Node.js</td>
+<td>复杂调度 + 反爬</td>
+<td>Node.js 工程抓取</td>
+<td><code>crawlee</code></td>
+</tr>
+<tr>
+<td>ScrapeGraphAI</td>
+<td>Python</td>
+<td>AI 驱动提取</td>
+<td>Python + LLM 提取</td>
+<td><code>scrapegraphai</code></td>
+</tr>
+<tr>
+<td>AnyCrawl</td>
+<td>Node.js</td>
+<td>服务化抓取</td>
+<td>团队抓取后端</td>
+<td>需部署</td>
+</tr>
+</tbody></table>
+<p><strong>安装示例</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Crawl4AI</span></span><br><span class="line">pip install crawl4ai</span><br><span class="line">crawl4ai-setup  <span class="comment"># 装浏览器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Crawlee</span></span><br><span class="line">npm install crawlee</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-网页数据平台（一体化）"><a href="#3-4-网页数据平台（一体化）" class="headerlink" title="3.4 网页数据平台（一体化）"></a>3.4 网页数据平台（一体化）</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>核心定位</th>
+<th>强项</th>
+<th>何时选</th>
+<th>API key</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tavily</td>
+<td>Agent research API</td>
+<td>search→extract→crawl 闭环</td>
+<td>Agent 调研</td>
+<td>$0.001&#x2F;次</td>
+</tr>
+<tr>
+<td>Firecrawl</td>
+<td>完整数据平台</td>
+<td>search&#x2F;scrape&#x2F;crawl&#x2F;interact</td>
+<td>想要统一平台</td>
+<td>$0.005&#x2F;页</td>
+</tr>
+<tr>
+<td>AnyCrawl</td>
+<td>自托管抓取</td>
+<td>服务化部署</td>
+<td>团队共用后端</td>
+<td>自部署</td>
+</tr>
+</tbody></table>
+<h2 id="四、6-大工具安装与使用"><a href="#四、6-大工具安装与使用" class="headerlink" title="四、6 大工具安装与使用"></a>四、6 大工具安装与使用</h2><h3 id="4-1-web-fetch（内建）"><a href="#4-1-web-fetch（内建）" class="headerlink" title="4.1 web_fetch（内建）"></a>4.1 web_fetch（内建）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 无需安装，HTTP 客户端直接实现</span></span><br><span class="line">curl -s <span class="string">&quot;https://r.jina.ai/https://example.com&quot;</span> | <span class="built_in">head</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-Jina-Reader"><a href="#4-2-Jina-Reader" class="headerlink" title="4.2 Jina Reader"></a>4.2 Jina Reader</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 浏览器扩展 + API</span></span><br><span class="line">curl <span class="string">&quot;https://r.jina.ai/https://blog.example.com/post-1&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Node.js SDK</span></span><br><span class="line">npm install jinaai</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">JinaReader</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;jinaai&#x27;</span></span><br><span class="line"><span class="keyword">const</span> reader = <span class="keyword">new</span> <span class="title class_">JinaReader</span>(&#123; <span class="attr">apiKey</span>: process.<span class="property">env</span>.<span class="property">JINA_API_KEY</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> reader.<span class="title function_">read</span>(<span class="string">&#x27;https://example.com&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-Exa"><a href="#4-3-Exa" class="headerlink" title="4.3 Exa"></a>4.3 Exa</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install exa-js</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Exa</span> <span class="keyword">from</span> <span class="string">&#x27;exa-js&#x27;</span></span><br><span class="line"><span class="keyword">const</span> exa = <span class="keyword">new</span> <span class="title class_">Exa</span>(process.<span class="property">env</span>.<span class="property">EXA_API_KEY</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 搜索</span></span><br><span class="line"><span class="keyword">const</span> results = <span class="keyword">await</span> exa.<span class="title function_">search</span>(<span class="string">&#x27;latest AI agent frameworks&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">numResults</span>: <span class="number">5</span>,</span><br><span class="line">  <span class="attr">useAutoprompt</span>: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拿内容</span></span><br><span class="line"><span class="keyword">const</span> contents = <span class="keyword">await</span> exa.<span class="title function_">getContents</span>([<span class="string">&#x27;https://example.com/post&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-Tavily"><a href="#4-4-Tavily" class="headerlink" title="4.4 Tavily"></a>4.4 Tavily</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @tavily/core</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; tavily &#125; <span class="keyword">from</span> <span class="string">&#x27;@tavily/core&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 搜索</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> tavily.<span class="title function_">search</span>(<span class="string">&#x27;AI agent tools comparison&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">maxResults</span>: <span class="number">5</span>,</span><br><span class="line">  <span class="attr">includeAnswer</span>: <span class="literal">true</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// extract</span></span><br><span class="line"><span class="keyword">const</span> extract = <span class="keyword">await</span> tavily.<span class="title function_">extract</span>([<span class="string">&#x27;https://example.com/article&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment">// crawl（整站）</span></span><br><span class="line"><span class="keyword">const</span> crawl = <span class="keyword">await</span> tavily.<span class="title function_">crawl</span>(<span class="string">&#x27;https://docs.example.com&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">maxDepth</span>: <span class="number">2</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5-Firecrawl"><a href="#4-5-Firecrawl" class="headerlink" title="4.5 Firecrawl"></a>4.5 Firecrawl</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 云端 API（最简单）</span></span><br><span class="line">curl -X POST https://api.firecrawl.dev/v1/scrape \</span><br><span class="line">  -H <span class="string">&quot;Authorization: Bearer fc-xxx&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;url&quot;: &quot;https://example.com&quot;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自部署</span></span><br><span class="line">docker run -d --name firecrawl -p 3002:3002 firecrawl/firecrawl</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">FirecrawlApp</span> <span class="keyword">from</span> <span class="string">&#x27;@mendable/firecrawl-js&#x27;</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> <span class="title class_">FirecrawlApp</span>(&#123; <span class="attr">apiKey</span>: <span class="string">&#x27;fc-xxx&#x27;</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 单页抓取</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> app.<span class="title function_">scrapeUrl</span>(<span class="string">&#x27;https://example.com&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 整站爬取</span></span><br><span class="line"><span class="keyword">const</span> crawlResult = <span class="keyword">await</span> app.<span class="title function_">crawlUrl</span>(<span class="string">&#x27;https://docs.example.com&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">limit</span>: <span class="number">100</span>,</span><br><span class="line">  <span class="attr">maxDepth</span>: <span class="number">3</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-6-Crawl4AI（Python）"><a href="#4-6-Crawl4AI（Python）" class="headerlink" title="4.6 Crawl4AI（Python）"></a>4.6 Crawl4AI（Python）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install crawl4ai</span><br><span class="line">crawl4ai-setup</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">from</span> crawl4ai <span class="keyword">import</span> AsyncWebCrawler</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> AsyncWebCrawler() <span class="keyword">as</span> crawler:</span><br><span class="line">        result = <span class="keyword">await</span> crawler.arun(</span><br><span class="line">            url=<span class="string">&quot;https://example.com&quot;</span>,</span><br><span class="line">            word_count_threshold=<span class="number">10</span>,</span><br><span class="line">            extraction_strategy=<span class="string">&quot;llm&quot;</span></span><br><span class="line">        )</span><br><span class="line">        <span class="built_in">print</span>(result.markdown[:<span class="number">500</span>])</span><br><span class="line"></span><br><span class="line">asyncio.run(main())</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、10-条默认推荐"><a href="#五、10-条默认推荐" class="headerlink" title="五、10 条默认推荐"></a>五、10 条默认推荐</h2><p>没特殊约束时的选择顺序：</p>
+<ol>
+<li><strong>已知 URL</strong>：先试 <code>web_fetch</code>，不行换 Jina</li>
+<li><strong>查技术资料 &#x2F; 英文</strong>：Exa</li>
+<li><strong>Agent 调研工作流</strong>：Tavily（search→extract→crawl）</li>
+<li><strong>登录态页面</strong>：Kimi WebBridge（用你的真实浏览器）</li>
+<li><strong>复杂自动化 &#x2F; 反爬</strong>：<code>browser-act</code></li>
+<li><strong>Python + RAG 清洗</strong>：Crawl4AI</li>
+<li><strong>Node.js 工程抓取</strong>：Crawlee</li>
+<li><strong>团队统一抓取后端</strong>：AnyCrawl</li>
+<li><strong>完整数据平台</strong>：Firecrawl</li>
+<li><strong>学术 &#x2F; 金融 &#x2F; 企业数据</strong>：用垂直 API（<code>agent-gw</code> 这类）</li>
+</ol>
+<h2 id="六、4-类典型场景的最佳实践"><a href="#六、4-类典型场景的最佳实践" class="headerlink" title="六、4 类典型场景的最佳实践"></a>六、4 类典型场景的最佳实践</h2><h3 id="6-1-内容聚合（AI-早报）"><a href="#6-1-内容聚合（AI-早报）" class="headerlink" title="6.1 内容聚合（AI 早报）"></a>6.1 内容聚合（AI 早报）</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Tavily 搜索最近 24h 的 AI 新闻</span></span><br><span class="line"><span class="keyword">const</span> news = <span class="keyword">await</span> tavily.<span class="title function_">search</span>(<span class="string">&#x27;AI news latest&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">maxResults</span>: <span class="number">10</span>,</span><br><span class="line">  <span class="attr">topic</span>: <span class="string">&#x27;news&#x27;</span>,</span><br><span class="line">  <span class="attr">days</span>: <span class="number">1</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 用 LLM 摘要</span></span><br><span class="line"><span class="keyword">const</span> summary = <span class="keyword">await</span> llm.<span class="title function_">summarize</span>(news.<span class="property">results</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-RAG-数据准备"><a href="#6-2-RAG-数据准备" class="headerlink" title="6.2 RAG 数据准备"></a>6.2 RAG 数据准备</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Crawl4AI 批量抓取文档站</span></span><br><span class="line">urls = [<span class="string">&quot;https://docs.example.com/page1&quot;</span>, ...]</span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">    result = <span class="keyword">await</span> crawler.arun(url=url)</span><br><span class="line">    <span class="comment"># 转 markdown 存入向量库</span></span><br><span class="line">    chunks = text_splitter.split(result.markdown)</span><br><span class="line">    vector_store.add(chunks)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-竞品监控"><a href="#6-3-竞品监控" class="headerlink" title="6.3 竞品监控"></a>6.3 竞品监控</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每周跑一次 Tavily crawl</span></span><br><span class="line">tavily.crawl(<span class="string">&#x27;https://competitor.com/blog&#x27;</span>, &#123;</span><br><span class="line">  maxDepth: 2,</span><br><span class="line">  <span class="built_in">limit</span>: 50</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment"># 对比新增内容，告警</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-4-私域数据接入"><a href="#6-4-私域数据接入" class="headerlink" title="6.4 私域数据接入"></a>6.4 私域数据接入</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 agent-gw 接企业内部 API</span></span><br><span class="line"><span class="keyword">from</span> agent_gw <span class="keyword">import</span> Gateway</span><br><span class="line">gw = Gateway(credentials=&#123;...&#125;)</span><br><span class="line">data = gw.query(<span class="string">&quot;SELECT * FROM customers WHERE ...&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、决策原则（避坑指南）"><a href="#七、决策原则（避坑指南）" class="headerlink" title="七、决策原则（避坑指南）"></a>七、决策原则（避坑指南）</h2><h3 id="7-1-何时用哪个"><a href="#7-1-何时用哪个" class="headerlink" title="7.1 何时用哪个"></a>7.1 何时用哪个</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>选错工具的后果</th>
+<th>正确选择</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>已知 URL，5 秒要结果</td>
+<td>用爬虫浪费 30 秒</td>
+<td><code>web_fetch</code></td>
+</tr>
+<tr>
+<td>整站要 1000 页</td>
+<td>用浏览器卡到崩</td>
+<td>Crawl4AI &#x2F; Crawlee</td>
+</tr>
+<tr>
+<td>登录后才能看</td>
+<td>用抓取器 403</td>
+<td>Kimi WebBridge</td>
+</tr>
+<tr>
+<td>复杂前端 SPA</td>
+<td><code>curl</code> 拿不到内容</td>
+<td><code>browser-use</code></td>
+</tr>
+<tr>
+<td>反爬严格</td>
+<td>普通 HTTP 被 ban</td>
+<td><code>browser-act</code> + 代理</td>
+</tr>
+<tr>
+<td>实时数据</td>
+<td>缓存过期</td>
+<td>垂直数据网关</td>
+</tr>
+</tbody></table>
+<h3 id="7-2-常见误区"><a href="#7-2-常见误区" class="headerlink" title="7.2 常见误区"></a>7.2 常见误区</h3><ul>
+<li><strong>过度爬取</strong>：能 API 解决的别爬，<strong>爬取有法律风险</strong></li>
+<li><strong>存原始 HTML</strong>：转 Markdown 后再存，<strong>省 10 倍空间</strong></li>
+<li><strong>同步抓取</strong>：用异步 &#x2F; 队列，<strong>吞吐高 10 倍</strong></li>
+<li><strong>不设超时</strong>：默认 30 秒超时，<strong>避免永久卡住</strong></li>
+<li><strong>robots.txt 忽略</strong>：<strong>先看 robots.txt</strong>！可能违法</li>
+</ul>
+<h3 id="7-3-合规红线"><a href="#7-3-合规红线" class="headerlink" title="7.3 合规红线"></a>7.3 合规红线</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">绝对不能爬的：</span><br><span class="line">- 个人信息（GDPR / 个保法）</span><br><span class="line">- 受版权保护的内容（除非合理使用）</span><br><span class="line">- robots.txt 明确禁止的</span><br><span class="line">- 需要登录的页面（未经授权）</span><br><span class="line">- 反爬机制强的站（可能触发法律纠纷）</span><br></pre></td></tr></table></figure>
+
+<p><strong>原则</strong>：能 API 走 API，能 RSS 走 RSS，<strong>不能爬就用浏览器手动</strong>。</p>
+<h2 id="八、性能优化"><a href="#八、性能优化" class="headerlink" title="八、性能优化"></a>八、性能优化</h2><h3 id="缓存层"><a href="#缓存层" class="headerlink" title="缓存层"></a>缓存层</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用 Redis 缓存抓取结果</span></span><br><span class="line"><span class="keyword">const</span> cached = <span class="keyword">await</span> redis.<span class="title function_">get</span>(<span class="string">`url:<span class="subst">$&#123;hash(url)&#125;</span>`</span>)</span><br><span class="line"><span class="keyword">if</span> (cached) <span class="keyword">return</span> cached</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> <span class="title function_">fetch</span>(url)</span><br><span class="line"><span class="keyword">await</span> redis.<span class="title function_">set</span>(<span class="string">`url:<span class="subst">$&#123;hash(url)&#125;</span>`</span>, result, <span class="string">&#x27;EX&#x27;</span>, <span class="number">86400</span>)  <span class="comment">// 缓存 24h</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 semaphore 控制并发</span></span><br><span class="line">sem = asyncio.Semaphore(<span class="number">5</span>)  <span class="comment"># 最多 5 个并发</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">fetch</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> sem:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">await</span> crawler.arun(url)</span><br></pre></td></tr></table></figure>
+
+<h3 id="增量抓取"><a href="#增量抓取" class="headerlink" title="增量抓取"></a>增量抓取</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只抓新内容（用 sitemap + lastmod）</span></span><br><span class="line"><span class="keyword">const</span> sitemap = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;https://example.com/sitemap.xml&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> urls = <span class="title function_">parseSitemap</span>(sitemap).<span class="title function_">filter</span>(<span class="function"><span class="params">u</span> =&gt;</span> </span><br><span class="line">  <span class="keyword">new</span> <span class="title class_">Date</span>(u.<span class="property">lastmod</span>) &gt; lastCrawlTime</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、5-个最易踩的坑"><a href="#九、5-个最易踩的坑" class="headerlink" title="九、5 个最易踩的坑"></a>九、5 个最易踩的坑</h2><ol>
+<li><strong>robots.txt 没看</strong>——直接爬被 ban</li>
+<li><strong>没设 User-Agent</strong>——被服务器识别为 bot 拒绝</li>
+<li><strong>没设 rate limit</strong>——同一 IP 频繁请求被临时 ban</li>
+<li><strong>JS 渲染页面用 curl</strong>——拿不到动态内容</li>
+<li><strong>大文件下载不限制</strong>——一个 PDF 1 GB 把磁盘撑爆</li>
+</ol>
+<h2 id="十、对比矩阵速查"><a href="#十、对比矩阵速查" class="headerlink" title="十、对比矩阵速查"></a>十、对比矩阵速查</h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>类型</th>
+<th>价格</th>
+<th>学习曲线</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>web_fetch</code></td>
+<td>单页</td>
+<td>免费</td>
+<td>0</td>
+<td>已知 URL</td>
+</tr>
+<tr>
+<td>Jina Reader</td>
+<td>单页</td>
+<td>免费 1k&#x2F;日</td>
+<td>0</td>
+<td>极简</td>
+</tr>
+<tr>
+<td>Exa Search</td>
+<td>搜索</td>
+<td>$5&#x2F;月起</td>
+<td>低</td>
+<td>英文技术</td>
+</tr>
+<tr>
+<td>Tavily Search</td>
+<td>搜索</td>
+<td>$0.001&#x2F;次</td>
+<td>低</td>
+<td>Agent 调研</td>
+</tr>
+<tr>
+<td>Kimi WebBridge</td>
+<td>浏览器</td>
+<td>免费</td>
+<td>低</td>
+<td>已登录</td>
+</tr>
+<tr>
+<td><code>browser-act</code></td>
+<td>浏览器</td>
+<td>免费</td>
+<td>中</td>
+<td>反爬自动化</td>
+</tr>
+<tr>
+<td><code>browser-use</code></td>
+<td>浏览器 agent</td>
+<td>开源</td>
+<td>中</td>
+<td>Agent 框架</td>
+</tr>
+<tr>
+<td>Crawl4AI</td>
+<td>爬虫</td>
+<td>开源</td>
+<td>中</td>
+<td>Python RAG</td>
+</tr>
+<tr>
+<td>Crawlee</td>
+<td>爬虫</td>
+<td>开源</td>
+<td>中</td>
+<td>Node.js</td>
+</tr>
+<tr>
+<td>Firecrawl</td>
+<td>平台</td>
+<td>$0.005&#x2F;页</td>
+<td>低</td>
+<td>一体化</td>
+</tr>
+<tr>
+<td>AnyCrawl</td>
+<td>平台</td>
+<td>自部署</td>
+<td>高</td>
+<td>团队后端</td>
+</tr>
+</tbody></table>
+<h2 id="十一、参考资源"><a href="#十一、参考资源" class="headerlink" title="十一、参考资源"></a>十一、参考资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://exa.ai/">exa.ai</a> — AI 搜索引擎官方</li>
+<li><a target="_blank" rel="noopener" href="https://tavily.com/">tavily.com</a> — Agent research API</li>
+<li><a target="_blank" rel="noopener" href="https://firecrawl.dev/">firecrawl.dev</a> — 网页数据平台</li>
+<li><a target="_blank" rel="noopener" href="https://docs.crawl4ai.com/">crawl4ai.com</a> — Python crawler</li>
+<li><a target="_blank" rel="noopener" href="https://crawlee.dev/">crawlee.dev</a> — Node.js crawler</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/jina-ai/reader">jina.ai&#x2F;reader</a> — Jina Reader</li>
+<li><a target="_blank" rel="noopener" href="https://browser-use.com/">browser-use.com</a> — Browser agent</li>
+<li><a target="_blank" rel="noopener" href="https://kimi.com/">kimi.com</a> — Kimi 浏览器自动化</li>
+</ul>
+<h2 id="十二、Firecrawl-自部署实战"><a href="#十二、Firecrawl-自部署实战" class="headerlink" title="十二、Firecrawl 自部署实战"></a>十二、Firecrawl 自部署实战</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 拉镜像</span></span><br><span class="line">docker pull firecrawl/firecrawl:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 配置环境变量</span></span><br><span class="line"><span class="built_in">cat</span> &gt; .<span class="built_in">env</span> &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">USE_DB_AUTHENTICATION=<span class="literal">true</span></span><br><span class="line">FIRECRAWL_API_KEY=$(openssl rand -hex 32)</span><br><span class="line">REDIS_URL=redis://redis:6379</span><br><span class="line">PLAYWRIGHT_BROWSERS_PATH=/ms-playwright</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 启动</span></span><br><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 验证</span></span><br><span class="line">curl -X POST http://localhost:3002/v1/scrape \</span><br><span class="line">  -H <span class="string">&quot;Authorization: Bearer <span class="variable">$FIRECRAWL_API_KEY</span>&quot;</span> \</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;url&quot;: &quot;https://example.com&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>性能调优</strong>：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">firecrawl:</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MAX_CONCURRENT_REQUESTS=20</span>    <span class="comment"># 并发数</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CRAWL_TIMEOUT=30000</span>           <span class="comment"># 单页超时 30s</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CACHE_TTL=86400</span>               <span class="comment"># 缓存 24h</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">limits:</span></span><br><span class="line">          <span class="attr">memory:</span> <span class="string">4G</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十三、代理池配置"><a href="#十三、代理池配置" class="headerlink" title="十三、代理池配置"></a>十三、代理池配置</h2><p>反爬严重的站需要代理池：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// proxy-pool.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">HttpsProxyAgent</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;https-proxy-agent&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ProxyPool</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">proxies</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">proxies</span> = proxies</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">current</span> = <span class="number">0</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="title function_">next</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> proxy = <span class="variable language_">this</span>.<span class="property">proxies</span>[<span class="variable language_">this</span>.<span class="property">current</span>]</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">current</span> = (<span class="variable language_">this</span>.<span class="property">current</span> + <span class="number">1</span>) % <span class="variable language_">this</span>.<span class="property">proxies</span>.<span class="property">length</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HttpsProxyAgent</span>(<span class="string">`http://<span class="subst">$&#123;proxy.user&#125;</span>:<span class="subst">$&#123;proxy.pass&#125;</span>@<span class="subst">$&#123;proxy.host&#125;</span>:<span class="subst">$&#123;proxy.port&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = <span class="keyword">new</span> <span class="title class_">ProxyPool</span>([</span><br><span class="line">  <span class="string">&#x27;user1:pass1@proxy1.com:8000&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;user2:pass2@proxy2.com:8000&#x27;</span>,</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">// Crawl4AI 用法</span></span><br><span class="line"><span class="keyword">await</span> crawler.<span class="title function_">arun</span>(url=<span class="string">&#x27;https://example.com&#x27;</span>, </span><br><span class="line">  config=&#123;<span class="string">&#x27;proxy&#x27;</span>: pool.<span class="title function_">next</span>()&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>免费代理</strong>（质量差，慎用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 公共代理池</span></span><br><span class="line">curl -s <span class="string">&quot;https://api.proxyscrape.com/v2/?request=displayproxies&amp;protocol=http&amp;timeout=5000&amp;country=all&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>付费代理推荐</strong>：</p>
+<ul>
+<li>Bright Data（$5&#x2F;GB，企业级）</li>
+<li>Oxylabs（$10&#x2F;GB，稳定）</li>
+<li>IPIDEA（$1&#x2F;GB，便宜）</li>
+<li>自建代理（云函数 &#x2F; 家庭宽带）</li>
+</ul>
+<h2 id="十四、LLM-集成最佳实践"><a href="#十四、LLM-集成最佳实践" class="headerlink" title="十四、LLM 集成最佳实践"></a>十四、LLM 集成最佳实践</h2><h3 id="14-1-内容摘要"><a href="#14-1-内容摘要" class="headerlink" title="14.1 内容摘要"></a>14.1 内容摘要</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Tavily 拿原始内容 → LLM 摘要</span></span><br><span class="line"><span class="keyword">const</span> search = <span class="keyword">await</span> tavily.<span class="title function_">search</span>(<span class="string">&#x27;AI 编程助手&#x27;</span>, &#123; <span class="attr">maxResults</span>: <span class="number">5</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> urls = search.<span class="property">results</span>.<span class="title function_">map</span>(<span class="function"><span class="params">r</span> =&gt;</span> r.<span class="property">url</span>)</span><br><span class="line"><span class="keyword">const</span> content = <span class="keyword">await</span> tavily.<span class="title function_">extract</span>(urls)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> summary = <span class="keyword">await</span> llm.<span class="title function_">chat</span>(&#123;</span><br><span class="line">  <span class="attr">messages</span>: [&#123;</span><br><span class="line">    <span class="attr">role</span>: <span class="string">&#x27;system&#x27;</span>,</span><br><span class="line">    <span class="attr">content</span>: <span class="string">&#x27;请基于以下内容做摘要，每篇 200 字以内&#x27;</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">    <span class="attr">role</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">    <span class="attr">content</span>: content.<span class="property">results</span>.<span class="title function_">map</span>(<span class="function"><span class="params">r</span> =&gt;</span> r.<span class="property">content</span>).<span class="title function_">join</span>(<span class="string">&#x27;\n\n---\n\n&#x27;</span>)</span><br><span class="line">  &#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="14-2-结构化提取"><a href="#14-2-结构化提取" class="headerlink" title="14.2 结构化提取"></a>14.2 结构化提取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel</span><br><span class="line"><span class="keyword">from</span> langchain_openai <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> langchain.document_loaders <span class="keyword">import</span> FireCrawlLoader</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ProductInfo</span>(<span class="title class_ inherited__">BaseModel</span>):</span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    price: <span class="built_in">float</span></span><br><span class="line">    description: <span class="built_in">str</span></span><br><span class="line">    features: <span class="built_in">list</span>[<span class="built_in">str</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 爬取 + 结构化提取</span></span><br><span class="line">loader = FireCrawlLoader(url=<span class="string">&quot;https://product.example.com&quot;</span>)</span><br><span class="line">docs = loader.load()</span><br><span class="line"></span><br><span class="line">llm = ChatOpenAI(model=<span class="string">&quot;gpt-4o&quot;</span>).with_structured_output(ProductInfo)</span><br><span class="line">result = llm.invoke(docs[<span class="number">0</span>].page_content)</span><br><span class="line"><span class="built_in">print</span>(result)</span><br><span class="line"><span class="comment"># ProductInfo(name=&#x27;...&#x27;, price=99.0, description=&#x27;...&#x27;, features=[&#x27;...&#x27;])</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="14-3-多源对比"><a href="#14-3-多源对比" class="headerlink" title="14.3 多源对比"></a>14.3 多源对比</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同时问多个搜索源，融合答案</span></span><br><span class="line"><span class="keyword">const</span> [exa, tavily] = <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>([</span><br><span class="line">  exa.<span class="title function_">search</span>(query, &#123; <span class="attr">numResults</span>: <span class="number">5</span> &#125;),</span><br><span class="line">  tavily.<span class="title function_">search</span>(query, &#123; <span class="attr">maxResults</span>: <span class="number">5</span> &#125;)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 去重 + 排序</span></span><br><span class="line"><span class="keyword">const</span> merged = <span class="title function_">deduplicateByUrl</span>([...exa.<span class="property">results</span>, ...tavily.<span class="property">results</span>])</span><br><span class="line"><span class="comment">// 让 LLM 综合多源答案</span></span><br><span class="line"><span class="keyword">const</span> answer = <span class="keyword">await</span> llm.<span class="title function_">chat</span>(&#123;</span><br><span class="line">  <span class="attr">messages</span>: [&#123;</span><br><span class="line">    <span class="attr">role</span>: <span class="string">&#x27;user&#x27;</span>,</span><br><span class="line">    <span class="attr">content</span>: <span class="string">`基于以下 <span class="subst">$&#123;merged.length&#125;</span> 个来源回答：<span class="subst">$&#123;query&#125;</span>\n\n<span class="subst">$&#123;merged.map(r =&gt; r.content).join(<span class="string">&#x27;\n\n&#x27;</span>)&#125;</span>`</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="十五、反爬对抗"><a href="#十五、反爬对抗" class="headerlink" title="十五、反爬对抗"></a>十五、反爬对抗</h2><h3 id="15-1-基础伪装"><a href="#15-1-基础伪装" class="headerlink" title="15.1 基础伪装"></a>15.1 基础伪装</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> headers = &#123;</span><br><span class="line">  <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;en-US,en;q=0.5&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Accept-Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;keep-alive&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;Upgrade-Insecure-Requests&#x27;</span>: <span class="string">&#x27;1&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-2-应对-Cloudflare"><a href="#15-2-应对-Cloudflare" class="headerlink" title="15.2 应对 Cloudflare"></a>15.2 应对 Cloudflare</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 cloudscraper（绕过简单 CF 防护）</span></span><br><span class="line">pip install cloudscraper</span><br><span class="line"></span><br><span class="line">python -c <span class="string">&quot;</span></span><br><span class="line"><span class="string">import cloudscraper</span></span><br><span class="line"><span class="string">scraper = cloudscraper.create_scraper()</span></span><br><span class="line"><span class="string">r = scraper.get(&#x27;https://example.com&#x27;)</span></span><br><span class="line"><span class="string">print(r.text)</span></span><br><span class="line"><span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="15-3-验证码处理"><a href="#15-3-验证码处理" class="headerlink" title="15.3 验证码处理"></a>15.3 验证码处理</h3><table>
+<thead>
+<tr>
+<th>服务</th>
+<th>价格</th>
+<th>准确率</th>
+<th>速度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2Captcha</td>
+<td>$2.99&#x2F;1000</td>
+<td>95%</td>
+<td>10-30s</td>
+</tr>
+<tr>
+<td>Anti-Captcha</td>
+<td>$2.00&#x2F;1000</td>
+<td>95%</td>
+<td>10-20s</td>
+</tr>
+<tr>
+<td>CapSolver</td>
+<td>$2.50&#x2F;1000</td>
+<td>99%</td>
+<td>5-10s</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用 CapSolver 集成</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">CapSolver</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;capsolver-npm&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> solver = <span class="keyword">new</span> <span class="title class_">CapSolver</span>(&#123; <span class="attr">apiKey</span>: process.<span class="property">env</span>.<span class="property">CAPSOLVER_KEY</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> solver.<span class="title function_">solveRecaptchaV2</span>(&#123;</span><br><span class="line">  <span class="attr">websiteURL</span>: <span class="string">&#x27;https://example.com&#x27;</span>,</span><br><span class="line">  <span class="attr">websiteKey</span>: <span class="string">&#x27;6Lc...&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-4-法律边界"><a href="#15-4-法律边界" class="headerlink" title="15.4 法律边界"></a>15.4 法律边界</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">合法：抓公开数据、个人研究、新闻聚合（注明来源）</span><br><span class="line">灰色：抓内部数据、研究用</span><br><span class="line">违法：绕过付费墙、抓个人信息、商业转卖未授权数据</span><br></pre></td></tr></table></figure>
+
+<p><strong>遇到边界时问</strong>：这些数据有版权吗？我会损害原网站利益吗？对方明确禁止吗？</p>
+<h2 id="十六、内容清洗与结构化"><a href="#十六、内容清洗与结构化" class="headerlink" title="十六、内容清洗与结构化"></a>十六、内容清洗与结构化</h2><p>抓回来的 HTML &#x2F; Markdown 还要清洗：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用 cheerio 清洗</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> cheerio <span class="keyword">from</span> <span class="string">&#x27;cheerio&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">clean</span>(<span class="params">html</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> $ = cheerio.<span class="title function_">load</span>(html)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 删广告 / 导航 / footer</span></span><br><span class="line">  $(<span class="string">&#x27;script, style, nav, footer, .ad, .sidebar&#x27;</span>).<span class="title function_">remove</span>()</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 提取正文</span></span><br><span class="line">  <span class="keyword">const</span> article = $(<span class="string">&#x27;article, main, .post-content&#x27;</span>).<span class="title function_">first</span>().<span class="title function_">text</span>()</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 清理空白</span></span><br><span class="line">  <span class="keyword">return</span> article.<span class="title function_">replace</span>(<span class="regexp">/\s+/g</span>, <span class="string">&#x27; &#x27;</span>).<span class="title function_">trim</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Markdown 提取</strong>（用 Readability）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Readability</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@mozilla/readability&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">JSDOM</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;jsdom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dom = <span class="keyword">new</span> <span class="title function_">JSDOM</span>(html)</span><br><span class="line"><span class="keyword">const</span> reader = <span class="keyword">new</span> <span class="title class_">Readability</span>(dom.<span class="property">window</span>.<span class="property">document</span>)</span><br><span class="line"><span class="keyword">const</span> article = reader.<span class="title function_">parse</span>()</span><br><span class="line"><span class="comment">// &#123; title, content (HTML), textContent, ... &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>结构化字段提取</strong>（用 LLM）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fields = <span class="keyword">await</span> llm.<span class="title function_">extract</span>(html, &#123;</span><br><span class="line">  <span class="attr">schema</span>: &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">    <span class="attr">author</span>: <span class="string">&#x27;string&#x27;</span>,</span><br><span class="line">    <span class="attr">publishDate</span>: <span class="string">&#x27;date&#x27;</span>,</span><br><span class="line">    <span class="attr">tags</span>: <span class="string">&#x27;string[]&#x27;</span>,</span><br><span class="line">    <span class="attr">summary</span>: <span class="string">&#x27;string&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="十七、数据湖架构"><a href="#十七、数据湖架构" class="headerlink" title="十七、数据湖架构"></a>十七、数据湖架构</h2><p>抓回来的数据怎么存？推荐分层架构：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Raw（原始 HTML/MD）</span><br><span class="line">  ↓ 清洗 / 转换</span><br><span class="line">Cleaned（结构化 JSON）</span><br><span class="line">  ↓ 分块</span><br><span class="line">Chunked（向量数据库）</span><br><span class="line">  ↓ 索引</span><br><span class="line">Searchable（可搜索）</span><br></pre></td></tr></table></figure>
+
+<p><strong>实现示例</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. Raw 存储（对象存储）</span></span><br><span class="line">raw_html = <span class="keyword">await</span> firecrawl.scrape(url)</span><br><span class="line">s3.put_object(Bucket=<span class="string">&#x27;raw&#x27;</span>, Key=<span class="string">f&#x27;<span class="subst">&#123;<span class="built_in">hash</span>(url)&#125;</span>.html&#x27;</span>, Body=raw_html)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 清洗</span></span><br><span class="line">cleaned = clean_html(raw_html)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 分块</span></span><br><span class="line">chunks = text_splitter.split(cleaned, chunk_size=<span class="number">500</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. Embedding</span></span><br><span class="line">vectors = [embed(c) <span class="keyword">for</span> c <span class="keyword">in</span> chunks]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 入库</span></span><br><span class="line">vector_store.upsert(ids=chunks_ids, vectors=vectors, metadata=chunks_meta)</span><br></pre></td></tr></table></figure>
+
+<p><strong>工具栈</strong>：</p>
+<ul>
+<li>原始层：S3 &#x2F; MinIO</li>
+<li>清洗层：Python + BeautifulSoup</li>
+<li>向量库：Pinecone &#x2F; Weaviate &#x2F; Qdrant</li>
+<li>元数据：PostgreSQL &#x2F; MongoDB</li>
+<li>调度：Airflow &#x2F; Prefect</li>
+</ul>
+<h2 id="十八、未来-1-2-年的趋势"><a href="#十八、未来-1-2-年的趋势" class="headerlink" title="十八、未来 1-2 年的趋势"></a>十八、未来 1-2 年的趋势</h2><p>AI 数据获取的方向：</p>
+<ul>
+<li><strong>更强的多模态</strong>：从图片 &#x2F; 视频 &#x2F; 音频提取信息</li>
+<li><strong>实时性</strong>：流式数据获取（不是定时拉）</li>
+<li><strong>知识图谱</strong>：从非结构化数据自动构建图</li>
+<li><strong>数据市场</strong>：第三方清洗数据的交易平台</li>
+<li><strong>联邦学习</strong>：不抓数据，只训练模型</li>
+</ul>
+<p><strong>给开发者的建议</strong>：</p>
+<ul>
+<li><strong>不要自己造轮子</strong>——能用现成 API 就用 API</li>
+<li><strong>重视内容质量 &gt; 抓取速度</strong>——脏数据比没数据更糟</li>
+<li><strong>关注法律合规</strong>——欧盟 GDPR &#x2F; 中国个保法都很严</li>
+<li><strong>持续优化 prompt</strong>——AI 工具的核心是 prompt</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>本文原则</strong>：工具列表会过期，但分类不会。3 个月后可能多出 5 个新工具，但你仍然在 6 类里挑——这个框架长期有用。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Crawler/" rel="tag">Crawler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exa/" rel="tag">Exa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Firecrawl/" rel="tag">Firecrawl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tavily/" rel="tag">Tavily</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" rel="tag">工具对比</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a><a class="next" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-node-beginner/">Node.js 起步必知</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-npmrc-cheatsheet/">.npmrc 配置实战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

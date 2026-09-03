@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Hermes vs OpenClaw（下）：子系统与选型 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Hermes vs OpenClaw（下）：子系统与选型</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Hermes vs OpenClaw（下）：子系统与选型</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.1k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 4</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>前两篇聊了哲学、配置、故障、消息流，本篇进到子系统细节——沙箱、浏览器、Memory、Skills 四块横向对比，最后给一张决策树帮你在”我该上哪个”这件事上不纠结。</p>
+<h2 id="七、子系统对比"><a href="#七、子系统对比" class="headerlink" title="七、子系统对比"></a>七、子系统对比</h2><h3 id="7-1-沙箱-执行后端"><a href="#7-1-沙箱-执行后端" class="headerlink" title="7.1 沙箱 &#x2F; 执行后端"></a>7.1 沙箱 &#x2F; 执行后端</h3><table>
+<thead>
+<tr>
+<th>框架</th>
+<th>后端</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hermes</td>
+<td>local &#x2F; Docker &#x2F; SSH &#x2F; Singularity &#x2F; Modal（5 种）</td>
+</tr>
+<tr>
+<td>OpenClaw</td>
+<td>Local Docker + SSH + OpenShell（3 种）</td>
+</tr>
+</tbody></table>
+<p>Hermes 多出 Singularity（HPC 环境）+ Modal（云端 serverless）。如果你的工作流里有 HPC 集群或 serverless 训练，Hermes 直接 cover；否则 3 种后端够用。</p>
+<h3 id="7-2-浏览器栈"><a href="#7-2-浏览器栈" class="headerlink" title="7.2 浏览器栈"></a>7.2 浏览器栈</h3><table>
+<thead>
+<tr>
+<th>框架</th>
+<th>方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hermes</td>
+<td>Browserbase、Browser Use、Firecrawl、Camofox、本地 Chrome&#x2F;CDP、本地 Chromium via <code>agent-browser</code></td>
+</tr>
+<tr>
+<td>OpenClaw</td>
+<td>隔离 managed browser + <code>user</code> profile（Chrome MCP 接已登录 Chrome） + Playwright 备份</td>
+</tr>
+</tbody></table>
+<p>Hermes 的选择面更广，对<strong>新接入的 provider 不挑剔</strong>；OpenClaw 偏向”用一个 Chrome 实例复用 cookie + Playwright 兜底”，对<strong>自动化场景固定、需要带登录态</strong>的任务更顺手。</p>
+<h3 id="7-3-Memory-模型"><a href="#7-3-Memory-模型" class="headerlink" title="7.3 Memory 模型"></a>7.3 Memory 模型</h3><ul>
+<li><strong>Hermes</strong>：四层系统——session history + Honcho dialectic 用户画像 + FTS5 全文检索 + procedural memory。token 效率高的 hot&#x2F;cold 分离（主 prompt 注入 + 归档存储）</li>
+<li><strong>OpenClaw</strong>：文件式无界，<code>MEMORY.md</code> + <code>memory/YYYY-MM-DD.md</code>，依赖 FTS5 搜索</li>
+</ul>
+<p>简单说：Hermes 的 Memory 是<strong>有界</strong>的（token 上限明确，hot&#x2F;cold 隔离），适合长期跑、记忆越攒越多；OpenClaw 是<strong>无界</strong>的（按天分文件，全部进 FTS5），适合任务型 agent、跑完即丢。</p>
+<h3 id="7-4-Skills"><a href="#7-4-Skills" class="headerlink" title="7.4 Skills"></a>7.4 Skills</h3><ul>
+<li><strong>Hermes</strong>：”Where OpenClaw says ‘here are 5,700 skills you can install,’ Hermes says ‘I’ll build the skills myself.’”（<a target="_blank" rel="noopener" href="https://pickaxe.co/post/hermes-agent-vs-openclaw">Pickaxe</a>）——自主生成 + 公共目录 + ClawHub 三种来源</li>
+<li><strong>OpenClaw</strong>：ClawHub marketplace（5700+ skills）+ workspace 挂载</li>
+</ul>
+<p>说到底 Hermes 的 Skills 是<strong>生成型</strong>（agent 自己造工具），OpenClaw 的 Skills 是<strong>组装型</strong>（从市场挑现成的）。前者适合”我的需求没人做过”的场景，后者适合”我要快速搭一个标准流水线”的场景。</p>
+<h2 id="八、选型决策树"><a href="#八、选型决策树" class="headerlink" title="八、选型决策树"></a>八、选型决策树</h2><p>别只看 feature 对比——把你自己的痛点列出来走一遍决策树，比 feature 列表靠谱得多：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">你需要频繁换模型 / 热改 config？</span><br><span class="line">  └─ 是 → Hermes</span><br><span class="line">  └─ 否 → 继续 ↓</span><br><span class="line"></span><br><span class="line">你的痛点是&quot;消息接入 + 跨平台控制&quot;？</span><br><span class="line">  └─ 是 → OpenClaw</span><br><span class="line">  └─ 否 → 继续 ↓</span><br><span class="line"></span><br><span class="line">你想要 agent 越用越聪明（自主 skill 生成）？</span><br><span class="line">  └─ 是 → Hermes</span><br><span class="line">  └─ 否 → 继续 ↓</span><br><span class="line"></span><br><span class="line">你要做大规模 agent 编排 / WebSocket 控制面？</span><br><span class="line">  └─ 是 → OpenClaw</span><br><span class="line">  └─ 否 → 看团队生态，二者都成熟</span><br></pre></td></tr></table></figure>
+
+<p>补几条经验：</p>
+<ul>
+<li>如果你<strong>机器配置不高</strong>（&lt; 4GB RAM），优先 OpenClaw——Hermes 子进程 + session + 四层 memory 跑久了比 OpenClaw 胖</li>
+<li>如果你要<strong>长期跑一个 agent 半年以上</strong>，选 Hermes——OpenClaw 单点 gateway 跑这么久大概率撞上 #63643</li>
+<li>如果你团队<strong>已经有人在 OpenClaw 上写了大量 plugin</strong>，迁移成本别忽视——历史投资有时候比技术优势更重</li>
+</ul>
+<h2 id="九、调研数据来源（三期汇总）"><a href="#九、调研数据来源（三期汇总）" class="headerlink" title="九、调研数据来源（三期汇总）"></a>九、调研数据来源（三期汇总）</h2><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>URL</th>
+<th>关键引用</th>
+<th>交叉验证</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Screenshotone 博客</td>
+<td><a target="_blank" rel="noopener" href="https://screenshotone.com/blog/hermes-agent-versus-openclaw">screenshotone.com</a></td>
+<td>“agent-first vs gateway-first” 总结</td>
+<td>✅ 与 trilogyai &#x2F; lushbinary 一致</td>
+</tr>
+<tr>
+<td>TrilogyAI Substack</td>
+<td><a target="_blank" rel="noopener" href="https://trilogyai.substack.com/p/technical-deep-dive-hermes-vs-openclaw">trilogyai.substack.com</a></td>
+<td>“OpenClaw 赌路由，Hermes 赌学习”</td>
+<td>✅ 与 composio &#x2F; pickaxe 一致</td>
+</tr>
+<tr>
+<td>Lushbinary 博客</td>
+<td><a target="_blank" rel="noopener" href="https://lushbinary.com/blog/hermes-vs-openclaw-key-differences-comparison">lushbinary.com</a></td>
+<td>CVE-2026-25253 &#x2F; ClawHub 规模</td>
+<td>✅ 多源印证</td>
+</tr>
+<tr>
+<td>Composio 博客</td>
+<td><a target="_blank" rel="noopener" href="https://composio.dev/content/openclaw-vs-hermes-agent">composio.dev</a></td>
+<td>OpenClaw 适合”重复自动化”，Hermes 适合”长期任务”</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Pickaxe.co</td>
+<td><a target="_blank" rel="noopener" href="https://pickaxe.co/post/hermes-agent-vs-openclaw">pickaxe.co</a></td>
+<td>Hermes 四层 memory &#x2F; “I’ll build skills myself”</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Hermes 官方文档</strong></td>
+<td><a target="_blank" rel="noopener" href="https://hermes-agent.nousresearch.com/docs/">hermes-agent.nousresearch.com&#x2F;docs</a></td>
+<td>gateway-internals.md &#x2F; configuration.md &#x2F; messaging.md &#x2F; delegation-patterns</td>
+<td>一手源</td>
+</tr>
+<tr>
+<td><strong>OpenClaw 官方文档</strong></td>
+<td><a target="_blank" rel="noopener" href="https://docs.openclaw.ai/">docs.openclaw.ai</a></td>
+<td>concepts&#x2F;architecture &#x2F; cli&#x2F;sessions &#x2F; plugins&#x2F;hooks</td>
+<td>一手源</td>
+</tr>
+<tr>
+<td>OpenClaw GitHub Issues</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/openclaw/openclaw/issues/13758">#13758</a> &#x2F; <a target="_blank" rel="noopener" href="https://github.com/openclaw/openclaw/issues/63643">#63643</a></td>
+<td>Gateway 内存泄漏 + CPU 100% 实测</td>
+<td>一手 bug 报告</td>
+</tr>
+</tbody></table>
+<p><strong>抓取方式</strong>：Tavily（advanced search）+ Exa（search_and_contents），命中权威源 8 个，关键论断均经多源印证。</p>
+<hr>
+<h2 id="十、待跟进问题"><a href="#十、待跟进问题" class="headerlink" title="十、待跟进问题"></a>十、待跟进问题</h2><ul>
+<li><input disabled="" type="checkbox"> Hermes 的 “cached-agent signature” 具体是哪几个字段的 hash？（需要翻 <code>gateway/run.py</code> 源码确认）</li>
+<li><input disabled="" type="checkbox"> OpenClaw 的 plugin 热加载机制是否跟 Hermes 一样有签名检测？</li>
+<li><input disabled="" type="checkbox"> 在自己的机器上跑 <code>ps -o rss,etime,cmd -p &lt;OpenClaw_PID&gt;</code> 抓一次内存基线，看是否复现 #63643</li>
+</ul>
+<hr>
+<h2 id="系列完结"><a href="#系列完结" class="headerlink" title="系列完结"></a>系列完结</h2><p>写完这三期，回头看最值的不是 feature 对比表——是 4.2 节那个实战印证：<strong>改完 config 发一条消息就生效</strong>，这点比任何官方文档的承诺都管用。选型也是同理，与其看 feature list 不如自己跑一遍真实场景。下次有人问我”Hermes 和 OpenClaw 上哪个”，我会先反问一句：”你的痛点是热加载、长期记忆、还是消息通道？”答案不同，结论就不同。</p>
+<blockquote>
+<p>调研完成于 2026-06-01，源码与官方文档版本同步至当时最新。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Gateway/" rel="tag">Gateway</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hermes/" rel="tag">Hermes</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Multi-Agent/" rel="tag">Multi-Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenClaw/" rel="tag">OpenClaw</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a><a class="next" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-node-beginner/">Node.js 起步必知</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-npmrc-cheatsheet/">.npmrc 配置实战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

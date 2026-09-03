@@ -1,0 +1,500 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Mac 开发机配置速查 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Mac 开发机配置速查</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Mac 开发机配置速查</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 5.4k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 25</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>每换一台 Mac 或重装系统后都要重新配置开发环境。这篇是<strong>装机一次到位</strong>的速查清单，按使用顺序排列，全部命令复制就能跑。</p>
+<h2 id="一、Homebrew-镜像源"><a href="#一、Homebrew-镜像源" class="headerlink" title="一、Homebrew + 镜像源"></a>一、Homebrew + 镜像源</h2><p>ARM Mac（Apple Silicon）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键装 Homebrew</span></span><br><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install.sh)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 shell 环境</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;&#x27;</span> &gt;&gt; ~/.zprofile</span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(/opt/homebrew/bin/brew shellenv)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">brew --version</span><br><span class="line"><span class="comment"># 输出 Homebrew 4.x.x 表示成功</span></span><br></pre></td></tr></table></figure>
+
+<p>默认从 GitHub 拉慢，换成中科大源（4 个仓库）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># brew / core / cask 三个仓库</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>&quot;</span> &amp;&amp; git remote set-url origin https://mirrors.ustc.edu.cn/brew.git</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core&quot;</span> &amp;&amp; \</span><br><span class="line">  git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-cask&quot;</span> &amp;&amp; \</span><br><span class="line">  git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># 二进制预编译包镜像（最大加速点）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">brew update &amp;&amp; brew doctor</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong>：原本 5+ 分钟的 <code>brew install</code> 缩到 30 秒。</p>
+<p><strong>Intel Mac</strong>（老款）把 <code>/opt/homebrew</code> 换成 <code>/usr/local</code> 即可。</p>
+<h2 id="二、12-个必改的-Terminal-defaults"><a href="#二、12-个必改的-Terminal-defaults" class="headerlink" title="二、12 个必改的 Terminal defaults"></a>二、12 个必改的 Terminal defaults</h2><p>Mac 出厂的 Dock &#x2F; 通知 &#x2F; 截图 &#x2F; Finder 默认设置不少反人类。<strong>这些命令全跑一遍</strong>能省很多日常摩擦。</p>
+<h3 id="1-截图存到指定目录"><a href="#1-截图存到指定目录" class="headerlink" title="1. 截图存到指定目录"></a>1. 截图存到指定目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/Documents/screenshots</span><br><span class="line">defaults write com.apple.screencapture location ~/Documents/screenshots &amp;&amp; \</span><br><span class="line">  killall SystemUIServer</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-截图改-jpg-格式"><a href="#2-截图改-jpg-格式" class="headerlink" title="2. 截图改 jpg 格式"></a>2. 截图改 jpg 格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.screencapture <span class="built_in">type</span> jpg &amp;&amp; killall SystemUIServer</span><br></pre></td></tr></table></figure>
+
+<p>默认 png 单张 5-10MB，jpg 缩到 1-2MB，<strong>质量损失肉眼不可见</strong>。</p>
+<h3 id="3-桌面所有文件隐藏"><a href="#3-桌面所有文件隐藏" class="headerlink" title="3. 桌面所有文件隐藏"></a>3. 桌面所有文件隐藏</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder CreateDesktop -bool <span class="literal">false</span> &amp;&amp; killall Finder</span><br></pre></td></tr></table></figure>
+
+<p>需要恢复：<code>defaults write com.apple.finder CreateDesktop -bool true &amp;&amp; killall Finder</code></p>
+<h3 id="4-Dock-隐藏-显示去延迟"><a href="#4-Dock-隐藏-显示去延迟" class="headerlink" title="4. Dock 隐藏&#x2F;显示去延迟"></a>4. Dock 隐藏&#x2F;显示去延迟</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.Dock autohide-delay -<span class="built_in">float</span> 0 &amp;&amp; killall Dock</span><br><span class="line"><span class="comment"># 动画时长也缩短</span></span><br><span class="line">defaults write com.apple.Dock autohide-time-modifier -<span class="built_in">float</span> 0.3 &amp;&amp; killall Dock</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Dock-不活跃图标半透明"><a href="#5-Dock-不活跃图标半透明" class="headerlink" title="5. Dock 不活跃图标半透明"></a>5. Dock 不活跃图标半透明</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.dock showhidden -bool TRUE &amp;&amp; killall Dock</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-Launchpad-一页显示更多图标"><a href="#6-Launchpad-一页显示更多图标" class="headerlink" title="6. Launchpad 一页显示更多图标"></a>6. Launchpad 一页显示更多图标</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.dock springboard-columns -int 8</span><br><span class="line">defaults write com.apple.dock springboard-rows -int 7</span><br><span class="line">defaults write com.apple.dock ResetLaunchPad -bool TRUE &amp;&amp; killall Dock</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-通知横幅-5-秒消失"><a href="#7-通知横幅-5-秒消失" class="headerlink" title="7. 通知横幅 5 秒消失"></a>7. 通知横幅 5 秒消失</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.notificationcenterui bannerTime 5</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-禁止-DS-Store-写到-U-盘-网络盘"><a href="#8-禁止-DS-Store-写到-U-盘-网络盘" class="headerlink" title="8. 禁止 .DS_Store 写到 U 盘 &#x2F; 网络盘"></a>8. 禁止 .DS_Store 写到 U 盘 &#x2F; 网络盘</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.desktopservices DSDontWriteNetworkStores <span class="literal">true</span></span><br><span class="line">defaults write com.apple.desktopservices DSDontWriteUSBStores <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="9-Finder-显示隐藏文件"><a href="#9-Finder-显示隐藏文件" class="headerlink" title="9. Finder 显示隐藏文件"></a>9. Finder 显示隐藏文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder AppleShowAllFiles -bool <span class="literal">true</span> &amp;&amp; killall Finder</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-禁用开机-chime-声"><a href="#10-禁用开机-chime-声" class="headerlink" title="10. 禁用开机 chime 声"></a>10. 禁用开机 chime 声</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nvram SystemAudioVolume=%80</span><br></pre></td></tr></table></figure>
+
+<p>NVRAM 设置，重启后生效。恢复：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nvram -d SystemAudioVolume</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-触控板轻点点击（不用按下去）"><a href="#11-触控板轻点点击（不用按下去）" class="headerlink" title="11. 触控板轻点点击（不用按下去）"></a>11. 触控板轻点点击（不用按下去）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.AppleMultitouchTrackpad Clicking -bool <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>GUI 设置在「系统设置 → 触控板」也可以。</p>
+<h3 id="12-关闭按-apps-自动更新"><a href="#12-关闭按-apps-自动更新" class="headerlink" title="12. 关闭按 apps 自动更新"></a>12. 关闭按 apps 自动更新</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不自动下载更新</span></span><br><span class="line"><span class="built_in">sudo</span> softwareupdate --schedule off</span><br></pre></td></tr></table></figure>
+
+<p>GUI 在「系统设置 → 软件更新」。</p>
+<h2 id="三、应用双开（微信-QQ-钉钉）"><a href="#三、应用双开（微信-QQ-钉钉）" class="headerlink" title="三、应用双开（微信&#x2F;QQ&#x2F;钉钉）"></a>三、应用双开（微信&#x2F;QQ&#x2F;钉钉）</h2><p>Mac 不能像 iOS 那样直接装两个相同的 app，但可以手动做”应用克隆”：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 复制 app 到新名字</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -R /Applications/WeChat.app /Applications/WeChatWork.app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 改 bundle id（系统靠这个区分 app）</span></span><br><span class="line"><span class="built_in">sudo</span> /usr/libexec/PlistBuddy -c \</span><br><span class="line">  <span class="string">&quot;Set :CFBundleIdentifier com.tencent.WeChatWork&quot;</span> \</span><br><span class="line">  /Applications/WeChatWork.app/Contents/Info.plist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重签名（系统会拒绝未签名的 app）</span></span><br><span class="line"><span class="built_in">sudo</span> codesign --force --deep --sign - /Applications/WeChatWork.app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 启动分身</span></span><br><span class="line"><span class="built_in">nohup</span> /Applications/WeChatWork.app/Contents/MacOS/WeChatWork &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<p>启动后在 Dock 右键”在程序坞中保留”。从此一个 app 图标开一个号。</p>
+<p><strong>批量双开</strong>（写脚本）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">APP_NAME=<span class="variable">$1</span></span><br><span class="line">BUNDLE_ID=<span class="variable">$2</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">cp</span> -R /Applications/<span class="variable">$&#123;APP_NAME&#125;</span>.app /Applications/<span class="variable">$&#123;APP_NAME&#125;</span>Work.app</span><br><span class="line"><span class="built_in">sudo</span> /usr/libexec/PlistBuddy -c <span class="string">&quot;Set :CFBundleIdentifier <span class="variable">$&#123;BUNDLE_ID&#125;</span>.work&quot;</span> \</span><br><span class="line">  /Applications/<span class="variable">$&#123;APP_NAME&#125;</span>Work.app/Contents/Info.plist</span><br><span class="line"><span class="built_in">sudo</span> codesign --force --deep --sign - /Applications/<span class="variable">$&#123;APP_NAME&#125;</span>Work.app</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;APP_NAME&#125;</span>Work 已创建&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、修复”app-已损坏-无法打开”"><a href="#四、修复”app-已损坏-无法打开”" class="headerlink" title="四、修复”app 已损坏 &#x2F; 无法打开”"></a>四、修复”app 已损坏 &#x2F; 无法打开”</h2><p>下载的第三方 app（不在 App Store &#x2F; 没过 notarization）会触发 Gatekeeper 拦截：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解除隔离属性（一次性）</span></span><br><span class="line"><span class="built_in">sudo</span> xattr -r -d com.apple.quarantine /Applications/SomeApp.app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果还是不行，强制重新签名</span></span><br><span class="line"><span class="built_in">sudo</span> codesign --force --deep --sign - /Applications/SomeApp.app</span><br></pre></td></tr></table></figure>
+
+<p>第一行删掉 macOS 给下载文件打的”可疑”标记；第二行重新签名骗过 Gatekeeper。<strong>这两步 90% 的”损坏”提示都能解决</strong>。</p>
+<p><strong>批量处理</strong>（装一批破解软件时）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> app <span class="keyword">in</span> /Applications/*.app; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">sudo</span> xattr -r -d com.apple.quarantine <span class="string">&quot;<span class="variable">$app</span>&quot;</span> 2&gt;/dev/null</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、装机必备-app-清单"><a href="#五、装机必备-app-清单" class="headerlink" title="五、装机必备 app 清单"></a>五、装机必备 app 清单</h2><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>推荐</th>
+<th>备选</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动器</td>
+<td>Alfred（付费，App Store）</td>
+<td>Raycast（免费开源）</td>
+</tr>
+<tr>
+<td>菜单栏管理</td>
+<td>Bartender 4（付费）</td>
+<td>Ice（免费）</td>
+</tr>
+<tr>
+<td>窗口管理</td>
+<td>Rectangle（免费开源）</td>
+<td>Magnet（付费）</td>
+</tr>
+<tr>
+<td>截图 &#x2F; OCR</td>
+<td>iShot（免费带 OCR）</td>
+<td>CleanShot X（付费）</td>
+</tr>
+<tr>
+<td>终端</td>
+<td>Warp（现代化）</td>
+<td>iTerm2（老牌）</td>
+</tr>
+<tr>
+<td>终端美化</td>
+<td>oh-my-zsh + powerlevel10k</td>
+<td>starship（跨 shell）</td>
+</tr>
+<tr>
+<td>剪切板</td>
+<td>Maccy（开源）</td>
+<td>Paste（付费）</td>
+</tr>
+<tr>
+<td>密码管理</td>
+<td>1Password（付费）</td>
+<td>Bitwarden（免费）</td>
+</tr>
+<tr>
+<td>VPN &#x2F; 代理</td>
+<td>ClashX Pro</td>
+<td>Surge</td>
+</tr>
+</tbody></table>
+<p><strong>Alfred + Rectangle + iShot</strong> 三个就能把日常效率拉高一大截。</p>
+<p><strong>开发必装</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Homebrew Cask 一行装齐</span></span><br><span class="line">brew install --cask \</span><br><span class="line">  visual-studio-code \</span><br><span class="line">  iterm2 \</span><br><span class="line">  rectangle \</span><br><span class="line">  raycast \</span><br><span class="line">  alt-tab \</span><br><span class="line">  iina \</span><br><span class="line">  obsidian \</span><br><span class="line">  figma \</span><br><span class="line">  notion \</span><br><span class="line">  wechat \</span><br><span class="line">  feishu \</span><br><span class="line">  dingtalk</span><br><span class="line"></span><br><span class="line"><span class="comment"># 命令行工具</span></span><br><span class="line">brew install \</span><br><span class="line">  git \</span><br><span class="line">  node \</span><br><span class="line">  python@3.12 \</span><br><span class="line">  jq \</span><br><span class="line">  ripgrep \</span><br><span class="line">  fd \</span><br><span class="line">  fzf \</span><br><span class="line">  lazygit \</span><br><span class="line">  neovim \</span><br><span class="line">  tmux \</span><br><span class="line">  htop</span><br></pre></td></tr></table></figure>
+
+<p><code>ripgrep</code>（<code>rg</code>）比 <code>grep</code> 快 10-100 倍；<code>fd</code> 是 <code>find</code> 的现代替代；<code>fzf</code> 是模糊查找必备。</p>
+<h2 id="六、zsh-oh-my-zsh-配置"><a href="#六、zsh-oh-my-zsh-配置" class="headerlink" title="六、zsh + oh-my-zsh 配置"></a>六、zsh + oh-my-zsh 配置</h2><p>Mac 默认 zsh 但没装 oh-my-zsh 的话相当于没配：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 装 oh-my-zsh</span></span><br><span class="line">sh -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 装 powerlevel10k 主题</span></span><br><span class="line">git <span class="built_in">clone</span> --depth=1 https://github.com/romkatv/powerlevel10k.git \</span><br><span class="line">  <span class="variable">$&#123;ZSH_CUSTOM:-<span class="variable">$HOME</span>/.oh-my-zsh/custom&#125;</span>/themes/powerlevel10k</span><br><span class="line"><span class="comment"># 在 ~/.zshrc 改 ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</span></span><br><span class="line"><span class="comment"># 重启 shell，按提示配置</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 必装插件</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions \</span><br><span class="line">  <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting \</span><br><span class="line">  <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"><span class="comment"># ~/.zshrc 改 plugins=(...)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 必备别名（追加到 ~/.zshrc）</span></span><br><span class="line"><span class="built_in">alias</span> ll=<span class="string">&#x27;ls -lah&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> la=<span class="string">&#x27;ls -A&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> l=<span class="string">&#x27;ls -CF&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gs=<span class="string">&#x27;git status&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> ga=<span class="string">&#x27;git add&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gc=<span class="string">&#x27;git commit&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gp=<span class="string">&#x27;git push&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gd=<span class="string">&#x27;git diff&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gco=<span class="string">&#x27;git checkout&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gb=<span class="string">&#x27;git branch&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> gl=<span class="string">&#x27;git log --oneline -20&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> v=<span class="string">&#x27;vim&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> c=<span class="string">&#x27;code .&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> lg=<span class="string">&#x27;lazygit&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="七、SSH-Git-配置"><a href="#七、SSH-Git-配置" class="headerlink" title="七、SSH + Git 配置"></a>七、SSH + Git 配置</h2><p>开发机必配：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 生成 SSH key</span></span><br><span class="line">ssh-keygen -t ed25519 -C <span class="string">&quot;your.email@example.com&quot;</span></span><br><span class="line"><span class="comment"># 默认路径 ~/.ssh/id_ed25519</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 启动 ssh-agent</span></span><br><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(ssh-agent -s)</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. macOS 特殊配置（添加到 ~/.ssh/config）</span></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; ~/.ssh/config &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">Host *</span><br><span class="line">  AddKeysToAgent <span class="built_in">yes</span></span><br><span class="line">  UseKeychain <span class="built_in">yes</span></span><br><span class="line">  IdentityFile ~/.ssh/id_ed25519</span><br><span class="line"></span><br><span class="line">Host github.com</span><br><span class="line">  HostName github.com</span><br><span class="line">  User git</span><br><span class="line">  IdentityFile ~/.ssh/id_ed25519</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 把公钥加到 GitHub</span></span><br><span class="line"><span class="built_in">cat</span> ~/.ssh/id_ed25519.pub | pbcopy</span><br><span class="line"><span class="comment"># 打开 https://github.com/settings/keys 粘贴</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 测试</span></span><br><span class="line">ssh -T git@github.com</span><br><span class="line"><span class="comment"># Hi username! You&#x27;ve successfully authenticated</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Git 全局配置</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;Your Name&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;your.email@example.com&quot;</span></span><br><span class="line">git config --global init.defaultBranch main</span><br><span class="line">git config --global pull.rebase <span class="literal">true</span>   <span class="comment"># pull 时 rebase 而非 merge</span></span><br><span class="line">git config --global core.autocrlf input  <span class="comment"># macOS / Linux 不改行尾</span></span><br><span class="line">git config --global core.editor <span class="string">&quot;code --wait&quot;</span></span><br><span class="line">git config --global rerere.enabled <span class="literal">true</span>  <span class="comment"># 复用冲突解决</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="八、Python-数据科学环境"><a href="#八、Python-数据科学环境" class="headerlink" title="八、Python 数据科学环境"></a>八、Python 数据科学环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 Miniforge（conda 的轻量替代，M1 友好）</span></span><br><span class="line">curl -L -O https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh</span><br><span class="line">bash Miniforge3-MacOSX-arm64.sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加到 PATH</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;export PATH=&quot;$HOME/miniforge3/bin:$PATH&quot;&#x27;</span> &gt;&gt; ~/.zshrc</span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建项目环境</span></span><br><span class="line">conda create -n myproject python=3.11</span><br><span class="line">conda activate myproject</span><br><span class="line"></span><br><span class="line"><span class="comment"># 装数据科学常用包</span></span><br><span class="line">conda install numpy pandas matplotlib scikit-learn jupyter</span><br></pre></td></tr></table></figure>
+
+<p><strong>pip 用阿里镜像</strong>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~/.pip/pip.conf</span></span><br><span class="line"><span class="section">[global]</span></span><br><span class="line"><span class="attr">index-url</span> = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line"><span class="attr">trusted-host</span> = mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、常见错误速查"><a href="#九、常见错误速查" class="headerlink" title="九、常见错误速查"></a>九、常见错误速查</h2><table>
+<thead>
+<tr>
+<th>错误</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>command not found: brew</code></td>
+<td>Homebrew PATH 没配</td>
+<td>装完后执行 <code>brew shellenv</code></td>
+</tr>
+<tr>
+<td><code>xcrun: error: invalid active developer path</code></td>
+<td>Xcode Command Line Tools 没装</td>
+<td><code>xcode-select --install</code></td>
+</tr>
+<tr>
+<td><code>App 已损坏</code></td>
+<td>Gatekeeper 拦截</td>
+<td><code>xattr -d com.apple.quarantine</code></td>
+</tr>
+<tr>
+<td><code>Operation not permitted</code></td>
+<td>SIP 保护</td>
+<td>多数情况不该关 SIP，少数如要关需要 Recovery Mode</td>
+</tr>
+<tr>
+<td><code>xcode-select: error: tool &#39;xcodebuild&#39; requires Xcode</code></td>
+<td>装错工具</td>
+<td>装 <code>xcode-select --install</code>（不是 Xcode）</td>
+</tr>
+<tr>
+<td>终端 <code>command not found</code> 找不到 brew 安装的</td>
+<td>zsh PATH 配置问题</td>
+<td><code>echo $PATH | tr &#39;:&#39; &#39;\n&#39;</code> 看是否有 <code>/opt/homebrew/bin</code></td>
+</tr>
+<tr>
+<td>Finder 侧栏多一堆内容</td>
+<td>旧设备同步</td>
+<td>「访达 → 设置 → 边栏」关掉不要的项</td>
+</tr>
+<tr>
+<td>App Store 一直转圈</td>
+<td>账号问题</td>
+<td><code>sudo killall appstoreagent</code></td>
+</tr>
+</tbody></table>
+<h2 id="十、装机后-30-分钟清单"><a href="#十、装机后-30-分钟清单" class="headerlink" title="十、装机后 30 分钟清单"></a>十、装机后 30 分钟清单</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[ ] Homebrew + 中科大镜像源                  5 分钟</span><br><span class="line">[ ] 12 个 defaults 命令                      10 分钟</span><br><span class="line">[ ] zsh + oh-my-zsh + powerlevel10k          5 分钟</span><br><span class="line">[ ] SSH key 生成 + GitHub 配置               5 分钟</span><br><span class="line">[ ] 必备 brew install                        5 分钟</span><br><span class="line">[ ] Python / Node 开发环境                    5 分钟</span><br><span class="line">[ ] 应用双开（微信/钉钉）                    2 分钟</span><br><span class="line">[ ] 终端别名（ll / gs / v 等）               1 分钟</span><br><span class="line">[ ] 测试：brew install hello &amp;&amp; brew doctor   1 分钟</span><br></pre></td></tr></table></figure>
+
+<p>跑完这 10 步，新 Mac 就能进入”能干活”状态。具体美化（主题、字体、配色）可以慢慢来。</p>
+<h2 id="十一、macOS-版本差异"><a href="#十一、macOS-版本差异" class="headerlink" title="十一、macOS 版本差异"></a>十一、macOS 版本差异</h2><p>不同系统版本的 defaults 路径可能不同：</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>默认 Shell</th>
+<th>Homebrew 路径</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>macOS 10.15 (Catalina)</td>
+<td>zsh</td>
+<td><code>/usr/local</code></td>
+<td>切换到 zsh</td>
+</tr>
+<tr>
+<td>macOS 11 (Big Sur)</td>
+<td>zsh</td>
+<td><code>/opt/homebrew</code>（ARM）&#x2F; <code>/usr/local</code>（Intel）</td>
+<td>Apple Silicon 起步</td>
+</tr>
+<tr>
+<td>macOS 12 (Monterey)</td>
+<td>zsh</td>
+<td>同上</td>
+<td>M1 Pro&#x2F;Max 主流</td>
+</tr>
+<tr>
+<td>macOS 13 (Ventura)</td>
+<td>zsh</td>
+<td>同上</td>
+<td>系统设置重构</td>
+</tr>
+<tr>
+<td>macOS 14 (Sonoma)</td>
+<td>zsh</td>
+<td>同上</td>
+<td>新增桌面 widgets</td>
+</tr>
+<tr>
+<td>macOS 15 (Sequoia)</td>
+<td>zsh</td>
+<td>同上</td>
+<td>iPhone mirroring</td>
+</tr>
+</tbody></table>
+<p><strong>Intel Mac 迁移到 Apple Silicon</strong>：不用全装 Homebrew，原 <code>/usr/local</code> 的内容不能用，要在 <code>/opt/homebrew</code> 重新装。备份 <code>brew list</code> 输出，新机重装。</p>
+<h2 id="十三、zsh-进阶配置"><a href="#十三、zsh-进阶配置" class="headerlink" title="十三、zsh 进阶配置"></a>十三、zsh 进阶配置</h2><p><code>.zshrc</code> 不只是装 oh-my-zsh。<strong>有 5 个细节能让你终端体验从”能用”变”顺手”</strong>。</p>
+<h3 id="1-PATH-顺序"><a href="#1-PATH-顺序" class="headerlink" title="1. PATH 顺序"></a>1. PATH 顺序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># .zshrc 顶部</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;/opt/homebrew/bin:/usr/local/bin:<span class="variable">$HOME</span>/.local/bin:<span class="variable">$PATH</span>&quot;</span></span><br><span class="line"><span class="comment"># Homebrew 在最前，local bin 次之</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-自定义函数"><a href="#2-自定义函数" class="headerlink" title="2. 自定义函数"></a>2. 自定义函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 ~/.zshrc 加</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 快速建项目目录并 cd 进去</span></span><br><span class="line"><span class="function"><span class="title">mkcd</span></span>() &#123; <span class="built_in">mkdir</span> -p <span class="string">&quot;<span class="variable">$1</span>&quot;</span> &amp;&amp; <span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取任何压缩包</span></span><br><span class="line"><span class="function"><span class="title">extract</span></span>() &#123;</span><br><span class="line">  <span class="keyword">if</span> [ -f <span class="variable">$1</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">      *.tar.bz2) tar xjf <span class="variable">$1</span> ;;</span><br><span class="line">      *.tar.gz)  tar xzf <span class="variable">$1</span> ;;</span><br><span class="line">      *.bz2)     bunzip2 <span class="variable">$1</span> ;;</span><br><span class="line">      *.rar)     unrar e <span class="variable">$1</span> ;;</span><br><span class="line">      *.gz)      gunzip <span class="variable">$1</span> ;;</span><br><span class="line">      *.tar)     tar xf <span class="variable">$1</span> ;;</span><br><span class="line">      *.tbz2)    tar xjf <span class="variable">$1</span> ;;</span><br><span class="line">      *.tgz)     tar xzf <span class="variable">$1</span> ;;</span><br><span class="line">      *.zip)     unzip <span class="variable">$1</span> ;;</span><br><span class="line">      *.Z)       uncompress <span class="variable">$1</span> ;;</span><br><span class="line">      *.7z)      7z x <span class="variable">$1</span> ;;</span><br><span class="line">      *)         <span class="built_in">echo</span> <span class="string">&quot;&#x27;<span class="variable">$1</span>&#x27; 无法解压&quot;</span> ;;</span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&#x27;<span class="variable">$1</span>&#x27; 不是有效文件&quot;</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 快速查端口占用</span></span><br><span class="line"><span class="function"><span class="title">port</span></span>() &#123;</span><br><span class="line">  lsof -i :<span class="variable">$1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查本机 IP</span></span><br><span class="line"><span class="function"><span class="title">myip</span></span>() &#123;</span><br><span class="line">  ifconfig | grep <span class="string">&quot;inet &quot;</span> | grep -v 127.0.0.1 | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-智能历史搜索"><a href="#3-智能历史搜索" class="headerlink" title="3. 智能历史搜索"></a>3. 智能历史搜索</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 ~/.zshrc 加</span></span><br><span class="line">HISTFILE=~/.zsh_history</span><br><span class="line">HISTSIZE=10000</span><br><span class="line">SAVEHIST=10000</span><br><span class="line"><span class="built_in">setopt</span> SHARE_HISTORY      <span class="comment"># 多终端共享历史</span></span><br><span class="line"><span class="built_in">setopt</span> HIST_IGNORE_DUPS   <span class="comment"># 跳过重复</span></span><br><span class="line"><span class="built_in">setopt</span> HIST_FIND_NO_DUPS  <span class="comment"># 搜索时跳过重复</span></span><br></pre></td></tr></table></figure>
+
+<p><code>Ctrl+R</code> 反向搜索历史命令，按 <code>Ctrl+R</code> 多次继续往前找。</p>
+<h3 id="4-智能补全"><a href="#4-智能补全" class="headerlink" title="4. 智能补全"></a>4. 智能补全</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">autoload</span> -Uz compinit &amp;&amp; compinit</span><br><span class="line"><span class="comment"># 模糊匹配</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> matcher-list <span class="string">&#x27;m:&#123;a-zA-Z&#125;=&#123;a-zA-Z&#125;&#x27;</span></span><br><span class="line"><span class="comment"># 目录补全带颜色</span></span><br><span class="line"><span class="built_in">zstyle</span> <span class="string">&#x27;:completion:*&#x27;</span> list-colors <span class="string">&quot;<span class="variable">$&#123;(s.:.)LS_COLORS&#125;</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-提示符美化（powerlevel10k-之外的选择）"><a href="#5-提示符美化（powerlevel10k-之外的选择）" class="headerlink" title="5. 提示符美化（powerlevel10k 之外的选择）"></a>5. 提示符美化（powerlevel10k 之外的选择）</h3><p>如果不想装 p10k，用 starship（跨 shell）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install starship</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;eval &quot;$(starship init zsh)&quot;&#x27;</span> &gt;&gt; ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p><code>~/.config/starship.toml</code> 自定义：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[character]</span></span><br><span class="line"><span class="attr">success_symbol</span> = <span class="string">&quot;[➜](bold green)&quot;</span></span><br><span class="line"><span class="attr">error_symbol</span> = <span class="string">&quot;[✗](bold red)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="section">[node]</span></span><br><span class="line"><span class="attr">version_format</span> = <span class="string">&quot;v[($semver)]($style) &quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十四、Docker-Desktop-替代方案"><a href="#十四、Docker-Desktop-替代方案" class="headerlink" title="十四、Docker Desktop 替代方案"></a>十四、Docker Desktop 替代方案</h2><p>Docker Desktop 商业授权争议后，社区有 3 个常用替代：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>优势</th>
+<th>安装</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OrbStack</strong></td>
+<td>启动快、UI 优雅、免费个人用</td>
+<td><code>brew install --cask orbstack</code></td>
+</tr>
+<tr>
+<td><strong>Colima</strong></td>
+<td>开源、CLI 工具</td>
+<td><code>brew install colima docker docker-compose</code></td>
+</tr>
+<tr>
+<td><strong>Rancher Desktop</strong></td>
+<td>k8s 友好</td>
+<td><code>brew install --cask rancher</code></td>
+</tr>
+</tbody></table>
+<p><strong>Colima 配置示例</strong>（推荐 ARM Mac 用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动</span></span><br><span class="line">colima start --cpu 4 --memory 8 --disk 60</span><br><span class="line"></span><br><span class="line"><span class="comment"># 装 docker-compose</span></span><br><span class="line">brew install docker-compose</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<p><strong>Docker Desktop 必装</strong>（不在乎授权就用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask docker</span><br><span class="line"><span class="comment"># 启动后开 OrbStack 兼容模式</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>镜像加速</strong>（国内）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ~/.docker/daemon.json</span></span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: <span class="section">[</span></span><br><span class="line"><span class="section">    &quot;https://registry.docker-cn.com&quot;,</span></span><br><span class="line"><span class="section">    &quot;https://mirror.ccs.tencentyun.com&quot;</span></span><br><span class="line"><span class="section">  ]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="十五、系统性能优化"><a href="#十五、系统性能优化" class="headerlink" title="十五、系统性能优化"></a>十五、系统性能优化</h2><p>新 Mac 通常性能就 OK，但可以进一步优化：</p>
+<h3 id="1-关闭多余启动项"><a href="#1-关闭多余启动项" class="headerlink" title="1. 关闭多余启动项"></a>1. 关闭多余启动项</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看登录时启动的应用</span></span><br><span class="line">osascript -e <span class="string">&#x27;tell application &quot;System Events&quot; to get the name of every login item&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 禁用某个启动项</span></span><br><span class="line">osascript -e <span class="string">&#x27;tell application &quot;System Events&quot; to delete login item &quot;ItemName&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>GUI 在「系统设置 → 通用 → 登录项」。</p>
+<h3 id="2-关闭-Spotlight-索引"><a href="#2-关闭-Spotlight-索引" class="headerlink" title="2. 关闭 Spotlight 索引"></a>2. 关闭 Spotlight 索引</h3><p>如果用 Alfred &#x2F; Raycast 代替 Spotlight 搜索：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭索引（节省 CPU）</span></span><br><span class="line"><span class="built_in">sudo</span> mdutil -a -i off</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完全禁用 Spotlight</span></span><br><span class="line"><span class="built_in">sudo</span> mdutil -E /</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新启用（如果改主意）</span></span><br><span class="line"><span class="built_in">sudo</span> mdutil -a -i on</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-关掉没用的动画"><a href="#3-关掉没用的动画" class="headerlink" title="3. 关掉没用的动画"></a>3. 关掉没用的动画</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 加快窗口动画</span></span><br><span class="line">defaults write NSGlobalDomain NSWindowResizeTime -<span class="built_in">float</span> 0.001</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关掉 Mission Control 动画</span></span><br><span class="line">defaults write com.apple.dock expose-animation-duration -<span class="built_in">float</span> 0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关掉 Launchpad 动画</span></span><br><span class="line">defaults write com.apple.dock springboard-show-duration -<span class="built_in">float</span> 0</span><br><span class="line">defaults write com.apple.dock springboard-hide-duration -<span class="built_in">float</span> 0</span><br><span class="line">defaults write com.apple.dock springboard-page-duration -<span class="built_in">float</span> 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-关闭-Crash-Reporter"><a href="#4-关闭-Crash-Reporter" class="headerlink" title="4. 关闭 Crash Reporter"></a>4. 关闭 Crash Reporter</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.CrashReporter DialogType none</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：关掉后系统崩溃不再弹窗，但日志还在 <code>/Library/Logs/DiagnosticReports/</code>。</p>
+<h3 id="5-减少-Time-Machine-备份频率"><a href="#5-减少-Time-Machine-备份频率" class="headerlink" title="5. 减少 Time Machine 备份频率"></a>5. 减少 Time Machine 备份频率</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认每小时备份，改成每天</span></span><br><span class="line"><span class="built_in">sudo</span> defaults write /System/Library/LaunchDaemons/com.apple.backupd-auto Interval -int 86400</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：这是 system-level default，谨慎改。</p>
+<h3 id="6-内存压力监控"><a href="#6-内存压力监控" class="headerlink" title="6. 内存压力监控"></a>6. 内存压力监控</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看内存压力</span></span><br><span class="line">memory_pressure</span><br><span class="line"><span class="comment"># 输出 System-wide memory free percentage: XX%</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 看进程内存占用</span></span><br><span class="line">top -o mem</span><br></pre></td></tr></table></figure>
+
+<p><strong>活动监视器</strong> GUI 也行：Dock 右键 → 选项 → 活动监视器。</p>
+<h3 id="7-清理系统缓存"><a href="#7-清理系统缓存" class="headerlink" title="7. 清理系统缓存"></a>7. 清理系统缓存</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统缓存（需 sudo）</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -rf /Library/Caches/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用户缓存</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/Library/Caches/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># Xcode 派生数据（开发机才需要）</span></span><br><span class="line"><span class="built_in">rm</span> -rf ~/Library/Developer/Xcode/DerivedData/*</span><br></pre></td></tr></table></figure>
+
+<p><strong>MacCleaner Pro</strong> 等第三方工具能可视化清理，<strong>但大多数”清理工具”是骗钱的</strong>——手动 rm 就行。</p>
+<h2 id="十六、备份与恢复策略"><a href="#十六、备份与恢复策略" class="headerlink" title="十六、备份与恢复策略"></a>十六、备份与恢复策略</h2><p>新 Mac 配好之后一定要做备份，否则下次换机要重来：</p>
+<h3 id="1-Time-Machine（系统级）"><a href="#1-Time-Machine（系统级）" class="headerlink" title="1. Time Machine（系统级）"></a>1. Time Machine（系统级）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用 Time Machine 备份到外接硬盘</span></span><br><span class="line"><span class="built_in">sudo</span> tmutil <span class="built_in">enable</span></span><br><span class="line"><span class="built_in">sudo</span> tmutil startbackup --auto</span><br></pre></td></tr></table></figure>
+
+<p>推荐用 Time Machine 自动备份整个系统。</p>
+<h3 id="2-配置文件-dotfiles-备份"><a href="#2-配置文件-dotfiles-备份" class="headerlink" title="2. 配置文件 dotfiles 备份"></a>2. 配置文件 dotfiles 备份</h3><p><code>.zshrc</code>、<code>.npmrc</code>、SSH keys、<code>.gitconfig</code> 这些应该进 git 仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推荐用 chezmoi 或 yadm 管理 dotfiles</span></span><br><span class="line">brew install yadm</span><br><span class="line">yadm init</span><br><span class="line">yadm add ~/.zshrc ~/.gitconfig ~/.npmrc</span><br><span class="line">yadm commit -m <span class="string">&quot;Initial dotfiles&quot;</span></span><br><span class="line">yadm remote add origin https://github.com/your/dotfiles.git</span><br><span class="line">yadm push</span><br></pre></td></tr></table></figure>
+
+<p>新机恢复：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yadm <span class="built_in">clone</span> https://github.com/your/dotfiles.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Homebrew-备份"><a href="#3-Homebrew-备份" class="headerlink" title="3. Homebrew 备份"></a>3. Homebrew 备份</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导出当前所有安装的包</span></span><br><span class="line">brew bundle dump --file=~/Brewfile</span><br><span class="line">git add ~/Brewfile</span><br><span class="line">git commit -m <span class="string">&quot;Update Brewfile&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 新机恢复</span></span><br><span class="line">brew install --cask --app-store</span><br><span class="line">brew bundle install --file=~/Brewfile</span><br></pre></td></tr></table></figure>
+
+<p><code>Brewfile</code> 是声明式清单，比手动重装可靠。</p>
+<h3 id="4-SSH-key-备份（重要！）"><a href="#4-SSH-key-备份（重要！）" class="headerlink" title="4. SSH key 备份（重要！）"></a>4. SSH key 备份（<strong>重要！</strong>）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SSH key 丢了 GitHub 账号就锁了，必须备份</span></span><br><span class="line"><span class="comment"># 加密存到 1Password / Bitwarden / 加密 U 盘</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十七、装机后的微调"><a href="#十七、装机后的微调" class="headerlink" title="十七、装机后的微调"></a>十七、装机后的微调</h2><h3 id="触控板手势（增加效率）"><a href="#触控板手势（增加效率）" class="headerlink" title="触控板手势（增加效率）"></a>触控板手势（增加效率）</h3><table>
+<thead>
+<tr>
+<th>手势</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>三指上滑</td>
+<td>Mission Control</td>
+</tr>
+<tr>
+<td>三指下滑</td>
+<td>App Exposé</td>
+</tr>
+<tr>
+<td>三指左右滑</td>
+<td>切换全屏应用</td>
+</tr>
+<tr>
+<td>四指捏合</td>
+<td>Launchpad</td>
+</tr>
+<tr>
+<td>四指张开</td>
+<td>显示桌面</td>
+</tr>
+<tr>
+<td>双指点按（轻按）</td>
+<td>智能缩放</td>
+</tr>
+<tr>
+<td>双指从边缘滑入</td>
+<td>通知中心</td>
+</tr>
+</tbody></table>
+<p>GUI 在「系统设置 → 触控板」全部可配。</p>
+<h3 id="Spotlight-替代"><a href="#Spotlight-替代" class="headerlink" title="Spotlight 替代"></a>Spotlight 替代</h3><p>如果禁用了 Spotlight，用 Alfred 替代：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask alfred</span><br></pre></td></tr></table></figure>
+
+<p>设置 Workflows：</p>
+<ul>
+<li>全局快捷键 <code>Cmd+Space</code> 触发</li>
+<li>搜索 Everything（默认）</li>
+<li>计算器（输入 <code>=2+2</code> 直接出结果）</li>
+<li>系统命令（输入 <code>shutdown</code> 直接关机）</li>
+<li>剪贴板历史（默认集成）</li>
+</ul>
+<h3 id="文件预览增强"><a href="#文件预览增强" class="headerlink" title="文件预览增强"></a>文件预览增强</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Quick Look 增强（预览各种文件）</span></span><br><span class="line">brew install --cask qlmarkdown  <span class="comment"># 预览 Markdown</span></span><br><span class="line">brew install --cask qlimagesize  <span class="comment"># 预览图片带尺寸</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="终端复用（tmux）"><a href="#终端复用（tmux）" class="headerlink" title="终端复用（tmux）"></a>终端复用（tmux）</h3><p><code>tmux</code> 是 SSH 远程工作必备，本地也很有用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">brew install tmux</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置文件 ~/.tmux.conf</span></span><br><span class="line"><span class="built_in">cat</span> &gt; ~/.tmux.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line"><span class="comment"># 鼠标支持</span></span><br><span class="line"><span class="built_in">set</span> -g mouse on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 前缀键改 Ctrl-a（emacs 风）</span></span><br><span class="line">unbind C-b</span><br><span class="line"><span class="built_in">set</span> -g prefix C-a</span><br><span class="line"><span class="built_in">bind</span> C-a send-prefix</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切分窗格</span></span><br><span class="line"><span class="built_in">bind</span> | split-window -h</span><br><span class="line"><span class="built_in">bind</span> - split-window -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载配置</span></span><br><span class="line"><span class="built_in">bind</span> r source-file ~/.tmux.conf \; display <span class="string">&quot;reloaded!&quot;</span></span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动</span></span><br><span class="line">tmux</span><br></pre></td></tr></table></figure>
+
+<p>常用命令：</p>
+<ul>
+<li><code>Ctrl-a &quot;</code> 横切分</li>
+<li><code>Ctrl-a %</code> 竖切分</li>
+<li><code>Ctrl-a d</code> detach（后台）</li>
+<li><code>tmux a</code> 重新 attach</li>
+</ul>
+<h2 id="十八、远程办公配置"><a href="#十八、远程办公配置" class="headerlink" title="十八、远程办公配置"></a>十八、远程办公配置</h2><p>新 Mac 拿来远程办公要配的几件事：</p>
+<h3 id="1-Tailscale（组网）"><a href="#1-Tailscale（组网）" class="headerlink" title="1. Tailscale（组网）"></a>1. Tailscale（组网）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask tailscale</span><br><span class="line"><span class="comment"># 启动后用 Google / Microsoft 账号登录</span></span><br><span class="line"><span class="comment"># 自动获得 100.x.x.x 虚拟 IP，可以访问家里 / 公司网络</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-SSH-服务器"><a href="#2-SSH-服务器" class="headerlink" title="2. SSH 服务器"></a>2. SSH 服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># macOS 自带 sshd，只需开启</span></span><br><span class="line"><span class="built_in">sudo</span> systemsetup -setremotelogin on</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证</span></span><br><span class="line"><span class="built_in">sudo</span> systemsetup -getremotelogin</span><br><span class="line"><span class="comment"># Remote Login: On</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 防火墙允许</span></span><br><span class="line"><span class="built_in">sudo</span> /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/sbin/sshd</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-屏幕共享（VNC）"><a href="#3-屏幕共享（VNC）" class="headerlink" title="3. 屏幕共享（VNC）"></a>3. 屏幕共享（VNC）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统设置 → 通用 → 共享 → 屏幕共享</span></span><br><span class="line"><span class="comment"># 或命令行</span></span><br><span class="line"><span class="built_in">sudo</span> launchctl load -w /System/Library/LaunchDaemons/com.apple.screensharing.plist</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Mos（鼠标平滑）"><a href="#4-Mos（鼠标平滑）" class="headerlink" title="4. Mos（鼠标平滑）"></a>4. Mos（鼠标平滑）</h3><p>远程办公用 Mos 解决 macOS 鼠标加速问题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask mos</span><br><span class="line"><span class="comment"># 设置：滚动方向反转、滚轮平滑、指针加速曲线</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="十九、macOS-软件下载加速"><a href="#十九、macOS-软件下载加速" class="headerlink" title="十九、macOS 软件下载加速"></a>十九、macOS 软件下载加速</h2><p>App Store &#x2F; Xcode 下载慢的话换 DNS：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时换 DNS</span></span><br><span class="line"><span class="built_in">sudo</span> networksetup -setdnsservers Wi-Fi 223.5.5.5 119.29.29.29</span><br><span class="line"></span><br><span class="line"><span class="comment"># 阿里 DNS（推荐）</span></span><br><span class="line"><span class="comment"># 223.5.5.5 / 223.6.6.6</span></span><br><span class="line"><span class="comment"># 腾讯 DNS</span></span><br><span class="line"><span class="comment"># 119.29.29.29 / 119.28.28.28</span></span><br><span class="line"><span class="comment"># Cloudflare</span></span><br><span class="line"><span class="comment"># 1.1.1.1 / 1.0.0.1</span></span><br></pre></td></tr></table></figure>
+
+<p>恢复默认：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> networksetup -setdnsservers Wi-Fi empty</span><br></pre></td></tr></table></figure>
+
+<p><strong>Xcode 下载加速</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 aria2c 多线程下载</span></span><br><span class="line">brew install aria2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或用 xcodes（专门管理 Xcode 版本的工具）</span></span><br><span class="line">brew install xcodes</span><br><span class="line">xcodes install 16.0  <span class="comment"># 自动从苹果 CDN 加速下载</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二十、给不同角色推荐的装机清单"><a href="#二十、给不同角色推荐的装机清单" class="headerlink" title="二十、给不同角色推荐的装机清单"></a>二十、给不同角色推荐的装机清单</h2><h3 id="给前端开发"><a href="#给前端开发" class="headerlink" title="给前端开发"></a>给前端开发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask \</span><br><span class="line">  visual-studio-code \</span><br><span class="line">  google-chrome \</span><br><span class="line">  firefox \</span><br><span class="line">  charles \</span><br><span class="line">  postman \</span><br><span class="line">  figma \</span><br><span class="line">  iterm2</span><br><span class="line"></span><br><span class="line">brew install \</span><br><span class="line">  node \</span><br><span class="line">  pnpm \</span><br><span class="line">  yarn</span><br></pre></td></tr></table></figure>
+
+<h3 id="给后端开发"><a href="#给后端开发" class="headerlink" title="给后端开发"></a>给后端开发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask \</span><br><span class="line">  visual-studio-code \</span><br><span class="line">  iterm2 \</span><br><span class="line">  orbstack \</span><br><span class="line">  postman \</span><br><span class="line">  tableplus \</span><br><span class="line">  redis-insight</span><br><span class="line"></span><br><span class="line">brew install \</span><br><span class="line">  go \</span><br><span class="line">  python \</span><br><span class="line">  rust \</span><br><span class="line">  postgresql@15 \</span><br><span class="line">  redis \</span><br><span class="line">  mysql</span><br></pre></td></tr></table></figure>
+
+<h3 id="给数据科学"><a href="#给数据科学" class="headerlink" title="给数据科学"></a>给数据科学</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask \</span><br><span class="line">  visual-studio-code \</span><br><span class="line">  jupyter-notebook \</span><br><span class="line">  visual-studio-code  <span class="comment"># VSCode Jupyter 插件</span></span><br><span class="line"></span><br><span class="line">brew install \</span><br><span class="line">  python \</span><br><span class="line">  miniforge</span><br><span class="line"><span class="comment"># 然后 conda install pandas numpy scikit-learn matplotlib jupyter</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="给设计师"><a href="#给设计师" class="headerlink" title="给设计师"></a>给设计师</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask \</span><br><span class="line">  figma \</span><br><span class="line">  sketch \</span><br><span class="line">  zeplin \</span><br><span class="line">  adobe-creative-cloud \</span><br><span class="line">  cleanmymac \</span><br><span class="line">  istat-menus</span><br></pre></td></tr></table></figure>
+
+<h2 id="二十一、装机后最容易踩的-5-个坑"><a href="#二十一、装机后最容易踩的-5-个坑" class="headerlink" title="二十一、装机后最容易踩的 5 个坑"></a>二十一、装机后最容易踩的 5 个坑</h2><h3 id="坑-1：SIP-关闭后系统升级挂掉"><a href="#坑-1：SIP-关闭后系统升级挂掉" class="headerlink" title="坑 1：SIP 关闭后系统升级挂掉"></a>坑 1：SIP 关闭后系统升级挂掉</h3><p><strong>症状</strong>：<code>sudo spctl assess --enable</code> 关闭 Gatekeeper 后系统大版本升级可能失败。<br><strong>解决</strong>：升级前重新开启 Gatekeeper。</p>
+<h3 id="坑-2：默认-zsh-PATH-不带-Homebrew"><a href="#坑-2：默认-zsh-PATH-不带-Homebrew" class="headerlink" title="坑 2：默认 zsh PATH 不带 Homebrew"></a>坑 2：默认 zsh PATH 不带 Homebrew</h3><p><strong>症状</strong>：<code>brew install xxx</code> 装好后 <code>command not found</code>。<br><strong>解决</strong>：把 <code>eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;</code> 加到 <code>~/.zprofile</code>（zsh 默认登录 shell 读这个，不是 <code>.zshrc</code>）。</p>
+<h3 id="坑-3：MySQL-Postgres-数据文件没备份就重装"><a href="#坑-3：MySQL-Postgres-数据文件没备份就重装" class="headerlink" title="坑 3：MySQL&#x2F;Postgres 数据文件没备份就重装"></a>坑 3：MySQL&#x2F;Postgres 数据文件没备份就重装</h3><p><strong>症状</strong>：<code>brew uninstall postgresql</code> 把 <code>~/Library/Application Support/Postgres</code> 一并删了。<br><strong>解决</strong>：卸载前先 <code>pg_dumpall &gt; backup.sql</code> 或拷贝 data 目录。</p>
+<h3 id="坑-4：Time-Machine-备份到外接硬盘时机器休眠"><a href="#坑-4：Time-Machine-备份到外接硬盘时机器休眠" class="headerlink" title="坑 4：Time Machine 备份到外接硬盘时机器休眠"></a>坑 4：Time Machine 备份到外接硬盘时机器休眠</h3><p><strong>症状</strong>：备份中断，下次想恢复发现数据不全。<br><strong>解决</strong>：macOS 设置里关闭”电池供电时进入睡眠”，或在电源设置里选”防止自动睡眠”。</p>
+<h3 id="坑-5：dotfiles-装好后-SSH-key-丢了"><a href="#坑-5：dotfiles-装好后-SSH-key-丢了" class="headerlink" title="坑 5：dotfiles 装好后 SSH key 丢了"></a>坑 5：dotfiles 装好后 SSH key 丢了</h3><p><strong>症状</strong>：GitHub &#x2F; GitLab 账号锁了，重新走”忘记密码”流程很麻烦。<br><strong>解决</strong>：装好 Mac 第一件事就是 <code>cat ~/.ssh/id_ed25519 | pbcopy</code>，存到 1Password &#x2F; 加密 U 盘。</p>
+<h2 id="二十二、调试与诊断"><a href="#二十二、调试与诊断" class="headerlink" title="二十二、调试与诊断"></a>二十二、调试与诊断</h2><p>Mac 调试工具集：</p>
+<h3 id="1-活动监视器"><a href="#1-活动监视器" class="headerlink" title="1. 活动监视器"></a>1. 活动监视器</h3><p>GUI 应用，看 CPU &#x2F; 内存 &#x2F; 磁盘 &#x2F; 网络。<code>/Applications/Utilities/Activity Monitor.app</code></p>
+<h3 id="2-Console-app"><a href="#2-Console-app" class="headerlink" title="2. Console.app"></a>2. Console.app</h3><p>系统日志：<code>/Applications/Utilities/Console.app</code>，按时间过滤应用日志。</p>
+<h3 id="3-终端命令"><a href="#3-终端命令" class="headerlink" title="3. 终端命令"></a>3. 终端命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看 CPU 占用</span></span><br><span class="line">top -o cpu</span><br><span class="line"><span class="comment"># 持续 5 秒采样</span></span><br><span class="line">top -o cpu -s 5</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看内存压力</span></span><br><span class="line">memory_pressure</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看磁盘使用</span></span><br><span class="line"><span class="built_in">df</span> -h</span><br><span class="line"><span class="built_in">du</span> -sh ~/Library/* | <span class="built_in">sort</span> -h</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看网络连接</span></span><br><span class="line">netstat -an | grep ESTABLISHED</span><br><span class="line">lsof -iTCP -sTCP:ESTABLISHED</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看系统启动时间</span></span><br><span class="line"><span class="built_in">uptime</span></span><br><span class="line"><span class="built_in">who</span> -b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看系统日志</span></span><br><span class="line"><span class="built_in">log</span> show --predicate <span class="string">&#x27;eventMessage CONTAINS &quot;error&quot;&#x27;</span> --last 1h</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-第三方工具"><a href="#4-第三方工具" class="headerlink" title="4. 第三方工具"></a>4. 第三方工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进程监控</span></span><br><span class="line">brew install htop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络分析</span></span><br><span class="line">brew install --cask wireshark</span><br><span class="line"></span><br><span class="line"><span class="comment"># 系统信息</span></span><br><span class="line">brew install neofetch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 磁盘分析（看哪占空间）</span></span><br><span class="line">brew install --cask omnidisksweeper</span><br></pre></td></tr></table></figure>
+
+<h2 id="二十三、macOS-快捷键大全"><a href="#二十三、macOS-快捷键大全" class="headerlink" title="二十三、macOS 快捷键大全"></a>二十三、macOS 快捷键大全</h2><p><strong>系统级</strong>：</p>
+<ul>
+<li><code>Cmd+Q</code> 退出应用</li>
+<li><code>Cmd+W</code> 关闭窗口</li>
+<li><code>Cmd+M</code> 最小化</li>
+<li><code>Cmd+H</code> 隐藏</li>
+<li><code>Cmd+Tab</code> 切换应用</li>
+<li>&#96;Cmd+&#96;&#96; 同应用多窗口切换</li>
+<li><code>Cmd+Shift+3</code> 全屏截图</li>
+<li><code>Cmd+Shift+4</code> 区域截图</li>
+<li><code>Cmd+Shift+5</code> 截图工具</li>
+<li><code>Ctrl+上箭头</code> Mission Control</li>
+<li><code>Cmd+Space</code> Spotlight（如果没改）</li>
+</ul>
+<p><strong>文本编辑</strong>：</p>
+<ul>
+<li><code>Cmd+←/→</code> 行首&#x2F;行尾</li>
+<li><code>Option+←/→</code> 词首&#x2F;词尾</li>
+<li><code>Cmd+Shift+K</code> 注释&#x2F;取消注释（VSCode）</li>
+</ul>
+<p><strong>终端</strong>：</p>
+<ul>
+<li><code>Ctrl+A/E</code> 命令行首&#x2F;行尾</li>
+<li><code>Ctrl+U/K</code> 删除到行首&#x2F;行尾</li>
+<li><code>Ctrl+R</code> 反向搜索历史</li>
+<li><code>Ctrl+L</code> 清屏</li>
+<li><code>Cmd+K</code> 清屏（部分终端）</li>
+<li><code>Cmd+D</code> 垂直分屏（iTerm2）</li>
+<li><code>Cmd+Shift+D</code> 水平分屏（iTerm2）</li>
+</ul>
+<h2 id="二十四、推荐资源"><a href="#二十四、推荐资源" class="headerlink" title="二十四、推荐资源"></a>二十四、推荐资源</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://macos-defaults.com/">macos-defaults.com</a> — 所有 defaults 命令大全</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathiasbynens/dotfiles">github.com&#x2F;mathiasbynens&#x2F;dotfiles</a> — 前 Google 工程师的 dotfiles（学习范式）</li>
+<li><a target="_blank" rel="noopener" href="https://sspai.com/">sspai.com</a> — 少数派，macOS 高质量教程</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/agarrharr/awesome-macos">github.com&#x2F;agarrharr&#x2F;awesome-macos</a> — macOS 资源汇总</li>
+<li><a target="_blank" rel="noopener" href="https://macos.tips/">macos.tips</a> — 每日小技巧</li>
+<li><a target="_blank" rel="noopener" href="https://reddit.com/r/macapps">reddit.com&#x2F;r&#x2F;macapps</a> — 应用推荐</li>
+<li><a target="_blank" rel="noopener" href="https://macmenu.app/">macmenu.app</a> — 状态栏图标管理</li>
+</ul>
+<h2 id="二十五、参考"><a href="#二十五、参考" class="headerlink" title="二十五、参考"></a>二十五、参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://brew.sh/">brew.sh</a> — Homebrew 官方</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ineo6/homebrew-install">github.com&#x2F;ineo6&#x2F;homebrew-install</a> — 国内镜像装</li>
+<li><a target="_blank" rel="noopener" href="https://sspai.com/post/27662">sspai.com&#x2F;post&#x2F;27662</a> — 通知中心定制</li>
+<li><a target="_blank" rel="noopener" href="https://sspai.com/post/40169">sspai.com&#x2F;post&#x2F;40169</a> — 更多 defaults 隐藏选项</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh">github.com&#x2F;ohmyzsh&#x2F;ohmyzsh</a> — zsh 配置框架</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k">github.com&#x2F;romkatv&#x2F;powerlevel10k</a> — 主题</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/twpayne/chezmoi">github.com&#x2F;twpayne&#x2F;chezmoi</a> — dotfiles 管理</li>
+<li><a target="_blank" rel="noopener" href="https://macos-defaults.com/">macos-defaults.com</a> — 所有 defaults 命令大全</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>适用 macOS 版本</strong>：13+（Apple Silicon）。Intel Mac 把 <code>/opt/homebrew</code> 换成 <code>/usr/local</code> 即可。</p>
+</blockquote>
+<p><strong>最后</strong>：装机不是一次性事，<strong>好用的配置都是慢慢调出来的</strong>。从这 21 节的速查开始，按需添加，每次新发现好用的小工具就 <code>brew install</code> 装上、<code>Brewfile</code> 备份下来。半年后你的 Mac 就成了最顺手的开发机。</p>
+<h2 id="二十六、一句话总结"><a href="#二十六、一句话总结" class="headerlink" title="二十六、一句话总结"></a>二十六、一句话总结</h2><p><strong>Homebrew + 镜像源 + zsh + 9 款 app + 12 个 defaults</strong>——这五件套搞定一台新 Mac 80% 的开发机需求。剩下 20% 留给慢慢调：<strong>先用、再优化、最后备份</strong>，是这个装机清单的核心节奏。</p>
+<h2 id="二十七、推荐的-4-个-dotfiles-仓库"><a href="#二十七、推荐的-4-个-dotfiles-仓库" class="headerlink" title="二十七、推荐的 4 个 dotfiles 仓库"></a>二十七、推荐的 4 个 dotfiles 仓库</h2><p>如果你刚换 Mac 没头绪，先 clone 这 4 个 dotfiles 仓库做参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mathiasbynens/dotfiles">mathiasbynens&#x2F;dotfiles</a> — 前 Google 工程师的，macOS + Homebrew + Bash 范式</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/holman/dotfiles">holman&#x2F;dotfiles</a> — GitHub CEO 的极简版</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/driesvints/dotfiles">driesvints&#x2F;dotfiles</a> — Laravel 维护者的 PHP 友好版</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nikitavoloboev/dotfiles">nikitavoloboev&#x2F;dotfiles</a> — 个人最爱，AI &#x2F; ML 工具链齐全</li>
+</ul>
+<p><strong>不要直接复制</strong>——看思路后挑适合自己工作流的 20% 留下，剩下改成本地化版本。每个人的 dotfiles 都不一样，盲目抄只会给自己挖坑。</p>
+<h2 id="二十八、macOS-升级策略"><a href="#二十八、macOS-升级策略" class="headerlink" title="二十八、macOS 升级策略"></a>二十八、macOS 升级策略</h2><p>每年 9-10 月苹果发大版本（macOS 16、17…），<strong>不要第一时间升级</strong>：</p>
+<ul>
+<li><strong>Wait 3 个月</strong>：等 .0 → .3 修复已知 bug（特别是外接显示器 &#x2F; Wi-Fi 兼容性问题）</li>
+<li><strong>Wait 6 个月</strong>：等 .0 → .5，确认主流 dev 工具（Docker、Homebrew、Node）兼容</li>
+<li><strong>Wait 1 年</strong>：等 .1 → .1，确认稳定后再升</li>
+</ul>
+<p><strong>升级前必做</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. Time Machine 完整备份</span></span><br><span class="line">tmutil startbackup --block</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. Brewfile 导出</span></span><br><span class="line">brew bundle dump --file=~/Brewfile.backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 关键文件备份</span></span><br><span class="line"><span class="built_in">cp</span> ~/.ssh/id_ed25519 ~/Desktop/ssh-backup</span><br><span class="line"><span class="built_in">cp</span> -r ~/.gnupg ~/Desktop/gpg-backup</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 列出已安装 app</span></span><br><span class="line"><span class="built_in">ls</span> /Applications/ &gt; ~/Desktop/apps-backup.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>升级失败回退</strong>：</p>
+<p>macOS 通常不能直接降级，要么：</p>
+<ul>
+<li>用 Time Machine 恢复到升级前的备份（全盘擦写）</li>
+<li>干净重装（要重做所有配置）</li>
+</ul>
+<p><strong>建议</strong>：生产机永远别追大版本，等次年 .1 &#x2F; .2 再说。</p>
+<p>日常使用 macOS 自动更新即可，<strong>大版本手动控制</strong>才是稳妥的 dev 习惯。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Homebrew/" rel="tag">Homebrew</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" rel="tag">效率工具</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-node-beginner/">Node.js 起步必知</a><a class="next" href="/2026/09/01/2026-09-02-npmrc-cheatsheet/">.npmrc 配置实战</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-node-beginner/">Node.js 起步必知</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-mac-config-tips/">Mac 开发机配置速查</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-npmrc-cheatsheet/">.npmrc 配置实战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
