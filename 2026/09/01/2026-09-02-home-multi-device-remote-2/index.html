@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>家庭多设备远程控制（下）：RDP / VNC / SMB | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">家庭多设备远程控制（下）：RDP / VNC / SMB</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">家庭多设备远程控制（下）：RDP / VNC / SMB</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.7k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 7</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>（上）篇讲了 Tailscale 组网 + SSH 远程命令。本篇讲图形界面和文件共享：<strong>RDP 远程 Windows 桌面</strong>、<strong>VNC 远程 Mac 屏幕</strong>、<strong>SMB 文件共享访问</strong>。</p>
+<h2 id="一、3-种方案对比"><a href="#一、3-种方案对比" class="headerlink" title="一、3 种方案对比"></a>一、3 种方案对比</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RDP</th>
+<th>VNC（Mac）</th>
+<th>SMB</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>用途</strong></td>
+<td>远程 Windows 桌面</td>
+<td>远程 Mac 屏幕</td>
+<td>文件共享</td>
+</tr>
+<tr>
+<td><strong>平台</strong></td>
+<td>Windows</td>
+<td>Mac</td>
+<td>跨平台</td>
+</tr>
+<tr>
+<td><strong>协议</strong></td>
+<td>3389&#x2F;TCP</td>
+<td>5900&#x2F;TCP</td>
+<td>445&#x2F;TCP</td>
+</tr>
+<tr>
+<td><strong>图像质量</strong></td>
+<td>高（GPU 加速）</td>
+<td>中（CPU 编码）</td>
+<td>不适用（文件传输）</td>
+</tr>
+<tr>
+<td><strong>音频</strong></td>
+<td>双向</td>
+<td>单向</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td><strong>剪贴板</strong></td>
+<td>同步</td>
+<td>同步</td>
+<td>同步（拖放）</td>
+</tr>
+<tr>
+<td><strong>多屏</strong></td>
+<td>支持</td>
+<td>支持（需配置）</td>
+<td>不支持</td>
+</tr>
+<tr>
+<td><strong>加密</strong></td>
+<td>TLS</td>
+<td>弱（需 SSH 隧道）</td>
+<td>弱（需 VPN）</td>
+</tr>
+<tr>
+<td><strong>跨平台客户端</strong></td>
+<td>macOS &#x2F; iOS &#x2F; Android &#x2F; Linux</td>
+<td>全平台（含 RealVNC）</td>
+<td>Finder &#x2F; Explorer &#x2F; smbclient</td>
+</tr>
+</tbody></table>
+<p><strong>核心建议</strong>：</p>
+<ul>
+<li>Windows 桌面 → <strong>RDP</strong>（性能好、原生 GPU 加速）</li>
+<li>Mac 屏幕 → <strong>VNC</strong> 或 <strong>Apple Screen Sharing</strong>（更原生）</li>
+<li>文件共享 → <strong>SMB</strong>（跨平台）或 <strong>scp</strong>（单文件传输）</li>
+</ul>
+<h2 id="二、RDP-远程-Windows-桌面"><a href="#二、RDP-远程-Windows-桌面" class="headerlink" title="二、RDP 远程 Windows 桌面"></a>二、RDP 远程 Windows 桌面</h2><h3 id="2-1-前置条件"><a href="#2-1-前置条件" class="headerlink" title="2.1 前置条件"></a>2.1 前置条件</h3><ul>
+<li><strong>Windows 必须是 Pro &#x2F; Enterprise &#x2F; Education</strong>（Home 版不能作为 RDP 服务端）</li>
+<li>系统设置 → 系统 → 远程桌面 → 开启”启用远程桌面”</li>
+<li>防火墙放行 3389&#x2F;TCP</li>
+</ul>
+<h3 id="2-2-配置用户权限"><a href="#2-2-配置用户权限" class="headerlink" title="2.2 配置用户权限"></a>2.2 配置用户权限</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用 RDP</span></span><br><span class="line"><span class="built_in">Set-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&#x27;HKLM:\System\CurrentControlSet\Control\Terminal Server&#x27;</span> <span class="literal">-Name</span> fDenyTSConnections <span class="literal">-Value</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用网络级别身份验证（NLA，更安全）</span></span><br><span class="line"><span class="built_in">Set-ItemProperty</span> <span class="literal">-Path</span> <span class="string">&#x27;HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp&#x27;</span> <span class="literal">-Name</span> UserAuthentication <span class="literal">-Value</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加用户到&quot;远程桌面用户&quot;组（Win 11 默认排除管理员）</span></span><br><span class="line"><span class="built_in">Add-LocalGroupMember</span> <span class="literal">-Group</span> <span class="string">&quot;Remote Desktop Users&quot;</span> <span class="literal">-Member</span> <span class="string">&quot;YourUser&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-Mac-控制端连接"><a href="#2-3-Mac-控制端连接" class="headerlink" title="2.3 Mac 控制端连接"></a>2.3 Mac 控制端连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># App Store 装 &quot;Microsoft Remote Desktop&quot;</span></span><br><span class="line">open rdp://100.z.z.z</span><br><span class="line"><span class="comment"># 或 GUI 里输入 IP / 凭证</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-通过-Tailscale-优化"><a href="#2-4-通过-Tailscale-优化" class="headerlink" title="2.4 通过 Tailscale 优化"></a>2.4 通过 Tailscale 优化</h3><p>Tailscale 已经把设备放进 100.x.x.x 虚拟内网，RDP 直接走这个内网：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认 Tailscale 启用 Magic DNS</span></span><br><span class="line">open rdp://mac-win.tail1234.ts.net</span><br><span class="line"><span class="comment"># Magic DNS 比 IP 友好</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-性能调优"><a href="#2-5-性能调优" class="headerlink" title="2.5 性能调优"></a>2.5 性能调优</h3><table>
+<thead>
+<tr>
+<th>设置</th>
+<th>推荐</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>分辨率</td>
+<td>1920×1080 或源端</td>
+<td>Retina 屏降低一半</td>
+</tr>
+<tr>
+<td>颜色深度</td>
+<td>32 位</td>
+<td>16 位看着发灰</td>
+</tr>
+<tr>
+<td>音频</td>
+<td>远程主机播放</td>
+<td>Mac 端听</td>
+</tr>
+<tr>
+<td>剪贴板</td>
+<td>开</td>
+<td>文件互传方便</td>
+</tr>
+<tr>
+<td>磁盘&#x2F;打印机重定向</td>
+<td>关</td>
+<td>减少带宽</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># RDP 配置文件 ~/.rdp 关键项</span></span><br><span class="line">screen mode <span class="built_in">id</span>:i:2</span><br><span class="line">use multimon:i:0</span><br><span class="line">session bpp:i:32</span><br><span class="line">audiomode:i:0</span><br><span class="line">redirectclipboard:i:1</span><br><span class="line">redirectprinters:i:0</span><br><span class="line">redirectdrives:i:0</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、VNC-远程-Mac-屏幕"><a href="#三、VNC-远程-Mac-屏幕" class="headerlink" title="三、VNC 远程 Mac 屏幕"></a>三、VNC 远程 Mac 屏幕</h2><h3 id="3-1-系统自带-Screen-Sharing（推荐）"><a href="#3-1-系统自带-Screen-Sharing（推荐）" class="headerlink" title="3.1 系统自带 Screen Sharing（推荐）"></a>3.1 系统自带 Screen Sharing（推荐）</h3><p>macOS 内置，<strong>比第三方 VNC 兼容性好</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统设置 → 通用 → 共享 → 屏幕共享 → 开</span></span><br><span class="line"><span class="comment"># 设置 VNC 密码（必填）</span></span><br></pre></td></tr></table></figure>
+
+<p>或命令行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl <span class="built_in">enable</span> system/com.apple.screensharing</span><br><span class="line"><span class="built_in">sudo</span> launchctl start system/com.apple.screensharing</span><br></pre></td></tr></table></figure>
+
+<p><strong>Mac 控制端</strong>（控制另一台 Mac）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">open vnc://100.x.x.x</span><br><span class="line"><span class="comment"># 或 Finder → 前往 → 连接服务器 → vnc://100.x.x.x</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows 控制端</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 RealVNC Viewer（免费）</span></span><br><span class="line"><span class="comment"># 输入 100.x.x.x:5900</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-第三方-VNC（高级用户）"><a href="#3-2-第三方-VNC（高级用户）" class="headerlink" title="3.2 第三方 VNC（高级用户）"></a>3.2 第三方 VNC（高级用户）</h3><p>如需更细的权限控制，装 RealVNC Server：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask vnc-viewer  <span class="comment"># 控制端</span></span><br><span class="line"><span class="comment"># RealVNC Server 在 Mac App Store 搜 &quot;VNC Server&quot;（付费）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-提高-VNC-性能"><a href="#3-3-提高-VNC-性能" class="headerlink" title="3.3 提高 VNC 性能"></a>3.3 提高 VNC 性能</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mac 设置</span></span><br><span class="line">defaults write com.apple.ScreenSharing <span class="string">&quot;VNCScreenQuality&quot;</span> -int 5</span><br><span class="line"><span class="comment"># 0 = 最高质量（带宽大）</span></span><br><span class="line"><span class="comment"># 5 = 较快（默认）</span></span><br><span class="line"><span class="comment"># 9 = 最快（图像糊）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 控制端用 RealVNC 时，选 &quot;Medium&quot; 质量 + 关闭颜色增强</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-Apple-Screen-Sharing-vs-VNC-差异"><a href="#3-4-Apple-Screen-Sharing-vs-VNC-差异" class="headerlink" title="3.4 Apple Screen Sharing vs VNC 差异"></a>3.4 Apple Screen Sharing vs VNC 差异</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Apple Screen Sharing</th>
+<th>第三方 VNC（RealVNC）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>集成</td>
+<td>系统级</td>
+<td>单独应用</td>
+</tr>
+<tr>
+<td>多屏支持</td>
+<td>主屏</td>
+<td>可选全屏</td>
+</tr>
+<tr>
+<td>加密</td>
+<td>弱（需 SSH 隧道）</td>
+<td>可强加密</td>
+</tr>
+<tr>
+<td>文件传输</td>
+<td>拖放</td>
+<td>拖放（按需）</td>
+</tr>
+<tr>
+<td>跨平台</td>
+<td>仅 Mac</td>
+<td>全平台</td>
+</tr>
+</tbody></table>
+<p><strong>结论</strong>：macOS 互控用 <strong>Screen Sharing</strong>（最简），Windows&#x2F;Mac 互控用 <strong>RealVNC</strong>（最广）。</p>
+<h2 id="四、SMB-文件共享"><a href="#四、SMB-文件共享" class="headerlink" title="四、SMB 文件共享"></a>四、SMB 文件共享</h2><h3 id="4-1-Mac-作为-SMB-服务端"><a href="#4-1-Mac-作为-SMB-服务端" class="headerlink" title="4.1 Mac 作为 SMB 服务端"></a>4.1 Mac 作为 SMB 服务端</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统设置 → 通用 → 共享 → 文件共享 → 开</span></span><br><span class="line"><span class="comment"># 勾选 &quot;共享文件夹&quot; 列表</span></span><br><span class="line"><span class="comment"># &quot;选项&quot; 里启用 SMB 访问</span></span><br></pre></td></tr></table></figure>
+
+<p>或命令行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> launchctl <span class="built_in">enable</span> system/com.apple.smbd</span><br><span class="line"><span class="built_in">sudo</span> launchctl start system/com.apple.smbd</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-Mac-控制端访问-SMB"><a href="#4-2-Mac-控制端访问-SMB" class="headerlink" title="4.2 Mac 控制端访问 SMB"></a>4.2 Mac 控制端访问 SMB</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Finder → Cmd+K → 连接服务器</span></span><br><span class="line">smb://100.x.x.x</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或命令行</span></span><br><span class="line">mount -t smbfs //user@100.x.x.x/Shared /Volumes/shared</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-Windows-控制端访问-SMB"><a href="#4-3-Windows-控制端访问-SMB" class="headerlink" title="4.3 Windows 控制端访问 SMB"></a>4.3 Windows 控制端访问 SMB</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 资源管理器地址栏输入</span></span><br><span class="line">\\100.x.x.x\Shared</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或映射网络驱动器</span></span><br><span class="line">net use Z: \\100.x.x.x\Shared</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-通过-Tailscale-优化-SMB"><a href="#4-4-通过-Tailscale-优化-SMB" class="headerlink" title="4.4 通过 Tailscale 优化 SMB"></a>4.4 通过 Tailscale 优化 SMB</h3><p>Tailscale 已加密，但 SMB 协议本身的认证较老（NTLMv2）。<strong>强烈建议</strong>：</p>
+<ul>
+<li><strong>SMB over Tailscale</strong>（不暴露 445 到公网）&#x3D; <strong>安全</strong></li>
+<li><strong>不要把 SMB 直接暴露公网</strong>（即使改了端口）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 验证 SMB 通过 Tailscale 工作</span></span><br><span class="line">smbutil statshares -m //100.x.x.x</span><br><span class="line"><span class="comment"># 应列出共享文件夹</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="五、性能对比实测"><a href="#五、性能对比实测" class="headerlink" title="五、性能对比实测"></a>五、性能对比实测</h2><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>局域网延迟</th>
+<th>Tailscale 延迟</th>
+<th>带宽占用</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RDP</strong></td>
+<td>5-20ms</td>
+<td>30-80ms</td>
+<td>5-20 Mbps</td>
+<td>桌面操作</td>
+</tr>
+<tr>
+<td><strong>VNC</strong></td>
+<td>10-30ms</td>
+<td>50-150ms</td>
+<td>10-30 Mbps</td>
+<td>演示 &#x2F; 跨平台</td>
+</tr>
+<tr>
+<td><strong>SMB</strong></td>
+<td>5-15ms</td>
+<td>20-50ms</td>
+<td>文件大小决定</td>
+<td>文件传输</td>
+</tr>
+<tr>
+<td><strong>scp</strong></td>
+<td>5-15ms</td>
+<td>20-50ms</td>
+<td>文件大小决定</td>
+<td>单文件</td>
+</tr>
+</tbody></table>
+<p><strong>Tailscale 直连 vs DERP 中继</strong>：</p>
+<ul>
+<li>直连（NAT 打洞成功）：延迟 &lt; 50ms</li>
+<li>DERP 中继（NAT 类型不兼容）：延迟 200-500ms</li>
+</ul>
+<p>可以 <code>tailscale ping</code> 看当前是哪种。</p>
+<h2 id="六、4-个常见故障"><a href="#六、4-个常见故障" class="headerlink" title="六、4 个常见故障"></a>六、4 个常见故障</h2><h3 id="6-1-RDP-连接被拒"><a href="#6-1-RDP-连接被拒" class="headerlink" title="6.1 RDP 连接被拒"></a>6.1 RDP 连接被拒</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">远程桌面无法连接到远程计算机</span><br><span class="line">原因：远程桌面服务未启用 / 防火墙阻止</span><br></pre></td></tr></table></figure>
+
+<p><strong>排查</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Windows 上</span></span><br><span class="line"><span class="built_in">Get-Service</span> TermService</span><br><span class="line"><span class="comment"># 应显示 Running</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 防火墙</span></span><br><span class="line"><span class="built_in">Get-NetFirewallRule</span> <span class="literal">-DisplayGroup</span> <span class="string">&quot;Remote Desktop&quot;</span> | <span class="built_in">Select</span> Enabled, Direction, Action</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启用服务</span></span><br><span class="line"><span class="built_in">Set-Service</span> <span class="literal">-Name</span> TermService <span class="literal">-StartupType</span> Automatic</span><br><span class="line"><span class="built_in">Start-Service</span> TermService</span><br><span class="line"></span><br><span class="line"><span class="comment"># 放行防火墙</span></span><br><span class="line"><span class="built_in">Enable-NetFirewallRule</span> <span class="literal">-DisplayGroup</span> <span class="string">&quot;Remote Desktop&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-Mac-VNC-显示黑屏"><a href="#6-2-Mac-VNC-显示黑屏" class="headerlink" title="6.2 Mac VNC 显示黑屏"></a>6.2 Mac VNC 显示黑屏</h3><p><strong>原因</strong>：macOS 屏幕共享需要用户登录才能用，<strong>未登录状态显示黑屏</strong>。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>让 Mac 始终登录（设置 → 用户与群组 → 自动登录）</li>
+<li>或用锁屏模式（<code>pmset</code> 命令）</li>
+<li>或 SSH 进 Mac 唤醒屏幕：<code>pmset wake</code> 或打开活动监视器</li>
+</ul>
+<h3 id="6-3-SMB-速度慢"><a href="#6-3-SMB-速度慢" class="headerlink" title="6.3 SMB 速度慢"></a>6.3 SMB 速度慢</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mac 测速</span></span><br><span class="line">smbutil view //user@100.x.x.x/Shared</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启用 SMB 3（多通道）</span></span><br><span class="line"><span class="built_in">sudo</span> defaults write /Library/Preferences/nsmb.conf -dict-add <span class="string">&quot;default&quot;</span> <span class="string">&quot;&#123;multichannel_enable=true;signing_required=false&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Mac SMB 默认 3.0 但有限制</strong>。上 multichannel 后速度能翻倍。</p>
+<h3 id="6-4-Tailscale-子网路由不工作"><a href="#6-4-Tailscale-子网路由不工作" class="headerlink" title="6.4 Tailscale 子网路由不工作"></a>6.4 Tailscale 子网路由不工作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mac-home 上确认路由广播</span></span><br><span class="line">tailscale status</span><br><span class="line"><span class="comment"># 192.168.31.0/24  via x.x.x.x</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他设备启用 subnet</span></span><br><span class="line"><span class="comment"># 在 Mac 上把 192.168.31.0/24 推给 tailscale</span></span><br><span class="line"><span class="built_in">sudo</span> tailscale up --advertise-routes=192.168.31.0/24</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、3-条安全建议"><a href="#七、3-条安全建议" class="headerlink" title="七、3 条安全建议"></a>七、3 条安全建议</h2><ol>
+<li><strong>强 VNC 密码</strong>：默认 8 位容易破解，建议 16+ 位</li>
+<li><strong>限制 SMB 用户</strong>：用 macOS 文件共享里的”仅这些用户”白名单</li>
+<li><strong>Tailscale ACL</strong>：管理后台按设备 tag 精细控制访问权限</li>
+</ol>
+<h2 id="八、3-条进阶玩法"><a href="#八、3-条进阶玩法" class="headerlink" title="八、3 条进阶玩法"></a>八、3 条进阶玩法</h2><ol>
+<li><strong>远程开机（Wake-on-LAN）</strong> + Tailscale 开机自启 &#x3D; 出门在外也能远程开机</li>
+<li><strong>文件版本管理</strong>：Mac SMB 共享 + Git 自动 commit</li>
+<li><strong>Screensharing 录屏</strong>：QuickTime Player → 文件 → 新建屏幕录制 → 选远程</li>
+</ol>
+<hr>
+<blockquote>
+<p><strong>本文 + 上篇</strong> &#x3D; 完整的家庭多设备远程控制方案。<strong>Tailscale + SSH&#x2F;RDP&#x2F;VNC&#x2F;SMB</strong> 的组合<strong>比传统 VPN&#x2F;TeamViewer 简单 5-10 倍</strong>，且更安全（端到端加密）。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RDP/" rel="tag">RDP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SMB/" rel="tag">SMB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tailscale/" rel="tag">Tailscale</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VNC/" rel="tag">VNC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/" rel="tag">文件共享</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" rel="tag">远程桌面</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-home-multi-device-remote-1/">家庭多设备远程控制（上）：环境 + Tailscale + SSH</a><a class="next" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Tailscale/" style="font-size: 15px;">Tailscale</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/RDP/" style="font-size: 15px;">RDP</a> <a href="/tags/VNC/" style="font-size: 15px;">VNC</a> <a href="/tags/SMB/" style="font-size: 15px;">SMB</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" style="font-size: 15px;">远程桌面</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/" style="font-size: 15px;">文件共享</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" style="font-size: 15px;">小红书</a> <a href="/tags/API/" style="font-size: 15px;">API</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15px;">爬虫</a> <a href="/tags/%E5%90%88%E8%A7%84/" style="font-size: 15px;">合规</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-home-multi-device-remote-1/">家庭多设备远程控制（上）：环境 + Tailscale + SSH</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-home-multi-device-remote-2/">家庭多设备远程控制（下）：RDP / VNC / SMB</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-llm-tradebot/">LLM-TradeBot 配置实战</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
