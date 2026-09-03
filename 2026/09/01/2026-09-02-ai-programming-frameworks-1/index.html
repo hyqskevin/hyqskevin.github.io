@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>AI 编程框架方法论（上）：SDD / TDD / BDD / DDD | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AI 编程框架方法论（上）：SDD / TDD / BDD / DDD</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AI 编程框架方法论（上）：SDD / TDD / BDD / DDD</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.5k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 5</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>最近调研 AI 编程框架，发现<strong>传统方法论不是被取代，是被重新分层</strong>。SDD 居最上层（架构&#x2F;需求），DDD 负责领域语言，BDD 负责验收标准，TDD 负责实现验证。AI 编码时代一个完整框架往往同时覆盖多层。本篇是 4 种方法论的横向对比 + 选型决策。</p>
+<h2 id="一、4-种方法论总览"><a href="#一、4-种方法论总览" class="headerlink" title="一、4 种方法论总览"></a>一、4 种方法论总览</h2><table>
+<thead>
+<tr>
+<th>方法论</th>
+<th>核心问题</th>
+<th>关键产物</th>
+<th>AI 时代的价值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>SDD</strong>（规范驱动开发）</td>
+<td>我们要造什么？</td>
+<td>spec.md &#x2F; OpenAPI</td>
+<td>AI 按规范生成代码，<strong>避免幻觉</strong></td>
+</tr>
+<tr>
+<td><strong>TDD</strong>（测试驱动开发）</td>
+<td>怎么保证代码正确？</td>
+<td>测试 + 实现</td>
+<td>AI 自动补全测试 &#x2F; 实现，<strong>提高信心</strong></td>
+</tr>
+<tr>
+<td><strong>BDD</strong>（行为驱动开发）</td>
+<td>用户行为是什么？</td>
+<td>Gherkin feature 文件</td>
+<td>AI 写场景化测试，<strong>对齐业务</strong></td>
+</tr>
+<tr>
+<td><strong>DDD</strong>（领域驱动设计）</td>
+<td>业务怎么建模？</td>
+<td>领域模型 &#x2F; 限界上下文</td>
+<td>AI 理解领域语言，<strong>减少误解</strong></td>
+</tr>
+</tbody></table>
+<p><strong>核心洞察</strong>：AI 编码时代<strong>单一方法论不够</strong>，要把 4 种组合成”AI 友好”的完整工作流。</p>
+<h2 id="二、SDD（规范驱动开发）"><a href="#二、SDD（规范驱动开发）" class="headerlink" title="二、SDD（规范驱动开发）"></a>二、SDD（规范驱动开发）</h2><h3 id="2-1-核心思想"><a href="#2-1-核心思想" class="headerlink" title="2.1 核心思想"></a>2.1 核心思想</h3><p>“先写规范，再写代码”——spec 是 single source of truth，AI 按 spec 生成。</p>
+<h3 id="2-2-代表项目"><a href="#2-2-代表项目" class="headerlink" title="2.2 代表项目"></a>2.2 代表项目</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>厂商</th>
+<th>核心理念</th>
+<th>推荐场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Spec-Kit</strong></td>
+<td>GitHub</td>
+<td>spec.md → plan.md → tasks.md</td>
+<td>通用项目</td>
+</tr>
+<tr>
+<td><strong>BMAD-METHOD</strong></td>
+<td>社区</td>
+<td>角色（PO&#x2F;架构师&#x2F;开发）协作</td>
+<td>大型团队</td>
+</tr>
+<tr>
+<td><strong>OpenSpec</strong></td>
+<td>Fission AI</td>
+<td>轻量 spec + 变更追踪</td>
+<td>中小项目</td>
+</tr>
+<tr>
+<td><strong>Superpowers</strong></td>
+<td>社区</td>
+<td>TDD + spec 自动化</td>
+<td>个人 &#x2F; 小团队</td>
+</tr>
+<tr>
+<td><strong>GStack</strong>（笔误应为 GStack）</td>
+<td>?</td>
+<td>AI 辅助 spec</td>
+<td>实验性</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-实际使用"><a href="#2-3-实际使用" class="headerlink" title="2.3 实际使用"></a>2.3 实际使用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 Spec-Kit（GitHub 官方）</span></span><br><span class="line">npx spec-kit init my-project</span><br><span class="line"><span class="built_in">cd</span> my-project</span><br><span class="line"><span class="comment"># 编辑 spec.md 描述需求</span></span><br><span class="line"><span class="comment"># /tasks 让 AI 生成 task list</span></span><br><span class="line"><span class="comment"># /implement 让 AI 写代码</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、TDD（测试驱动开发）"><a href="#三、TDD（测试驱动开发）" class="headerlink" title="三、TDD（测试驱动开发）"></a>三、TDD（测试驱动开发）</h2><h3 id="3-1-核心思想"><a href="#3-1-核心思想" class="headerlink" title="3.1 核心思想"></a>3.1 核心思想</h3><p>“先写测试，再写实现”——Red-Green-Refactor 循环。</p>
+<h3 id="3-2-AI-时代的增强"><a href="#3-2-AI-时代的增强" class="headerlink" title="3.2 AI 时代的增强"></a>3.2 AI 时代的增强</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">传统 TDD:</span><br><span class="line">  Red: 写失败测试</span><br><span class="line">  Green: 写通过实现</span><br><span class="line">  Refactor: 重构</span><br><span class="line"></span><br><span class="line">AI TDD:</span><br><span class="line">  Red: 写&quot;我想要什么&quot;自然语言</span><br><span class="line">  Green: AI 写实现 + 配套测试</span><br><span class="line">  Refactor: AI 自动建议重构</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-代表工具"><a href="#3-3-代表工具" class="headerlink" title="3.3 代表工具"></a>3.3 代表工具</h3><ul>
+<li><strong>GitHub Copilot</strong>：AI 补全测试</li>
+<li><strong>Cursor Test Agent</strong>：自动写测试 + 修复</li>
+<li><strong>Diffblue Cover</strong>（Java）：自动生成单元测试</li>
+<li><strong>CodeMirror</strong>（Python）：AI 生成 pytest</li>
+</ul>
+<h2 id="四、BDD（行为驱动开发）"><a href="#四、BDD（行为驱动开发）" class="headerlink" title="四、BDD（行为驱动开发）"></a>四、BDD（行为驱动开发）</h2><h3 id="4-1-核心思想"><a href="#4-1-核心思想" class="headerlink" title="4.1 核心思想"></a>4.1 核心思想</h3><p>“用业务语言描述行为”——Given&#x2F;When&#x2F;Then 格式。</p>
+<h3 id="4-2-Gherkin-语法"><a href="#4-2-Gherkin-语法" class="headerlink" title="4.2 Gherkin 语法"></a>4.2 Gherkin 语法</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># language: zh-CN</span></span><br><span class="line">功能: 用户登录</span><br><span class="line">  场景: 成功登录</span><br><span class="line">    假如 用户访问登录页</span><br><span class="line">    当 输入正确的邮箱和密码</span><br><span class="line">    那么 应该跳转到首页</span><br><span class="line">    而且 应该看到欢迎消息</span><br><span class="line"></span><br><span class="line">  场景: 密码错误</span><br><span class="line">    假如 用户访问登录页</span><br><span class="line">    当 输入错误的密码</span><br><span class="line">    那么 应该显示错误提示</span><br><span class="line">    而且 不应该跳转</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-AI-时代的实践"><a href="#4-3-AI-时代的实践" class="headerlink" title="4.3 AI 时代的实践"></a>4.3 AI 时代的实践</h3><ul>
+<li><strong>AI 写 Gherkin</strong>：根据用户故事自动生成场景</li>
+<li><strong>AI 实现 + 验证</strong>：根据 Given&#x2F;When&#x2F;Then 自动写代码 + 跑测试</li>
+<li><strong>自动维护</strong>：当代码改时，AI 重写对应 Gherkin</li>
+</ul>
+<h2 id="五、DDD（领域驱动设计）"><a href="#五、DDD（领域驱动设计）" class="headerlink" title="五、DDD（领域驱动设计）"></a>五、DDD（领域驱动设计）</h2><h3 id="5-1-核心思想"><a href="#5-1-核心思想" class="headerlink" title="5.1 核心思想"></a>5.1 核心思想</h3><p>“代码 &#x3D; 业务的镜像”——领域专家 + 开发共同建模。</p>
+<h3 id="5-2-关键概念"><a href="#5-2-关键概念" class="headerlink" title="5.2 关键概念"></a>5.2 关键概念</h3><ul>
+<li><strong>限界上下文（Bounded Context）</strong>：每个子域独立</li>
+<li><strong>实体（Entity）</strong>：有 ID 的领域对象</li>
+<li><strong>值对象（Value Object）</strong>：无 ID 的属性集合</li>
+<li><strong>聚合根（Aggregate Root）</strong>：一致性边界</li>
+<li><strong>通用语言（Ubiquitous Language）</strong>：业务 + 技术共用术语</li>
+<li><strong>ADR（架构决策记录）</strong>：记录重要决策</li>
+</ul>
+<h3 id="5-3-AI-时代的增强"><a href="#5-3-AI-时代的增强" class="headerlink" title="5.3 AI 时代的增强"></a>5.3 AI 时代的增强</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># AI 帮你做&quot;限界上下文划分&quot;</span></span><br><span class="line"><span class="comment"># 输入：业务描述</span></span><br><span class="line"><span class="comment"># 输出：建议的领域模型 + 限界上下文</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># AI 帮你做&quot;实体识别&quot;</span></span><br><span class="line"><span class="comment"># 输入：业务需求</span></span><br><span class="line"><span class="comment"># 输出：实体清单 + 关系 + 行为</span></span><br></pre></td></tr></table></figure>
+
+<p>工具：</p>
+<ul>
+<li><strong>contextmapper</strong>：可视化限界上下文</li>
+<li><strong>PlantUML + AI</strong>：自动生成领域图</li>
+<li><strong>Structurizr</strong>：架构即代码 + AI 补充</li>
+</ul>
+<h2 id="六、4-种方法论-AI-时代对比"><a href="#六、4-种方法论-AI-时代对比" class="headerlink" title="六、4 种方法论 AI 时代对比"></a>六、4 种方法论 AI 时代对比</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>SDD</th>
+<th>TDD</th>
+<th>BDD</th>
+<th>DDD</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>适合项目</td>
+<td>中大型</td>
+<td>所有</td>
+<td>业务复杂</td>
+<td>领域复杂</td>
+</tr>
+<tr>
+<td>学习曲线</td>
+<td>中</td>
+<td>中高</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>AI 友好度</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+</tr>
+<tr>
+<td>团队规模</td>
+<td>3-10+</td>
+<td>1-10</td>
+<td>5-20</td>
+<td>5-20+</td>
+</tr>
+<tr>
+<td>投资回报（AI 时代）</td>
+<td>极高</td>
+<td>高</td>
+<td>高</td>
+<td>中</td>
+</tr>
+<tr>
+<td>失败成本</td>
+<td>中（规范错全错）</td>
+<td>低（测试可改）</td>
+<td>中</td>
+<td>高（重构成本）</td>
+</tr>
+</tbody></table>
+<h2 id="七、4-种方法论的”AI-友好度”详解"><a href="#七、4-种方法论的”AI-友好度”详解" class="headerlink" title="七、4 种方法论的”AI 友好度”详解"></a>七、4 种方法论的”AI 友好度”详解</h2><h3 id="7-1-SDD-为什么对-AI-最友好"><a href="#7-1-SDD-为什么对-AI-最友好" class="headerlink" title="7.1 SDD 为什么对 AI 最友好"></a>7.1 SDD 为什么对 AI 最友好</h3><ul>
+<li><strong>明确输入</strong>：spec.md 给 AI 完整的需求描述</li>
+<li><strong>可验证</strong>：spec 有 acceptance criteria，AI 实现后能自我验证</li>
+<li><strong>可迭代</strong>：spec 改 → AI 重写代码，闭环清晰</li>
+</ul>
+<h3 id="7-2-TDD-对-AI-友好"><a href="#7-2-TDD-对-AI-友好" class="headerlink" title="7.2 TDD 对 AI 友好"></a>7.2 TDD 对 AI 友好</h3><ul>
+<li><strong>明确目标</strong>：测试就是”功能正确”的定义</li>
+<li><strong>可自动化</strong>：AI 写测试 + 实现 + 跑测试形成闭环</li>
+</ul>
+<h3 id="7-3-BDD-对-AI-友好"><a href="#7-3-BDD-对-AI-友好" class="headerlink" title="7.3 BDD 对 AI 友好"></a>7.3 BDD 对 AI 友好</h3><ul>
+<li><strong>业务语言</strong>：AI 理解”Given 用户访问…那么…”比理解”user.click()”容易</li>
+<li><strong>可对齐</strong>：业务和开发用同一份 Gherkin 文件</li>
+</ul>
+<h3 id="7-4-DDD-对-AI-友好度较低"><a href="#7-4-DDD-对-AI-友好度较低" class="headerlink" title="7.4 DDD 对 AI 友好度较低"></a>7.4 DDD 对 AI 友好度较低</h3><ul>
+<li><strong>抽象概念多</strong>：限界上下文 &#x2F; 聚合 &#x2F; 实体 &#x2F; 值对象 AI 难自动推断</li>
+<li><strong>需要领域专家</strong>：DDD 强调”人”而非”规范”</li>
+</ul>
+<h2 id="八、选型决策树"><a href="#八、选型决策树" class="headerlink" title="八、选型决策树"></a>八、选型决策树</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">项目类型？</span><br><span class="line">├─ 个人 / 小工具 → SDD（写个 spec，AI 跑通）</span><br><span class="line">├─ 业务系统 + 团队 → SDD + TDD（规范 + 测试双驱动）</span><br><span class="line">├─ 多角色协作（产品/运营/技术）→ BDD（业务对齐）</span><br><span class="line">├─ 复杂业务领域（金融/医疗/物流）→ DDD（建模）</span><br><span class="line">└─ 完整 AI 编码框架 → SDD + TDD（推荐组合）</span><br></pre></td></tr></table></figure>
+
+<p><strong>推荐组合（2026 年）</strong>：</p>
+<ul>
+<li><strong>80% 的项目</strong>：SDD + TDD（双驱动）</li>
+<li><strong>复杂业务</strong>：加 BDD（业务对齐）</li>
+<li><strong>企业级</strong>：DDD + SDD + TDD（全套）</li>
+</ul>
+<h2 id="九、3-个常见误区"><a href="#九、3-个常见误区" class="headerlink" title="九、3 个常见误区"></a>九、3 个常见误区</h2><h3 id="9-1-把-SDD-当需求文档"><a href="#9-1-把-SDD-当需求文档" class="headerlink" title="9.1 把 SDD 当需求文档"></a>9.1 把 SDD 当需求文档</h3><ul>
+<li>❌ 写 100 页 spec</li>
+<li>✅ 写 1-2 页清晰 spec + AI 协助补充细节</li>
+</ul>
+<h3 id="9-2-把-TDD-当测试覆盖率工具"><a href="#9-2-把-TDD-当测试覆盖率工具" class="headerlink" title="9.2 把 TDD 当测试覆盖率工具"></a>9.2 把 TDD 当测试覆盖率工具</h3><ul>
+<li>❌ 追求 100% 覆盖率</li>
+<li>✅ 关注”关键路径”和”边界条件”</li>
+</ul>
+<h3 id="9-3-把-DDD-当万能药"><a href="#9-3-把-DDD-当万能药" class="headerlink" title="9.3 把 DDD 当万能药"></a>9.3 把 DDD 当万能药</h3><ul>
+<li>❌ 任何项目都做 DDD</li>
+<li>✅ 只在领域复杂（金融 &#x2F; 医疗 &#x2F; 物流）时用</li>
+</ul>
+<hr>
+<h2 id="下期预告"><a href="#下期预告" class="headerlink" title="下期预告"></a>下期预告</h2><p>（下）篇讲 AI 编程的<strong>工具层</strong>——Spec-Kit &#x2F; BMAD &#x2F; OpenSpec &#x2F; Superpowers &#x2F; GStack 等 5+ AI 工具的横向对比、代码图谱（CodeGraph &#x2F; Graphify）、OpenCLI 工具层，最后给完整的选型决策矩阵。👉 <a href="/2026/09/01/2026-09-02-ai-programming-frameworks-2/">（下）：AI 工具与代码图谱</a></p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI/" rel="tag">AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BDD/" rel="tag">BDD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DDD/" rel="tag">DDD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDD/" rel="tag">SDD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TDD/" rel="tag">TDD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA/" rel="tag">编程方法论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%89%E5%9E%8B/" rel="tag">选型</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a><a class="next" href="/2026/09/01/2026-09-02-ai-programming-frameworks-2/">AI 编程框架方法论（下）：工具与代码图谱</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA/" style="font-size: 15px;">编程方法论</a> <a href="/tags/SDD/" style="font-size: 15px;">SDD</a> <a href="/tags/TDD/" style="font-size: 15px;">TDD</a> <a href="/tags/BDD/" style="font-size: 15px;">BDD</a> <a href="/tags/DDD/" style="font-size: 15px;">DDD</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">编程框架</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">代码图谱</a> <a href="/tags/OpenCLI/" style="font-size: 15px;">OpenCLI</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Tailscale/" style="font-size: 15px;">Tailscale</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/RDP/" style="font-size: 15px;">RDP</a> <a href="/tags/VNC/" style="font-size: 15px;">VNC</a> <a href="/tags/SMB/" style="font-size: 15px;">SMB</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" style="font-size: 15px;">远程桌面</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/" style="font-size: 15px;">文件共享</a> <a href="/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/" style="font-size: 15px;">量化交易</a> <a href="/tags/LLM-Agent/" style="font-size: 15px;">LLM Agent</a> <a href="/tags/Kimi/" style="font-size: 15px;">Kimi</a> <a href="/tags/Binance/" style="font-size: 15px;">Binance</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 15px;">自动化</a> <a href="/tags/Mac/" style="font-size: 15px;">Mac</a> <a href="/tags/Homebrew/" style="font-size: 15px;">Homebrew</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/cheatsheet/" style="font-size: 15px;">cheatsheet</a> <a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">效率工具</a> <a href="/tags/OPC/" style="font-size: 15px;">OPC</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/%E7%A4%BE%E5%8C%BA/" style="font-size: 15px;">社区</a> <a href="/tags/%E5%88%9B%E4%B8%9A/" style="font-size: 15px;">创业</a> <a href="/tags/Node-js/" style="font-size: 15px;">Node.js</a> <a href="/tags/npm/" style="font-size: 15px;">npm</a> <a href="/tags/npmrc/" style="font-size: 15px;">.npmrc</a> <a href="/tags/%E6%96%B0%E6%89%8B/" style="font-size: 15px;">新手</a> <a href="/tags/Obsidian/" style="font-size: 15px;">Obsidian</a> <a href="/tags/LLM-Wiki/" style="font-size: 15px;">LLM Wiki</a> <a href="/tags/Workflow/" style="font-size: 15px;">Workflow</a> <a href="/tags/Knowledge-Base/" style="font-size: 15px;">Knowledge Base</a> <a href="/tags/iCloud/" style="font-size: 15px;">iCloud</a> <a href="/tags/%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">对比</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/Plugin/" style="font-size: 15px;">Plugin</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Dify/" style="font-size: 15px;">Dify</a> <a href="/tags/frp/" style="font-size: 15px;">frp</a> <a href="/tags/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" style="font-size: 15px;">内网穿透</a> <a href="/tags/%E5%86%85%E5%AE%B9%E5%AE%A1%E6%A0%B8/" style="font-size: 15px;">内容审核</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E4%B8%AD%E6%96%87%E5%A4%84%E7%90%86/" style="font-size: 15px;">中文处理</a> <a href="/tags/%E4%BC%A6%E7%90%86/" style="font-size: 15px;">伦理</a> <a href="/tags/Trae-AI/" style="font-size: 15px;">Trae AI</a> <a href="/tags/AI-%E7%BC%96%E7%A8%8B/" style="font-size: 15px;">AI 编程</a> <a href="/tags/Cursor/" style="font-size: 15px;">Cursor</a> <a href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" style="font-size: 15px;">小红书</a> <a href="/tags/API/" style="font-size: 15px;">API</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 15px;">爬虫</a> <a href="/tags/%E5%90%88%E8%A7%84/" style="font-size: 15px;">合规</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt/" style="font-size: 15px;">Nuxt</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/Pinia/" style="font-size: 15px;">Pinia</a> <a href="/tags/Prisma/" style="font-size: 15px;">Prisma</a> <a href="/tags/%E5%85%A8%E6%A0%88/" style="font-size: 15px;">全栈</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/CI-CD/" style="font-size: 15px;">CI/CD</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-programming-frameworks-1/">AI 编程框架方法论（上）：SDD / TDD / BDD / DDD</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-programming-frameworks-2/">AI 编程框架方法论（下）：工具与代码图谱</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-catti-self-study/">一年自学 CATTI 口译笔译</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-1/">Hermes vs OpenClaw（上）：设计哲学</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-2/">Hermes vs OpenClaw（中）：运行时行为</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-hermes-vs-openclaw-gateway-3/">Hermes vs OpenClaw（下）：子系统与选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-home-multi-device-remote-1/">家庭多设备远程控制（上）：环境 + Tailscale + SSH</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
