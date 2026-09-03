@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Multi-Agent 框架对比与选型 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Multi-Agent 框架对比与选型</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Multi-Agent 框架对比与选型</h1><div class="post-meta">2026-09-01<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.3k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 5</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>（上）篇讲了 7 种 Multi-Agent 架构模式。本篇（下）讲<strong>主流框架对比 + 选型决策</strong>——光懂模式不够，要落地就要选具体框架。</p>
+<h2 id="一、7-个主流框架对比"><a href="#一、7-个主流框架对比" class="headerlink" title="一、7 个主流框架对比"></a>一、7 个主流框架对比</h2><table>
+<thead>
+<tr>
+<th>框架</th>
+<th>厂商</th>
+<th>模式</th>
+<th>语言</th>
+<th>部署难度</th>
+<th>学习曲线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LangGraph</strong></td>
+<td>LangChain</td>
+<td>Supervisor &#x2F; Graph</td>
+<td>Python</td>
+<td>中</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>CrewAI</strong></td>
+<td>CrewAI Inc.</td>
+<td>Role-Based</td>
+<td>Python</td>
+<td>低</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>AutoGen</strong></td>
+<td>Microsoft</td>
+<td>Conversation</td>
+<td>Python</td>
+<td>中</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>MetaGPT</strong></td>
+<td>DeepWisdom</td>
+<td>SOP-Driven</td>
+<td>Python</td>
+<td>高</td>
+<td>中高</td>
+</tr>
+<tr>
+<td><strong>OpenAI Agents SDK</strong></td>
+<td>OpenAI</td>
+<td>Handoffs</td>
+<td>Python</td>
+<td>低</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>Claude Code Agent Teams</strong></td>
+<td>Anthropic</td>
+<td>P2P Mesh</td>
+<td>Python</td>
+<td>低</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>MiniMax Mavis</strong></td>
+<td>MiniMax</td>
+<td>LWV</td>
+<td>Python</td>
+<td>中</td>
+<td>中</td>
+</tr>
+</tbody></table>
+<h2 id="二、7-框架详解"><a href="#二、7-框架详解" class="headerlink" title="二、7 框架详解"></a>二、7 框架详解</h2><h3 id="2-1-LangGraph"><a href="#2-1-LangGraph" class="headerlink" title="2.1 LangGraph"></a>2.1 LangGraph</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> langgraph.graph <span class="keyword">import</span> StateGraph</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义状态</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AgentState</span>(<span class="title class_ inherited__">TypedDict</span>):</span><br><span class="line">    messages: <span class="built_in">list</span></span><br><span class="line">    next_agent: <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义节点</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">supervisor</span>(<span class="params">state</span>):</span><br><span class="line">    <span class="comment"># 决定下一个 agent</span></span><br><span class="line">    state[<span class="string">&quot;next_agent&quot;</span>] = <span class="string">&quot;researcher&quot;</span></span><br><span class="line">    <span class="keyword">return</span> state</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">researcher</span>(<span class="params">state</span>):</span><br><span class="line">    <span class="comment"># 做研究</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;messages&quot;</span>: state[<span class="string">&quot;messages&quot;</span>] + [<span class="string">&quot;research result&quot;</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建图</span></span><br><span class="line">graph = StateGraph(AgentState)</span><br><span class="line">graph.add_node(<span class="string">&quot;supervisor&quot;</span>, supervisor)</span><br><span class="line">graph.add_node(<span class="string">&quot;researcher&quot;</span>, researcher)</span><br><span class="line">graph.add_edge(<span class="string">&quot;supervisor&quot;</span>, <span class="string">&quot;researcher&quot;</span>)</span><br><span class="line">graph.add_edge(<span class="string">&quot;researcher&quot;</span>, <span class="string">&quot;supervisor&quot;</span>)</span><br><span class="line">app = graph.<span class="built_in">compile</span>()</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>完整 Graph API（StateGraph）</li>
+<li>灵活组合 7 种模式</li>
+<li>与 LangChain 生态集成</li>
+</ul>
+<p><strong>适用</strong>：复杂 workflow + 需要可观测</p>
+<h3 id="2-2-CrewAI"><a href="#2-2-CrewAI" class="headerlink" title="2.2 CrewAI"></a>2.2 CrewAI</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> crewai <span class="keyword">import</span> Agent, Task, Crew</span><br><span class="line"></span><br><span class="line">researcher = Agent(</span><br><span class="line">    role=<span class="string">&quot;市场研究员&quot;</span>,</span><br><span class="line">    goal=<span class="string">&quot;收集 AI 行业最新动态&quot;</span>,</span><br><span class="line">    backstory=<span class="string">&quot;10 年科技媒体经验&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">writer = Agent(</span><br><span class="line">    role=<span class="string">&quot;内容写手&quot;</span>,</span><br><span class="line">    goal=<span class="string">&quot;把研究写成文章&quot;</span>,</span><br><span class="line">    backstory=<span class="string">&quot;擅长把复杂概念讲清楚&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">research_task = Task(</span><br><span class="line">    description=<span class="string">&quot;研究 2026 AI 编程工具&quot;</span>,</span><br><span class="line">    agent=researcher,</span><br><span class="line">    expected_output=<span class="string">&quot;结构化研究报告&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">write_task = Task(</span><br><span class="line">    description=<span class="string">&quot;把研究报告写成博客文章&quot;</span>,</span><br><span class="line">    agent=writer,</span><br><span class="line">    expected_output=<span class="string">&quot;2000 字博客&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">crew = Crew(</span><br><span class="line">    agents=[researcher, writer],</span><br><span class="line">    tasks=[research_task, write_task],</span><br><span class="line">    verbose=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">result = crew.kickoff()</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>角色定义自然语言化</li>
+<li>学习曲线低</li>
+<li>适合内容创作 &#x2F; 调研</li>
+</ul>
+<h3 id="2-3-AutoGen"><a href="#2-3-AutoGen" class="headerlink" title="2.3 AutoGen"></a>2.3 AutoGen</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> autogen <span class="keyword">import</span> AssistantAgent, UserProxyAgent</span><br><span class="line"></span><br><span class="line">assistant = AssistantAgent(<span class="string">&quot;assistant&quot;</span>, llm_config=...)</span><br><span class="line">user_proxy = UserProxyAgent(<span class="string">&quot;user&quot;</span>, code_execution_config=&#123;<span class="string">&quot;work_dir&quot;</span>: <span class="string">&quot;.&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line">user_proxy.initiate_chat(</span><br><span class="line">    assistant,</span><br><span class="line">    message=<span class="string">&quot;分析这个数据集&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>对话驱动（GroupChat 模式）</li>
+<li>支持代码执行</li>
+<li>微软背景，企业友好</li>
+</ul>
+<h3 id="2-4-MetaGPT"><a href="#2-4-MetaGPT" class="headerlink" title="2.4 MetaGPT"></a>2.4 MetaGPT</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> metagpt.roles <span class="keyword">import</span> ProductManager, Architect, Engineer</span><br><span class="line"><span class="keyword">from</span> metagpt.team <span class="keyword">import</span> Team</span><br><span class="line"></span><br><span class="line">team = Team()</span><br><span class="line">team.hire([ProductManager(), Architect(), Engineer()])</span><br><span class="line">team.run_project(<span class="string">&quot;开发一个 AI 笔记 App&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>完整 SOP（产品 &#x2F; 架构 &#x2F; 工程 &#x2F; QA）</li>
+<li>模拟真实软件公司</li>
+<li>适合软件工程</li>
+</ul>
+<h3 id="2-5-OpenAI-Agents-SDK"><a href="#2-5-OpenAI-Agents-SDK" class="headerlink" title="2.5 OpenAI Agents SDK"></a>2.5 OpenAI Agents SDK</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> agents <span class="keyword">import</span> Agent, Runner</span><br><span class="line"></span><br><span class="line">agent = Agent(</span><br><span class="line">    name=<span class="string">&quot;assistant&quot;</span>,</span><br><span class="line">    instructions=<span class="string">&quot;You are a helpful assistant&quot;</span>,</span><br><span class="line">    tools=[get_weather, search_web]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">result = Runner.run_sync(agent, <span class="string">&quot;What&#x27;s the weather in Tokyo?&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>OpenAI 官方</li>
+<li>Handoffs 模式</li>
+<li>适合 GPT 系列</li>
+</ul>
+<h3 id="2-6-Claude-Code-Agent-Teams"><a href="#2-6-Claude-Code-Agent-Teams" class="headerlink" title="2.6 Claude Code Agent Teams"></a>2.6 Claude Code Agent Teams</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># claude_code/agent_teams.yaml</span></span><br><span class="line">teams:</span><br><span class="line">  - name: research-team</span><br><span class="line">    agents:</span><br><span class="line">      - name: web-searcher</span><br><span class="line">        model: claude-sonnet-<span class="number">4</span></span><br><span class="line">      - name: analyzer</span><br><span class="line">        model: claude-sonnet-<span class="number">4</span></span><br><span class="line">    mailbox: redis</span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>Anthropic 官方</li>
+<li>P2P Mailbox 通信</li>
+<li>适合探索 &#x2F; 多角度分析</li>
+</ul>
+<h3 id="2-7-MiniMax-Mavis"><a href="#2-7-MiniMax-Mavis" class="headerlink" title="2.7 MiniMax Mavis"></a>2.7 MiniMax Mavis</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Mavis 内部格式</span></span><br><span class="line"><span class="comment"># 三权分立：Leader 派工 + Worker 执行 + Verifier 审查</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>特点</strong>：</p>
+<ul>
+<li>LWV 模式</li>
+<li>强一致性</li>
+<li>国内可用</li>
+</ul>
+<h2 id="三、5-维度对比"><a href="#三、5-维度对比" class="headerlink" title="三、5 维度对比"></a>三、5 维度对比</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>LangGraph</th>
+<th>CrewAI</th>
+<th>AutoGen</th>
+<th>MetaGPT</th>
+<th>Agents SDK</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>协议模式</td>
+<td>任意图</td>
+<td>Role</td>
+<td>对话</td>
+<td>SOP</td>
+<td>Handoffs</td>
+</tr>
+<tr>
+<td>学习曲线</td>
+<td>中高</td>
+<td>低</td>
+<td>中</td>
+<td>中高</td>
+<td>低</td>
+</tr>
+<tr>
+<td>文档质量</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>社区活跃</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐</td>
+<td>⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td>调试工具</td>
+<td>LangSmith</td>
+<td>CrewAI Studio</td>
+<td>AutoGen Studio</td>
+<td>MetaGPT Web</td>
+<td>OpenAI Dashboard</td>
+</tr>
+<tr>
+<td>商用支持</td>
+<td>LangChain</td>
+<td>CrewAI Inc.</td>
+<td>Microsoft</td>
+<td>DeepWisdom</td>
+<td>OpenAI</td>
+</tr>
+</tbody></table>
+<h2 id="四、5-类场景推荐"><a href="#四、5-类场景推荐" class="headerlink" title="四、5 类场景推荐"></a>四、5 类场景推荐</h2><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>代码项目</strong></td>
+<td>MetaGPT</td>
+<td>完整 SOP 模拟软件公司</td>
+</tr>
+<tr>
+<td><strong>内容创作</strong></td>
+<td>CrewAI</td>
+<td>角色定义自然语言化</td>
+</tr>
+<tr>
+<td><strong>研究分析</strong></td>
+<td>Claude Code Agent Teams</td>
+<td>P2P 多角度</td>
+</tr>
+<tr>
+<td><strong>客服流程</strong></td>
+<td>OpenAI Agents SDK</td>
+<td>Handoffs 适合流水线</td>
+</tr>
+<tr>
+<td><strong>通用探索</strong></td>
+<td>LangGraph</td>
+<td>灵活 + LangChain 生态</td>
+</tr>
+</tbody></table>
+<h2 id="五、3-条选型原则"><a href="#五、3-条选型原则" class="headerlink" title="五、3 条选型原则"></a>五、3 条选型原则</h2><h3 id="5-1-用现有-LLM-配套"><a href="#5-1-用现有-LLM-配套" class="headerlink" title="5.1 用现有 LLM 配套"></a>5.1 用现有 LLM 配套</h3><ul>
+<li>用 GPT 系列 → OpenAI Agents SDK</li>
+<li>用 Claude → Claude Code Agent Teams</li>
+<li>用国内模型（Qwen &#x2F; GLM &#x2F; Hy4）→ LangGraph &#x2F; CrewAI</li>
+</ul>
+<h3 id="5-2-团队熟悉度优先"><a href="#5-2-团队熟悉度优先" class="headerlink" title="5.2 团队熟悉度优先"></a>5.2 团队熟悉度优先</h3><ul>
+<li>Python 熟 → 全部可选</li>
+<li>TypeScript 熟 → 仅 LangGraph（TS 版）</li>
+<li>不熟 Python → 仅 OpenAI Agents SDK</li>
+</ul>
+<h3 id="5-3-任务匹配"><a href="#5-3-任务匹配" class="headerlink" title="5.3 任务匹配"></a>5.3 任务匹配</h3><ul>
+<li>长任务（多步）→ MetaGPT &#x2F; LangGraph</li>
+<li>短任务（单步）→ CrewAI</li>
+<li>探索任务 → Claude Code Agent Teams</li>
+</ul>
+<h2 id="六、3-个真实案例"><a href="#六、3-个真实案例" class="headerlink" title="六、3 个真实案例"></a>六、3 个真实案例</h2><h3 id="6-1-内容生成"><a href="#6-1-内容生成" class="headerlink" title="6.1 内容生成"></a>6.1 内容生成</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">项目：每天产出 5 篇 AI 行业新闻摘要</span><br><span class="line">选型：CrewAI（Role-Based）</span><br><span class="line">团队：研究员 + 编辑 + 审校</span><br><span class="line">流程：研究 → 写作 → 审校</span><br><span class="line">成本：3 LLM 角色 × 5 篇 / 天 = 15 次 API 调用</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-自动化办公"><a href="#6-2-自动化办公" class="headerlink" title="6.2 自动化办公"></a>6.2 自动化办公</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">项目：周报自动生成</span><br><span class="line">选型：LangGraph（Supervisor + Worker）</span><br><span class="line">流程：</span><br><span class="line">  supervisor 接收周报需求</span><br><span class="line">    → 数据收集 worker 拉数据</span><br><span class="line">    → 模板填充 worker 套模板</span><br><span class="line">    → 审核 worker 检查</span><br><span class="line">    → supervisor 输出</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-软件工程"><a href="#6-3-软件工程" class="headerlink" title="6.3 软件工程"></a>6.3 软件工程</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">项目：自动重构 legacy 代码</span><br><span class="line">选型：MetaGPT（SOP-Driven）</span><br><span class="line">团队：架构师 + 开发 + 测试</span><br><span class="line">流程：</span><br><span class="line">  架构师 读代码 → 写架构方案</span><br><span class="line">  开发 实施方案</span><br><span class="line">  测试 写测试</span><br><span class="line">  QA 验收</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、3-条避坑"><a href="#七、3-条避坑" class="headerlink" title="七、3 条避坑"></a>七、3 条避坑</h2><ol>
+<li><strong>不要为了”高级”选复杂框架</strong>——5 个 Agent 的项目用 Handoffs 比 LangGraph 简单</li>
+<li><strong>不要忽视调试工具</strong>——LangSmith &#x2F; CrewAI Studio 是救命稻草</li>
+<li><strong>不要每个项目都从 0 搭</strong>——选熟悉的框架，积累复用</li>
+</ol>
+<h2 id="八、3-条未来趋势"><a href="#八、3-条未来趋势" class="headerlink" title="八、3 条未来趋势"></a>八、3 条未来趋势</h2><ol>
+<li><strong>MCP + Agent 框架融合</strong>——MCP 工具调用 &#x3D; 通用 Agent 协议</li>
+<li><strong>统一上下文窗口</strong>——128K → 1M context 让复杂 multi-agent 不再受限制</li>
+<li><strong>Auto-eval 成熟</strong>——SWE-bench &#x2F; HumanEval 自动评估 Agent 质量</li>
+</ol>
+<h2 id="九、本文-上篇"><a href="#九、本文-上篇" class="headerlink" title="九、本文 + 上篇"></a>九、本文 + 上篇</h2><ul>
+<li>（上）7 种模式详解（已写）</li>
+<li>（下）主流框架对比 + 选型（本文）</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>Multi-Agent 架构选型核心</strong>：<strong>先选模式，再选框架</strong>。模式错了，再多框架也救不了；模式对了，框架只是工具。<strong>LangGraph &#x2F; CrewAI &#x2F; AutoGen &#x2F; MetaGPT 都能跑通，关键看你的任务</strong>。<strong>3 个 Agent 足够就别上 5 个</strong>，<strong>单进程足够就别上分布式</strong>。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AutoGen/" rel="tag">AutoGen</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CrewAI/" rel="tag">CrewAI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LangGraph/" rel="tag">LangGraph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MetaGPT/" rel="tag">MetaGPT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Multi-Agent/" rel="tag">Multi-Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%89%E5%9E%8B/" rel="tag">选型</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/01/2026-09-02-multi-agent-architecture-1/">Multi-Agent 架构 7 种模式（上）</a><a class="next" href="/2026/09/01/2026-09-02-ningbo-ai-ecosystem/">宁波 AI 生态观察</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA/" style="font-size: 15px;">编程方法论</a> <a href="/tags/SDD/" style="font-size: 15px;">SDD</a> <a href="/tags/TDD/" style="font-size: 15px;">TDD</a> <a href="/tags/BDD/" style="font-size: 15px;">BDD</a> <a href="/tags/DDD/" style="font-size: 15px;">DDD</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">编程框架</a> <a href="/tags/%E4%BB%A3%E7%A0%81%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">代码图谱</a> <a href="/tags/OpenCLI/" style="font-size: 15px;">OpenCLI</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E5%AF%B9%E6%AF%94/" style="font-size: 15px;">工具对比</a> <a href="/tags/Crawler/" style="font-size: 15px;">Crawler</a> <a href="/tags/Firecrawl/" style="font-size: 15px;">Firecrawl</a> <a href="/tags/Exa/" style="font-size: 15px;">Exa</a> <a href="/tags/Tavily/" style="font-size: 15px;">Tavily</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E6%96%B9%E6%A1%88/" style="font-size: 15px;">项目方案</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/Attention/" style="font-size: 15px;">Attention</a> <a href="/tags/Transformer/" style="font-size: 15px;">Transformer</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 15px;">深度学习</a> <a href="/tags/NLP/" style="font-size: 15px;">NLP</a> <a href="/tags/%E5%8F%A3%E8%AF%91/" style="font-size: 15px;">口译</a> <a href="/tags/%E7%AC%94%E8%AF%91/" style="font-size: 15px;">笔译</a> <a href="/tags/CATTI/" style="font-size: 15px;">CATTI</a> <a href="/tags/%E8%87%AA%E5%AD%A6/" style="font-size: 15px;">自学</a> <a href="/tags/AI-%E6%97%B6%E4%BB%A3/" style="font-size: 15px;">AI 时代</a> <a href="/tags/Taro/" style="font-size: 15px;">Taro</a> <a href="/tags/Vue3/" style="font-size: 15px;">Vue3</a> <a href="/tags/Nuxt3/" style="font-size: 15px;">Nuxt3</a> <a href="/tags/NestJS/" style="font-size: 15px;">NestJS</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 15px;">小程序</a> <a href="/tags/%E5%90%8E%E5%8F%B0/" style="font-size: 15px;">后台</a> <a href="/tags/Diffusion/" style="font-size: 15px;">Diffusion</a> <a href="/tags/%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/" style="font-size: 15px;">生成模型</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E7%94%9F%E6%88%90/" style="font-size: 15px;">图像生成</a> <a href="/tags/%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90/" style="font-size: 15px;">视频生成</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Stars/" style="font-size: 15px;">Stars</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/" style="font-size: 15px;">知识管理</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%9B%91%E6%8E%A7/" style="font-size: 15px;">监控</a> <a href="/tags/monorepo/" style="font-size: 15px;">monorepo</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E8%90%A5%E9%80%A0/" style="font-size: 15px;">社群营造</a> <a href="/tags/%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/" style="font-size: 15px;">案例分析</a> <a href="/tags/%E6%9D%AD%E5%B7%9E/" style="font-size: 15px;">杭州</a> <a href="/tags/%E6%96%87%E5%8C%96%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">文化空间</a> <a href="/tags/%E7%A4%BE%E5%8C%BA%E8%BF%90%E8%90%A5/" style="font-size: 15px;">社区运营</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/Gateway/" style="font-size: 15px;">Gateway</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Tailscale/" style="font-size: 15px;">Tailscale</a> <a href="/tags/SSH/" style="font-size: 15px;">SSH</a> <a href="/tags/RDP/" style="font-size: 15px;">RDP</a> <a href="/tags/VNC/" style="font-size: 15px;">VNC</a> <a href="/tags/SMB/" style="font-size: 15px;">SMB</a> <a href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" style="font-size: 15px;">远程桌面</a> <a href="/tags/%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB/" style="font-size: 15px;">文件共享</a> <a href="/tags/Hy4/" style="font-size: 15px;">Hy4</a> <a href="/tags/%E8%85%BE%E8%AE%AF%E6%B7%B7%E5%85%83/" style="font-size: 15px;">腾讯混元</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%9B%BD%E4%BA%A7%E5%A4%A7%E6%A8%A1%E5%9E%8B/" style="font-size: 15px;">国产大模型</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7-Agent/" style="font-size: 15px;">企业级 Agent</a> <a href="/tags/%E9%87%91%E8%9E%8D/" style="font-size: 15px;">金融</a> <a href="/tags/%E6%95%99%E8%82%B2/" style="font-size: 15px;">教育</a> <a href="/tags/%E9%80%9A%E7%94%A8-Agent/" style="font-size: 15px;">通用 Agent</a> <a href="/tags/%E5%B7%A5%E4%B8%9A/" style="font-size: 15px;">工业</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-302ai-newapi/">302AI + New-API 商业化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-706-skill-tree-1/">706 智囊团技能树（上）：M1-M6 主里程碑</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-706-skill-tree-2/">706 智囊团技能树（中）：M4 工作流与 M5 分支</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-706-skill-tree-3/">706 智囊团技能树（下）：M7-M10 企业岗位</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-706-workshop-v2/">706 宁波 AI 知识工坊 V2 实施</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-agent-config-comparison/">AI Agent 配置系统对比</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-news-radar/">ai-news-radar 技术调研</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-programming-frameworks-1/">AI 编程框架方法论（上）：SDD / TDD / BDD / DDD</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-programming-frameworks-2/">AI 编程框架方法论（下）：工具与代码图谱</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/09/01/2026-09-02-ai-source-tools/">AI 信源获取工具地图</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
