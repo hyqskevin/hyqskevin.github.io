@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Palantir 本体论 10 范式 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Palantir 本体论 10 范式</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Palantir 本体论 10 范式</h1><div class="post-meta">2026-10-07<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 4.2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 16</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><h2 id="总览-从-15-个案例到-10-条范式"><a href="#总览-从-15-个案例到-10-条范式" class="headerlink" title="总览:从 15 个案例到 10 条范式"></a>总览:从 15 个案例到 10 条范式</h2><p>把 Palantir Foundry 落地拆开看,真正可复用的不是工具,而是<strong>工程模式</strong>。本手册从 15 个公开案例(Airbus、Cleveland Clinic、Tampa General、Sonnedix、Doosan、Concordance、WFP、HHS-CDC、Fujitsu、Sompo、Swiss Re、Axel Springer 等)中横向提炼 10 条范式。它们不是孤立技巧,而是搭建一个完整 ontology 项目的核心积木,实际项目通常组合使用 5-8 条。</p>
+<p>为什么是这 10 条,而不是 7 条或 15 条?三条筛选标准:</p>
+<ol>
+<li><strong>跨案例复现</strong>:同一条做法在 ≥3 个不同行业出现(如 write-back 闭环出现在 Airbus &#x2F; Cleveland &#x2F; Tampa 三家)</li>
+<li><strong>可拆解为步骤</strong>:每条能写成 3-5 步可执行清单,不是抽象口号</li>
+<li><strong>失败模式可识别</strong>:能说清”什么情况下会失效”,避免被包装成”银弹”</li>
+</ol>
+<p>10 条范式按实现层次分四层:</p>
+<ul>
+<li><strong>对象与执行核心</strong>(范式 1-3):落地 ontology 的最小集</li>
+<li><strong>数据接入与治理</strong>(范式 4-6):把外部世界和合规纳入本体</li>
+<li><strong>协同与叙事</strong>(范式 7-8):把单体扩展到多组织,把工具升级为基础设施</li>
+<li><strong>生态与组织</strong>(范式 9-10):让供应商、合资伙伴、IT 服务商复用同一套范式</li>
+</ul>
+<p>每条范式四个要素:<strong>适用场景</strong>、<strong>关键做法</strong>(3-5 步)、<strong>来源案例</strong>、<strong>失败模式</strong>。</p>
+<hr>
+<h2 id="一、对象与执行核心"><a href="#一、对象与执行核心" class="headerlink" title="一、对象与执行核心"></a>一、对象与执行核心</h2><h3 id="1-1-Object-→-Action-→-Write-back-闭环"><a href="#1-1-Object-→-Action-→-Write-back-闭环" class="headerlink" title="1.1 Object → Action → Write-back 闭环"></a>1.1 Object → Action → Write-back 闭环</h3><p><strong>适用场景</strong>:任何想打通”数据 + 模型 + 业务执行”的企业。先识别业务 Object,再把工作流定义为对 Object 的 Action,最后把 Action 结果写回底层系统(MES &#x2F; SAP &#x2F; EHR &#x2F; CRM)。这条范式是整个 ontology 落地的”如果只能选一条,选它”。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>先识别 3-7 个核心 Object,不要贪多</li>
+<li>把现有工作流逐一映射为 Action(“X 动作对 Y Object”)</li>
+<li>Action 必须有 write-back 目标,没有 write-back 就退化为 dashboard</li>
+<li>Object 状态字段定义为时序 + 事件流,确保可追溯</li>
+<li>跑通第一个端到端 Action 后再横向扩展</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li><a href="./01-airbus.md">airbus</a>:Aircraft + Production Order Action 写回 SAP&#x2F;MES</li>
+<li><a href="./06-cleveland-clinic.md">cleveland-clinic</a>:Patient + Bed + Assign-bed Action 写回 EHR</li>
+<li><a href="./08-tampa-general-hospital.md">tampa-general-hospital</a>:Bed + Schedule-shift Action 写回 Staffing Matrix</li>
+<li><a href="./05-sonnedix.md">sonnedix</a>:Tracker Panel + Maintenance Action 写回资产系统</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>Action 退化为只读 BI 视图,等于换皮 BI 项目</li>
+<li>Object 数量过多(&gt;20)导致关系纠缠,建模半途而废</li>
+<li>写回无 audit,医疗&#x2F;金融场景合规风险</li>
+</ul>
+<h3 id="1-2-多业务线共用-Ontology-视图"><a href="#1-2-多业务线共用-Ontology-视图" class="headerlink" title="1.2 多业务线共用 Ontology 视图"></a>1.2 多业务线共用 Ontology 视图</h3><p><strong>适用场景</strong>:多业务线集团(内容+广告+订阅、保险+养老+医疗、媒体+订阅+广告)。同一用户&#x2F;客户在不同业务线下定义不一致。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>在 Foundry 上建共享 Object Type(Reader &#x2F; Subscriber &#x2F; Policyholder &#x2F; Resident),跨业务线引用</li>
+<li>每个业务线有各自的 Link Type + Action Type,但挂在共享 Object 上</li>
+<li>用 granular access control 把”商业机密”和”可共享数据”分层(open &#x2F; internal &#x2F; restricted)</li>
+<li>用 Workshop &#x2F; Quiver 把 ML 产出以低代码界面下沉到非技术角色</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li><a href="./11-axel-springer.md">axel-springer</a>:Reader&#x2F;Article&#x2F;AdSlot 跨内容+广告+订阅</li>
+<li><a href="./13-swiss-re.md">swiss-re</a>:Policy&#x2F;Claim&#x2F;Portfolio 跨寿险+财险+健康险</li>
+<li><a href="./14-sompo.md">sompo</a>:Resident&#x2F;Policy&#x2F;Claim 跨养老+保险+防灾+医疗</li>
+<li>互补 <a href="./12-ringier.md">ringier</a>:85% 编辑每天使用是用户密度指标</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>共享 Object 过于抽象(“Customer” &#x2F; “Account”),丢失业务语义</li>
+<li>业务线间权限博弈耗时过长,access control 设计烂尾</li>
+<li>没有低代码界面,退化为”数据团队玩具”</li>
+</ul>
+<h3 id="1-3-Field-first-Action"><a href="#1-3-Field-first-Action" class="headerlink" title="1.3 Field-first Action"></a>1.3 Field-first Action</h3><p><strong>适用场景</strong>:操作员&#x2F;工人&#x2F;编辑&#x2F;护士&#x2F;驾驶员等第一线用户。让他们主动学新 app 不现实,要把 Action 嵌进他们现有工作流(邮件、移动 push、对讲、IM)。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>识别第一线工作流,而非 dashboard</li>
+<li>把 AI&#x2F;ML 输出翻译成”人话建议”(“把 3 号曝气池 setpoint 从 X 调到 Y,因为氨氮水平将超限”)</li>
+<li>在建议里嵌入 accept&#x2F;reject 按钮 + 富文本反馈</li>
+<li>reject&#x2F;feedback 行为作为 first-class 事件写回 Ontology</li>
+<li>形成”操作员决策 → 模型反馈 → 模型更新”的持续训练闭环</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./03-jacobs.md">jacobs</a>:每天 2 封 setpoint 邮件,reject 写回 Ontology</li>
+<li>主要 <a href="./08-tampa-general-hospital.md">tampa-general-hospital</a>:飓风 Ian 24 小时内把 disaster response 写成移动应用</li>
+<li>主要 <a href="./12-ringier.md">ringier</a>:85% 编辑每天使用 Foundry 编辑界面</li>
+<li>互补 <a href="./05-sonnedix.md">sonnedix</a>:资产经理从平台直接钻取 + action 维修请求</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>强推 app,让操作员学新工具——失败率高</li>
+<li>没有 reject 路径,操作员被迫接受 AI 建议,模型偏差无人纠正</li>
+<li>邮件&#x2F;移动端 Action 无 audit trail,合规失效</li>
+</ul>
+<hr>
+<h2 id="二、数据接入与治理"><a href="#二、数据接入与治理" class="headerlink" title="二、数据接入与治理"></a>二、数据接入与治理</h2><h3 id="2-1-外部世界数据纳入本体论"><a href="#2-1-外部世界数据纳入本体论" class="headerlink" title="2.1 外部世界数据纳入本体论"></a>2.1 外部世界数据纳入本体论</h3><p><strong>适用场景</strong>:物理资产运营(太阳能场、风电场、油气管道、水务、农业)。传统企业 IT 只映射内网系统,但运营决策需要外部信号(卫星图像、天气、地理、市场电价)。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>识别决策所需的外部世界信号(卫星 &#x2F; 天气 &#x2F; 市场 &#x2F; 地理 &#x2F; 第三方)</li>
+<li>在 Ontology 上为外部信号建模为 first-class Object(SatelliteImage &#x2F; WeatherDriver &#x2F; MarketPrice)</li>
+<li>通过 MetaConstellation 或类似能力接入外部数据</li>
+<li>让外部信号成为触发 Action 的依据(CV Detection Event → Maintenance Action)</li>
+<li>Action 结果反向校准外部信号模型,持续学习</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./05-sonnedix.md">sonnedix</a>:MetaConstellation 卫星 + CV 检测写入 Tracker object</li>
+<li>互补 <a href="./04-kinder-morgan.md">kinder-morgan</a>:Weather Driver + ERCOT Market Object → Supply Adjustment Action</li>
+<li>互补 <a href="./01-airbus.md">airbus</a>:外部维修数据进入 Aircraft BOM,触发 Maintenance Action</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>外部数据只做”展示图层”,不进入 Action 链</li>
+<li>外部数据接入成本过高(人工标注、半手工 ETL)</li>
+<li>没有 quality flag,决策错误无人察觉</li>
+</ul>
+<h3 id="2-2-多部门-virtuous-cycle"><a href="#2-2-多部门-virtuous-cycle" class="headerlink" title="2.2 多部门 virtuous cycle"></a>2.2 多部门 virtuous cycle</h3><p><strong>适用场景</strong>:制造、重型机械、消费电子等”产品全生命周期数据有商业价值”的企业。售后索赔、市场信号、新品研发原本各自为政,数据闭环能让企业从”卖产品”升级到”用产品反馈驱动下一代产品”。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>识别跨部门核心 Object(Machine &#x2F; Product &#x2F; Order &#x2F; Claim &#x2F; MarketSignal)</li>
+<li>把售后 Claim object 写回 R&amp;D 选型决策(不只是”看 dashboard”)</li>
+<li>把市场信号驱动新品研发方向(MarketSignal → Product Development Action)</li>
+<li>把质量数据反向影响供应链(Claim root cause → Supply Adjustment)</li>
+<li>把闭环命名为可对外宣传的”flywheel”或”cycle”——这是销售&#x2F;高层支持的硬抓手</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./02-doosan-infracore.md">doosan-infracore</a>:Claim → R&amp;D + MarketSignal → Supply 的 virtuous cycle</li>
+<li>对比 <a href="./01-airbus.md">airbus</a>:Defect → Production Schedule 的内部闭环</li>
+<li>互补 <a href="./08-tampa-general-hospital.md">tampa-general-hospital</a>:临床结果 → OR 排程的医院内部循环</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>售后数据只用来”投诉处理”,不写回 R&amp;D,数据闭环失败</li>
+<li>多部门 KPI 互相冲突,没有”virtuous cycle”叙事,高层推动失败</li>
+<li>Cycle 命名太学术,没有故事化包装,内部认知度低</li>
+</ul>
+<h3 id="2-3-治理分层-PBAC"><a href="#2-3-治理分层-PBAC" class="headerlink" title="2.3 治理分层 + PBAC"></a>2.3 治理分层 + PBAC</h3><p><strong>适用场景</strong>:政府、医疗、金融等受监管行业;多组织数据共享场景。RBAC(基于角色)粒度不够,需要把 markings &#x2F; purpose &#x2F; audit 作为 Object 自身属性,而不是 IT 层后置。WFP 在冲突地区保护受益人隐私、HHS 在疫情期间打通 25 亿数据点,都依赖这条范式。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>把数据敏感度标记(PHI &#x2F; PII &#x2F; 机密 &#x2F; 内部 &#x2F; 公开)建模为 Object property</li>
+<li>把访问目的(clinical &#x2F; billing &#x2F; research &#x2F; emergency)建模为 action 的 context</li>
+<li>audit log 作为 Object 自身的 event stream(不是后置 SIEM)</li>
+<li>跨组织共享时,每个 Object 同时持有”自己的 inbound view”和”对外的 outbound view”</li>
+<li>政府应急场景下,把多机构 markings 作为 Object 的 first-class property</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./07-hhs-cdc.md">hhs-cdc</a>:HIPAA-equivalent markings + 5 天上线 + 25 亿数据点 audit</li>
+<li>主要 <a href="./10-world-food-programme.md">world-food-programme</a>:purpose limitation + beneficiary protection</li>
+<li>主要 <a href="./14-sompo.md">sompo</a>:”只有值班护理员能改 Resident”这种业务级权限</li>
+<li>互补 <a href="./09-concordance.md">concordance</a>:合作伙伴间 data sharing rules 作为 Object 属性</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>markings 作为 IT 层后置,Object 与治理脱钩</li>
+<li>没有 purpose-based 上下文,访问控制退化为”全有或全无”</li>
+<li>audit log 不在 Object 内,监管检查失败</li>
+</ul>
+<hr>
+<h2 id="三、协同与叙事"><a href="#三、协同与叙事" class="headerlink" title="三、协同与叙事"></a>三、协同与叙事</h2><h3 id="3-1-Bidirectional-Object-Common-Operating-Picture"><a href="#3-1-Bidirectional-Object-Common-Operating-Picture" class="headerlink" title="3.1 Bidirectional Object + Common Operating Picture"></a>3.1 Bidirectional Object + Common Operating Picture</h3><p><strong>适用场景</strong>:供应链、多组织生态、跨部门协同。任何一个 Object 既被上游 view 也被下游 view,所有 action 必须考虑双侧 effect。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>为每个核心 Object 定义双向视图(inbound + outbound)</li>
+<li>跨组织数据共享时,每个组织保留对自有数据的控制权(data sovereignty)</li>
+<li>在 Ontology 上建模组织关系(Manufacturer → Distributor → Provider)作为 Link Type</li>
+<li>Action 必须考虑”上游影响 + 下游影响”,并在 audit log 中双向记录</li>
+<li>提供单点真相视图(Common Operating Picture)让所有组织基于同一份事实决策</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./09-concordance.md">concordance</a>:Surgence 让 4,000+ 供应商共享 demand + priority</li>
+<li>主要 <a href="./04-kinder-morgan.md">kinder-morgan</a>:Common Operating Picture 量化供需,运维与商务共用同一份数据源</li>
+<li>主要 <a href="./10-world-food-programme.md">world-food-programme</a>:Control Tower 让 173 国家 &#x2F; 72 组织共享 visibility</li>
+<li>互补 <a href="./15-fujitsu.md">fujitsu</a>:Single Pane of Glass 把 40+ 业务系统联通到 85% 系统覆盖率</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>单向视图,上游&#x2F;下游看不到自己</li>
+<li>没有 data sovereignty 边界,合作伙伴拒绝接入</li>
+<li>视图分散在不同 BI 报表,没有真正的 Common Operating Picture</li>
+</ul>
+<h3 id="3-2-Operating-System-比喻-iOS-类比"><a href="#3-2-Operating-System-比喻-iOS-类比" class="headerlink" title="3.2 Operating System 比喻 + iOS 类比"></a>3.2 Operating System 比喻 + iOS 类比</h3><p><strong>适用场景</strong>:任何 ontology 项目想从”工具”升级为”基础设施”的场景。把 ontology 定位成”工具”或”应用”,最终会被边缘化;定位成”Operating System”才能获得长期投入。Tampa General 的 CEO 在公开演讲中直接把 Hospital Sync 比作 iOS,这是叙事最成功的案例之一。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>在叙事上把 ontology 比作 Operating System(如 Tampa General CEO 的 iOS 类比)</li>
+<li>强调 “user and creator live in harmony”——用户与开发者共同迭代</li>
+<li>从单 use case 演化到 “12+ use cases on one OS”(Tampa 三年扩张)</li>
+<li>用 “wired through Foundry and AIP” 这种”全系统接入”的措辞</li>
+<li>产品定义写 “Operating System” 而不是 “Application” 或 “Module”</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./08-tampa-general-hospital.md">tampa-general-hospital</a>:iOS 类比 + Care Coordination Operating System 命名</li>
+<li>互补 <a href="./01-airbus.md">airbus</a>:Skywise 从 OEM tool 演化到 industry operating platform</li>
+<li>互补 <a href="./06-cleveland-clinic.md">cleveland-clinic</a>:Hospital Operating System 多模块复用同一 ontology</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>仅叫”BI 平台”或”数据分析工具”,高层投入不足</li>
+<li>单 use case 跑通后没有扩展到 12+ use cases,退化为单点项目</li>
+<li>“Operating System” 仅是宣传话术,没有真实 multi-app 复用,反噬品牌</li>
+</ul>
+<hr>
+<h2 id="四、生态与组织"><a href="#四、生态与组织" class="headerlink" title="四、生态与组织"></a>四、生态与组织</h2><h3 id="4-1-Deployed-Engineer-嵌入客户现场"><a href="#4-1-Deployed-Engineer-嵌入客户现场" class="headerlink" title="4.1 Deployed Engineer 嵌入客户现场"></a>4.1 Deployed Engineer 嵌入客户现场</h3><p><strong>适用场景</strong>:医疗、政府、人道主义、重型机械等复杂行业。客户场景不能靠”卖现成方案”解决,需要工程师长期驻场。Cleveland Clinic 的 capacity nurse 不是软件用户,而是 ontology 的共同建模者。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li>Forward Deployed Engineer(FDE)团队从 day 1 嵌入客户现场</li>
+<li>FDE 与客户领域专家(capacity nurse、bed manager、plant operator)共同建模 ontology</li>
+<li>“Solve the hardest problems” 作为 FDE 文化(不是”卖软件许可”)</li>
+<li>长期驻场(多年期)共建数据治理与多边信任</li>
+<li>合同从单次采购升级到多年期协议(Kinder Morgan、WFP、HHS 都是多年期)</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./10-world-food-programme.md">world-food-programme</a>:多年期合作 + field officer + DOTS 自定义</li>
+<li>主要 <a href="./06-cleveland-clinic.md">cleveland-clinic</a>:Rohit Chandra 强调 “sit side-by-side” 共建</li>
+<li>主要 <a href="./14-sompo.md">sompo</a>:2019 合资成立 Palantir Technologies Japan K.K.,股权关系绑定</li>
+<li>互补 <a href="./01-airbus.md">airbus</a>:多年期合作 + Forward Deployed 真实作战</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>派销售而非 FDE 现场,客户业务理解浅</li>
+<li>FDE 项目周期过短(&lt; 6 个月),无法共建 ontology</li>
+<li>FDE 与客户团队没有共同决策机制,沦为外包</li>
+</ul>
+<h3 id="4-2-Global-FDE-IT-服务商伙伴"><a href="#4-2-Global-FDE-IT-服务商伙伴" class="headerlink" title="4.2 Global FDE &#x2F; IT 服务商伙伴"></a>4.2 Global FDE &#x2F; IT 服务商伙伴</h3><p><strong>适用场景</strong>:大型企业、政府、多国运营场景。单靠 Palantir FDE 不够,需要借助大型 IT 服务商(Accenture &#x2F; Fujitsu &#x2F; Deloitte &#x2F; Sompo)的本地能力与生态。Fujitsu 从 2020 合作到 2025 Global FDE Partner,经历了完整的”PMM → 采购 → 深度合作”三段演进。</p>
+<p><strong>关键做法</strong>:</p>
+<ol>
+<li><strong>PMM 阶段</strong>:先与 AI 平台公司合作(销售 &#x2F; 培训 &#x2F; 概念验证)</li>
+<li><strong>采购阶段</strong>:签全球分销协议(IT 服务商在区域内销售 Foundry)</li>
+<li><strong>深度合作阶段</strong>:签 AIP 许可 + Global FDE Partner 协议</li>
+<li><strong>IT 服务商必须先用 ontology 自训 2-3 年</strong>再交付给客户(Fujitsu 自 2020 起内部用,2023 才开始客户交付)</li>
+<li><strong>内部实战转化为客户解决方案套件</strong>(Fujitsu 50+ 运营应用 → 制造业供应链韧性方案)</li>
+</ol>
+<p><strong>来源案例</strong>:</p>
+<ul>
+<li>主要 <a href="./15-fujitsu.md">fujitsu</a>:2020 合作 → 2023 全球分销 → 2025 AIP 许可 + Global FDE Partner 的演进路线</li>
+<li>互补 <a href="./14-sompo.md">sompo</a>:2019 合资模式,日本企业以股权关系绑定 AI 平台公司</li>
+<li>互补 <a href="./13-swiss-re.md">swiss-re</a>:与 Accenture 等大型咨询合作扩展</li>
+</ul>
+<p><strong>失败模式</strong>:</p>
+<ul>
+<li>IT 服务商直接转售而不内化使用,客户实施质量差</li>
+<li>跳过 PMM 阶段直接进深度合作,业务理解不足</li>
+<li>内部实战没有沉淀为可复用套件,客户交付边际成本高</li>
+</ul>
+<hr>
+<h2 id="五、横向对比"><a href="#五、横向对比" class="headerlink" title="五、横向对比"></a>五、横向对比</h2><table>
+<thead>
+<tr>
+<th>范式</th>
+<th>行业适用</th>
+<th>实施难度</th>
+<th>价值密度</th>
+<th>代表案例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. Object → Action → Write-back</td>
+<td>通用</td>
+<td>中</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td><a href="./01-airbus.md">airbus</a> <a href="./06-cleveland-clinic.md">cleveland-clinic</a></td>
+</tr>
+<tr>
+<td>2. 多业务线共用 Ontology</td>
+<td>ToC &#x2F; 多业务集团</td>
+<td>高</td>
+<td>⭐⭐⭐⭐</td>
+<td><a href="./11-axel-springer.md">axel-springer</a> <a href="./13-swiss-re.md">swiss-re</a></td>
+</tr>
+<tr>
+<td>3. Field-first Action</td>
+<td>制造 &#x2F; 医疗 &#x2F; 应急</td>
+<td>中</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td><a href="./03-jacobs.md">jacobs</a> <a href="./08-tampa-general-hospital.md">tampa-general-hospital</a></td>
+</tr>
+<tr>
+<td>4. 外部世界数据纳入本体论</td>
+<td>物理资产 &#x2F; 能源 &#x2F; 农业</td>
+<td>高</td>
+<td>⭐⭐⭐⭐</td>
+<td><a href="./05-sonnedix.md">sonnedix</a> <a href="./04-kinder-morgan.md">kinder-morgan</a></td>
+</tr>
+<tr>
+<td>5. 多部门 virtuous cycle</td>
+<td>制造 &#x2F; 重工</td>
+<td>中</td>
+<td>⭐⭐⭐⭐</td>
+<td><a href="./02-doosan-infracore.md">doosan-infracore</a></td>
+</tr>
+<tr>
+<td>6. 治理分层 + PBAC</td>
+<td>政府 &#x2F; 医疗 &#x2F; 金融</td>
+<td>高</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td><a href="./07-hhs-cdc.md">hhs-cdc</a> <a href="./10-world-food-programme.md">world-food-programme</a></td>
+</tr>
+<tr>
+<td>7. Bidirectional + Common Operating Picture</td>
+<td>供应链 &#x2F; 多组织</td>
+<td>高</td>
+<td>⭐⭐⭐⭐</td>
+<td><a href="./09-concordance.md">concordance</a> <a href="./04-kinder-morgan.md">kinder-morgan</a></td>
+</tr>
+<tr>
+<td>8. Operating System 比喻</td>
+<td>通用</td>
+<td>低</td>
+<td>⭐⭐⭐⭐</td>
+<td><a href="./08-tampa-general-hospital.md">tampa-general-hospital</a> <a href="./01-airbus.md">airbus</a></td>
+</tr>
+<tr>
+<td>9. Deployed Engineer 嵌入</td>
+<td>复杂行业</td>
+<td>高</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td><a href="./10-world-food-programme.md">world-food-programme</a> <a href="./06-cleveland-clinic.md">cleveland-clinic</a></td>
+</tr>
+<tr>
+<td>10. Global FDE &#x2F; IT 服务商</td>
+<td>大企业 &#x2F; 多国</td>
+<td>高</td>
+<td>⭐⭐⭐⭐</td>
+<td><a href="./15-fujitsu.md">fujitsu</a> <a href="./14-sompo.md">sompo</a></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、实施优先级"><a href="#六、实施优先级" class="headerlink" title="六、实施优先级"></a>六、实施优先级</h2><p>落地本体论项目,建议按四阶段递进:</p>
+<h3 id="阶段一-基础设施-Months-1-6"><a href="#阶段一-基础设施-Months-1-6" class="headerlink" title="阶段一:基础设施(Months 1-6)"></a>阶段一:基础设施(Months 1-6)</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[范式 1] Object → Action → Write-back  ← 先跑通核心闭环</span><br><span class="line">[范式 3] Field-first Action             ← Action 嵌进第一线工作流</span><br></pre></td></tr></table></figure>
+
+<p>没有范式 1,后面所有范式都是空中楼阁。范式 3 决定操作员愿不愿意用。</p>
+<h3 id="阶段二-规模扩展-Months-6-18"><a href="#阶段二-规模扩展-Months-6-18" class="headerlink" title="阶段二:规模扩展(Months 6-18)"></a>阶段二:规模扩展(Months 6-18)</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[范式 8] Operating System 比喻          ← 叙事升级到基础设施,争取长期投入</span><br><span class="line">[范式 2] 多业务线共用 Ontology         ← 横向扩展到相邻业务线</span><br><span class="line">[范式 5] 多部门 virtuous cycle         ← 售后/研发/市场数据闭环</span><br></pre></td></tr></table></figure>
+
+<p>阶段二的关键是<strong>扩展</strong>——从单一业务线扩到多业务线,从单部门扩到跨部门。</p>
+<h3 id="阶段三-高级能力-Months-18-36"><a href="#阶段三-高级能力-Months-18-36" class="headerlink" title="阶段三:高级能力(Months 18-36)"></a>阶段三:高级能力(Months 18-36)</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[范式 7] Bidirectional + Common Operating Picture  ← 跨组织数据共享</span><br><span class="line">[范式 6] 治理分层 + PBAC                            ← 受监管行业必补</span><br><span class="line">[范式 4] 外部世界数据纳入本体论                     ← 物理/能源/农业</span><br></pre></td></tr></table></figure>
+
+<p>阶段三解决的是<strong>复杂度</strong>——把外部信号纳入,把合规纳入,把跨组织纳入。</p>
+<h3 id="阶段四-规模化与生态-Months-36"><a href="#阶段四-规模化与生态-Months-36" class="headerlink" title="阶段四:规模化与生态(Months 36+)"></a>阶段四:规模化与生态(Months 36+)</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[范式 9]  Deployed Engineer 嵌入       ← 复杂行业需要 FDE 长期驻场</span><br><span class="line">[范式 10] Global FDE / IT 服务商伙伴   ← 多国 / 多客户场景借 IT 服务商扩展</span><br></pre></td></tr></table></figure>
+
+<p>阶段四是<strong>杠杆化</strong>——让一家公司无法单独交付的能力,通过 FDE 和 IT 服务商生态复制出去。</p>
+<hr>
+<h2 id="七、组合范式-如何用是关键"><a href="#七、组合范式-如何用是关键" class="headerlink" title="七、组合范式:如何用是关键"></a>七、组合范式:如何用是关键</h2><p>范式不是清单,是积木。三个常见的组合:</p>
+<ul>
+<li><strong>闭环组合</strong>:范式 1 + 3 + 5。Airbus、Tampa General、Doosan 都用了这三层,形成”Object 可执行 + 第一线能用 + 跨部门闭环”。</li>
+<li><strong>多边组合</strong>:范式 1 + 2 + 7。Concordance、WFP、Sompo 用这三层,把跨业务线和跨组织的共用 ontology 搭起来。</li>
+<li><strong>合规组合</strong>:范式 1 + 6 + 9。HHS-CDC、Cleveland Clinic、World Food Programme 用这三层,把治理和长期驻场嵌入执行。</li>
+</ul>
+<p>判断一个 ontology 项目是否成熟的简单标准:<strong>用了多少条范式、用了哪几层</strong>。一个成熟项目通常覆盖四层中的前三层,跨”执行核心 + 数据接入 + 协同”三段。范式 9 和 10 是生态放大器,通常在第三、四阶段才进入。</p>
+<p>最后一条提醒:<strong>范式的价值在于组合,而非堆砌</strong>。15 个案例里没有一家用了全部 10 条,但每家都在自己的核心业务域里把 3-6 条打透。选哪几条取决于你的业务最痛的是”执行”(范式 1-3)、”合规”(范式 6)、还是”协同”(范式 2、7),再围绕这一两条主线把相邻范式逐步加上。</p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>15 个案例的完整笔记位于本文 <a href="./01-airbus.md">01-airbus</a> 至 <a href="./15-fujitsu.md">15-fujitsu</a>。本手册是横向范式提炼,案例细节见对应文件。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI%E8%90%BD%E5%9C%B0/" rel="tag">AI落地</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Foundry/" rel="tag">Foundry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Ontology/" rel="tag">Ontology</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Palantir/" rel="tag">Palantir</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E5%8C%96%E8%BD%AC%E5%9E%8B/" rel="tag">数字化转型</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E6%9E%B6%E6%9E%84/" rel="tag">数据架构</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/" rel="tag">案例研究</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/07/2026/2026-10-08-palantir-jacobs/">Palantir Jacobs 案例</a><a class="next" href="/2026/10/07/2026/2026-10-08-palantir-ringier/">Ringier 新闻编辑室</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

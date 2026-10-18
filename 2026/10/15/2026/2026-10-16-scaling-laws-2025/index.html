@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>推理算力成 Scaling 新维度 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">推理算力成 Scaling 新维度</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">推理算力成 Scaling 新维度</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 12</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>如果说 2020 年的 Kaplan Scaling 打开了”训练算力驱动性能”的大门，2022 年 Chinchilla 重新平衡了参数与数据，那么 2024-2025 年真正打开的是另一扇门：<strong>Test-Time Scaling（推理时算力扩展）</strong>。OpenAI o1、DeepSeek-R1、Snell 等人的论文几乎在同一时间把”推理算力”推上了与”训练算力”等量齐观的地位。本文按时间线 + 公式 + 工业案例三层结构，把这场演进的核心理念、策略矩阵、算力分配表与未来趋势一次性梳理清楚。</p>
+<h2 id="一、时间坐标：从训练到推理"><a href="#一、时间坐标：从训练到推理" class="headerlink" title="一、时间坐标：从训练到推理"></a>一、时间坐标：从训练到推理</h2><h3 id="1-1-关键节点"><a href="#1-1-关键节点" class="headerlink" title="1.1 关键节点"></a>1.1 关键节点</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2020     Kaplan 2020《Scaling Laws for Neural LMs》</span><br><span class="line">2022     Chinchilla（20 tokens / param）</span><br><span class="line">2023     DeepSeek / Qwen 持续训练侧 Scaling</span><br><span class="line">2024-09  OpenAI o1 发布 ⭐ Test-Time Scaling 显式提出</span><br><span class="line">2024-10  Snell 等人《Scaling LLM Test-Time Compute》⭐⭐</span><br><span class="line">2024-12  o3 / DeepSeek-R1 强化</span><br><span class="line">2025-01  DeepSeek-R1 完整开源</span><br><span class="line">2025-03  Scaling Law 2.0 涌现</span><br><span class="line">2025-06  推理时算力 vs 训练时算力 平衡</span><br><span class="line">2025-08  Test-Time Training (TTT) 探索</span><br></pre></td></tr></table></figure>
+
+<p>这张时间线的最大变化在 2024-09：<strong>o1 把”推理”变成了一种可被显式扩展的资源</strong>。在它之前，Scaling Law 的主战场是预训练；在它之后，推理时的算力投入也被纳入了”性能—算力”曲线。</p>
+<h3 id="1-2-范式迁移"><a href="#1-2-范式迁移" class="headerlink" title="1.2 范式迁移"></a>1.2 范式迁移</h3><p><strong>传统 Scaling Law（2020-2022）</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Training Compute ↑</span><br><span class="line">   ↓</span><br><span class="line">模型参数 ↑</span><br><span class="line">   ↓</span><br><span class="line">性能 ↑</span><br></pre></td></tr></table></figure>
+
+<p><strong>Test-Time Scaling Law（2024-2025）</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Test-Time Compute ↑</span><br><span class="line">   ↓</span><br><span class="line">推理质量 ↑</span><br><span class="line">   ↓</span><br><span class="line">性能 ↑</span><br></pre></td></tr></table></figure>
+
+<p>两者并不互斥——它们是同一根曲线的两条腿。</p>
+<h2 id="二、训练算力-vs-推理算力"><a href="#二、训练算力-vs-推理算力" class="headerlink" title="二、训练算力 vs 推理算力"></a>二、训练算力 vs 推理算力</h2><h3 id="2-1-总算力分解"><a href="#2-1-总算力分解" class="headerlink" title="2.1 总算力分解"></a>2.1 总算力分解</h3><p>$$C_{\text{total}} &#x3D; C_{\text{train}} + N_{\text{queries}} \times C_{\text{inference}}$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>典型值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$C_{\text{total}}$</td>
+<td>总算力</td>
+<td>10²² - 10²⁵ FLOPs</td>
+</tr>
+<tr>
+<td>$C_{\text{train}}$</td>
+<td>训练算力</td>
+<td>10²² - 10²⁴</td>
+</tr>
+<tr>
+<td>$N_{\text{queries}}$</td>
+<td>推理查询数</td>
+<td>用户数 × 时间</td>
+</tr>
+<tr>
+<td>$C_{\text{inference}}$</td>
+<td>单次推理算力</td>
+<td>10¹⁸ - 10²²</td>
+</tr>
+</tbody></table>
+<p>注意 $N_{\text{queries}}$ 是”乘数”——<strong>只要用户量足够大，推理侧的累积算力就会反超训练侧</strong>。这也是为什么 2024 年之后所有头部团队都开始认真规划”推理预算”。</p>
+<h3 id="2-2-关键洞察"><a href="#2-2-关键洞察" class="headerlink" title="2.2 关键洞察"></a>2.2 关键洞察</h3><blockquote>
+<p><strong>算力 &#x3D; 训练算力 + 推理算力</strong><br>两者都能扩展性能——但方式不同。</p>
+</blockquote>
+<p><strong>未来算力分配</strong>：</p>
+<blockquote>
+<p><strong>未来算力分配 &#x3D; 训练（一次性）+ 推理（持续）</strong><br>推理算力可能超过训练算力。</p>
+</blockquote>
+<h2 id="三、Test-Time-Scaling-三大策略"><a href="#三、Test-Time-Scaling-三大策略" class="headerlink" title="三、Test-Time Scaling 三大策略"></a>三、Test-Time Scaling 三大策略</h2><h3 id="3-1-策略-1-·-Best-of-N-采样"><a href="#3-1-策略-1-·-Best-of-N-采样" class="headerlink" title="3.1 策略 1 · Best-of-N 采样"></a>3.1 策略 1 · Best-of-N 采样</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N 个候选回答 → PRM 评分 → 选最高分</span><br><span class="line"></span><br><span class="line">N=1:     单次生成</span><br><span class="line">N=16:    16 倍推理算力</span><br><span class="line">N=1000:  1000 倍推理算力</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>N</th>
+<th>AIME 2024</th>
+<th>SWE-Bench</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>13%</td>
+<td>4%</td>
+</tr>
+<tr>
+<td>16</td>
+<td>35%</td>
+<td>12%</td>
+</tr>
+<tr>
+<td>100</td>
+<td>50%</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>75%</td>
+<td>50%</td>
+</tr>
+</tbody></table>
+<p>这是 OpenAI o1 的核心机制之一：<strong>大量 Best-of-N + 过程奖励模型（PRM）评分</strong>。实现最简单，也最容易并行，但边际收益会迅速递减。</p>
+<h3 id="3-2-策略-2-·-树搜索（Tree-Search）"><a href="#3-2-策略-2-·-树搜索（Tree-Search）" class="headerlink" title="3.2 策略 2 · 树搜索（Tree Search）"></a>3.2 策略 2 · 树搜索（Tree Search）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Step 1: 生成 8 个候选第一步</span><br><span class="line">Step 2: PRM 评分，选 top-3</span><br><span class="line">Step 3: 对每个 top-3 生成第二步</span><br><span class="line">Step 4: PRM 评分，保留 top-3</span><br><span class="line">Step 5: 继续直到完成</span><br></pre></td></tr></table></figure>
+
+<p><strong>MCTS + PRM</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">蒙特卡洛树搜索：</span><br><span class="line">  - 选择：UCB 公式</span><br><span class="line">  - 扩展：生成新节点</span><br><span class="line">  - 模拟：PRM 评分</span><br><span class="line">  - 回溯：更新 Q 值</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>AIME 2024</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best-of-N (N&#x3D;100)</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>树搜索 + PRM</td>
+<td><strong>65%</strong></td>
+</tr>
+</tbody></table>
+<p>树搜索是 Best-of-N 的”立体化”——把搜索空间从平面铺开变成层级展开。代价是实现复杂度和计算量都明显上升。</p>
+<h3 id="3-3-策略-3-·-迭代修正"><a href="#3-3-策略-3-·-迭代修正" class="headerlink" title="3.3 策略 3 · 迭代修正"></a>3.3 策略 3 · 迭代修正</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Step 1: 生成初始答案</span><br><span class="line">Step 2: 自我反思</span><br><span class="line">Step 3: 改进答案</span><br><span class="line">Step 4: 循环直到满意</span><br></pre></td></tr></table></figure>
+
+<p><strong>Reflexion 范式</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">reflexion</span>(<span class="params">question, max_iter=<span class="number">3</span></span>):</span><br><span class="line">    response = llm(question)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(max_iter):</span><br><span class="line">        <span class="comment"># 自我批评</span></span><br><span class="line">        critique = llm(<span class="string">f&quot;批评：<span class="subst">&#123;response&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 改进</span></span><br><span class="line">        response = llm(<span class="string">f&quot;基于批评改进：<span class="subst">&#123;critique&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+
+<p><strong>Self-Refine 效果</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>1 次</th>
+<th>3 次</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数学</td>
+<td>35%</td>
+<td><strong>55%</strong></td>
+</tr>
+<tr>
+<td>代码</td>
+<td>30%</td>
+<td><strong>45%</strong></td>
+</tr>
+<tr>
+<td>写作</td>
+<td>60%</td>
+<td><strong>75%</strong></td>
+</tr>
+</tbody></table>
+<p>迭代修正的优势是<strong>持续改进</strong>——每次反思都给答案加一层”自检”，适合答案可以渐进优化的场景。</p>
+<h2 id="四、Snell-2024-论文详解"><a href="#四、Snell-2024-论文详解" class="headerlink" title="四、Snell 2024 论文详解"></a>四、Snell 2024 论文详解</h2><h3 id="4-1-论文核心"><a href="#4-1-论文核心" class="headerlink" title="4.1 论文核心"></a>4.1 论文核心</h3><p><strong>Snell, Kumar, Zhou 等（Google DeepMind）</strong>：</p>
+<p>《Scaling LLM Test-Time Compute——Can We Predict and Improve Performance？》</p>
+<p><strong>核心发现</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Test-Time Compute Scaling 的两个阶段：</span><br><span class="line"></span><br><span class="line">阶段 1（low compute）：</span><br><span class="line">  - PRM 主导</span><br><span class="line">  - 提升快，回报高</span><br><span class="line"></span><br><span class="line">阶段 2（high compute）：</span><br><span class="line">  - 树搜索 + revision 主导</span><br><span class="line">  - 提升慢，但持续</span><br></pre></td></tr></table></figure>
+
+<p>低算力区段靠 Best-of-N + PRM 拿收益，高算力区段必须靠树搜索 + 迭代修正才能继续往上推。这是整篇论文最值得记住的一句话。</p>
+<h3 id="4-2-公式-2-·-Test-Time-Compute-优化"><a href="#4-2-公式-2-·-Test-Time-Compute-优化" class="headerlink" title="4.2 公式 2 · Test-Time Compute 优化"></a>4.2 公式 2 · Test-Time Compute 优化</h3><p>$$\text{Performance} &#x3D; f(C_{\text{inference}})$$</p>
+<p><strong>两个区域</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>Compute 范围</th>
+<th>最优策略</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1-100</td>
+<td>Best-of-N + PRM</td>
+</tr>
+<tr>
+<td>100-10000</td>
+<td>树搜索</td>
+</tr>
+<tr>
+<td>10000+</td>
+<td>多方法集成</td>
+</tr>
+</tbody></table>
+<p><strong>关键</strong>：</p>
+<blockquote>
+<p><strong>没有”一种方法适用所有”——按算力预算选最佳策略</strong></p>
+</blockquote>
+<h3 id="4-3-公式-3-·-Performance-Compute-曲线"><a href="#4-3-公式-3-·-Performance-Compute-曲线" class="headerlink" title="4.3 公式 3 · Performance-Compute 曲线"></a>4.3 公式 3 · Performance-Compute 曲线</h3><p>$$\text{Acc} &#x3D; 1 - \exp(- \alpha \cdot C_{\text{inference}}^\beta)$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\alpha$</td>
+<td>任务难度系数</td>
+</tr>
+<tr>
+<td>$\beta$</td>
+<td>边际收益（&lt; 1）</td>
+</tr>
+<tr>
+<td>$C_{\text{inference}}$</td>
+<td>推理算力</td>
+</tr>
+</tbody></table>
+<p><strong>关键</strong>：$\beta &lt; 1$——<strong>算力翻倍性能提升不到翻倍</strong>（边际递减）。这意味着 Test-Time Scaling 不是”无脑堆算力”，而是存在天花板。</p>
+<h2 id="五、实际效果：o1-vs-GPT-4o"><a href="#五、实际效果：o1-vs-GPT-4o" class="headerlink" title="五、实际效果：o1 vs GPT-4o"></a>五、实际效果：o1 vs GPT-4o</h2><h3 id="5-1-算力对比"><a href="#5-1-算力对比" class="headerlink" title="5.1 算力对比"></a>5.1 算力对比</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>训练算力</th>
+<th>推理算力</th>
+<th>AIME 2024</th>
+<th>SWE-Bench</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPT-4o</td>
+<td>10²⁵</td>
+<td>10¹⁸</td>
+<td>13%</td>
+<td>4%</td>
+</tr>
+<tr>
+<td><strong>o1</strong></td>
+<td>10²⁵</td>
+<td><strong>10²⁰</strong> ⭐</td>
+<td><strong>70%+</strong></td>
+<td><strong>70%+</strong></td>
+</tr>
+</tbody></table>
+<p><strong>关键</strong>：</p>
+<blockquote>
+<p><strong>o1 训练算力 ≈ GPT-4o</strong>，但推理算力高 <strong>100x</strong><br>→ 性能提升 <strong>5-15x</strong></p>
+</blockquote>
+<h3 id="5-2-公式-4-·-推理-vs-训练算力的等效关系"><a href="#5-2-公式-4-·-推理-vs-训练算力的等效关系" class="headerlink" title="5.2 公式 4 · 推理 vs 训练算力的等效关系"></a>5.2 公式 4 · 推理 vs 训练算力的等效关系</h3><p>$$\text{Equivalent Compute} &#x3D; C_{\text{train}} + \eta \cdot C_{\text{inference}}$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$\eta$</td>
+<td>推理效率折扣（典型 0.1-0.5）</td>
+</tr>
+</tbody></table>
+<p><strong>含义</strong>：</p>
+<blockquote>
+<p>100x 推理算力 ≈ 10-50x 训练算力的”等效性能提升”<br>（但推理不需要重新训练，便宜很多）</p>
+</blockquote>
+<p><strong>意义</strong>：</p>
+<blockquote>
+<p><strong>不用训练更大模型，只用推理更多算力</strong>——性价比更高</p>
+</blockquote>
+<p>这正是 2024-2025 年各团队重新评估”是否还要做下一代超大预训练模型”的根本原因——推理侧投入的 ROI 更高、更可控、更可调度。</p>
+<h2 id="六、Test-Time-Scaling-四类型"><a href="#六、Test-Time-Scaling-四类型" class="headerlink" title="六、Test-Time Scaling 四类型"></a>六、Test-Time Scaling 四类型</h2><h3 id="6-1-类型-1-·-Parallel-Scaling（并行）"><a href="#6-1-类型-1-·-Parallel-Scaling（并行）" class="headerlink" title="6.1 类型 1 · Parallel Scaling（并行）"></a>6.1 类型 1 · Parallel Scaling（并行）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">N 个独立采样</span><br><span class="line">  ↓</span><br><span class="line">聚合（投票 / Best-of-N）</span><br><span class="line">  ↓</span><br><span class="line">最终答案</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>优势</strong>：容易实现、适合”独立可验证”任务</li>
+<li><strong>局限</strong>：边际收益递减、大量冗余计算</li>
+</ul>
+<h3 id="6-2-类型-2-·-Sequential-Scaling（串行）"><a href="#6-2-类型-2-·-Sequential-Scaling（串行）" class="headerlink" title="6.2 类型 2 · Sequential Scaling（串行）"></a>6.2 类型 2 · Sequential Scaling（串行）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Step 1: 生成</span><br><span class="line">Step 2: 反思</span><br><span class="line">Step 3: 改进</span><br><span class="line">Step 4: 再反思</span><br><span class="line">...</span><br><span class="line">Step N: 最终答案</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>优势</strong>：持续改进、适合”迭代”任务</li>
+<li><strong>局限</strong>：慢（串行延迟）、可能陷入循环</li>
+</ul>
+<h3 id="6-3-类型-3-·-Tree-Search（树搜索）"><a href="#6-3-类型-3-·-Tree-Search（树搜索）" class="headerlink" title="6.3 类型 3 · Tree Search（树搜索）"></a>6.3 类型 3 · Tree Search（树搜索）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">并行 + 串行 混合</span><br><span class="line">  ↓</span><br><span class="line">树结构</span><br><span class="line">  ↓</span><br><span class="line">剪枝 + 搜索</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>优势</strong>：全局最优、避免局部最优</li>
+<li><strong>局限</strong>：实现复杂、计算量大</li>
+</ul>
+<h3 id="6-4-类型-4-·-Test-Time-Training（TTT）"><a href="#6-4-类型-4-·-Test-Time-Training（TTT）" class="headerlink" title="6.4 类型 4 · Test-Time Training（TTT）"></a>6.4 类型 4 · Test-Time Training（TTT）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">推理时更新模型权重</span><br><span class="line">  ↓</span><br><span class="line">用当前任务数据微调</span><br><span class="line">  ↓</span><br><span class="line">用更新后的模型推理</span><br></pre></td></tr></table></figure>
+
+<p>2024-2025 新兴方向——Meta &#x2F; Stanford 探索。这是把”训练”和”推理”边界彻底打破的一种尝试：每次推理时都在现场做一次小规模适配。</p>
+<h2 id="七、算力最优分配"><a href="#七、算力最优分配" class="headerlink" title="七、算力最优分配"></a>七、算力最优分配</h2><h3 id="7-1-公式-5-·-算力分配优化"><a href="#7-1-公式-5-·-算力分配优化" class="headerlink" title="7.1 公式 5 · 算力分配优化"></a>7.1 公式 5 · 算力分配优化</h3><p>$$\max_{C_t, C_i} \text{Performance} \quad \text{s.t.} \quad C_t + C_i &#x3D; C_{\text{budget}}$$</p>
+<p><strong>最优分配</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>任务类型</th>
+<th>$C_t$（训练）</th>
+<th>$C_i$（推理）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>创意写作</td>
+<td>80%</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>数学推理</td>
+<td>50%</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>客户服务</td>
+<td>30%</td>
+<td>70%</td>
+</tr>
+<tr>
+<td>实时翻译</td>
+<td>20%</td>
+<td>80%</td>
+</tr>
+</tbody></table>
+<p><strong>关键</strong>：</p>
+<blockquote>
+<p><strong>不同任务的最优分配不同</strong>——不是”训练越大越好”或”推理越多越好”</p>
+</blockquote>
+<p>创意写作重在风格多样性，更依赖训练侧；数学推理需要长链思考，训练与推理各占一半；客服和翻译的答案相对标准化，推理侧的反复校验收益更高。</p>
+<h3 id="7-2-公式-6-·-何时用-Test-Time-Scaling"><a href="#7-2-公式-6-·-何时用-Test-Time-Scaling" class="headerlink" title="7.2 公式 6 · 何时用 Test-Time Scaling"></a>7.2 公式 6 · 何时用 Test-Time Scaling</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">使用条件（任一满足）：</span><br><span class="line">  - 任务可验证（有 PRM）</span><br><span class="line">  - 答案短（数学题）</span><br><span class="line">  - 任务难度高</span><br><span class="line">  - 推理预算充足</span><br><span class="line"></span><br><span class="line">不使用条件：</span><br><span class="line">  - 任务无 PRM</span><br><span class="line">  - 答案长（文章）</span><br><span class="line">  - 实时要求（&lt; 100ms）</span><br></pre></td></tr></table></figure>
+
+<p>如果你的任务<strong>既无法验证、又要长答案、还要实时返回</strong>，Test-Time Scaling 几乎注定跑不通。</p>
+<h2 id="八、工业实践"><a href="#八、工业实践" class="headerlink" title="八、工业实践"></a>八、工业实践</h2><h3 id="8-1-DeepSeek-R1-案例"><a href="#8-1-DeepSeek-R1-案例" class="headerlink" title="8.1 DeepSeek-R1 案例"></a>8.1 DeepSeek-R1 案例</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">训练算力：~5M H800-hour ≈ $5-10M</span><br><span class="line">推理算力：每用户 1000-10000 token/s</span><br><span class="line">  × 数亿用户</span><br><span class="line">  × 365 天</span><br><span class="line">  = 比训练算力高 10-100x</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键</strong>：</p>
+<blockquote>
+<p><strong>R1 的成功 &#x3D; 高效训练 + 大规模推理算力</strong><br>训练不一定要重——推理时的算力更重要</p>
+</blockquote>
+<p>DeepSeek-R1 用 GRPO + 蒸馏把”训练成本”压到几百万美元级，把成本压力转移到了推理侧的工程优化上。</p>
+<h3 id="8-2-OpenAI-o1-定价"><a href="#8-2-OpenAI-o1-定价" class="headerlink" title="8.2 OpenAI o1 定价"></a>8.2 OpenAI o1 定价</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GPT-4o：        $5  / 1M input tokens</span><br><span class="line">o1-preview：    $15 / 1M input tokens</span><br><span class="line">o1：            $60 / 1M output tokens</span><br><span class="line"></span><br><span class="line">o1 价格高 12x = 因为推理算力高</span><br></pre></td></tr></table></figure>
+
+<p><strong>商业模式</strong>：</p>
+<blockquote>
+<p>推理算力收费 → 用户为”思考”付费<br>这是 LLM 行业的新范式</p>
+</blockquote>
+<p>o1 是行业里第一个把”思考本身”明码标价的模型——<strong>用户为每一步推理付钱</strong>，这一定价模型后来被 Claude、Perplexity、Qwen 等陆续跟进。</p>
+<h3 id="8-3-案例：Perplexity-Deep-Research"><a href="#8-3-案例：Perplexity-Deep-Research" class="headerlink" title="8.3 案例：Perplexity Deep Research"></a>8.3 案例：Perplexity Deep Research</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">用户问：研究 XXX 主题</span><br><span class="line">  ↓</span><br><span class="line">Perplexity 后台跑 10 分钟</span><br><span class="line">  ↓</span><br><span class="line">调用 50+ 次 LLM</span><br><span class="line">  ↓</span><br><span class="line">输出完整研究报告</span><br></pre></td></tr></table></figure>
+
+<p><strong>成本</strong>：</p>
+<ul>
+<li>每次查询 $0.5-$2</li>
+<li>用户付费 $20&#x2F;月</li>
+<li><strong>靠”推理算力”变现</strong></li>
+</ul>
+<p>Perplexity 的 Deep Research 是另一个典型范式：<strong>把高单价、低频次的研究任务做成订阅产品</strong>，本质上是用推理算力替代人工研究员的工时。</p>
+<h2 id="九、训练-vs-推理算力演进"><a href="#九、训练-vs-推理算力演进" class="headerlink" title="九、训练 vs 推理算力演进"></a>九、训练 vs 推理算力演进</h2><h3 id="9-1-2020-2025-Scaling-路线图"><a href="#9-1-2020-2025-Scaling-路线图" class="headerlink" title="9.1 2020-2025 Scaling 路线图"></a>9.1 2020-2025 Scaling 路线图</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2020  Kaplan:    训练算力 10x 提升 → 模型 10x 大</span><br><span class="line">2022  Chinchilla: 重新平衡数据</span><br><span class="line">2023  GPT-4:     训练算力到顶</span><br><span class="line">2024  o1:        推理算力开始规模化 ⭐</span><br><span class="line">2025  R1:        开源推理模型</span><br><span class="line">2026+            训练 + 推理 联合优化</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-2-公式-7-·-双算力扩展"><a href="#9-2-公式-7-·-双算力扩展" class="headerlink" title="9.2 公式 7 · 双算力扩展"></a>9.2 公式 7 · 双算力扩展</h3><p>$$\text{Performance} &#x3D; f(C_t^\alpha \cdot C_i^\beta)$$</p>
+<ul>
+<li>$\alpha &#x3D; 0.3$（训练算力影响）</li>
+<li>$\beta &#x3D; 0.7$（推理算力影响）</li>
+<li>训练算力<strong>更稀缺</strong>（一次性）</li>
+<li>推理算力<strong>可重复使用</strong>（用户多）</li>
+</ul>
+<p><strong>未来</strong>：</p>
+<blockquote>
+<p>推理算力的总贡献 &gt; 训练算力<br>“Inference Compute” &gt; “Training Compute”</p>
+</blockquote>
+<h2 id="十、未来趋势"><a href="#十、未来趋势" class="headerlink" title="十、未来趋势"></a>十、未来趋势</h2><h3 id="10-1-趋势-1-·-推理时训练（TTT）"><a href="#10-1-趋势-1-·-推理时训练（TTT）" class="headerlink" title="10.1 趋势 1 · 推理时训练（TTT）"></a>10.1 趋势 1 · 推理时训练（TTT）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">未来：</span><br><span class="line">  - 推理时用当前数据微调模型</span><br><span class="line">  - 适应特定任务</span><br><span class="line">  - Meta 2024 TTT 模型</span><br></pre></td></tr></table></figure>
+
+<p>TTT 把”训练”嵌入到”推理”内部，可以看作 Test-Time Scaling 的极端形态。</p>
+<h3 id="10-2-趋势-2-·-自适应算力"><a href="#10-2-趋势-2-·-自适应算力" class="headerlink" title="10.2 趋势 2 · 自适应算力"></a>10.2 趋势 2 · 自适应算力</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">未来：</span><br><span class="line">  - 简单问题用少算力</span><br><span class="line">  - 复杂问题用多算力</span><br><span class="line">  - 动态调整</span><br></pre></td></tr></table></figure>
+
+<p>路由式推理（router model）已经在工业界普及，GPT-5 &#x2F; Claude &#x2F; Gemini 都内置了”轻模型 &#x2F; 重模型”自动分流。</p>
+<h3 id="10-3-趋势-3-·-分布式推理"><a href="#10-3-趋势-3-·-分布式推理" class="headerlink" title="10.3 趋势 3 · 分布式推理"></a>10.3 趋势 3 · 分布式推理</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">未来：</span><br><span class="line">  - 多个小模型协作</span><br><span class="line">  - 任务分解</span><br><span class="line">  - 算力弹性</span><br></pre></td></tr></table></figure>
+
+<p>MoE + 路由 + 分布式集群，让”算力”从单一 GPU 扩展到整个数据中心级别。</p>
+<h2 id="十一、关键洞察"><a href="#十一、关键洞察" class="headerlink" title="十一、关键洞察"></a>十一、关键洞察</h2><ol>
+<li><strong>2024 是 Test-Time Scaling 元年</strong>（o1 发布）</li>
+<li><strong>推理算力 &#x3D; 新的 Scaling 维度</strong>——与训练算力同等重要</li>
+<li><strong>Snell 论文证明</strong>——Test-Time Scaling 可预测</li>
+<li><strong>DeepSeek-R1 证明开源可追平闭源</strong>——GRPO + 蒸馏</li>
+<li><strong>未来 &#x3D; 训练算力 + 推理算力 联合优化</strong></li>
+</ol>
+<p>落到工程实践上：<strong>别再把预算全压在训练侧</strong>——给推理侧留出独立预算、设计可调度的算力路由、把 Test-Time Scaling 当成产品功能而不是研究 demo，是接下来两年模型团队必须回答的命题。</p>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>⚠️ 本文涉及的具体模型名称（OpenAI o1 &#x2F; o1-preview &#x2F; GPT-4o、DeepSeek-R1、Snell 等论文署名模型）以及对应版本、价格、性能数据，<strong>均以发布时（2024-2025）的公开资料为准</strong>。读者在引用时，建议自行核验 OpenAI、DeepMind、DeepSeek 官方在 2026 年 10 月之后的最新版本说明——这些模型的产品形态、定价、可用 API 都可能已经迭代多次。</p>
+<h2 id="必读论文"><a href="#必读论文" class="headerlink" title="必读论文"></a>必读论文</h2><h3 id="核心-3-篇"><a href="#核心-3-篇" class="headerlink" title="核心 3 篇"></a>核心 3 篇</h3><ol>
+<li><strong>Snell et al. 2024《Scaling LLM Test-Time Compute》⭐⭐⭐</strong></li>
+<li><strong>OpenAI 2024-09《o1 &#x2F; Learning to Reason》⭐⭐⭐</strong></li>
+<li><strong>DeepSeek 2025《R1》⭐⭐⭐</strong></li>
+</ol>
+<h3 id="进阶-2-篇"><a href="#进阶-2-篇" class="headerlink" title="进阶 2 篇"></a>进阶 2 篇</h3><ol start="4">
+<li><strong>Lightman et al. 2023《Let’s Verify Step by Step》</strong></li>
+<li><strong>Kaplan et al. 2020《Scaling Laws》</strong></li>
+</ol>
+<h3 id="工业-1-篇"><a href="#工业-1-篇" class="headerlink" title="工业 1 篇"></a>工业 1 篇</h3><ol start="6">
+<li><strong>Hoffmann et al. 2022《Chinchilla》</strong></li>
+</ol>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeepSeek-R1/" rel="tag">DeepSeek-R1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RL-Scaling/" rel="tag">RL Scaling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scaling-Laws/" rel="tag">Scaling Laws</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Snell/" rel="tag">Snell</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Test-Time-Compute/" rel="tag">Test-Time Compute</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/o1/" rel="tag">o1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8E%A8%E7%90%86%E7%AE%97%E5%8A%9B/" rel="tag">推理算力</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/15/2026/2026-10-16-o1-r1-reasoning/">o1 与 R1：推理时算力改写 LLM</a><a class="next" href="/2026/10/12/2026/2026-10-13-agi-assistant-papers/">10 篇 AGI 助手论文速读</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

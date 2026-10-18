@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>2025 Agent 演进全景 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">2025 Agent 演进全景</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">2025 Agent 演进全景</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.8k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 7</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><h2 id="一、时间坐标"><a href="#一、时间坐标" class="headerlink" title="一、时间坐标"></a>一、时间坐标</h2><p>回顾 2024 年下半年到 2026 年初，Agent 领域几乎每两个月就有一个关键节点冒头：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">2024-09  Anthropic《Building Effective Agents》 ⭐</span><br><span class="line">2024-10  LangChain LangGraph 1.0</span><br><span class="line">2024-11  Anthropic MCP Spec</span><br><span class="line">2024-12  Manus AI 爆火（Context Engineering 实践）</span><br><span class="line">2025-02  OpenAI DeepResearch 发布</span><br><span class="line">2025-04  Google A2A 协议</span><br><span class="line">2025-05  LangGraph + A2A 集成</span><br><span class="line">2025-08  Claude 4 Opus（更安全）</span><br><span class="line">2025-09  OpenAI o3（推理 + Agent）</span><br><span class="line">2025-12  AI Agent Marketplace 商业化</span><br><span class="line">2026-Q1 预计 Agent 互联网雏形</span><br></pre></td></tr></table></figure>
+
+<p>两年时间，Agent 从「LLM + 几个工具」演化为「协议 + 多智能体 + 工程方法论」的完整栈。</p>
+<hr>
+<h2 id="二、Agent-范式演进"><a href="#二、Agent-范式演进" class="headerlink" title="二、Agent 范式演进"></a>二、Agent 范式演进</h2><h3 id="2-1-能力栈公式"><a href="#2-1-能力栈公式" class="headerlink" title="2.1 能力栈公式"></a>2.1 能力栈公式</h3><p>把 Agent 拆开看，本质是这五件事的叠加：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Agent = LLM + Memory + Planning + Tools + Context Engineering</span><br></pre></td></tr></table></figure>
+
+<p>关键洞察不是公式本身，而是 <strong>Context Engineering</strong> 这一项——它把 Agent 从「写好 prompt 就完事」拉到了系统工程的层面。</p>
+<h3 id="2-2-Agent-三大时代"><a href="#2-2-Agent-三大时代" class="headerlink" title="2.2 Agent 三大时代"></a>2.2 Agent 三大时代</h3><table>
+<thead>
+<tr>
+<th>时代</th>
+<th>特征</th>
+<th>代表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Agent 1.0（2023-2024）</td>
+<td>Function Calling + ReAct</td>
+<td>AutoGen, LangGraph</td>
+</tr>
+<tr>
+<td>Agent 2.0（2024-2025）</td>
+<td>Context Engineering + MCP</td>
+<td>Manus, Cursor, Claude Code</td>
+</tr>
+<tr>
+<td>Agent 3.0（2025+）</td>
+<td>Multi-Agent 协作 + A2A</td>
+<td>Google A2A, OpenAI Swarm</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>三大时代的真正分水岭是「能不能持续管理上下文」，而不是模型本身变大。</p>
+</blockquote>
+<hr>
+<h2 id="三、四大新范式整合"><a href="#三、四大新范式整合" class="headerlink" title="三、四大新范式整合"></a>三、四大新范式整合</h2><h3 id="3-1-Context-Engineering（上下文工程）"><a href="#3-1-Context-Engineering（上下文工程）" class="headerlink" title="3.1 Context Engineering（上下文工程）"></a>3.1 Context Engineering（上下文工程）</h3><p>Anthropic 2024-09 的核心主张可以归纳为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">旧的思路：</span><br><span class="line">  1. 写好 prompt</span><br><span class="line">  2. 一次性塞给 LLM</span><br><span class="line">  3. 期待好结果</span><br><span class="line"></span><br><span class="line">新的思路：</span><br><span class="line">  1. 系统化设计 context</span><br><span class="line">  2. 4 大来源：system / tools / docs / history</span><br><span class="line">  3. Agent loop 中持续管理</span><br><span class="line">  4. 动态优化</span><br></pre></td></tr></table></figure>
+
+<p>需要警惕的是 <strong>Lost in the Middle</strong> 现象——LLM 对中间段注意力最弱，关键信息必须放在首尾。</p>
+<p>四大策略对应四种工程动作：</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>实施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Write</td>
+<td>主动写入信息到 context</td>
+</tr>
+<tr>
+<td>Select</td>
+<td>检索 + Rerank + 摘要</td>
+</tr>
+<tr>
+<td>Compress</td>
+<td>摘要 + 截断 + 表格化</td>
+</tr>
+<tr>
+<td>Isolate</td>
+<td>多 Agent 分工隔离</td>
+</tr>
+</tbody></table>
+<p>详见配套讲稿 <code>&lt;vault&gt;/37-Agent-MCP/02-Context-Engineering.md</code>。</p>
+<h3 id="3-2-A2A-协议（Agent-协作）"><a href="#3-2-A2A-协议（Agent-协作）" class="headerlink" title="3.2 A2A 协议（Agent 协作）"></a>3.2 A2A 协议（Agent 协作）</h3><p>Google 在 2025-04 发布的 A2A 与 Anthropic 的 MCP 形成天然互补：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MCP（Anthropic）管：Agent → Tool</span><br><span class="line">A2A（Google）   管：Agent → Agent</span><br></pre></td></tr></table></figure>
+
+<p>横向打通靠 A2A，纵向调用工具靠 MCP，两者共同构成 Agent 时代的双协议底座。</p>
+<p>核心组件：</p>
+<ul>
+<li><strong>Agent Card</strong>：代理名片（类似 OAuth 的发现机制）</li>
+<li><strong>JSON-RPC 2.0</strong>：标准化通信协议</li>
+<li><strong>SSE 流式</strong>：实时进度推送</li>
+<li><strong>任务生命周期</strong>：状态机管理</li>
+</ul>
+<p>与现有框架的关系很清晰：</p>
+<table>
+<thead>
+<tr>
+<th>范围</th>
+<th>工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>跨框架 Agent 通信</td>
+<td><strong>A2A</strong></td>
+</tr>
+<tr>
+<td>单框架 Agent 内部</td>
+<td>LangGraph &#x2F; AutoGen</td>
+</tr>
+<tr>
+<td>Agent 与工具</td>
+<td>MCP</td>
+</tr>
+</tbody></table>
+<p>详见配套讲稿 <code>&lt;vault&gt;/37-Agent-MCP/03-A2A-协议.md</code>。</p>
+<h3 id="3-3-Multi-Agent-协作深入"><a href="#3-3-Multi-Agent-协作深入" class="headerlink" title="3.3 Multi-Agent 协作深入"></a>3.3 Multi-Agent 协作深入</h3><p>三大主流框架各有适用场景：</p>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>抽象</th>
+<th>适用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AutoGen</td>
+<td>对话回合</td>
+<td>复杂多 Agent 协作</td>
+</tr>
+<tr>
+<td>CrewAI</td>
+<td>角色 + 任务</td>
+<td>简单工作流</td>
+</tr>
+<tr>
+<td>LangGraph</td>
+<td>图 + 状态</td>
+<td>复杂状态管理</td>
+</tr>
+</tbody></table>
+<p>通信模式上，主流方案收敛到 5 种：</p>
+<ul>
+<li>Sequential（顺序）</li>
+<li>Hierarchical（分层）</li>
+<li>Group Chat（群聊）</li>
+<li>Handoff（移交）</li>
+<li>Debate（辩论）</li>
+</ul>
+<p>共识机制则根据任务复杂度选用：投票 &#x2F; 加权 &#x2F; LLM Judge。详见配套讲稿 <code>&lt;vault&gt;/37-Agent-MCP/04-Multi-Agent-协作.md</code>。</p>
+<h3 id="3-4-Prompt-Injection-安全"><a href="#3-4-Prompt-Injection-安全" class="headerlink" title="3.4 Prompt Injection 安全"></a>3.4 Prompt Injection 安全</h3><p>OWASP 2025 把 Prompt Injection 列为 LLM Top 1 风险。常见攻击类型有 6 种：</p>
+<ul>
+<li>Prompt Override（指令覆盖）</li>
+<li>Role Play（角色扮演）</li>
+<li>Context Stuffing（上下文填充）</li>
+<li>Payload Splitting（载荷分割）</li>
+<li>Indirect Injection（间接注入）</li>
+<li>Tool Injection（工具注入）</li>
+</ul>
+<p>其中「间接注入」最危险——攻击载荷藏在文档、网页、邮件里，Agent 读取后就被劫持。</p>
+<p>防御要做 5 层叠加，而不是任何单点：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">L1 输入过滤（60%）</span><br><span class="line">L2 System Prompt 加固（80%）</span><br><span class="line">L3 输出验证（90%）</span><br><span class="line">L4 沙箱（99%）</span><br><span class="line">L5 人工审核（99.9%）</span><br></pre></td></tr></table></figure>
+
+<p>每一层挡住的都是不同威胁面，叠加后才接近可用。详见配套讲稿 <code>&lt;vault&gt;/37-Agent-MCP/05-Prompt-Injection.md</code>。</p>
+<hr>
+<h2 id="四、2025-SOTA-Agent-平台"><a href="#四、2025-SOTA-Agent-平台" class="headerlink" title="四、2025 SOTA Agent 平台"></a>四、2025 SOTA Agent 平台</h2><p>把这一年真正跑出生产力的平台摆在一起对照：</p>
+<h3 id="4-1-OpenAI-Operator"><a href="#4-1-OpenAI-Operator" class="headerlink" title="4.1 OpenAI Operator"></a>4.1 OpenAI Operator</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">能力：Computer Use 2.0</span><br><span class="line">  - 浏览器操作</span><br><span class="line">  - 文件处理</span><br><span class="line">  - 多步任务</span><br><span class="line"></span><br><span class="line">限制：</span><br><span class="line">  - 需 Pro 订阅（$200/月）</span><br><span class="line">  - 慢（每步 5-10s）</span><br><span class="line">  - 容易卡住</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-Claude-4-Opus"><a href="#4-2-Claude-4-Opus" class="headerlink" title="4.2 Claude 4 Opus"></a>4.2 Claude 4 Opus</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">能力：</span><br><span class="line">  - 200K context</span><br><span class="line">  - Computer Use（改进版）</span><br><span class="line">  - Tool Use（最强）</span><br><span class="line"></span><br><span class="line">新特性：</span><br><span class="line">  - 思考模式（Extended Thinking）</span><br><span class="line">  - 减少越狱成功率</span><br><span class="line">  - 更好的代码生成</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-Google-Gemini-2-5-Pro"><a href="#4-3-Google-Gemini-2-5-Pro" class="headerlink" title="4.3 Google Gemini 2.5 Pro"></a>4.3 Google Gemini 2.5 Pro</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">能力：</span><br><span class="line">  - 1M-2M context</span><br><span class="line">  - 原生多模态</span><br><span class="line">  - 深度研究（DeepResearch）</span><br><span class="line"></span><br><span class="line">优势：</span><br><span class="line">  - 长 context</span><br><span class="line">  - 多模态原生</span><br><span class="line">  - 价格便宜</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-Manus-AI"><a href="#4-4-Manus-AI" class="headerlink" title="4.4 Manus AI"></a>4.4 Manus AI</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">能力：</span><br><span class="line">  - 自主任务执行</span><br><span class="line">  - Context Engineering 标杆</span><br><span class="line">  - 沙箱执行</span><br><span class="line"></span><br><span class="line">融资：数亿美元（2024-12）</span><br><span class="line">估值：数十亿美元</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5-DeepSeek-V3-R1（开源-SOTA）"><a href="#4-5-DeepSeek-V3-R1（开源-SOTA）" class="headerlink" title="4.5 DeepSeek-V3 + R1（开源 SOTA）"></a>4.5 DeepSeek-V3 + R1（开源 SOTA）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">能力：</span><br><span class="line">  - 671B MoE（37B 激活）</span><br><span class="line">  - 推理能力追平 o1</span><br><span class="line">  - 完全开源</span><br><span class="line">  - 14.8T tokens 训练</span><br><span class="line"></span><br><span class="line">意义：开源 Agent 时代的开端</span><br></pre></td></tr></table></figure>
+
+<p>五个平台分别卡位：Operator 占 Computer Use、Claude 4 占 Tool Use、Gemini 2.5 Pro 占长 context 与多模态、Manus 占工程实践、DeepSeek 占开源底座。</p>
+<hr>
+<h2 id="五、2025-2026-未来趋势"><a href="#五、2025-2026-未来趋势" class="headerlink" title="五、2025-2026 未来趋势"></a>五、2025-2026 未来趋势</h2><h3 id="5-1-Agent-Marketplace"><a href="#5-1-Agent-Marketplace" class="headerlink" title="5.1 Agent Marketplace"></a>5.1 Agent Marketplace</h3><p>Agent Store 已经不只是 GPT Store 那种「自定义 prompt 集合」，而是 Agent 经济的基础设施：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">想象：</span><br><span class="line">  - Agent 商店：用户购买专业 Agent</span><br><span class="line">  - Agent 支付：Agent 之间互相支付</span><br><span class="line">  - Agent 经济：GDP 的一部分</span><br></pre></td></tr></table></figure>
+
+<p>OpenAI GPT Store 2024-01 上线后已有 100 万+ 自定义 GPT，2025 升级为「Agent Marketplace」只是时间问题。</p>
+<h3 id="5-2-Agent-互联网"><a href="#5-2-Agent-互联网" class="headerlink" title="5.2 Agent 互联网"></a>5.2 Agent 互联网</h3><p>互联网的主体将从「人 ↔ 网页」切换到「Agent ↔ Agent &#x2F; 服务 &#x2F; 数据」：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">传统互联网：人 ↔ 网页</span><br><span class="line">Agent 互联网：Agent ↔ Agent</span><br><span class="line">              Agent ↔ 服务</span><br><span class="line">              Agent ↔ 数据</span><br></pre></td></tr></table></figure>
+
+<p>支撑这套体系的关键协议：</p>
+<ul>
+<li>MCP（工具）</li>
+<li>A2A（Agent）</li>
+<li>OpenAPI（服务）</li>
+<li>SQL（数据）</li>
+</ul>
+<h3 id="5-3-端侧-Agent"><a href="#5-3-端侧-Agent" class="headerlink" title="5.3 端侧 Agent"></a>5.3 端侧 Agent</h3><p>LLM 量化与 Apple Silicon &#x2F; 高通芯片让本地 Agent 成为现实：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">未来：</span><br><span class="line">  - iPhone / Android 直接跑 LLM Agent</span><br><span class="line">  - Apple Silicon 4B / 8B 模型</span><br><span class="line">  - 完全本地化</span><br><span class="line">  - 隐私保护</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-多模态-Agent"><a href="#5-4-多模态-Agent" class="headerlink" title="5.4 多模态 Agent"></a>5.4 多模态 Agent</h3><p>未来 Agent 必然是全模态的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">看（Vision）</span><br><span class="line">听（Audio）</span><br><span class="line">读（Web / Doc）</span><br><span class="line">操作（Computer Use）</span><br><span class="line">思考（Reasoning）</span><br><span class="line">输出（生成）</span><br><span class="line"></span><br><span class="line">= 全模态 Agent</span><br></pre></td></tr></table></figure>
+
+<p>四个趋势彼此交织：Marketplace 给商业化铺路、Agent 互联网给协议打底、端侧化解决隐私与延迟、多模态决定能落地的场景边界。</p>
+<hr>
+<h2 id="六、关键洞察"><a href="#六、关键洞察" class="headerlink" title="六、关键洞察"></a>六、关键洞察</h2><p>把全文压成六条 takeaway：</p>
+<ol>
+<li><strong>Context Engineering 是 Agent 时代的新学科</strong>——不是 prompt 技巧，而是系统级工程问题，Anthropic &#x2F; Manus &#x2F; Cursor 都在深度实践。</li>
+<li><strong>A2A + MCP &#x3D; Agent 时代双协议</strong>——A2A 负责横向（Agent ↔ Agent），MCP 负责纵向（Agent ↔ Tool），未来可能融合。</li>
+<li><strong>Multi-Agent 协作 &#x3D; 复杂任务的关键</strong>——三大框架 AutoGen &#x2F; CrewAI &#x2F; LangGraph，5 大通信模式 + 共识机制。</li>
+<li><strong>Prompt Injection 是 LLM #1 安全风险</strong>——间接注入最危险，需要 5 层防御叠加，红队测试必做。</li>
+<li><strong>2025 是 Agent 商业化元年</strong>——OpenAI Operator、Claude 4 Opus、Gemini 2.5 Pro、Manus AI 同时跑通。</li>
+<li><strong>未来 3 大趋势</strong>——Agent Marketplace、Agent 互联网、端侧 Agent，2026 起开始交叉验证。</li>
+</ol>
+<p>把这六条串起来：Agent 正在从「demo 玩具」走向「协议 + 工程 + 商业」的完整栈。</p>
+<hr>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>本文涉及的模型与平台版本号均为撰写时（2025 年底）的快照：</p>
+<ul>
+<li>Claude 4 Opus（Anthropic，2025-08）</li>
+<li>Gemini 2.5 Pro（Google，2025）</li>
+<li>OpenAI o3 &#x2F; Operator（2025）</li>
+<li>DeepSeek-V3 &#x2F; R1（2024-2025）</li>
+<li>LangGraph 1.0（2024-10）</li>
+</ul>
+<p>⚠️ <strong>以发布时为准</strong>——模型能力、价格、上下文长度、API 形态在 6 个月内可能多次迭代，落地前请以官方最新文档为准。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/A2A/" rel="tag">A2A</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Context-Engineering/" rel="tag">Context Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MCP/" rel="tag">MCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Multi-Agent/" rel="tag">Multi-Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Prompt-Injection/" rel="tag">Prompt Injection</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/15/2026/2026-10-16-a2a-protocol/">A2A：Agent 协作协议</a><a class="next" href="/2026/10/15/2026/2026-10-16-constitutional-ai/">宪法AI对齐范式</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

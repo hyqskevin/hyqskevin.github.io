@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>AI 助手生态案例盘点 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AI 助手生态案例盘点</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AI 助手生态案例盘点</h1><div class="post-meta">2026-10-12<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.5k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 6</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><blockquote>
+<p>本文是「10 篇 arxiv 论文 + 12 商业案例 + 15 仓库」调研系列的<strong>案例部分</strong>，聚焦 GitHub 高星仓库与公开商业评测，呈现 AI 助手生态的真实版图。</p>
+</blockquote>
+<h2 id="一、GitHub-仓库全景"><a href="#一、GitHub-仓库全景" class="headerlink" title="一、GitHub 仓库全景"></a>一、GitHub 仓库全景</h2><p>下面 15 个仓库按 stars 排序，覆盖个人助手、多 Agent 框架、Agent 基础设施与 Harness 工程四类。所有链接均可直接访问。</p>
+<h3 id="1-1-Agent-基础设施类"><a href="#1-1-Agent-基础设施类" class="headerlink" title="1.1 Agent 基础设施类"></a>1.1 Agent 基础设施类</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/obra/superpowers">obra&#x2F;superpowers</a></td>
+<td>298101</td>
+<td>面向 AI Agent 的技能框架与软件开发方法论</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/open-webui/open-webui">open-webui&#x2F;open-webui</a></td>
+<td>154723</td>
+<td>自托管 LLM Web UI，对标 ChatGPT 界面</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/langchain-ai/langchain">langchain-ai&#x2F;langchain</a></td>
+<td>147696</td>
+<td>Agent 工程平台，生产级 LLM 应用与 Agent</td>
+</tr>
+</tbody></table>
+<p><strong>简评</strong>：三者构成「上层产品 &#x2F; 中层框架 &#x2F; 底层技能」的三角。<code>open-webui</code> 解决「用户怎么用」，<code>langchain</code> 解决「开发者怎么搭」，<code>superpowers</code> 解决「Agent 怎么做工程」。</p>
+<h3 id="1-2-多-Agent-编排类"><a href="#1-2-多-Agent-编排类" class="headerlink" title="1.2 多 Agent 编排类"></a>1.2 多 Agent 编排类</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/FoundationAgents/MetaGPT">FoundationAgents&#x2F;MetaGPT</a></td>
+<td>70820</td>
+<td>多 Agent 框架：首个 AI 软件公司，自然语言编程</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/microsoft/autogen">microsoft&#x2F;autogen</a></td>
+<td>61374</td>
+<td>微软出品，面向 Agentic AI 的编程框架</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/crewAIInc/crewAI">crewAIInc&#x2F;crewAI</a></td>
+<td>59612</td>
+<td>角色扮演 + 自主协作的多 Agent 编排</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/langchain-ai/langgraph">langchain-ai&#x2F;langgraph</a></td>
+<td>43142</td>
+<td>基于状态图的有状态 Agent 编排框架</td>
+</tr>
+</tbody></table>
+<p><strong>简评</strong>：<code>MetaGPT</code> 走「软件公司」路线（PM&#x2F;工程师&#x2F;QA 角色），<code>autogen</code> 走「通用对话编排」路线，<code>crewAI</code> 走「角色协作」路线，<code>langgraph</code> 走「图结构」路线——四条路径的取舍取决于任务是否需要严格角色分工。</p>
+<h3 id="1-3-自托管-个人-AI-助手类"><a href="#1-3-自托管-个人-AI-助手类" class="headerlink" title="1.3 自托管 &#x2F; 个人 AI 助手类"></a>1.3 自托管 &#x2F; 个人 AI 助手类</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">Anil-matcha&#x2F;open-dots</a></td>
+<td>5729</td>
+<td>开源自托管 AI Agent 工作台，对标 OpenAI Dots、Meta Muse</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/CopilotKit/OpenDots">CopilotKit&#x2F;OpenDots</a></td>
+<td>5041</td>
+<td>跨文本、电话、Slack 的常驻 AI 同事</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/HKUDS/nanobot">HKUDS&#x2F;nanobot</a></td>
+<td>48970</td>
+<td>港大数据智能实验室出品，超轻量 Python 个人 Agent 框架</td>
+</tr>
+</tbody></table>
+<p><strong>简评</strong>：当大厂的「Dot&#x2F;Muse&#x2F;Grok Bot」定价高、数据出境、必须登录时，自托管方案就成为隐私敏感用户的首选——<code>nanobot</code> 代码量最小适合学习，<code>open-dots</code> 体验最接近商业产品。</p>
+<h3 id="1-4-Harness-工程类"><a href="#1-4-Harness-工程类" class="headerlink" title="1.4 Harness 工程类"></a>1.4 Harness 工程类</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/HKUDS/DeepCode">HKUDS&#x2F;DeepCode</a></td>
+<td>16699</td>
+<td>Open Agentic Coding：Agent Harness + 循环工程 + 多 Agent 编排</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/ModelEngine-Group/nexent">ModelEngine-Group&#x2F;nexent</a></td>
+<td>5924</td>
+<td>零代码平台，自然语言自动生成生产级 AI Agent</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/ai-boost/awesome-harness-engineering">ai-boost&#x2F;awesome-harness-engineering</a></td>
+<td>4797</td>
+<td>Harness 工程精选清单：工具、模式、评测、记忆</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/wquguru/harness-books">wquguru&#x2F;harness-books</a></td>
+<td>3180</td>
+<td>两本 Harness 工程电子书，解读 Claude Code 等设计哲学</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/openlit/openlit">openlit&#x2F;openlit</a></td>
+<td>2844</td>
+<td>开源 Agent Harness 平台：追踪、评测、护栏</td>
+</tr>
+</tbody></table>
+<p><strong>简评</strong>：Harness 是「包住 Agent 的工程外壳」，解决 Prompt 太脆弱、Token 太贵、行为不可复现三大痛点。<code>awesome-harness-engineering</code> 适合入门，<code>harness-books</code> 适合深入原理，<code>openlit</code> 适合生产部署。</p>
+<h2 id="二、商业案例对比"><a href="#二、商业案例对比" class="headerlink" title="二、商业案例对比"></a>二、商业案例对比</h2><p>下面 12 条公开案例覆盖主流评测、中文社区、海外社区三类来源。每条都附带可访问的 URL。</p>
+<h3 id="2-1-主流评测（海外）"><a href="#2-1-主流评测（海外）" class="headerlink" title="2.1 主流评测（海外）"></a>2.1 主流评测（海外）</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>案例标题</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><a target="_blank" rel="noopener" href="https://www.drpang.ai/dots-muse-openclaw-hermes-grok-managed-agent/">Dots、Muse、OpenClaw、Hermes 与 Grok Bot 对比</a></td>
+<td>drpang.ai</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a target="_blank" rel="noopener" href="https://kingy.ai/blog/openai-dot-vs-grok-bot-vs-meta-muse/">Dot vs Grok Bot vs Muse: Pricing, Specs &amp; Benchmarks</a></td>
+<td>kingy.ai</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a target="_blank" rel="noopener" href="https://www.onewave-ai.com/blog/muse-vs-grok-bot-vs-dots">Muse vs Grok Bot vs Dots: OpenAI Dots Compared (2026)</a></td>
+<td>onewave-ai.com</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a target="_blank" rel="noopener" href="https://codeatic.com/blog/ai-agents-compared-dots-muse-grok-claude">AI Agents Compared: Dots, Muse, Grok Bot and Claude</a></td>
+<td>codeatic.com</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a target="_blank" rel="noopener" href="https://aialvin.substack.com/p/grok-bot-vs-muse-vs-dots-the-three">Grok Bot vs Muse vs Dots, the Three Agentic AI Assistants Racing for Your Daily</a></td>
+<td>aialvin.substack.com</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a target="_blank" rel="noopener" href="https://api.treerouter.ai/en/blog/grok-bot-vs-muse-vs-dots">Grok Bot vs Muse vs Dots: AI Agent Guide</a></td>
+<td>treerouter.ai</td>
+</tr>
+</tbody></table>
+<p><strong>观察</strong>：海外评测普遍按「定价 &#x2F; 规格 &#x2F; 跑分」三段式对比，且会把 Anthropic 的 Claude 一并加入四强争霸，反映出生态向「多极并存」演进。</p>
+<h3 id="2-2-中文社区"><a href="#2-2-中文社区" class="headerlink" title="2.2 中文社区"></a>2.2 中文社区</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>案例标题</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7</td>
+<td><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000048338968">Personal Agent 对比：Grok Bot、Muse、Dots 怎么选？</a></td>
+<td>segmentfault</td>
+</tr>
+<tr>
+<td>8</td>
+<td><a target="_blank" rel="noopener" href="https://aicoder.com/zh/news/news-20260930-grok-bot-mate-muse-openai-dots">个人桌面智能体三国杀：Grok Bot vs Meta Muse vs OpenAI Dots</a></td>
+<td>aicoder.com</td>
+</tr>
+<tr>
+<td>9</td>
+<td><a target="_blank" rel="noopener" href="https://blog.laozhang.ai/zh/posts/chatgpt-dots-vs-meta-muse-vs-grok-bot">ChatGPT Dot、Meta Muse、Grok Bot 对比：起步价 $100、$0、$20</a></td>
+<td>laozhang.ai</td>
+</tr>
+<tr>
+<td>10</td>
+<td><a target="_blank" rel="noopener" href="https://slatemoth.com/zh/insights/hark-muse-dots-grok-bot/">当 AI 都开始”用电脑”：Hark、Muse、Dots 与 Grok Bot 的功能趋近</a></td>
+<td>slatemoth.com</td>
+</tr>
+<tr>
+<td>11</td>
+<td><a target="_blank" rel="noopener" href="https://www.xmsumi.com/detail/4249">dots vs Muse vs Grok Bot：三大 AI 智能体横向对比</a></td>
+<td>xmsumi.com</td>
+</tr>
+</tbody></table>
+<p><strong>观察</strong>：中文社区更关注「起步价 &#x2F; 数据出境 &#x2F; 中文场景」，标题常用「三国杀」「怎么选」等用户决策导向词，符合中文用户面对多产品时的对比需求。</p>
+<h3 id="2-3-行业新闻"><a href="#2-3-行业新闻" class="headerlink" title="2.3 行业新闻"></a>2.3 行业新闻</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>案例标题</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>12</td>
+<td><a target="_blank" rel="noopener" href="https://hk.finance.yahoo.com/news/%E5%BE%AE%E8%BD%AF%E5%BC%95%E5%85%A5openai%E7%AB%9E%E4%BA%89%E5%AF%B9%E6%89%8Banthropic-%E4%B8%BAai%E5%8A%A9%E6%89%8B%E5%A2%9E%E6%B7%BB%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9-194029590.html">微软引入 OpenAI 竞争对手 Anthropic，为 AI 助手增添模型选择</a></td>
+<td>hk.finance.yahoo.com</td>
+</tr>
+</tbody></table>
+<p><strong>观察</strong>：行业层面的关键信号是「巨头互相引入对手模型」，意味着 AI 助手产品将从「单一模型绑定」走向「模型路由」，第三方 Agent 编排框架（LangChain &#x2F; LangGraph）的价值进一步提升。</p>
+<h2 id="三、关键洞察"><a href="#三、关键洞察" class="headerlink" title="三、关键洞察"></a>三、关键洞察</h2><p><strong>洞察 1：Harness 工程是新的护城河</strong>。LangChain 14 万⭐、obra&#x2F;superpowers 接近 30 万⭐，两者已超越传统 LLM 框架热度，说明 Agent 落地最大的瓶颈不再是「能不能调通」，而是「能不能稳定跑、可观测、可评测」。</p>
+<p><strong>洞察 2：自托管需求被低估</strong>。个人助手类三件套加起来 6 万⭐，与 <code>crewAI</code> 一个框架相当——隐私敏感场景下，自托管路线的市场远比想象中大。</p>
+<p><strong>洞察 3：模型品牌正在弱化</strong>。商业评测同时把 Dots&#x2F;Muse&#x2F;Grok Bot&#x2F;Claude 摆在一起，说明用户越来越不在乎「背后是谁的模型」，只在乎「能不能干完活」。</p>
+<p><strong>洞察 4：中文社区的对比密度高于英文</strong>。11 条中文评测覆盖 5 个独立来源，而 6 条英文评测来自 6 个来源，中文用户对「决策前对比」的依赖明显更重。</p>
+<h2 id="四、跟进阅读建议"><a href="#四、跟进阅读建议" class="headerlink" title="四、跟进阅读建议"></a>四、跟进阅读建议</h2><ul>
+<li><strong>想搭生产 Agent</strong>：先读 <a target="_blank" rel="noopener" href="https://github.com/langchain-ai/langchain">langchain</a>，再看 <a target="_blank" rel="noopener" href="https://github.com/obra/superpowers">superpowers</a> 学工程模式</li>
+<li><strong>想自托管个人助手</strong>：<a target="_blank" rel="noopener" href="https://github.com/HKUDS/nanobot">nanobot</a> 入门 → <a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">open-dots</a> 体验</li>
+<li><strong>想追商业趋势</strong>：<a target="_blank" rel="noopener" href="https://www.drpang.ai/dots-muse-openclaw-hermes-grok-managed-agent/">drpang.ai</a> + <a target="_blank" rel="noopener" href="https://kingy.ai/blog/openai-dot-vs-grok-bot-vs-meta-muse/">kingy.ai</a> 双读即可覆盖主流</li>
+<li><strong>想深入 Harness 原理</strong>：<a target="_blank" rel="noopener" href="https://github.com/wquguru/harness-books">wquguru&#x2F;harness-books</a> + <a target="_blank" rel="noopener" href="https://github.com/ai-boost/awesome-harness-engineering">ai-boost&#x2F;awesome-harness-engineering</a></li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>以发布时为准</strong>：文中所有产品名（Dots、Muse、Grok Bot、Claude）、定价（$100&#x2F;$0&#x2F;$20）、stars 数均来自 2025-2026 年公开数据，发布时可能已变动，请以官方仓库与官网最新信息为准。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI-Agent/" rel="tag">AI Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AutoGen/" rel="tag">AutoGen</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CrewAI/" rel="tag">CrewAI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GitHub/" rel="tag">GitHub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Harness/" rel="tag">Harness</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LangChain/" rel="tag">LangChain</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LangGraph/" rel="tag">LangGraph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MetaGPT/" rel="tag">MetaGPT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Open-WebUI/" rel="tag">Open WebUI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A1%88%E4%BE%8B%E7%9B%98%E7%82%B9/" rel="tag">案例盘点</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/12/2026/2026-10-13-agi-assistant-papers/">10 篇 AGI 助手论文速读</a><a class="next" href="/2026/10/12/2026/2026-10-13-ai-assistant-comparison/">AI 助手能力对比决策</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

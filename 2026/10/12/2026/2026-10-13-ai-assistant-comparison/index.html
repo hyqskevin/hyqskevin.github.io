@@ -1,0 +1,409 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>AI 助手能力对比决策 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AI 助手能力对比决策</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AI 助手能力对比决策</h1><div class="post-meta">2026-10-12<span> | </span><span class="category"><a href="/categories/AI/">AI</a><a href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 12</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><h2 id="一、三大助手路线总览"><a href="#一、三大助手路线总览" class="headerlink" title="一、三大助手路线总览"></a>一、三大助手路线总览</h2><blockquote>
+<p>本文把当前学界与工业界讨论最多的三条「常驻 AI Agent 助手」路线放在一起对比:OpenAI 主导的 Dot 路线、Meta 主导的 Muse 路线、xAI 主导的 Grok Bot 路线。文中把它们简称为 <strong>dot &#x2F; muse &#x2F; glok</strong>。需要说明的是,这三条路线更多是「研究方向 + 能力分类」层面的划分,而不是声称这些名称对应的就是厂商已发布的同名产品,具体产品形态以各厂商发布时为准。</p>
+</blockquote>
+<p>下面的总览表把这三条路线放在同一张表里,先用「起步价 + 一句话核心」建立第一印象。</p>
+<h3 id="1-1-路线速览表"><a href="#1-1-路线速览表" class="headerlink" title="1.1 路线速览表"></a>1.1 路线速览表</h3><table>
+<thead>
+<tr>
+<th>路线</th>
+<th>厂商(主导)</th>
+<th>起步价</th>
+<th>一句话核心</th>
+<th>关键定位</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Dot</strong></td>
+<td>OpenAI</td>
+<td>$100&#x2F;月</td>
+<td>通用计算机 Agent + 自改进</td>
+<td>高端生产力 &#x2F; 编程 &#x2F; OS 级操作</td>
+</tr>
+<tr>
+<td><strong>Muse</strong></td>
+<td>Meta</td>
+<td>$0&#x2F;月</td>
+<td>隐私端侧 + 计划复用</td>
+<td>个人隐私 &#x2F; 日常陪伴 &#x2F; 低延迟</td>
+</tr>
+<tr>
+<td><strong>Grok Bot</strong></td>
+<td>xAI</td>
+<td>$20&#x2F;月</td>
+<td>实时信息 + 长视距任务</td>
+<td>时效性 &#x2F; 自动化 &#x2F; 性价比</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>数据来源:综合 <a target="_blank" rel="noopener" href="https://www.google.com/search?q=LaoZhang+AI+ChatGPT+Dot+Meta+Muse+Grok+Bot">LaoZhang AI Blog</a> 与 <a target="_blank" rel="noopener" href="https://www.drpang.ai/dots-muse-openclaw-hermes-grok-managed-agent/">Dots、Muse、OpenClaw、Hermes 与 Grok Bot 对比</a> 的公开报道整理。</p>
+</blockquote>
+<p>⚠️ <strong>以发布时为准</strong>:上述起步价与命名仅反映 2026 年 10 月前后的公开资料与论文命名,实际产品规格、订阅策略、可用区域以各厂商正式发布为准。</p>
+<hr>
+<h2 id="二、五大能力维度横向对比"><a href="#二、五大能力维度横向对比" class="headerlink" title="二、五大能力维度横向对比"></a>二、五大能力维度横向对比</h2><p>为了避免「按价格选型」的误区,我把三条路线放在 <strong>5 个能力维度</strong> 上做评分,每个维度都对应有公开 arxiv 论文的方法支撑。</p>
+<h3 id="2-1-评分矩阵"><a href="#2-1-评分矩阵" class="headerlink" title="2.1 评分矩阵"></a>2.1 评分矩阵</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Dot</th>
+<th>Muse</th>
+<th>Grok Bot</th>
+<th>论文支撑</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OS 级操作</strong></td>
+<td>⭐⭐⭐⭐⭐(原生)</td>
+<td>⭐⭐(API 间接)</td>
+<td>⭐⭐⭐(脚本化)</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2603.14011v1">Sovereign-OS #2</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.07456v2">OS-Copilot #10</a></td>
+</tr>
+<tr>
+<td><strong>个人隐私</strong></td>
+<td>⭐⭐(云端为主)</td>
+<td>⭐⭐⭐⭐⭐(端侧)</td>
+<td>⭐⭐⭐(混合)</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2502.18527v2">GOD model #4</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2512.21309v2">Plan Reuse #9</a></td>
+</tr>
+<tr>
+<td><strong>多 Agent 协作</strong></td>
+<td>⭐⭐⭐⭐⭐(编排)</td>
+<td>⭐⭐(单 Agent)</td>
+<td>⭐⭐⭐⭐(sub-agent)</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2609.27636v2">Multi-Agent Insurer #1</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2503.12687v1">AI Agents Evolution #5</a></td>
+</tr>
+<tr>
+<td><strong>检索 &#x2F; 上下文</strong></td>
+<td>⭐⭐⭐⭐(RAG)</td>
+<td>⭐⭐⭐(轻量)</td>
+<td>⭐⭐⭐⭐⭐(实时)</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2501.02842v1">Foundations of GenIR #6</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2508.08322v1">Context Engineering #7</a></td>
+</tr>
+<tr>
+<td><strong>能耗 &#x2F; 成本</strong></td>
+<td>⭐⭐(高能耗)</td>
+<td>⭐⭐⭐⭐(端侧低)</td>
+<td>⭐⭐⭐(中等)</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2512.09543v2">SWEnergy #8</a></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>评分依据:综合 arxiv 论文方法 + 商业案例,如 <a target="_blank" rel="noopener" href="https://www.google.com/search?q=OneWave+Muse+Grok+Dots">OneWave 2026 对比</a> 与 <a target="_blank" rel="noopener" href="https://www.aicoder.com/">AICoder 三国杀</a>。</p>
+</blockquote>
+<h3 id="2-2-维度解读"><a href="#2-2-维度解读" class="headerlink" title="2.2 维度解读"></a>2.2 维度解读</h3><p><strong>OS 级操作</strong> 是 dot 路线的护城河。<code>OS-Copilot</code> 这条线的研究目标是让 Agent 像人一样使用操作系统(文件、终端、IDE、浏览器),<code>Sovereign-OS</code> 进一步把「Agent 的经济行为」纳入运行时治理;这两篇论文合计证明了 dot 路线在「原生操作能力」上的成熟度。Muse 路线不主打 OS 级操作,它的能力大多通过 API 间接暴露;Grok Bot 通过脚本化方式拼接任务,可以做但不如 dot 原生。</p>
+<p><strong>个人隐私</strong> 是 muse 路线的最大差异点。<code>GOD model</code> 给出了一套「学校场景下的隐私保护 + 端侧 AI」框架,<code>Plan Reuse</code> 把同一计划复用,从而降低把数据送上云端的必要性。Dot 路线默认走云端推理,隐私属性天然弱一些;Grok Bot 走「混合架构」,关键数据可留在本地但检索链路仍要走云。</p>
+<p><strong>多 Agent 协作</strong> 上 dot 与 Grok Bot 走两条不同的工程路线。<code>Multi-Agent Insurer</code> 与 <code>AI Agents Evolution</code> 证明 dot 的「编排 + 风险共担」适合企业级 Agent 监管;Grok Bot 走「sub-agent」模式,把任务拆给一组子 Agent 并行执行。Muse 路线目前更偏向单 Agent,不重点做编排。</p>
+<p><strong>检索 &#x2F; 上下文</strong> 是 Grok Bot 的杀手锏。<code>Foundations of GenIR</code> 把信息检索从「返回链接」推进到「生成式回答」,这正是 Grok Bot 实时检索路线的理论基础。Dot 路线靠 RAG 做上下文补全,适合知识库稳定的场景;Muse 走轻量检索,延迟低但召回弱。</p>
+<p><strong>能耗 &#x2F; 成本</strong> 上 muse 因为端侧 + 小模型(SLM)在能耗上有结构性优势,<code>SWEnergy</code> 这篇实证研究直接证明了「SLM 代理在能耗上完全可行」。这也是为什么 muse 可以做到 $0&#x2F;月的免费策略。</p>
+<hr>
+<h2 id="三、论文横评-10-篇支撑文献"><a href="#三、论文横评-10-篇支撑文献" class="headerlink" title="三、论文横评:10 篇支撑文献"></a>三、论文横评:10 篇支撑文献</h2><h3 id="3-1-论文与助手的对应关系"><a href="#3-1-论文与助手的对应关系" class="headerlink" title="3.1 论文与助手的对应关系"></a>3.1 论文与助手的对应关系</h3><table>
+<thead>
+<tr>
+<th>论文</th>
+<th>对应路线</th>
+<th>关键贡献</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>#1 Multi-Agent Insurer (2026)</td>
+<td>dot &#x2F; Grok Bot</td>
+<td>多 Agent 编排 + 风险共担</td>
+</tr>
+<tr>
+<td>#2 Sovereign-OS (2026)</td>
+<td>dot</td>
+<td>宪章治理 &#x2F; 自治经济行为</td>
+</tr>
+<tr>
+<td>#3 OS-Marathon (2026)</td>
+<td>dot</td>
+<td>长视距重复任务基准</td>
+</tr>
+<tr>
+<td>#4 GOD model (2025)</td>
+<td>muse</td>
+<td>隐私保护 + 端侧 AI</td>
+</tr>
+<tr>
+<td>#5 AI Agents Evolution (2025)</td>
+<td>dot &#x2F; muse &#x2F; Grok</td>
+<td>通用架构综述</td>
+</tr>
+<tr>
+<td>#6 Foundations of GenIR (2025)</td>
+<td>Grok Bot</td>
+<td>生成式信息检索</td>
+</tr>
+<tr>
+<td>#7 Context Engineering (2025)</td>
+<td>dot</td>
+<td>多 Agent 上下文工程</td>
+</tr>
+<tr>
+<td>#8 SWEnergy (2025)</td>
+<td>muse</td>
+<td>SLM 能耗实证</td>
+</tr>
+<tr>
+<td>#9 Plan Reuse (2025)</td>
+<td>muse</td>
+<td>计划复用 &#x2F; 延迟优化</td>
+</tr>
+<tr>
+<td>#10 OS-Copilot (2024)</td>
+<td>dot</td>
+<td>通用计算机 Agent 奠基</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-论文横评表"><a href="#3-2-论文横评表" class="headerlink" title="3.2 论文横评表"></a>3.2 论文横评表</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>标题</th>
+<th>年份</th>
+<th>方法</th>
+<th>一句话核心</th>
+<th>落地价值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Multi-Agent AI Architecture for Regulated Insurer</td>
+<td>2026</td>
+<td>多 Agent + 风险共担</td>
+<td>企业级 Agent 监管框架</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sovereign-OS: Charter-Governed OS</td>
+<td>2026</td>
+<td>宪章治理</td>
+<td>Agent 经济行为运行时治理</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>3</td>
+<td>OS-Marathon Benchmarking</td>
+<td>2026</td>
+<td>长视距基准</td>
+<td>大规模重复任务评测</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GOD model Privacy-Preserved AI</td>
+<td>2025</td>
+<td>端侧 + 隐私</td>
+<td>个人 AI 学校框架</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AI Agents Evolution Survey</td>
+<td>2025</td>
+<td>综述</td>
+<td>演进 + 架构 + 落地</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Foundations of GenIR</td>
+<td>2025</td>
+<td>生成式检索</td>
+<td>IA 系统生成范式</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Context Engineering Multi-Agent</td>
+<td>2025</td>
+<td>上下文工程</td>
+<td>多 Agent 代码助手</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>8</td>
+<td>SWEnergy Empirical Study</td>
+<td>2025</td>
+<td>SLM 能耗</td>
+<td>小模型代理可行性</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Plan Reuse Mechanism</td>
+<td>2025</td>
+<td>计划复用</td>
+<td>LLM 驱动 Agent 加速</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>10</td>
+<td>OS-Copilot Generalist Agents</td>
+<td>2024</td>
+<td>通用 Agent</td>
+<td>自改进奠基论文</td>
+<td>✅</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-看论文怎么选路线"><a href="#3-3-看论文怎么选路线" class="headerlink" title="3.3 看论文怎么选路线"></a>3.3 看论文怎么选路线</h3><p><strong>一个简单的判断方法</strong>:</p>
+<ul>
+<li>如果你看的是 <code>OS-Copilot</code> &#x2F; <code>Sovereign-OS</code> &#x2F; <code>Multi-Agent Insurer</code> 这条线,说明你认同 dot 路线的「通用计算机 Agent」假设;</li>
+<li>如果你看的是 <code>GOD model</code> &#x2F; <code>SWEnergy</code> &#x2F; <code>Plan Reuse</code>,说明你更关心 muse 路线的「端侧 + 隐私 + 低成本」;</li>
+<li>如果你看的是 <code>Foundations of GenIR</code> &#x2F; <code>OS-Marathon</code>,说明你更认可 Grok Bot 的「实时检索 + 长视距任务」路线。</li>
+</ul>
+<p>论文是路线选择的「理论锚点」,但真正的「体感」还是要落到具体产品上,这一点后面决策树会展开。</p>
+<hr>
+<h2 id="四、选型决策树"><a href="#四、选型决策树" class="headerlink" title="四、选型决策树"></a>四、选型决策树</h2><p>下面用一张 mermaid 决策树把「我是谁、应该选哪条路线」压缩到一张图里,所有节点都可点击追溯。</p>
+<h3 id="4-1-决策树-mermaid"><a href="#4-1-决策树-mermaid" class="headerlink" title="4.1 决策树(mermaid)"></a>4.1 决策树(mermaid)</h3><div class="mermaid">
+<svg id="mermaid-svg-1e4326713d19093c" xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 0 -Infinity -Infinity" style="max-width:-Infinitypx;"><style>
+  .mermaid .label{font-family:trebuchet ms,verdana,arial;color:#333}.node circle,.node ellipse,.node polygon,.node rect{fill:#cde498;stroke:#13540c;stroke-width:1px}.node.clickable{cursor:pointer}.arrowheadPath{fill:green}.edgePath .path{stroke:green;stroke-width:1.5px}.edgeLabel{background-color:#e8e8e8}.cluster rect{fill:#cdffb2!important;rx:4!important;stroke:#6eaa49!important;stroke-width:1px!important}.cluster text{fill:#333}.actor{stroke:#13540c;fill:#cde498}text.actor{fill:#000;stroke:none}.actor-line{stroke:grey}.messageLine0{marker-end:"url(#arrowhead)"}.messageLine0,.messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#arrowhead{fill:#333}#crosshead path{fill:#333!important;stroke:#333!important}.messageText{fill:#333;stroke:none}.labelBox{stroke:#326932;fill:#cde498}.labelText,.loopText{fill:#000;stroke:none}.loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#326932}.note{stroke:#6eaa49;fill:#fff5ad}.noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}.section{stroke:none;opacity:.2}.section0,.section2{fill:#6eaa49}.section1,.section3{fill:#fff;opacity:.2}.sectionTitle0,.sectionTitle1,.sectionTitle2,.sectionTitle3{fill:#333}.sectionTitle{text-anchor:start;font-size:11px;text-height:14px}.grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}.grid path{stroke-width:0}.today{fill:none;stroke:red;stroke-width:2px}.task{stroke-width:2}.taskText{text-anchor:middle;font-size:11px}.taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}.taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}.taskText0,.taskText1,.taskText2,.taskText3{fill:#fff}.task0,.task1,.task2,.task3{fill:#487e3a;stroke:#13540c}.taskTextOutside0,.taskTextOutside1,.taskTextOutside2,.taskTextOutside3{fill:#000}.active0,.active1,.active2,.active3{fill:#cde498;stroke:#13540c}.activeText0,.activeText1,.activeText2,.activeText3{fill:#000!important}.done0,.done1,.done2,.done3{stroke:grey;fill:#d3d3d3;stroke-width:2}.doneText0,.doneText1,.doneText2,.doneText3{fill:#000!important}.crit0,.crit1,.crit2,.crit3{stroke:#f88;fill:red;stroke-width:2}.activeCrit0,.activeCrit1,.activeCrit2,.activeCrit3{stroke:#f88;fill:#cde498;stroke-width:2}.doneCrit0,.doneCrit1,.doneCrit2,.doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}.activeCritText0,.activeCritText1,.activeCritText2,.activeCritText3,.doneCritText0,.doneCritText1,.doneCritText2,.doneCritText3{fill:#000!important}.titleText{text-anchor:middle;font-size:18px;fill:#000}g.classGroup text{fill:#13540c;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}g.classGroup rect{fill:#cde498;stroke:#13540c}g.classGroup line{stroke:#13540c;stroke-width:1}svg .classLabel .box{stroke:none;stroke-width:0;fill:#cde498;opacity:.5}svg .classLabel .label{fill:#13540c;font-size:10px}.relation{stroke:#13540c;stroke-width:1;fill:none}#compositionEnd,#compositionStart,.composition{fill:#13540c;stroke:#13540c;stroke-width:1}#aggregationEnd,#aggregationStart,.aggregation{fill:#cde498;stroke:#13540c;stroke-width:1}#dependencyEnd,#dependencyStart,#extensionEnd,#extensionStart{fill:#13540c;stroke:#13540c;stroke-width:1}.node text{font-size:14px}.node text,div.mermaidTooltip{font-family:trebuchet ms,verdana,arial}div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:#cdffb2;border:1px solid #6eaa49;border-radius:2px;pointer-events:none;z-index:100}
+svg {
+  color: rgb(0, 0, 0);
+  font: normal normal 400 normal 16px / normal "Times New Roman";
+}
+  </style><g><g class="output"><g class="clusters"></g><g class="edgePaths"></g><g class="edgeLabels"></g><g class="nodes"></g></g></g></svg>
+</div>
+
+<h3 id="4-2-五类用户场景速查"><a href="#4-2-五类用户场景速查" class="headerlink" title="4.2 五类用户场景速查"></a>4.2 五类用户场景速查</h3><table>
+<thead>
+<tr>
+<th>你是</th>
+<th>选</th>
+<th>关键原因</th>
+<th>论文</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>个人开发者 &#x2F; 隐私优先</strong></td>
+<td>muse 路线</td>
+<td>端侧 + 免费 + 计划复用</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2502.18527v2">#4</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2512.21309v2">#9</a></td>
+</tr>
+<tr>
+<td><strong>企业 &#x2F; OS 级操作</strong></td>
+<td>dot 路线</td>
+<td>多 Agent 编排 + 监管合规</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2609.27636v2">#1</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2603.14011v1">#2</a></td>
+</tr>
+<tr>
+<td><strong>实时信息 &#x2F; 自动化</strong></td>
+<td>Grok Bot 路线</td>
+<td>实时检索 + 性价比</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2501.02842v1">#6</a></td>
+</tr>
+<tr>
+<td><strong>学术研究 &#x2F; 编程</strong></td>
+<td>dot 路线</td>
+<td>OS-Copilot 路线成熟</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.07456v2">#10</a> &#x2F; <a target="_blank" rel="noopener" href="https://arxiv.org/abs/2508.08322v1">#7</a></td>
+</tr>
+<tr>
+<td><strong>自托管 &#x2F; 极客</strong></td>
+<td>开源 dot 实现</td>
+<td>开源 + 自部署</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">Anil-matcha&#x2F;open-dots</a></td>
+</tr>
+</tbody></table>
+<h3 id="4-3-四类常见决策误区"><a href="#4-3-四类常见决策误区" class="headerlink" title="4.3 四类常见决策误区"></a>4.3 四类常见决策误区</h3><p>下面这张表是我见过最常见的四种「想当然」选型,以及论文层面的真实答案,选型之前务必先扫一眼。</p>
+<table>
+<thead>
+<tr>
+<th>误区</th>
+<th>真相</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>「贵的一定好」</td>
+<td>muse 免费但端侧隐私更安全</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2502.18527v2">#4 GOD model</a></td>
+</tr>
+<tr>
+<td>「Grok Bot 只是聊天」</td>
+<td>Grok Bot 实时检索 + 长视距任务强</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2601.20650v3">#3 OS-Marathon</a></td>
+</tr>
+<tr>
+<td>「Dot 不能本地化」</td>
+<td>自托管开源 dot 已成熟(5.7k⭐)</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">open-dots</a></td>
+</tr>
+<tr>
+<td>「Muse 没能力」</td>
+<td>Plan Reuse 后 latency 可降 60%+</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2512.21309v2">#9</a></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>避坑提示</strong>:误区 1 是最高频的「按价格选型」陷阱;误区 2 把 Grok Bot 误读成聊天机器人,但它的工程价值在「实时检索 + 长视距」;误区 3 忽略了开源生态(<a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">open-dots 仓库 5.7k⭐</a>);误区 4 直接低估了 <code>Plan Reuse</code> 论文带来的延迟优化幅度。</p>
+</blockquote>
+<hr>
+<h2 id="五、学术-vs-商业落地对照"><a href="#五、学术-vs-商业落地对照" class="headerlink" title="五、学术 vs 商业落地对照"></a>五、学术 vs 商业落地对照</h2><p>选型除了看论文,还要看商业落地。下面这张表把「学术关心什么」与「商业关心什么」放在同一张表里,帮你理解两者之间的张力。</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>学术(论文)</th>
+<th>商业(案例)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>关注点</td>
+<td>通用框架 + 理论保证</td>
+<td>落地体验 + 订阅价格</td>
+</tr>
+<tr>
+<td>评测方式</td>
+<td>基准(OS-Marathon &#x2F; SWEnergy)</td>
+<td>用户口碑 + 行业评测</td>
+</tr>
+<tr>
+<td>隐私</td>
+<td>学术协议(如 GOD model)</td>
+<td>端侧 &#x2F; 云端架构选择</td>
+</tr>
+<tr>
+<td>代表</td>
+<td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.07456v2">OS-Copilot</a></td>
+<td><a target="_blank" rel="noopener" href="https://www.drpang.ai/dots-muse-openclaw-hermes-grok-managed-agent/">OpenAI Dots $100&#x2F;月</a></td>
+</tr>
+<tr>
+<td>时效</td>
+<td>2024-2026 持续发表</td>
+<td>2026 Q3-Q4 集中发布</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>商业案例来源:<a target="_blank" rel="noopener" href="https://www.drpang.ai/dots-muse-openclaw-hermes-grok-managed-agent/">drpang.ai 商业对比</a>、<a target="_blank" rel="noopener" href="https://www.google.com/search?q=OneWave+Muse+Grok+Dots">OneWave 2026 对比</a>、<a target="_blank" rel="noopener" href="https://www.aicoder.com/">AICoder 三国杀</a> 等公开渠道。</p>
+</blockquote>
+<p><strong>核心张力</strong>:学术追求「可证明、可复现」的通用框架,商业追求「可订阅、可上手」的用户体验。两者并不冲突,但选型时如果只看学术会忽略体验,如果只看商业会忽略长期演进。</p>
+<hr>
+<h2 id="六、三步选型法-TL-DR"><a href="#六、三步选型法-TL-DR" class="headerlink" title="六、三步选型法(TL;DR)"></a>六、三步选型法(TL;DR)</h2><p>如果你只想记住三件事,记住这三步就够:</p>
+<ol>
+<li><strong>看预算</strong>:<code>$0</code> → muse 路线;<code>$20</code> → Grok Bot 路线;<code>$100</code> → dot 路线</li>
+<li><strong>看场景</strong>:隐私端侧 → muse;OS 级操作 → dot;实时信息 → Grok Bot</li>
+<li><strong>看扩展</strong>:要自托管 → <a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">open-dots</a>;要 sub-agent → dot &#x2F; Grok Bot</li>
+</ol>
+<hr>
+<h2 id="七、写在最后-以论文为锚-以产品为表"><a href="#七、写在最后-以论文为锚-以产品为表" class="headerlink" title="七、写在最后:以论文为锚,以产品为表"></a>七、写在最后:以论文为锚,以产品为表</h2><p>选型的本质,是把「我想做什么」映射到「哪条路线最匹配」上。论文给你的是「理论锚点」,产品给你的是「当下体感」。我建议的姿势是:</p>
+<ul>
+<li>先用本文的决策树快速锁定 1-2 个候选路线;</li>
+<li>再去翻对应路线下的 2-3 篇 arxiv 论文(尤其是 <code>OS-Copilot</code> &#x2F; <code>GOD model</code> &#x2F; <code>Foundations of GenIR</code> 这三篇入门);</li>
+<li>最后真的去下一个试用版跑两周,看延迟、隐私、能耗的实际感受。</li>
+</ul>
+<p>最后提醒一句:本文里所有「厂商 + 价格 + 路线命名」都来自 2026 年 10 月前后的公开资料,具体产品规格、订阅策略、可用区域以各厂商正式发布为准。如果半年后你看到价格或命名变了,请以官方公告为准,论文层面的能力对比仍然有效。</p>
+<hr>
+<p><strong>相关阅读</strong>:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2501.02842v1">Foundations of GenIR(arxiv)</a> · 生成式信息检索的范式起点</li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2402.07456v2">OS-Copilot(arxiv)</a> · 通用计算机 Agent 奠基论文</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Anil-matcha/open-dots">open-dots(GitHub 5.7k⭐)</a> · 自托管 dot 实现</li>
+</ul>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AGI/" rel="tag">AGI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI-Agent/" rel="tag">AI-Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OS-Copilot/" rel="tag">OS-Copilot</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%86%B3%E7%AD%96%E6%A0%91/" rel="tag">决策树</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9AAgent/" rel="tag">多Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AB%AF%E4%BE%A7AI/" rel="tag">端侧AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%89%E5%9E%8B%E5%86%B3%E7%AD%96/" rel="tag">选型决策</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/12/2026/2026-10-13-ai-assistant-ecosystem/">AI 助手生态案例盘点</a><a class="next" href="/2026/10/07/2026/2026-10-08-academic-research-skills/">22 个科研学术 Skill</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>26 个 Agent skill | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">26 个 Agent skill</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">26 个 Agent skill</h1><div class="post-meta">2026-10-07<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3.5k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 14</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>Agent Skill 是 2026 年 AI 工程师的核心资产——一个好的 Skill 能让 Claude Code、Cursor、Codex 等 coding agent 的产出从「能跑」变成「生产级」。本文从社区 26 条高价值 Skill 里，<strong>精选 Top 5 + 10 条深度解读 + 16 条紧凑清单</strong>，覆盖工程、性能、上下文、安全、视觉化 7 大场景。</p>
+<h2 id="一、Top-5-概览"><a href="#一、Top-5-概览" class="headerlink" title="一、Top 5 概览"></a>一、Top 5 概览</h2><p>按 GitHub stars 降序，每个 Skill 都点过星标做交叉验证：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>仓库</th>
+<th>stars</th>
+<th>一句话核心</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/mattpocuck/skills">mattpocuck&#x2F;skills</a></td>
+<td>278,768</td>
+<td>“Skills for Real Engineers”，来自 mattpocuck 本人 .agents 目录的实战工程 Skill 合集</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/affaan-m/ECC">affaan-m&#x2F;ECC</a></td>
+<td>274,535</td>
+<td>Agent harness 性能优化系统：Skills + 经验 + 记忆 + 研究优先开发</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/Graphify-Labs/graphify">Graphify-Labs&#x2F;graphify</a></td>
+<td>124,525</td>
+<td>把任意代码库（含文档、SQL schema、配置、PDF）变成可查询的知识图谱</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/addyosmani/agent-skills">addyosmani&#x2F;agent-skills</a></td>
+<td>102,310</td>
+<td>Google Chrome 团队出品，面向 AI 编程 agent 的生产级工程 Skill 集合</td>
+</tr>
+<tr>
+<td>5</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/thedotmack/claude-mem">thedotmack&#x2F;claude-mem</a></td>
+<td>97,391</td>
+<td>跨会话持久化上下文：自动捕获&#x2F;压缩&#x2F;重注入，兼容 Claude Code &#x2F; Cursor &#x2F; Codex &#x2F; Gemini</td>
+</tr>
+</tbody></table>
+<p><strong>一句话总结</strong>：Top 1-2 是「通用工程方法论」，Top 3 是「代码理解新范式」，Top 4 是「工程实践模板」，Top 5 是「上下文持久化」。装这 5 个，基本覆盖日常 coding agent 90% 的场景。</p>
+<h2 id="二、Skill-知识底座"><a href="#二、Skill-知识底座" class="headerlink" title="二、Skill 知识底座"></a>二、Skill 知识底座</h2><p>在装 Skill 之前，先理解它的运行机制——否则容易装了一堆、撞车率 40%。</p>
+<h3 id="2-1-什么是-Agent-Skill"><a href="#2-1-什么是-Agent-Skill" class="headerlink" title="2.1 什么是 Agent Skill"></a>2.1 什么是 Agent Skill</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Skill = 一个 SKILL.md 文件（含 frontmatter + markdown body）</span><br><span class="line">  - frontmatter：描述、触发条件、模型选择、权限</span><br><span class="line">  - body：具体执行流程 + 工具调用规则</span><br><span class="line">  - 加载流程：系统注入 description → 按需触发 → 读取 body</span><br></pre></td></tr></table></figure>
+
+<p><strong>Skill ≠ Tool</strong>：</p>
+<ul>
+<li>Tool 是「单次原子能力」（调 API、读文件）</li>
+<li>Skill 是「一组 Tool + Prompt + 决策规则的 SOP」</li>
+</ul>
+<h3 id="2-2-Skill-触发机制"><a href="#2-2-Skill-触发机制" class="headerlink" title="2.2 Skill 触发机制"></a>2.2 Skill 触发机制</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 启动 Agent 时：所有 Skill 的 description 被注入系统提示</span><br><span class="line">2. 用户输入：Agent 根据 description 判断匹配度</span><br><span class="line">3. 命中阈值：自动加载 body，按 SOP 执行</span><br><span class="line">4. 不命中：保持沉默，不占用上下文</span><br></pre></td></tr></table></figure>
+
+<p><strong>这意味着</strong>：Skill 的 description 写得好不好，决定了它「撞车率」与「触发率」。</p>
+<h3 id="2-3-选型三层过滤"><a href="#2-3-选型三层过滤" class="headerlink" title="2.3 选型三层过滤"></a>2.3 选型三层过滤</h3><p>社区总结的三层过滤法：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">第一层：能否解决我的具体场景？（不是&quot;看起来很酷&quot;）</span><br><span class="line">第二层：description 是否清晰？（撞车率 &gt; 40% = 装它就是坑队友）</span><br><span class="line">第三层：维护是否持续？（README + commits + 最近 90 天活跃）</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键指标</strong>：撞车率 ≤ 5% + 近 90 天有 commit &#x3D; 可装。否则先观察。</p>
+<h2 id="三、生产级-Skill-集合（10-条精选）"><a href="#三、生产级-Skill-集合（10-条精选）" class="headerlink" title="三、生产级 Skill 集合（10 条精选）"></a>三、生产级 Skill 集合（10 条精选）</h2><p>下面 10 条按「stars 高 + 类别代表性强」排序，每条都带”为什么推荐 &#x2F; 适用场景”。</p>
+<h3 id="3-1-mattpocuck-skills（278k-·-通用工程方法论）"><a href="#3-1-mattpocuck-skills（278k-·-通用工程方法论）" class="headerlink" title="3.1 mattpocuck&#x2F;skills（278k · 通用工程方法论）"></a>3.1 mattpocuck&#x2F;skills（278k · 通用工程方法论）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/mattpocuck/skills</span></span><br><span class="line"><span class="string">作者:</span> <span class="string">mattpocuck（TypeScript</span> <span class="string">Weekly</span> <span class="string">主理人）</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">TypeScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">278</span><span class="string">,768</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：「Skills for Real Engineers」——来自 mattpocuck 本人 <code>.agents</code> 目录的真实工程 Skill，不是 Demo。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>想了解「高水平工程师每天用 coding agent 干什么」</li>
+<li>想直接复用一批 TS 工程的 code review、refactor、test 模板</li>
+<li>想学习 Skill 怎么写得”不撞车”</li>
+</ul>
+<p><strong>为什么推荐</strong>：TypeScript Weekly 的受众都是真实工程师，278k stars 是真实使用量而非炒作。<strong>第一个该装的 Skill</strong>。</p>
+<h3 id="3-2-affaan-m-ECC（274k-·-性能优化系统）"><a href="#3-2-affaan-m-ECC（274k-·-性能优化系统）" class="headerlink" title="3.2 affaan-m&#x2F;ECC（274k · 性能优化系统）"></a>3.2 affaan-m&#x2F;ECC（274k · 性能优化系统）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/affaan-m/ECC</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">JavaScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">274</span><span class="string">,535</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：<strong>Agent harness performance optimization system</strong>——不是单个 Skill，而是一套”Agent 操作系统级别”的优化框架。</p>
+<p><strong>包含模块</strong>：</p>
+<ul>
+<li>Skills（可复用方法）</li>
+<li>Instincts（条件反射级决策）</li>
+<li>Memory（跨会话上下文）</li>
+<li>Security（安全护栏）</li>
+<li>Research-first（先调研后编码）</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>Agent 跑得慢、token 浪费严重</li>
+<li>多个 Agent 间需要共享上下文</li>
+<li>想给 Agent 加安全护栏</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>唯一一个把”Agent 性能”当一级概念做的项目</strong>——其他 Skill 都是”加能力”，ECC 是”让 Agent 跑得更快”。</p>
+<h3 id="3-3-Graphify-Labs-graphify（124k-·-代码-→-知识图谱）"><a href="#3-3-Graphify-Labs-graphify（124k-·-代码-→-知识图谱）" class="headerlink" title="3.3 Graphify-Labs&#x2F;graphify（124k · 代码 → 知识图谱）"></a>3.3 Graphify-Labs&#x2F;graphify（124k · 代码 → 知识图谱）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/Graphify-Labs/graphify</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">Python</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">124</span><span class="string">,525</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：把任意代码库（含文档、SQL schema、配置、PDF）转成可查询的知识图谱，提供 <code>/graphify</code> Skill。</p>
+<p><strong>使用方式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/graphify</span><br><span class="line"><span class="comment"># Agent 自动扫描代码库 → 抽取实体关系 → 存入知识图谱</span></span><br><span class="line"><span class="comment"># 之后可问：「订单服务的所有外部依赖是什么？」</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>接手陌生大型代码库，需要快速理解架构</li>
+<li>想让 Agent 能”跨文件推理”（如”用户表的所有写入路径”）</li>
+<li>做架构评审、依赖审计</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>代码理解从 grep 时代跨入知识图谱时代</strong>——Agent 不用再一行行读文件，而是直接查图谱。</p>
+<h3 id="3-4-addyosmani-agent-skills（102k-·-Chrome-团队出品）"><a href="#3-4-addyosmani-agent-skills（102k-·-Chrome-团队出品）" class="headerlink" title="3.4 addyosmani&#x2F;agent-skills（102k · Chrome 团队出品）"></a>3.4 addyosmani&#x2F;agent-skills（102k · Chrome 团队出品）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/addyosmani/agent-skills</span></span><br><span class="line"><span class="string">作者:</span> <span class="string">Google</span> <span class="string">Chrome</span> <span class="string">团队（addyosmani）</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">JavaScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">102</span><span class="string">,310</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：<strong>Google Chrome 团队内部使用</strong>的 AI 编程 agent 工程 Skill 集合，覆盖代码审查、调试、规划、PR 描述等场景。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>在大厂工程团队，希望 Skill 风格”工业化”</li>
+<li>想参考 Chrome 团队的代码审查 SOP</li>
+<li>需要 PR 描述、commit message 自动化</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>大厂背书 + 真实工程实践</strong>——addyosmani 是 Chrome 性能优化负责人，102k stars 是工业级验证。</p>
+<h3 id="3-5-thedotmack-claude-mem（97k-·-跨会话持久化）"><a href="#3-5-thedotmack-claude-mem（97k-·-跨会话持久化）" class="headerlink" title="3.5 thedotmack&#x2F;claude-mem（97k · 跨会话持久化）"></a>3.5 thedotmack&#x2F;claude-mem（97k · 跨会话持久化）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/thedotmack/claude-mem</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">TypeScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">97</span><span class="string">,391</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：「跨会话持久化上下文」——自动捕获、压缩、重注入上下文，<strong>解决 Claude Code「开新窗口就忘事」的痛点</strong>。</p>
+<p><strong>核心特性</strong>：</p>
+<ul>
+<li>自动捕获所有对话历史</li>
+<li>智能压缩（保留关键决策、去除冗余）</li>
+<li>新会话启动时自动重注入</li>
+<li>兼容 Claude Code &#x2F; Cursor &#x2F; Codex &#x2F; Gemini</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>长周期项目（跨多天、多周）</li>
+<li>团队多人协作同一个 codebase</li>
+<li>需要 Agent 记住”上次为什么选 PostgreSQL 而不是 MongoDB”</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>Agent 的”长期记忆”问题目前没有标准答案，claude-mem 是社区最成熟的方案</strong>。</p>
+<h3 id="3-6-cloudflare-security-audit-skill（25k-·-安全审计）"><a href="#3-6-cloudflare-security-audit-skill（25k-·-安全审计）" class="headerlink" title="3.6 cloudflare&#x2F;security-audit-skill（25k · 安全审计）"></a>3.6 cloudflare&#x2F;security-audit-skill（25k · 安全审计）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/cloudflare/security-audit-skill</span></span><br><span class="line"><span class="string">作者:</span> <span class="string">Cloudflare</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">JavaScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">25</span><span class="string">,565</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：Cloudflare 出品的<strong>多阶段安全审计 Skill</strong>——结果机器可读、可独立验证，给 coding agent 加安全门禁。</p>
+<p><strong>审计阶段</strong>：</p>
+<ol>
+<li>依赖审计（已知 CVE）</li>
+<li>代码审计（注入、越权、敏感信息泄露）</li>
+<li>配置审计（CORS、CSP、Secrets）</li>
+<li>部署审计（容器、CI&#x2F;CD）</li>
+</ol>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>企业内部 Skill（合规、安全审计必须）</li>
+<li>给生产代码加最后一道门</li>
+<li>CI&#x2F;CD 集成 Agent 自动审计</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>Stars 数虽然只有 25k，但背书最强（Cloudflare）</strong>——企业内审首选。</p>
+<h3 id="3-7-tt-a1i-archify（78k-·-想法-→-架构图）"><a href="#3-7-tt-a1i-archify（78k-·-想法-→-架构图）" class="headerlink" title="3.7 tt-a1i&#x2F;archify（78k · 想法 → 架构图）"></a>3.7 tt-a1i&#x2F;archify（78k · 想法 → 架构图）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/tt-a1i/archify</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">JavaScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">78</span><span class="string">,944</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：把任意想法、计划、代码库变成<strong>好看的可交互架构图</strong>——一个面向 Claude Code、Codex 的可视化 Skill。</p>
+<p><strong>使用方式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/archify</span><br><span class="line"><span class="comment"># 输入：「画出当前微服务架构」</span></span><br><span class="line"><span class="comment"># 输出：HTML + SVG 可交互图</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>技术方案评审（PPT 配图）</li>
+<li>文档自动生成（README 加图）</li>
+<li>新人 onboarding（架构图替代文字）</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>架构图是工程沟通的硬通货</strong>——archify 把”画图”从设计师手里抢回到 Agent。</p>
+<h3 id="3-8-Egonex-AI-Understand-Anything（85k-·-交互式知识图谱）"><a href="#3-8-Egonex-AI-Understand-Anything（85k-·-交互式知识图谱）" class="headerlink" title="3.8 Egonex-AI&#x2F;Understand-Anything（85k · 交互式知识图谱）"></a>3.8 Egonex-AI&#x2F;Understand-Anything（85k · 交互式知识图谱）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/Egonex-AI/Understand-Anything</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">TypeScript</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">85</span><span class="string">,481</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：「Graphs that teach &gt; graphs that impress」——把任意代码转成可探索、可搜索、可交互的知识图谱。</p>
+<p><strong>与 graphify 的区别</strong>：</p>
+<ul>
+<li>graphify：Python 实现，强调查询能力</li>
+<li>Understand-Anything：TypeScript 实现，强调交互体验</li>
+</ul>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>教学场景（让学生”点图”理解代码）</li>
+<li>代码评审（可视化依赖关系）</li>
+<li>Onboarding（新人”看图”代替”读文档”）</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>stars 85k 是真实用户量</strong>——交互体验在知识图谱赛道最强。</p>
+<h3 id="3-9-punkpeye-awesome-mcp-servers（95k-·-MCP-生态）"><a href="#3-9-punkpeye-awesome-mcp-servers（95k-·-MCP-生态）" class="headerlink" title="3.9 punkpeye&#x2F;awesome-mcp-servers（95k · MCP 生态）"></a>3.9 punkpeye&#x2F;awesome-mcp-servers（95k · MCP 生态）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/punkpeye/awesome-mcp-servers</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">N/A（awesome</span> <span class="string">列表）</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">95</span><span class="string">,897</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：MCP servers 精选列表——GitHub、GitLab、Postgres、Filesystem、Slack 等数百个官方&#x2F;社区 MCP server。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>想找现成的 MCP server 接入 Agent</li>
+<li>想了解 MCP 生态成熟度</li>
+<li>想找特定服务的官方 MCP 实现</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>MCP 是 Agent 时代最重要的协议</strong>——awesome-mcp-servers 是 MCP 生态的”HN 首页”。</p>
+<h3 id="3-10-ComposioHQ-awesome-claude-skills（76k-·-Claude-Skill-精选）"><a href="#3-10-ComposioHQ-awesome-claude-skills（76k-·-Claude-Skill-精选）" class="headerlink" title="3.10 ComposioHQ&#x2F;awesome-claude-skills（76k · Claude Skill 精选）"></a>3.10 ComposioHQ&#x2F;awesome-claude-skills（76k · Claude Skill 精选）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/ComposioHQ/awesome-claude-skills</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">Python</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">76</span><span class="string">,639</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：Claude Skills 精选列表 + 资源 + 工具——Composio 维护，专注 Claude AI 工作流定制。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>想系统了解 Claude Skill 生态</li>
+<li>找现成的 Skill 直接装</li>
+<li>找 Skill 设计模式参考</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>Composio 是 Claude 生态最活跃的公司之一</strong>——list 质量与更新频率都是顶级。</p>
+<h2 id="四、场景化-Skill（2-条精选）"><a href="#四、场景化-Skill（2-条精选）" class="headerlink" title="四、场景化 Skill（2 条精选）"></a>四、场景化 Skill（2 条精选）</h2><h3 id="4-1-sergebulaev-linkedin-skills（4k-·-写-LinkedIn-帖子）"><a href="#4-1-sergebulaev-linkedin-skills（4k-·-写-LinkedIn-帖子）" class="headerlink" title="4.1 sergebulaev&#x2F;linkedin-skills（4k · 写 LinkedIn 帖子）"></a>4.1 sergebulaev&#x2F;linkedin-skills（4k · 写 LinkedIn 帖子）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://github.com/sergebulaev/linkedin-skills</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">Python</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">4</span><span class="string">,268</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：11 个 Claude Code + Codex Skill，<strong>专攻”写出人味不机械”的 LinkedIn 帖子</strong>。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>个人品牌运营（LinkedIn 是主战场）</li>
+<li>不擅长写”人话”的工程师</li>
+<li>想批量产出 LinkedIn 内容</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>stars 不高但垂直领域唯一</strong>——专门解决”Agent 写社交媒体很机械”的痛点。</p>
+<h3 id="4-2-panniantong-agent-reach（·-16-平台统一接入）"><a href="#4-2-panniantong-agent-reach（·-16-平台统一接入）" class="headerlink" title="4.2 panniantong&#x2F;agent-reach（· 16 平台统一接入）"></a>4.2 panniantong&#x2F;agent-reach（· 16 平台统一接入）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">仓库:</span> <span class="string">https://lobehub.com/en/skills/panniantong-agent-reach-skill</span></span><br><span class="line"><span class="string">语言:</span> <span class="string">Skill</span></span><br><span class="line"><span class="attr">stars:</span> <span class="number">0</span><span class="string">（站点）</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心</strong>：AI agents <strong>统一接入 16 个 Web 平台</strong>（Twitter&#x2F;X、Reddit、YouTube、GitHub、Bilibili、小红书、抖音、微博、微信公众号等）。</p>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>多平台内容分发</li>
+<li>跨平台数据采集</li>
+<li>不想每个平台单独写 Skill</li>
+</ul>
+<p><strong>为什么推荐</strong>：<strong>“撞车率”最低的 Skill</strong>——一个 Skill 替代 16 个平台接入。</p>
+<h2 id="五、其他推荐（16-条紧凑清单）"><a href="#五、其他推荐（16-条紧凑清单）" class="headerlink" title="五、其他推荐（16 条紧凑清单）"></a>五、其他推荐（16 条紧凑清单）</h2><p>剩余 16 条按类别分组，每条一行：</p>
+<h3 id="5-1-官方文档与商城（5-条）"><a href="#5-1-官方文档与商城（5-条）" class="headerlink" title="5.1 官方文档与商城（5 条）"></a>5.1 官方文档与商城（5 条）</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview">Anthropic Agent Skills 官方文档</a> — 理解 SKILL.md 加载流程的最佳入口</li>
+<li><a target="_blank" rel="noopener" href="https://mcpservers.org/agent-skills">mcpservers.org&#x2F;agent-skills</a> — 官方&#x2F;社区 Skill 一站式商店，分类清晰，一键安装</li>
+<li><a target="_blank" rel="noopener" href="https://awesomeclaude.ai/awesome-claude-skills">awesomeclaude.ai&#x2F;awesome-claude-skills</a> — 区分 slash command（手动触发）vs skill（自动按 context 触发）</li>
+<li><a target="_blank" rel="noopener" href="https://www.totalum.app/blog/claude-code-skills-totalum">Totalum Blog — Claude Code Skills 完整指南</a> — Skills vs Hooks vs Subagents vs MCP 差异对比</li>
+<li><a target="_blank" rel="noopener" href="https://leehanchung.github.io/blogs/2025/10/26/claude-skills-deep-dive">leehanchung — Claude Skills Deep Dive</a> — 源码级拆解 frontmatter + markdown body</li>
+</ul>
+<h3 id="5-2-实战经验贴（4-条）"><a href="#5-2-实战经验贴（4-条）" class="headerlink" title="5.2 实战经验贴（4 条）"></a>5.2 实战经验贴（4 条）</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@unicodeveloper/10-must-have-skills-for-claude-and-any-coding-agent-in-2026-b5451b013051">Medium: 10 Must-Have Skills for Claude (2026)</a> — 官方&#x2F;验证&#x2F;社区三层 Skill 全景</li>
+<li><a target="_blank" rel="noopener" href="https://www.aihero.dev/5-agent-skills-i-use-every-day">aihero: 5 Agent Skills I Use Every Day</a> — 实战工程师每日 5 个：prompting、TDD、架构、spec</li>
+<li><a target="_blank" rel="noopener" href="https://post.smzdm.com/p/apql9qp9/">什么值得买: 1000 个 skills 推荐 30 个</a> — 中文社区从 1000 个 SKILL.md 精选 30 个</li>
+<li><a target="_blank" rel="noopener" href="https://post.m.smzdm.com/p/ad7m5ovz">smzdm: 装上就快一倍 — 谁该装、谁该建</a> — 选型三层过滤 + 撞车率 40% → 5% 描述写法</li>
+</ul>
+<h3 id="5-3-特定功能-Skill（4-条）"><a href="#5-3-特定功能-Skill（4-条）" class="headerlink" title="5.3 特定功能 Skill（4 条）"></a>5.3 特定功能 Skill（4 条）</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.yeyupiaoling.cn/article/1791149995294?lang=en">luxueliu-agent-discipline-skills</a> — 4 个单文件工程纪律 Skill，一行命令安装</li>
+<li><a target="_blank" rel="noopener" href="https://www.skillsdirectory.com/skills/jackneil-launch-post">Launch Post (Grade A)</a> — Claude Skill：自动发布 X&#x2F;Twitter 公告</li>
+<li><a target="_blank" rel="noopener" href="https://aihot.virxact.com/api/v1/items/dfcis3hxowljt45i0bvyi3f0n">PromptArmor Databricks Genie 披露</a> — Skill 安全风险 case：企业内审 Skill 来源是刚需</li>
+<li><a target="_blank" rel="noopener" href="https://lobehub.com/en/skills/panniantong-agent-reach-skill">agent-reach</a> — 16 平台统一接入（已在 4.2 详解）</li>
+</ul>
+<h3 id="5-4-新功能与平台（3-条）"><a href="#5-4-新功能与平台（3-条）" class="headerlink" title="5.4 新功能与平台（3 条）"></a>5.4 新功能与平台（3 条）</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://aihot.virxact.com/api/v1/items/sxr71auxicu8uk3e4bqxol02h">Claude Code 云端会话</a> — 每个任务独占 VM，可并行 + 以分支收尾，Pro&#x2F;Max&#x2F;Team&#x2F;Enterprise 免费</li>
+<li><a target="_blank" rel="noopener" href="https://aihot.virxact.com/api/v1/items/sbvvdrkyjbtob4gp4iwwtyar1">Claude Code mods 入门</a> — Token Weather 上下文窗口预报插件，mods &#x3D; hooks 形式运行的 JS&#x2F;TS 模块</li>
+</ul>
+<h2 id="六、Skill-生态的-5-段-takeaway"><a href="#六、Skill-生态的-5-段-takeaway" class="headerlink" title="六、Skill 生态的 5 段 takeaway"></a>六、Skill 生态的 5 段 takeaway</h2><h3 id="6-1-通用工程方法论-单点-Skill"><a href="#6-1-通用工程方法论-单点-Skill" class="headerlink" title="6.1 通用工程方法论 &gt; 单点 Skill"></a>6.1 通用工程方法论 &gt; 单点 Skill</h3><p>mattpocuck&#x2F;skills（278k）和 affaan-m&#x2F;ECC（274k）高居榜首，因为它们是「方法论」而非「单功能」。装一个能解决一类问题，而不是装十个解决十个问题。</p>
+<h3 id="6-2-代码理解进入”知识图谱”时代"><a href="#6-2-代码理解进入”知识图谱”时代" class="headerlink" title="6.2 代码理解进入”知识图谱”时代"></a>6.2 代码理解进入”知识图谱”时代</h3><p>Graphify-Labs&#x2F;graphify（124k）和 Egonex-AI&#x2F;Understand-Anything（85k）合并 stars 超 200k——<strong>代码理解的下一个十年是图谱，不是 grep</strong>。</p>
+<h3 id="6-3-大厂背书是工业级信号"><a href="#6-3-大厂背书是工业级信号" class="headerlink" title="6.3 大厂背书是工业级信号"></a>6.3 大厂背书是工业级信号</h3><p>addyosmani&#x2F;agent-skills（Chrome）和 cloudflare&#x2F;security-audit-skill（Cloudflare）——<strong>stars 数背后是大厂内部使用量</strong>。</p>
+<h3 id="6-4-跨工具兼容性是新主线"><a href="#6-4-跨工具兼容性是新主线" class="headerlink" title="6.4 跨工具兼容性是新主线"></a>6.4 跨工具兼容性是新主线</h3><p>claude-mem（兼容 4 个 Agent 平台）和 agent-reach（16 个 Web 平台）——<strong>Skill 必须多平台兼容才有未来</strong>。</p>
+<h3 id="6-5-安全审计是企业刚需"><a href="#6-5-安全审计是企业刚需" class="headerlink" title="6.5 安全审计是企业刚需"></a>6.5 安全审计是企业刚需</h3><p>cloudflare&#x2F;security-audit-skill（25k）和 PromptArmor 披露的 Skill 钓鱼风险——<strong>企业级 Agent 落地，安全 Skill 是入场券</strong>。</p>
+<h2 id="七、装-Skill-的-3-个铁律"><a href="#七、装-Skill-的-3-个铁律" class="headerlink" title="七、装 Skill 的 3 个铁律"></a>七、装 Skill 的 3 个铁律</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 先理解机制，再装：SKILL.md 怎么加载、description 怎么触发</span><br><span class="line">2. 三层过滤选型：场景匹配 + 描述清晰 + 持续维护</span><br><span class="line">3. 撞车率 ≤ 5%：description 写得像搜索词，而不是通用描述</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、推荐起步包"><a href="#八、推荐起步包" class="headerlink" title="八、推荐起步包"></a>八、推荐起步包</h2><p>如果只装 5 个：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. mattpocuck/skills（278k）       — 通用工程方法论</span><br><span class="line">2. addyosmani/agent-skills（102k） — 工程实践模板</span><br><span class="line">3. thedotmack/claude-mem（97k）    — 跨会话持久化</span><br><span class="line">4. punkpeye/awesome-mcp-servers    — MCP 生态地图</span><br><span class="line">5. cloudflare/security-audit-skill — 安全门禁</span><br></pre></td></tr></table></figure>
+
+<p><strong>装完这 5 个，覆盖 80% 日常 coding agent 场景</strong>。剩下 21 条按场景按需装。</p>
+<hr>
+<blockquote>
+<p><strong>Skill 生态的现状</strong>（2026 H2）：<strong>Top 5 stars 都是百万 &#x2F; 几十万量级</strong>——Skill 已经是 coding agent 时代的「事实操作系统」。<strong>未来 12 个月的核心趋势</strong>：① 跨平台统一（claude-mem、agent-reach 路线） ② 知识图谱化（graphify、Understand-Anything 路线） ③ 安全审计标配（cloudflare、PromptArmor 路线）。<strong>会装 Skill、会改 SKILL.md、是 AI 工程师的核心竞争力</strong>。</p>
+</blockquote>
+<h2 id="更新记录（2026-10-09）"><a href="#更新记录（2026-10-09）" class="headerlink" title="更新记录（2026-10-09）"></a>更新记录（2026-10-09）</h2><blockquote>
+<p>本节为源稿「批次 2026-10-09」GitHub 增补——在原 26 条基础上追加 4 个高 star 仓库（编号 27-30）。原 26 条内容未改动。</p>
+</blockquote>
+<ul>
+<li>[#27] <a target="_blank" rel="noopener" href="https://github.com/obra/superpowers">obra&#x2F;superpowers</a> ⭐ 296,610 — An agentic skills framework &amp; software development methodology that works.</li>
+<li>[#28] <a target="_blank" rel="noopener" href="https://github.com/anthropics/skills">anthropics&#x2F;skills</a> ⭐ 180,018 — Public repository for Agent Skills.</li>
+<li>[#29] <a target="_blank" rel="noopener" href="https://github.com/Shubhamsaboo/awesome-llm-apps">Shubhamsaboo&#x2F;awesome-llm-apps</a> ⭐ 140,838 — 100+ AI Agents, Agent Skills and RAG Apps - Free and Open Source.</li>
+<li>[#30] <a target="_blank" rel="noopener" href="https://github.com/JuliusBrussee/caveman">JuliusBrussee&#x2F;caveman</a> ⭐ 110,606 — why use many token when few token do trick. Viral skill + proxy for coding agents that cuts 65% of tokens by talking like a caveman.</li>
+</ul>
+<p><strong>入库说明</strong>：上述 4 条来自源稿批次 2026-10-09 的 GitHub 公开仓库增补，用于补充近期 stars 增长显著的 Agent skill 仓库；原 26 条保持不变，整体收录扩展为 30 条。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Claude-Code/" rel="tag">Claude Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MCP/" rel="tag">MCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Skill/" rel="tag">Skill</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" rel="tag">资源精选</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/07/2026/2026-10-08-academic-research-skills/">22 个科研学术 Skill</a><a class="next" href="/2026/10/07/2026/2026-10-08-design-skills/">18 个设计 Skill 推荐</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

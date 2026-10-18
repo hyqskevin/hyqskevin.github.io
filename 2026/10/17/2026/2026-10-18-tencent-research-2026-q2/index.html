@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>腾讯研究院Q2抓取复盘 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">腾讯研究院Q2抓取复盘</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">腾讯研究院Q2抓取复盘</h1><div class="post-meta">2026-10-17<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.4k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 5</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><blockquote>
+<p>抓取周期：2026-04-27 ~ 2026-07-27。以下为公开抓取源的尝试记录与结论，供后续复盘参考。</p>
+</blockquote>
+<h2 id="一、结论"><a href="#一、结论" class="headerlink" title="一、结论"></a>一、结论</h2><p><strong>2026-04-27 ~ 2026-07-27 期间，腾讯研究院公众号在公开抓取源里基本拿不到内容。</strong></p>
+<p>无论是第三方搜索索引还是官方站点，都没能在目标时间窗内返回新的公众号推文。问题集中在两点：搜狗微信搜索的索引缺失或被屏蔽，以及腾讯研究院官网 tisi.org 自身更新缓慢。</p>
+<h2 id="二、各源尝试结果"><a href="#二、各源尝试结果" class="headerlink" title="二、各源尝试结果"></a>二、各源尝试结果</h2><h3 id="2-1-搜狗微信搜索（weixin-sogou-com）—-失败"><a href="#2-1-搜狗微信搜索（weixin-sogou-com）—-失败" class="headerlink" title="2.1 搜狗微信搜索（weixin.sogou.com）— 失败"></a>2.1 搜狗微信搜索（weixin.sogou.com）— 失败</h3><ul>
+<li><code>type=1</code>（文章）与 <code>type=2</code>（公众号）两种请求都触发反爬</li>
+<li><code>curl</code> 拿到的 10KB &#x2F; 30KB 空壳 HTML，页面里没有任何 <code>mp.weixin.qq.com</code> 链接</li>
+<li>Playwright（headless Chromium）渲染后拿到 10KB 页面，搜索结果显示「暂无与”腾讯研究院”相关的官方认证订阅号」</li>
+<li>变种名「腾讯研究院TISI」同样无结果</li>
+<li>推测：该公众号在搜狗的索引可能未注册，或被屏蔽</li>
+</ul>
+<h3 id="2-2-腾讯研究院官网（tisi-org）—-部分成功"><a href="#2-2-腾讯研究院官网（tisi-org）—-部分成功" class="headerlink" title="2.2 腾讯研究院官网（tisi.org）— 部分成功"></a>2.2 腾讯研究院官网（tisi.org）— 部分成功</h3><ul>
+<li>抓取首页 30 篇文章 ID，范围 32573 ~ 33246</li>
+<li><strong>最新一篇为 2026-03-17</strong>（《春节AI热潮之后，网民真的开始用AI了吗？｜T-ask调研》）</li>
+<li><strong>2026-04-27 之后 0 篇</strong></li>
+<li>原因：腾讯研究院官网更新缓慢，4–7 月可能本来就没有新文</li>
+</ul>
+<h3 id="2-3-Bing-搜索-—-转载命中"><a href="#2-3-Bing-搜索-—-转载命中" class="headerlink" title="2.3 Bing 搜索 — 转载命中"></a>2.3 Bing 搜索 — 转载命中</h3><ul>
+<li><code>site:mp.weixin.qq.com 腾讯研究院 2026</code> 命中 4 个标题</li>
+<li>但 Bing 不返回 <code>mp.weixin.qq.com</code> 原链接，只给知乎 &#x2F; 腾讯新闻等转载链接</li>
+<li>命中标题：<ul>
+<li>聚焦AI系统性进化 腾讯发布2026人工智能十大趋势报告</li>
+<li>腾讯研究院《AI 原生工作报告 2026》（知乎）</li>
+<li>腾讯研究院：2026从超级个体到超级团队——AI时代组织变革</li>
+<li>腾讯研究院推出《AI Coding 观察报告 2.0》</li>
+</ul>
+</li>
+</ul>
+<h2 id="三、获取建议"><a href="#三、获取建议" class="headerlink" title="三、获取建议"></a>三、获取建议</h2><ol>
+<li><strong>人工方式</strong>：打开微信 App → 搜「腾讯研究院」→ 进入公众号 → 查看 2026-04 之后所有推文</li>
+<li><strong>第三方聚合</strong>：看 wechat-feeds &#x2F; 公众号监控类服务（需付费）</li>
+<li><strong>新榜 &#x2F; 西瓜数据</strong>：公众号数据平台，可能有「腾讯研究院」的近 3 个月文章归档（需付费）</li>
+<li><strong>微信「搜一搜」</strong>：微信内嵌搜索，比搜狗微信搜索索引更全</li>
+<li><strong>IMA 知识库</strong>：在 706 社区助手 &#x2F; 花卷的 agent 前沿仓库里直接搜「腾讯研究院」</li>
+</ol>
+<h2 id="四、已知可获取的相关内容"><a href="#四、已知可获取的相关内容" class="headerlink" title="四、已知可获取的相关内容"></a>四、已知可获取的相关内容</h2><p>来源：腾讯研究院官网 tisi.org（2025-12 ~ 2026-03，仅供参考，不在 2026-04-27 ~ 07-27 抓取窗口内）。</p>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>标题</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2026-03-17</td>
+<td>春节AI热潮之后，网民真的开始用AI了吗？｜T-ask调研</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/33083/">https://www.tisi.org/33083/</a></td>
+</tr>
+<tr>
+<td>2026-03-12</td>
+<td>一场关于AI意识觉醒的数字表演</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/33048/">https://www.tisi.org/33048/</a></td>
+</tr>
+<tr>
+<td>2026-03-10</td>
+<td>麦克法兰：普通人要如何在时代的变化中自我保全？</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/33043/">https://www.tisi.org/33043/</a></td>
+</tr>
+<tr>
+<td>2026-03-09</td>
+<td>中国动画电影为什么会成功？</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/33031/">https://www.tisi.org/33031/</a></td>
+</tr>
+<tr>
+<td>2026-03-06</td>
+<td>大模型之后：人类与机器的分工重写｜万字圆桌实录</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/33011/">https://www.tisi.org/33011/</a></td>
+</tr>
+<tr>
+<td>2026-03-03</td>
+<td>张江：人工智能的功能与意识，其实是两条不相交的平行线</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32996/">https://www.tisi.org/32996/</a></td>
+</tr>
+<tr>
+<td>2026-03-02</td>
+<td>腾讯研究院司晓：AI要让人放心，把人放大</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32978/">https://www.tisi.org/32978/</a></td>
+</tr>
+<tr>
+<td>2026-02-27</td>
+<td>胡延平：人的重建，从不仰望AI开始</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32945/">https://www.tisi.org/32945/</a></td>
+</tr>
+<tr>
+<td>2026-02-12</td>
+<td>我们正在迎来”硅基化”社交时代</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32923/">https://www.tisi.org/32923/</a></td>
+</tr>
+<tr>
+<td>2026-02-11</td>
+<td>2025年，微短剧精品化走到哪步了？</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32917/">https://www.tisi.org/32917/</a></td>
+</tr>
+<tr>
+<td>2026-02-09</td>
+<td>2026年人工智能+的共识与分歧</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32940/">https://www.tisi.org/32940/</a></td>
+</tr>
+<tr>
+<td>2026-02-05</td>
+<td>袁晓辉：AI不应只为精英而来，而应为每一个人而来</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32854/">https://www.tisi.org/32854/</a></td>
+</tr>
+<tr>
+<td>2026-02-04</td>
+<td>1865年《红旗法案》的幽灵，仍在今天游荡</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32808/">https://www.tisi.org/32808/</a></td>
+</tr>
+<tr>
+<td>2026-02-03</td>
+<td>张笑宇：我为什么成了坚定的AI”降临派”？</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32940/">https://www.tisi.org/32940/</a></td>
+</tr>
+<tr>
+<td>2026-02-02</td>
+<td>AI是人的延伸，人是AI的尺度</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32711/">https://www.tisi.org/32711/</a></td>
+</tr>
+<tr>
+<td>2026-01-30</td>
+<td>2026前沿科技趋势：塑造自己的下一个版本</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32658/">https://www.tisi.org/32658/</a></td>
+</tr>
+<tr>
+<td>2026-01-29</td>
+<td>腾讯首席科学家张正友：具身智能已经走到多智能体互动的全新阶段</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32652/">https://www.tisi.org/32652/</a></td>
+</tr>
+<tr>
+<td>2026-01-28</td>
+<td>腾讯司晓：用让人放心的技术，迎接把人放大的未来</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32645/">https://www.tisi.org/32645/</a></td>
+</tr>
+<tr>
+<td>2026-01-27</td>
+<td>腾讯郭凯天：让AI成为尊重人、成就人、有温度的力量</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32593/">https://www.tisi.org/32593/</a></td>
+</tr>
+<tr>
+<td>2026-01-22</td>
+<td>2025年AI治理报告：回归现实主义</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/33246/">https://www.tisi.org/33246/</a></td>
+</tr>
+<tr>
+<td>2026-01-20</td>
+<td>超越”第四次工业革命”：关于人工智能与人类主体性的再思考</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32579/">https://www.tisi.org/32579/</a></td>
+</tr>
+<tr>
+<td>2026-01-15</td>
+<td>谁在沉迷AI算命？</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32573/">https://www.tisi.org/32573/</a></td>
+</tr>
+<tr>
+<td>2026-01-13</td>
+<td>胡泳：海外青少年社交媒体限制，背后的逻辑与趋势</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32229/">https://www.tisi.org/32229/</a></td>
+</tr>
+<tr>
+<td>2026-01-06</td>
+<td>AI会导致人类升智，还是降智？｜2万字辩论赛实录</td>
+<td><a target="_blank" rel="noopener" href="https://www.tisi.org/32017/">https://www.tisi.org/32017/</a></td>
+</tr>
+</tbody></table>
+<h2 id="五、模型版本说明"><a href="#五、模型版本说明" class="headerlink" title="五、模型版本说明"></a>五、模型版本说明</h2><p>⚠️ 以发布时为准：本文为人工整理的抓取实验记录，不涉及具体大模型生成。后续若重新抓取，请按当时可用的搜索索引与公众号状态重新评估。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/2026Q2/" rel="tag">2026Q2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%8A%93%E5%8F%96/" rel="tag">公众号抓取</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E7%88%AC/" rel="tag">反爬</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96/" rel="tag">数据获取</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%85%BE%E8%AE%AF%E7%A0%94%E7%A9%B6%E9%99%A2/" rel="tag">腾讯研究院</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/17/2026/2026-10-18-vue-ai-papers/">Vue 与 AI 论文速读</a><a class="next" href="/2026/10/17/2026/2026-10-18-wechat-ai-weekly-2026-q3/">2026 Q3 AI 前沿速览</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

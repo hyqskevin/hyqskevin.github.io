@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>DeepResearch 全新范式 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">DeepResearch 全新范式</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">DeepResearch 全新范式</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3.1k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 12</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>如果说 2023 年是「Prompt 联网」的元年、2024 年是 RAG 工程化的元年，那么 2025 年就是 <strong>DeepResearch</strong>（深度研究 Agent）全面登场的元年。从 2025-02-02 OpenAI 发布 Deep Research 起，Perplexity、Gemini、Anthropic、阿里 Qwen 几乎在两个月内集体跟进，把「LLM 自主完成研究员级任务」从概念变成了 ChatGPT Pro 里 5-30 分钟就能交付的完整研究报告。本篇系统拆解这套范式：核心定义、5 阶段状态机、OpenAI 架构、基准成绩、与 RAG 的边界、实现挑战、平台对比、可运行的 Python 代码，以及多模态 &#x2F; 实时 &#x2F; 协作三条未来趋势线。</p>
+<h2 id="一、DeepResearch-的核心定义"><a href="#一、DeepResearch-的核心定义" class="headerlink" title="一、DeepResearch 的核心定义"></a>一、DeepResearch 的核心定义</h2><h3 id="1-1-范式定义"><a href="#1-1-范式定义" class="headerlink" title="1.1 范式定义"></a>1.1 范式定义</h3><p>DeepResearch 不是一种新的模型，也不是某种检索算法的升级，而是一种全新的 <strong>Agent 范式</strong>：用 LLM 当大脑，把浏览器、搜索 API、代码执行器、文件写作工具串成一个多步循环，让模型自己决定「查什么 → 读什么 → 反思够不够 → 整合 → 写报告」。一句话概括：</p>
+<blockquote>
+<p><strong>DeepResearch &#x3D; LLM Agent + 浏览器 + 多步推理 + 信息整合 —— 自主完成”研究员”级别的工作。</strong></p>
+</blockquote>
+<p>它的本质是把「搜索 + 阅读 + 思考 + 写作」这条原本属于人类的流水线，整体外包给一个能反思的智能体。</p>
+<h3 id="1-2-与传统搜索的对比"><a href="#1-2-与传统搜索的对比" class="headerlink" title="1.2 与传统搜索的对比"></a>1.2 与传统搜索的对比</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Google 搜索</th>
+<th>Perplexity</th>
+<th>Deep Research</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>查询方式</strong></td>
+<td>关键词</td>
+<td>自然语言</td>
+<td>自然语言</td>
+</tr>
+<tr>
+<td><strong>响应形式</strong></td>
+<td>链接列表</td>
+<td>简短总结</td>
+<td>完整研究报告</td>
+</tr>
+<tr>
+<td><strong>信息源</strong></td>
+<td>网页摘要</td>
+<td>网页 + 引用</td>
+<td>多源 + 引用</td>
+</tr>
+<tr>
+<td><strong>耗时</strong></td>
+<td>&lt; 1s</td>
+<td>5-10s</td>
+<td>5-30 min</td>
+</tr>
+<tr>
+<td><strong>深度</strong></td>
+<td>浅</td>
+<td>中</td>
+<td>深（多步推理）</td>
+</tr>
+</tbody></table>
+<p>关键差异在「耗时换深度」：传统搜索追求秒级返回链接，DeepResearch 用 5-30 分钟的算力换一篇带引用、覆盖多视角的成稿。</p>
+<h3 id="1-3-五大核心特征"><a href="#1-3-五大核心特征" class="headerlink" title="1.3 五大核心特征"></a>1.3 五大核心特征</h3><ol>
+<li><strong>多步推理</strong>——不是一次性回答，而是 Plan → Search → Reflect 的循环</li>
+<li><strong>主动搜索</strong>——LLM 自己决定查什么，而不是用户指定关键词</li>
+<li><strong>信息整合</strong>——综合多个来源，做交叉验证</li>
+<li><strong>报告生成</strong>——产出结构化文档，不是链接列表</li>
+<li><strong>引用溯源</strong>——每个事实都有出处，可点击核验</li>
+</ol>
+<h2 id="二、DeepResearch-的完整流程"><a href="#二、DeepResearch-的完整流程" class="headerlink" title="二、DeepResearch 的完整流程"></a>二、DeepResearch 的完整流程</h2><h3 id="2-1-5-大阶段状态机"><a href="#2-1-5-大阶段状态机" class="headerlink" title="2.1 5 大阶段状态机"></a>2.1 5 大阶段状态机</h3><p>把 DeepResearch 的工作流抽象成一个状态机 $S &#x3D; (\text{task}, \text{search history}, \text{findings}, \text{plan})$，可以清晰地拆出 5 个阶段：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">1. Plan（规划）</span><br><span class="line">   ├─ LLM 拆解问题</span><br><span class="line">   ├─ 列出子任务</span><br><span class="line">   └─ 决定搜索策略</span><br><span class="line"></span><br><span class="line">2. Search（搜索）</span><br><span class="line">   ├─ 调用搜索工具</span><br><span class="line">   ├─ 浏览网页</span><br><span class="line">   └─ 提取关键信息</span><br><span class="line"></span><br><span class="line">3. Reflect（反思）</span><br><span class="line">   ├─ 信息够不够？</span><br><span class="line">   ├─ 信息是否准确？</span><br><span class="line">   └─ 是否需要补充？</span><br><span class="line"></span><br><span class="line">4. Synthesize（综合）</span><br><span class="line">   ├─ 整合所有信息</span><br><span class="line">   ├─ 推理分析</span><br><span class="line">   └─ 得出结论</span><br><span class="line"></span><br><span class="line">5. Write（写作）</span><br><span class="line">   ├─ 报告结构</span><br><span class="line">   ├─ 论点 + 证据</span><br><span class="line">   └─ 引用标注</span><br></pre></td></tr></table></figure>
+
+<p>Plan 和 Search 之间往往会反复跳转多次，直到 Reflect 判定信息充分才进入 Synthesize &#x2F; Write。</p>
+<h3 id="2-2-反思判定规则"><a href="#2-2-反思判定规则" class="headerlink" title="2.2 反思判定规则"></a>2.2 反思判定规则</h3><p>反思环节是 DeepResearch 区别于「一次性 RAG」的关键。用 $R_{\text{reflect}} &#x3D; f(\text{info}, \text{plan}, \text{gap})$ 表示一次反思决策，对应规则如下：</p>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>信息充分 + 来源可靠</td>
+<td>进入写作</td>
+</tr>
+<tr>
+<td>信息不足</td>
+<td>继续搜索</td>
+</tr>
+<tr>
+<td>信息冲突</td>
+<td>多源验证</td>
+</tr>
+<tr>
+<td>超过 N 步</td>
+<td>强制进入写作</td>
+</tr>
+</tbody></table>
+<p>最后一条「超时强制收尾」很重要——真实任务里常常遇到「永远查不完」的陷阱，必须给一个步数上限，避免成本爆炸。</p>
+<h3 id="2-3-信息整合公式"><a href="#2-3-信息整合公式" class="headerlink" title="2.3 信息整合公式"></a>2.3 信息整合公式</h3><p>把每条信息记作 $I_i$（含来源 URL、摘录、关键事实、引用强度），整合过程就是：</p>
+<p>$$F_{\text{integrated}} &#x3D; \text{LLM}({I_1, I_2, …, I_n})$$</p>
+<p>整合不是简单拼接，而是要让 LLM 在多源证据之间做交叉验证、识别冲突、提炼共性，最终输出可被引用的「事实卡片」。</p>
+<h2 id="三、OpenAI-DeepResearch-架构剖析"><a href="#三、OpenAI-DeepResearch-架构剖析" class="headerlink" title="三、OpenAI DeepResearch 架构剖析"></a>三、OpenAI DeepResearch 架构剖析</h2><h3 id="3-1-模块组成"><a href="#3-1-模块组成" class="headerlink" title="3.1 模块组成"></a>3.1 模块组成</h3><p>OpenAI 在 2025-02 发布 DeepResearch 时给出的架构，本质上是「o3 推理模型 + 工具编排」：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────┐</span><br><span class="line">│  Orchestrator (o3 + Tools)          │</span><br><span class="line">│  - 任务规划                          │</span><br><span class="line">│  - 反思决策                          │</span><br><span class="line">└──────┬──────────────────────────────┘</span><br><span class="line">       │</span><br><span class="line">   ┌───▼────────────────────────┐</span><br><span class="line">   │  Browser Tool (Computer Use)  │</span><br><span class="line">   │  - 点击 / 滚动 / 搜索          │</span><br><span class="line">   │  - 提取 HTML / PDF            │</span><br><span class="line">   └────┬─────────────────────────┘</span><br><span class="line">        │</span><br><span class="line">   ┌────▼─────────────────────────┐</span><br><span class="line">   │  Search API                    │</span><br><span class="line">   │  - Web 搜索                    │</span><br><span class="line">   │  - 学术搜索                    │</span><br><span class="line">   └────┬─────────────────────────┘</span><br><span class="line">        │</span><br><span class="line">   ┌────▼─────────────────────────┐</span><br><span class="line">   │  Code Interpreter              │</span><br><span class="line">   │  - 数据分析                    │</span><br><span class="line">   │  - 图表生成                    │</span><br><span class="line">   └────┬─────────────────────────┘</span><br><span class="line">        │</span><br><span class="line">   ┌────▼─────────────────────────┐</span><br><span class="line">   │  Memory                        │</span><br><span class="line">   │  - 任务历史                    │</span><br><span class="line">   │  - 已查信息                    │</span><br><span class="line">   │  - 反思记录                    │</span><br><span class="line">   └────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p>四个工具 + 一个 Orchestrator + 一份 Memory，就是整套系统的骨架。Computer Use 让模型像人一样操作浏览器，Search API 提供结构化检索入口，Code Interpreter 用来处理数据与图表，Memory 则承担长任务的上下文管理。</p>
+<h3 id="3-2-实战-Prompt-示例"><a href="#3-2-实战-Prompt-示例" class="headerlink" title="3.2 实战 Prompt 示例"></a>3.2 实战 Prompt 示例</h3><p>下面是一段可直接复用的系统提示词骨架：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">system_prompt = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你是 DeepResearch Agent。严格按以下流程：</span></span><br><span class="line"><span class="string">1. 收到任务后先制定研究计划</span></span><br><span class="line"><span class="string">2. 使用 search_web 搜索关键信息</span></span><br><span class="line"><span class="string">3. 使用 read_url 阅读重要网页</span></span><br><span class="line"><span class="string">4. 反思：信息够了吗？需要补充吗？</span></span><br><span class="line"><span class="string">5. 整合：把所有发现综合成报告</span></span><br><span class="line"><span class="string">6. 写报告：每个论断都有 [来源]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">可用工具：</span></span><br><span class="line"><span class="string">- search_web(query)</span></span><br><span class="line"><span class="string">- read_url(url)</span></span><br><span class="line"><span class="string">- calculate(expression)</span></span><br><span class="line"><span class="string">- write_file(path, content)</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>把这段提示词丢给任意支持 Function Call 的模型（GPT-4o &#x2F; Claude 3.5+ &#x2F; Qwen），就能跑出一个最小可用的 DeepResearch 雏形。</p>
+<h2 id="四、基准成绩与典型场景"><a href="#四、基准成绩与典型场景" class="headerlink" title="四、基准成绩与典型场景"></a>四、基准成绩与典型场景</h2><h3 id="4-1-Humanity’s-Last-Exam（HLE）"><a href="#4-1-Humanity’s-Last-Exam（HLE）" class="headerlink" title="4.1 Humanity’s Last Exam（HLE）"></a>4.1 Humanity’s Last Exam（HLE）</h3><p>HLE 是 2024 年底推出的博士级跨学科难题集，被视为「人类研究生水平的标尺」：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>准确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPT-4o</td>
+<td>3%</td>
+</tr>
+<tr>
+<td>o1</td>
+<td>9%</td>
+</tr>
+<tr>
+<td><strong>Deep Research</strong></td>
+<td><strong>26.6%</strong> ⭐</td>
+</tr>
+</tbody></table>
+<p>26.6% 这个数字意义重大——它意味着 DeepResearch 不只是「能写漂亮报告」，而是首次在博士级难题上稳定超越人类研究生的平均水平（人类基线约 8%）。</p>
+<h3 id="4-2-GAIA-多模态研究基准"><a href="#4-2-GAIA-多模态研究基准" class="headerlink" title="4.2 GAIA 多模态研究基准"></a>4.2 GAIA 多模态研究基准</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>准确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPT-4 + 工具</td>
+<td>15%</td>
+</tr>
+<tr>
+<td><strong>Deep Research</strong></td>
+<td><strong>67%</strong> ⭐</td>
+</tr>
+</tbody></table>
+<p>GAIA 测试的是「看图、读 PDF、操作浏览器」等多模态研究能力。DeepResearch 从 15% 直接跳到 67%，说明 Computer Use + 多模态理解的组合才是真正的乘数效应。</p>
+<h3 id="4-3-五大典型应用场景"><a href="#4-3-五大典型应用场景" class="headerlink" title="4.3 五大典型应用场景"></a>4.3 五大典型应用场景</h3><ul>
+<li><strong>学术研究</strong>：写文献综述、找研究空白</li>
+<li><strong>商业分析</strong>：竞品分析、市场调研</li>
+<li><strong>技术调研</strong>：选型对比、性能基准</li>
+<li><strong>新闻调查</strong>：多源核实、深度报道</li>
+<li><strong>投资研究</strong>：公司基本面、行业趋势</li>
+</ul>
+<p>凡是「需要读 30 篇文章、写一篇综述」的人类工作，都是 DeepResearch 的天然入口。</p>
+<h2 id="五、与-RAG-的边界"><a href="#五、与-RAG-的边界" class="headerlink" title="五、与 RAG 的边界"></a>五、与 RAG 的边界</h2><p>很多人会把 DeepResearch 当成「升级版 RAG」，但两者的设计目标完全不同：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>RAG</th>
+<th>DeepResearch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>查询</strong></td>
+<td>单次 &#x2F; 短</td>
+<td>复杂 &#x2F; 长</td>
+</tr>
+<tr>
+<td><strong>检索</strong></td>
+<td>一次性</td>
+<td>多步 + 反思</td>
+</tr>
+<tr>
+<td><strong>信息</strong></td>
+<td>已有索引</td>
+<td>实时联网</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td>简短答案</td>
+<td>完整报告</td>
+</tr>
+<tr>
+<td><strong>耗时</strong></td>
+<td>秒级</td>
+<td>5-30 分钟</td>
+</tr>
+<tr>
+<td><strong>Agent Loop</strong></td>
+<td>无</td>
+<td>多步循环</td>
+</tr>
+<tr>
+<td><strong>适用</strong></td>
+<td>客服 &#x2F; 文档 QA</td>
+<td>研究 &#x2F; 报告</td>
+</tr>
+</tbody></table>
+<p>更准确的关系是：<strong>RAG 是 DeepResearch 的一个组件</strong>。DeepResearch &#x3D; RAG + 主动搜索 + 反思 + 写作，是 RAG 的「复杂任务版」。换句话说，DeepResearch 内部仍然会调用向量检索，只是它不满足于一次召回就给出答案。</p>
+<h2 id="六、实现-DeepResearch-的四大挑战"><a href="#六、实现-DeepResearch-的四大挑战" class="headerlink" title="六、实现 DeepResearch 的四大挑战"></a>六、实现 DeepResearch 的四大挑战</h2><h3 id="6-1-上下文管理"><a href="#6-1-上下文管理" class="headerlink" title="6.1 上下文管理"></a>6.1 上下文管理</h3><p>一次深度研究任务可能涉及 100+ 网页，但 LLM 的 context 窗口只有 128K–1M token，撑不住全文拼接。常见解法：</p>
+<ul>
+<li><strong>渐进式摘要</strong>——每查 10 个网页就压成一段摘要</li>
+<li><strong>关键事实提取</strong>——只保留可被引用的「事实卡片」</li>
+<li><strong>Rerank</strong>——按相关性排序，丢弃低分片段</li>
+<li><strong>结构化存储</strong>——用表格 &#x2F; 列表压缩表达</li>
+</ul>
+<h3 id="6-2-信息质量"><a href="#6-2-信息质量" class="headerlink" title="6.2 信息质量"></a>6.2 信息质量</h3><p>网络上有大量错误信息、过时博客、AI 生成的低质内容。LLM 本身难以判断真伪。解法：</p>
+<ul>
+<li><strong>多源验证</strong>——关键事实查 3 个以上来源</li>
+<li><strong>权威性优先</strong>——学术 &gt; 政府 &gt; 媒体 &gt; 论坛</li>
+<li><strong>时间戳</strong>——优先新信息</li>
+<li><strong>LLM 反思</strong>——让模型自问「这个数据可靠吗？」</li>
+</ul>
+<h3 id="6-3-推理深度"><a href="#6-3-推理深度" class="headerlink" title="6.3 推理深度"></a>6.3 推理深度</h3><p>复杂问题需要 5-10 步推理链，而 LLM 在长推理链上容易「中途跑偏」。解法：</p>
+<ul>
+<li><strong>CoT 显式推理</strong>——每一步都写出思考过程</li>
+<li><strong>o1 &#x2F; R1 推理模型</strong>——专门设计的慢思考模型</li>
+<li><strong>反思循环</strong>——检查推理过程本身</li>
+<li><strong>任务分解</strong>——每步独立完成，再拼装</li>
+</ul>
+<h3 id="6-4-成本控制"><a href="#6-4-成本控制" class="headerlink" title="6.4 成本控制"></a>6.4 成本控制</h3><p>单次 DeepResearch 任务可能耗时 5-30 分钟、调用 100+ 次 LLM API，单任务成本 $1-10，企业级落地必须控本：</p>
+<ul>
+<li><strong>小模型做搜索</strong>（Haiku &#x2F; GPT-4o-mini）——量大价低</li>
+<li><strong>大模型做综合</strong>（o1 &#x2F; Sonnet 4.5）——只在 Synthesize &#x2F; Reflect 阶段用</li>
+<li><strong>预算控制</strong>——硬限制搜索步数</li>
+<li><strong>并行搜索</strong>——多个 query 同时跑</li>
+</ul>
+<h2 id="七、平台对比与必读资料"><a href="#七、平台对比与必读资料" class="headerlink" title="七、平台对比与必读资料"></a>七、平台对比与必读资料</h2><h3 id="7-1-主流平台"><a href="#7-1-主流平台" class="headerlink" title="7.1 主流平台"></a>7.1 主流平台</h3><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>发布时间</th>
+<th>关键技术</th>
+<th>价格</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>OpenAI Deep Research</strong></td>
+<td>2025-02</td>
+<td>o3 + Computer Use</td>
+<td>$200&#x2F;月 (Pro)</td>
+</tr>
+<tr>
+<td><strong>Perplexity Deep Research</strong></td>
+<td>2025-03</td>
+<td>Sonar + RAG</td>
+<td>$20&#x2F;月 (Pro)</td>
+</tr>
+<tr>
+<td><strong>Gemini Deep Research</strong></td>
+<td>2025-02</td>
+<td>Gemini 2.0 + Search</td>
+<td>$20&#x2F;月 (Advanced)</td>
+</tr>
+<tr>
+<td><strong>Claude (Web Search)</strong></td>
+<td>2025-04</td>
+<td>Claude 3.7 + Tools</td>
+<td>API 计费</td>
+</tr>
+<tr>
+<td><strong>Qwen DeepResearch</strong></td>
+<td>2025-05</td>
+<td>Qwen + Web</td>
+<td>免费 &#x2F; API</td>
+</tr>
+</tbody></table>
+<p>OpenAI 贵在 o3 推理模型的「思考 token」，Perplexity &#x2F; Gemini 走轻量模型 + 检索增强的路线，Qwen DeepResearch 则是国内唯一在 2025 年上半年跟进的开源方案。</p>
+<h3 id="7-2-必读论文"><a href="#7-2-必读论文" class="headerlink" title="7.2 必读论文"></a>7.2 必读论文</h3><ul>
+<li><strong>核心 3 篇</strong>：<ol>
+<li>OpenAI 2025-02《DeepResearch Technical Report》⭐⭐⭐</li>
+<li>Perplexity 2024《How Deep Research Works》</li>
+<li>Anthropic 2024-12《Computer Use for Research》</li>
+</ol>
+</li>
+<li><strong>进阶 2 篇</strong>：<ol start="4">
+<li>LangChain 2024-11《Research Assistant Template》</li>
+<li>Google 2025-02《Gemini Deep Research》</li>
+</ol>
+</li>
+<li><strong>历史 1 篇</strong>：<ol start="6">
+<li>Lewis et al. 2020《RAG》（DeepResearch 的前身）</li>
+</ol>
+</li>
+</ul>
+<h2 id="八、一个最小可运行的-DeepResearch-实现"><a href="#八、一个最小可运行的-DeepResearch-实现" class="headerlink" title="八、一个最小可运行的 DeepResearch 实现"></a>八、一个最小可运行的 DeepResearch 实现</h2><p>下面是一份约 60 行的 Python 骨架，演示 Plan → Action → Reflect → Synthesize 的核心循环：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">DeepResearchAgent</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, llm, tools</span>):</span><br><span class="line">        <span class="variable language_">self</span>.llm = llm</span><br><span class="line">        <span class="variable language_">self</span>.tools = tools</span><br><span class="line">        <span class="variable language_">self</span>.memory = &#123;</span><br><span class="line">            <span class="string">&quot;findings&quot;</span>: [],</span><br><span class="line">            <span class="string">&quot;search_history&quot;</span>: [],</span><br><span class="line">            <span class="string">&quot;plan&quot;</span>: []</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">research</span>(<span class="params">self, question, max_steps=<span class="number">20</span></span>):</span><br><span class="line">        <span class="comment"># 1. 制定计划</span></span><br><span class="line">        <span class="variable language_">self</span>.memory[<span class="string">&quot;plan&quot;</span>] = <span class="variable language_">self</span>.llm(<span class="string">f&quot;为问题制定研究计划：<span class="subst">&#123;question&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> step <span class="keyword">in</span> <span class="built_in">range</span>(max_steps):</span><br><span class="line">            <span class="comment"># 2. 决定下一步动作</span></span><br><span class="line">            action = <span class="variable language_">self</span>.decide_action()</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 3. 执行动作</span></span><br><span class="line">            result = <span class="variable language_">self</span>.execute(action)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 4. 反思</span></span><br><span class="line">            should_continue = <span class="variable language_">self</span>.reflect()</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> should_continue:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 5. 综合报告</span></span><br><span class="line">        report = <span class="variable language_">self</span>.synthesize_report()</span><br><span class="line">        <span class="keyword">return</span> report</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decide_action</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.llm(<span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        当前任务：<span class="subst">&#123;self.task&#125;</span></span></span><br><span class="line"><span class="string">        当前计划：<span class="subst">&#123;self.memory[<span class="string">&#x27;plan&#x27;</span>]&#125;</span></span></span><br><span class="line"><span class="string">        已查信息：<span class="subst">&#123;self.memory[<span class="string">&#x27;findings&#x27;</span>]&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        下一步应该：</span></span><br><span class="line"><span class="string">        1. search_web(&quot;query&quot;)</span></span><br><span class="line"><span class="string">        2. read_url(&quot;url&quot;)</span></span><br><span class="line"><span class="string">        3. analyze_findings()</span></span><br><span class="line"><span class="string">        4. write_report()</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reflect</span>(<span class="params">self</span>):</span><br><span class="line">        verdict = <span class="variable language_">self</span>.llm(<span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        任务：<span class="subst">&#123;self.task&#125;</span></span></span><br><span class="line"><span class="string">        已查：<span class="subst">&#123;<span class="built_in">len</span>(self.memory[<span class="string">&#x27;findings&#x27;</span>])&#125;</span> 条信息</span></span><br><span class="line"><span class="string">        最关键问题是否回答了？</span></span><br><span class="line"><span class="string">        1. 信息充分 → 写报告</span></span><br><span class="line"><span class="string">        2. 信息不足 → 继续搜索</span></span><br><span class="line"><span class="string">        3. 信息冲突 → 多源验证</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;继续&quot;</span> <span class="keyword">in</span> verdict</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">synthesize_report</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.llm(<span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        任务：<span class="subst">&#123;self.task&#125;</span></span></span><br><span class="line"><span class="string">        所有发现：<span class="subst">&#123;self.memory[<span class="string">&#x27;findings&#x27;</span>]&#125;</span></span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        生成完整报告（含引用）。</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>把 <code>llm</code> 换成任意 OpenAI &#x2F; Anthropic &#x2F; Qwen 客户端，把 <code>tools</code> 换成 search_web &#x2F; read_url 的实际实现，就能跑通一个最简单的 DeepResearch。要做生产版，再叠加上下文压缩、并行搜索、步骤预算即可。</p>
+<h2 id="九、三条未来趋势"><a href="#九、三条未来趋势" class="headerlink" title="九、三条未来趋势"></a>九、三条未来趋势</h2><h3 id="9-1-多模态-DeepResearch"><a href="#9-1-多模态-DeepResearch" class="headerlink" title="9.1 多模态 DeepResearch"></a>9.1 多模态 DeepResearch</h3><p>未来 DeepResearch 不只是文本：</p>
+<ul>
+<li>看 YouTube 视频（自动提取字幕 + 关键帧）</li>
+<li>看 PDF 文献（含图表 OCR）</li>
+<li>看图表数据（直接读取 CSV &#x2F; Excel）</li>
+<li>听播客（语音转写 + 摘要）</li>
+</ul>
+<p>多模态是 DeepResearch 从「阅读互联网」走向「理解互联网」的关键一步。</p>
+<h3 id="9-2-实时-DeepResearch"><a href="#9-2-实时-DeepResearch" class="headerlink" title="9.2 实时 DeepResearch"></a>9.2 实时 DeepResearch</h3><p>从 5-30 分钟压缩到 1-5 分钟：</p>
+<ul>
+<li><strong>并行搜索</strong>——多个 query 同时跑</li>
+<li><strong>增量生成</strong>——边查边写，不等全部搜完</li>
+<li><strong>实时流式输出</strong>——用户看着草稿成长</li>
+</ul>
+<p>背后的关键是推理模型本身的提速（o3-mini、Gemini 2.0 Flash Thinking 都是这条线的产品）。</p>
+<h3 id="9-3-协作-DeepResearch"><a href="#9-3-协作-DeepResearch" class="headerlink" title="9.3 协作 DeepResearch"></a>9.3 协作 DeepResearch</h3><p>未来的形态会更「人类中心」：</p>
+<ul>
+<li>多人协作 DeepResearch（团队共享一个研究项目）</li>
+<li>人类参与决策（关键节点弹窗让人确认方向）</li>
+<li>共享研究笔记（Zotero &#x2F; Obsidian 联动）</li>
+</ul>
+<p>Agent 不是替代研究员，而是让研究员从「信息搬运工」升级为「研究方向决策者」。</p>
+<hr>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><blockquote>
+<p>⚠️ <strong>以发布时为准</strong></p>
+</blockquote>
+<p>本文涉及的模型与平台版本号基于 2025 上半年的公开资料：</p>
+<ul>
+<li>OpenAI DeepResearch 基于 <strong>o3</strong> 推理模型 + Computer Use</li>
+<li>Perplexity DeepResearch 基于 <strong>Sonar</strong> 模型</li>
+<li>Gemini DeepResearch 基于 <strong>Gemini 2.0</strong></li>
+<li>Claude Web Search 基于 <strong>Claude 3.7 Sonnet</strong></li>
+<li>Qwen DeepResearch 基于 <strong>Qwen3</strong> 系列</li>
+</ul>
+<p>LLM 领域迭代极快，本文提到的准确率、价格、API 形态可能在半年内就有显著变化。请以各厂商发布时的官方文档为准，本文的目的是讲清范式与架构，而非锁定某一个版本的快照。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeepResearch/" rel="tag">DeepResearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RAG/" rel="tag">RAG</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E6%80%9D%E5%BE%AA%E7%8E%AF/" rel="tag">反思循环</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9A%E6%AD%A5%E6%8E%A8%E7%90%86/" rel="tag">多步推理</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/15/2026/2026-10-16-gpt3-scaling/">GPT-3规模化训练</a><a class="next" href="/2026/10/15/2026/2026-10-16-instructgpt-rlhf/">InstructGPT对齐革命</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

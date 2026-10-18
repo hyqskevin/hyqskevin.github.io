@@ -1,0 +1,257 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>xsec_token 逆向研究 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">xsec_token 逆向研究</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">xsec_token 逆向研究</h1><div class="post-meta">2026-09-20<span> | </span><span class="category"><a href="/categories/security/">security</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2.4k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 9</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>最近把小红书 <code>xsec_token</code> 的公开资料与一手抓取数据做了一次系统梳理。本文是<strong>现状综述 + 统计观察 + 算法推测</strong>，并未完成实际逆向，目标是把已知事实、数据特征与可行路径先落定。</p>
+<h2 id="一、一句话总结"><a href="#一、一句话总结" class="headerlink" title="一、一句话总结"></a>一、一句话总结</h2><p><code>xsec_token</code> 是<strong>服务端下发</strong>、<strong>绑定账号 + 日期 + 来源（xsec_source）</strong>、采用 <strong>URL-safe base64 编码</strong>（45–46 字符）的短时会话令牌，验证窗口约几分钟到几小时。</p>
+<p>本批 15 条 token 集中在 <strong>4 个前缀桶</strong>：</p>
+<ul>
+<li><code>ABok0nwmx-q9Ue8NCGxkW80</code> ×7</li>
+<li><code>ABH28cUv</code> ×4</li>
+<li><code>AB__fxL9ma9BRWBe3vPFpyV</code> ×3</li>
+<li><code>ABxudi9lUdviGS7IoadOpZcPkZ1STuYt_vzC_AHjAaUro</code> ×1</li>
+</ul>
+<p>前缀桶差异疑似与 <code>xsec_source</code> + Chrome session 强绑定。</p>
+<h2 id="二、数据基础与统计"><a href="#二、数据基础与统计" class="headerlink" title="二、数据基础与统计"></a>二、数据基础与统计</h2><p>数据来自一篇小红书相关推文文档中抓取的 15 条真实 URL（每条都带 <code>xsec_token=...&amp;xsec_source=</code>），使用已登录态的 Chrome profile（<code>&lt;chrome_profile&gt;</code>）抓取，4 个关键词合并去重。</p>
+<h3 id="2-1-前缀（8-字符）分布"><a href="#2-1-前缀（8-字符）分布" class="headerlink" title="2.1 前缀（8 字符）分布"></a>2.1 前缀（8 字符）分布</h3><table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>条数</th>
+<th>占比</th>
+<th>关联作者</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ABok0nwmx</code></td>
+<td>7</td>
+<td>47%</td>
+<td>铁刚铁、折线之外、Liang、康斯坦汀、阿博粒、设计师言炎、冯叮当</td>
+</tr>
+<tr>
+<td><code>ABH28cUv</code></td>
+<td>4</td>
+<td>27%</td>
+<td>量子位、瑞娜啊、赛文乔伊、可问春风</td>
+</tr>
+<tr>
+<td><code>AB__fxL9</code></td>
+<td>3</td>
+<td>20%</td>
+<td>叉叉叉叉叉😈、Busoni、学术卷卷</td>
+</tr>
+<tr>
+<td><code>ABxudi9l</code></td>
+<td>1</td>
+<td>7%</td>
+<td>FlowAPI（<strong>完全独立 token 格式</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-长度分布"><a href="#2-2-长度分布" class="headerlink" title="2.2 长度分布"></a>2.2 长度分布</h3><table>
+<thead>
+<tr>
+<th>长度</th>
+<th>条数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>46 字符</td>
+<td>12</td>
+<td>编码前 34 字节</td>
+</tr>
+<tr>
+<td>45 字符</td>
+<td>3</td>
+<td>编码前 33 字节（<strong>全部是 ABH28cUv 前缀</strong>）</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-字符集"><a href="#2-3-字符集" class="headerlink" title="2.3 字符集"></a>2.3 字符集</h3><ul>
+<li><strong>URL-safe base64</strong>：<code>A-Z a-z 0-9 - _</code></li>
+<li>不含 <code>+</code> <code>/</code> <code>=</code>（标准 base64 字符被替换）</li>
+<li>字符频率分析显示<strong>非均匀分布</strong>，暗示非随机字符串（应是密文&#x2F;签名）</li>
+</ul>
+<h3 id="2-4-关联特征"><a href="#2-4-关联特征" class="headerlink" title="2.4 关联特征"></a>2.4 关联特征</h3><ul>
+<li><code>ABH28cUv</code> 4 条全部是 <strong>2026-09-04 发布日</strong>内容</li>
+<li><code>ABok0nwmx</code> 7 条主要是<strong>同 session 内的搜索结果</strong></li>
+<li><code>ABxudi9l</code> 1 条是 <strong>2026-08-03 的早期笔记</strong>（不同算法路径 or 旧版本）</li>
+</ul>
+<h2 id="三、社区关键事实"><a href="#三、社区关键事实" class="headerlink" title="三、社区关键事实"></a>三、社区关键事实</h2><p>综合 5 篇一手分析，提炼出 5 个关键事实。</p>
+<h3 id="3-1-token-是服务端生成，不是前端-JS-算出来"><a href="#3-1-token-是服务端生成，不是前端-JS-算出来" class="headerlink" title="3.1 token 是服务端生成，不是前端 JS 算出来"></a>3.1 token 是服务端生成，不是前端 JS 算出来</h3><blockquote>
+<p>来自 GitHub Issue #186 (JoeanAmier&#x2F;XHS-Downloader)<br>“xsec_token 是服务器返回的，只能用博主主页作品的接口，传入 user_id 和 cursor 去遍历博主所有作品，每次返回结果里有 note_id 及其对应的 xsec_token”</p>
+</blockquote>
+<p>关键词搜索接口 <code>https://edith.xiaohongshu.com/api/sns/web/v1/search/notes</code> 的返回结果里<strong>直接包含 xsec_token</strong>。</p>
+<h3 id="3-2-token-绑定账号-日期-来源（xsec-source）"><a href="#3-2-token-绑定账号-日期-来源（xsec-source）" class="headerlink" title="3.2 token 绑定账号 + 日期 + 来源（xsec_source）"></a>3.2 token 绑定账号 + 日期 + 来源（xsec_source）</h3><blockquote>
+<p>“xsec_token 的值与账号、日期、来源都有关，不是固定的”<br>“Token is bound to <strong>xsec_source</strong> (e.g., pc_search, pc_user, pc_feed)”<br>“Server validates token matches source and hasn’t expired”</p>
+</blockquote>
+<p>这解释了为什么同一 session 内 token 前缀聚集。</p>
+<h3 id="3-3-PC-端-AES-CBC（密钥-IV-动态派生）或-SM4-国密"><a href="#3-3-PC-端-AES-CBC（密钥-IV-动态派生）或-SM4-国密" class="headerlink" title="3.3 PC 端 &#x3D; AES-CBC（密钥+IV 动态派生）或 SM4 国密"></a>3.3 PC 端 &#x3D; AES-CBC（密钥+IV 动态派生）或 SM4 国密</h3><blockquote>
+<p>来自 CSDN wenku《小红书PC端xsec_token加密机制与反爬风控策略深度分析》</p>
+</blockquote>
+<ul>
+<li>客户端本地环境（Canvas&#x2F;WebGL&#x2F;音频哈希&#x2F;TLS 指纹&#x2F;时钟偏移熵）经<strong>多层混淆</strong>与<strong>时间戳绑定</strong></li>
+<li>通过 <strong>AES-CBC</strong>（密钥与 IV 均动态派生）或 <strong>SM4 国密算法</strong>加密生成</li>
+<li>生命周期与页面加载会话绑定，每次刷新&#x2F;滚动&#x2F;点击都可能重签</li>
+<li>与 Cookie 中 <code>session_id</code>、<code>device_id</code>、<code>web_id</code> 形成交叉验证闭环</li>
+<li>时间戳越界（允许偏差 <strong>≤300ms</strong>）或设备指纹哈希不匹配 → 412 &#x2F; 403</li>
+</ul>
+<h3 id="3-4-移动端-App-用-Frida-Hook-才能拿到真算法"><a href="#3-4-移动端-App-用-Frida-Hook-才能拿到真算法" class="headerlink" title="3.4 移动端 App 用 Frida Hook 才能拿到真算法"></a>3.4 移动端 App 用 Frida Hook 才能拿到真算法</h3><blockquote>
+<p>“我用 Frida Hook 过 App 的 com.xhs.security.XSecTokenGenerator.generate() 方法，发现签名密钥是<strong>动态生成</strong>的，依赖于当前进程内存中的某个 AES 密钥对象——这意味着单纯静态分析 APK 几乎不可能还原完整算法”</p>
+</blockquote>
+<p>更务实的做法：抓包定位 feed 请求触发时机，记录完整请求头，把 <code>x-sig</code> 值复制出来在自有服务里复用。<strong>同一设备 token 复用窗口期约 4 小时</strong>，比网页端解析 <code>a1</code> 更稳定。</p>
+<h3 id="3-5-失效机制（5-大主因）"><a href="#3-5-失效机制（5-大主因）" class="headerlink" title="3.5 失效机制（5 大主因）"></a>3.5 失效机制（5 大主因）</h3><p>来自 CSDN ask：</p>
+<ol>
+<li><strong>登录状态过期</strong> &#x2F; 被强制下线</li>
+<li><strong>频繁请求触发反爬</strong>（&gt;50次&#x2F;分钟限流，重复使用相同 token 连续 10+ 次作废）</li>
+<li><strong>客户端&#x2F;服务器时间偏差过大</strong>（&gt; ±5分钟）</li>
+<li><strong>App 版本更新导致加密策略变更</strong></li>
+<li><strong>设备指纹&#x2F;IP 突变</strong></li>
+</ol>
+<h2 id="四、算法推测"><a href="#四、算法推测" class="headerlink" title="四、算法推测"></a>四、算法推测</h2><p>下图是推测的 token 内部结构示意：</p>
+<p><img src="https://hyqskevin.github.io/pic/security/xsec-token-structure.png" alt="xsec_token 结构推测"></p>
+<h3 id="4-1-候选-A：HMAC-SHA256-时间戳-device-id"><a href="#4-1-候选-A：HMAC-SHA256-时间戳-device-id" class="headerlink" title="4.1 候选 A：HMAC-SHA256 + 时间戳 + device_id"></a>4.1 候选 A：HMAC-SHA256 + 时间戳 + device_id</h3><p>CSDN 流传的实现（<strong>未经官方验证</strong>）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">generate_xsec_token</span>(<span class="params">secret_key, device_id, path</span>):</span><br><span class="line">    timestamp = <span class="built_in">int</span>(time.time() * <span class="number">1000</span>)  <span class="comment"># 毫秒</span></span><br><span class="line">    raw_string = <span class="string">f&quot;<span class="subst">&#123;timestamp&#125;</span>\n<span class="subst">&#123;device_id&#125;</span>\n<span class="subst">&#123;path&#125;</span>&quot;</span></span><br><span class="line">    signature = hmac.new(secret_key.encode(<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">                          raw_string.encode(<span class="string">&#x27;utf-8&#x27;</span>),</span><br><span class="line">                          hashlib.sha256).digest()</span><br><span class="line">    <span class="keyword">return</span> base64.b64encode(signature).decode().replace(<span class="string">&#x27;+&#x27;</span>, <span class="string">&#x27;-&#x27;</span>).replace(<span class="string">&#x27;/&#x27;</span>, <span class="string">&#x27;_&#x27;</span>).replace(<span class="string">&#x27;=&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>问题</strong>：HMAC-SHA256 输出 32 字节 → base64url 编码 &#x3D; 43 字符，<strong>与我们观察的 45–46 字符不符</strong>。长度差 2–3 字节，可能是 prefix（如 timestamp 8 字节）+ signature 32 字节 → 40 字节 &#x3D; 54 字符（也不符）。</p>
+<h3 id="4-2-候选-B：AES-CBC-16-字节-IV-16-字节密文"><a href="#4-2-候选-B：AES-CBC-16-字节-IV-16-字节密文" class="headerlink" title="4.2 候选 B：AES-CBC + 16 字节 IV + 16 字节密文"></a>4.2 候选 B：AES-CBC + 16 字节 IV + 16 字节密文</h3><ul>
+<li>SM4 &#x2F; AES-128-CBC 输出 &#x3D; 16 字节块</li>
+<li>加上 16 字节 IV &#x3D; 32 字节 → base64url &#x3D; 43 字符</li>
+<li>加上时间戳前缀 2 字节 &#x3D; 34 字节 → 46 字符 ✅ <strong>匹配</strong></li>
+<li>与 CSDN wenku 分析一致（<strong>最可能</strong>）</li>
+</ul>
+<h3 id="4-3-候选-C：SM4-GCM（认证加密）"><a href="#4-3-候选-C：SM4-GCM（认证加密）" class="headerlink" title="4.3 候选 C：SM4-GCM（认证加密）"></a>4.3 候选 C：SM4-GCM（认证加密）</h3><ul>
+<li>12 字节 IV + 16 字节密文 + 16 字节 tag &#x3D; 44 字节 → 59 字符（<strong>不符</strong>）</li>
+</ul>
+<h3 id="4-4-候选-D：自定义混合（签名-加密-元数据）"><a href="#4-4-候选-D：自定义混合（签名-加密-元数据）" class="headerlink" title="4.4 候选 D：自定义混合（签名 + 加密 + 元数据）"></a>4.4 候选 D：自定义混合（签名 + 加密 + 元数据）</h3><ul>
+<li>元数据（timestamp 4B + xsec_source 1B + 标志 1B）+ 加密签名（28B）&#x3D; 34 字节 → 46 字符 ✅</li>
+<li>与多个前缀桶现象吻合：不同 xsec_source 用不同前缀</li>
+</ul>
+<p><strong>最可能</strong>：候选 B（<strong>AES-CBC 或 SM4-CBC</strong>，34 字节 &#x3D; 16 字节 IV + 16 字节密文 + 2 字节元数据）。</p>
+<h2 id="五、复现路径"><a href="#五、复现路径" class="headerlink" title="五、复现路径"></a>五、复现路径</h2><h3 id="5-1-方向-1：服务端真实算法（高门槛，难）"><a href="#5-1-方向-1：服务端真实算法（高门槛，难）" class="headerlink" title="5.1 方向 1：服务端真实算法（高门槛，难）"></a>5.1 方向 1：服务端真实算法（高门槛，难）</h3><ul>
+<li><strong>方法</strong>：抓浏览器真实调用栈 → Chrome DevTools → Network → HAR 文件导出 → 找生成 token 的 XHR 调用 → 看 response 字段</li>
+<li><strong>预期产出</strong>：拿到原始 token + 生成参数（device_id &#x2F; path &#x2F; timestamp &#x2F; secret_key 来源）</li>
+<li><strong>风险</strong>：服务端可能用 WebAssembly &#x2F; 加密的 JS bundle 防静态分析</li>
+</ul>
+<h3 id="5-2-方向-2：构造伪造-token-测试服务端验证（最实用）"><a href="#5-2-方向-2：构造伪造-token-测试服务端验证（最实用）" class="headerlink" title="5.2 方向 2：构造伪造 token 测试服务端验证（最实用）"></a>5.2 方向 2：构造伪造 token 测试服务端验证（最实用）</h3><ul>
+<li><strong>方法</strong>：用候选 B 算法（AES-CBC + 16B IV + 16B 密文），用任意 key 构造 token → 用 curl_cffi 模拟 Chrome TLS 指纹请求小红书接口</li>
+<li><strong>预期产出</strong>：观察服务端拒绝方式（412 &#x2F; 403 &#x2F; 300031 验证码）</li>
+<li><strong>价值</strong>：反推 token 内部结构</li>
+<li><strong>推荐工具</strong>：MediaCrawler 已有完整 Python 框架 + curl_cffi + Playwright</li>
+</ul>
+<p>示例请求骨架：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl_cffi https://edith.xiaohongshu.com/api/sns/web/v1/search/notes \</span><br><span class="line">  -H <span class="string">&quot;User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124.0&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;x-s: &lt;YOUR_TOKEN&gt;&quot;</span> \</span><br><span class="line">  -H <span class="string">&quot;x-t: <span class="subst">$(date +%s000)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-方向-3：DOM-抓取-window-INITIAL-STATE（最稳健）"><a href="#5-3-方向-3：DOM-抓取-window-INITIAL-STATE（最稳健）" class="headerlink" title="5.3 方向 3：DOM 抓取 window.INITIAL_STATE（最稳健）"></a>5.3 方向 3：DOM 抓取 window.<strong>INITIAL_STATE</strong>（最稳健）</h3><ul>
+<li><strong>方法</strong>：浏览器加载笔记详情页 → 提取 <code>window.__INITIAL_STATE__</code> 大型 JSON</li>
+<li><strong>预期产出</strong>：完整 token 字段（note_id &#x2F; xsec_token &#x2F; xsec_source &#x2F; 创建时间）</li>
+<li><strong>推荐工具</strong>：MediaCrawler 已实现，可直接复用</li>
+</ul>
+<h3 id="5-4-方向-4：前端-JS-静态分析（最低门槛）"><a href="#5-4-方向-4：前端-JS-静态分析（最低门槛）" class="headerlink" title="5.4 方向 4：前端 JS 静态分析（最低门槛）"></a>5.4 方向 4：前端 JS 静态分析（最低门槛）</h3><ul>
+<li><strong>方法</strong>：Chrome DevTools → Sources → 搜 <code>xsec_token</code> 关键字 → 找生成函数</li>
+<li><strong>风险</strong>：小红书用 webpack + 混淆 + 死代码 + 字符串编码（Base64 + XOR），纯静态分析耗时</li>
+</ul>
+<h2 id="六、实验设计与待验证清单"><a href="#六、实验设计与待验证清单" class="headerlink" title="六、实验设计与待验证清单"></a>六、实验设计与待验证清单</h2><table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>方向</th>
+<th>工具</th>
+<th>预期时间</th>
+<th>成功率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>⭐⭐⭐</td>
+<td>方向 3：DOM 抓取 INITIAL_STATE</td>
+<td>MediaCrawler + Chrome</td>
+<td>1-2h</td>
+<td><strong>90%</strong></td>
+</tr>
+<tr>
+<td>⭐⭐⭐</td>
+<td>方向 2：构造伪造 token 测试</td>
+<td>curl_cffi + Python</td>
+<td>2-3h</td>
+<td>80%</td>
+</tr>
+<tr>
+<td>⭐⭐</td>
+<td>方向 1：浏览器 HAR 抓包</td>
+<td>Chrome DevTools</td>
+<td>1h</td>
+<td>70%</td>
+</tr>
+<tr>
+<td>⭐</td>
+<td>方向 4：JS 静态分析</td>
+<td>Chrome Sources + 反混淆</td>
+<td>4-8h</td>
+<td>40%</td>
+</tr>
+</tbody></table>
+<h3 id="6-1-短期（1-周内可做）"><a href="#6-1-短期（1-周内可做）" class="headerlink" title="6.1 短期（1 周内可做）"></a>6.1 短期（1 周内可做）</h3><ul>
+<li><input disabled="" type="checkbox"> 用方向 3 抓 <code>window.__INITIAL_STATE__</code> 看 token 完整字段</li>
+<li><input disabled="" type="checkbox"> 用方向 2 构造伪造 token 测服务端拒绝方式</li>
+<li><input disabled="" type="checkbox"> 验证 <code>ABH28cUv</code> 前缀桶内 3 条 45 字符 token 与 1 条 46 字符 token 的差异</li>
+<li><input disabled="" type="checkbox"> 验证 <code>ABxudi9l</code> 桶（FlowAPI，2026-08-03）是否真是不同算法版本</li>
+</ul>
+<h3 id="6-2-中期（1-个月内可做）"><a href="#6-2-中期（1-个月内可做）" class="headerlink" title="6.2 中期（1 个月内可做）"></a>6.2 中期（1 个月内可做）</h3><ul>
+<li><input disabled="" type="checkbox"> 抓 100 条 token 做大样本统计（前缀&#x2F;长度&#x2F;时间相关性）</li>
+<li><input disabled="" type="checkbox"> 复现 CSDN wenku 描述的”Canvas&#x2F;WebGL&#x2F;音频哈希 + AES-CBC”链路</li>
+<li><input disabled="" type="checkbox"> 写一篇完整逆向报告</li>
+</ul>
+<h3 id="6-3-长期（持续追踪）"><a href="#6-3-长期（持续追踪）" class="headerlink" title="6.3 长期（持续追踪）"></a>6.3 长期（持续追踪）</h3><ul>
+<li><input disabled="" type="checkbox"> 监控 token 算法变更（小红书每 15 分钟轮换密钥池）</li>
+<li><input disabled="" type="checkbox"> 集成到 xhs-info-crawl 项目（自动 refresh token）</li>
+<li><input disabled="" type="checkbox"> 与开发者社区交叉验证</li>
+</ul>
+<h2 id="七、相关资源"><a href="#七、相关资源" class="headerlink" title="七、相关资源"></a>七、相关资源</h2><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CSDN wenku - PC 端 xsec_token 加密机制</td>
+<td><a target="_blank" rel="noopener" href="https://wenku.csdn.net/doc/bceuwqrnts">https://wenku.csdn.net/doc/bceuwqrnts</a></td>
+</tr>
+<tr>
+<td>CSDN wenku - HMAC-SHA256 Python 实现（<strong>未经验证</strong>）</td>
+<td><a target="_blank" rel="noopener" href="https://wenku.csdn.net/answer/8a9wfb8494">https://wenku.csdn.net/answer/8a9wfb8494</a></td>
+</tr>
+<tr>
+<td>CSDN wenku - Frida Hook 移动端算法</td>
+<td><a target="_blank" rel="noopener" href="https://wenku.csdn.net/answer/2yx4pyy16k">https://wenku.csdn.net/answer/2yx4pyy16k</a></td>
+</tr>
+<tr>
+<td>GitHub Issue #186 - JoeanAmier&#x2F;XHS-Downloader</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/JoeanAmier/XHS-Downloader/issues/186">https://github.com/JoeanAmier/XHS-Downloader/issues/186</a></td>
+</tr>
+<tr>
+<td>deepwiki - MediaCrawler XHS 集成</td>
+<td><a target="_blank" rel="noopener" href="https://deepwiki.com/mcp-service/media-crawler-mcp-service/4.2-xiaohongshu-(xhs)-integration">https://deepwiki.com/mcp-service/media-crawler-mcp-service/4.2-xiaohongshu-(xhs)-integration</a></td>
+</tr>
+<tr>
+<td>MediaCrawler 项目分析</td>
+<td><a target="_blank" rel="noopener" href="https://bitibiti.com/2024/03/24/MediaCrawler-%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%88%AC%E8%99%AB%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">https://bitibiti.com/2024/03/24/MediaCrawler-小红书爬虫源码分析/</a></td>
+</tr>
+<tr>
+<td>XHS-Downloader 项目</td>
+<td><a target="_blank" rel="noopener" href="https://gitee.com/yonglelolu/XHS-Downloader">https://gitee.com/yonglelolu/XHS-Downloader</a></td>
+</tr>
+</tbody></table>
+<h2 id="八、法律与合规提示"><a href="#八、法律与合规提示" class="headerlink" title="八、法律与合规提示"></a>八、法律与合规提示</h2><ul>
+<li>本研究<strong>仅用于安全研究&#x2F;学习</strong>，不应用于：<ul>
+<li>商业爬虫批量抓取</li>
+<li>绕过小红书付费&#x2F;会员限制</li>
+<li>任何违反小红书《用户协议》或《数据安全法》的活动</li>
+</ul>
+</li>
+<li>实测时务必用<strong>自己的测试账号</strong>，控制 QPS ≤ 5&#x2F;分钟</li>
+<li>如发现漏洞，请通过<strong>小红书官方 SRC</strong>（安全应急响应中心）上报</li>
+</ul>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>⚠️ 本文所引用的 <strong>Codex-GPT6-Astra</strong> 及相关分析结论，<strong>以发布时为准</strong>。小红书 <code>xsec_token</code> 的生成算法与风控策略处于持续变更中（密钥池约每 15 分钟轮换），文中”算法推测”与”社区关键事实”仅反映整理时点（2026-09）的公开认知，后续版本可能已失效，请读者自行验证。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xsec-token/" rel="tag">xsec_token</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8A%A0%E5%AF%86/" rel="tag">加密</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E7%88%AC/" rel="tag">反爬</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/" rel="tag">安全研究</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B0%8F%E7%BA%A2%E4%B9%A6/" rel="tag">小红书</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" rel="tag">逆向工程</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/20/2026/2026-09-21-glm-5-3-cases/">GLM-5.3 落地案例集</a><a class="next" href="/2026/09/20/2026/2026-09-21-glm-5-3-learning-path/">GLM-5.3 学习路径</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

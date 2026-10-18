@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>A2A：Agent 协作协议 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">A2A：Agent 协作协议</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">A2A：Agent 协作协议</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3.3k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 13</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p><img src="https://hyqskevin.github.io/pic/a2a-protocol/cover.png" alt="封面"></p>
+<blockquote>
+<p><strong>关键论文</strong>：Google 2025-04《A2A: A New Protocol for Agent Collaboration》<br><strong>配套讲稿</strong>：Agent-MCP 模块</p>
+</blockquote>
+<h2 id="⚠️-模型版本说明"><a href="#⚠️-模型版本说明" class="headerlink" title="⚠️ 模型版本说明"></a>⚠️ 模型版本说明</h2><p>本文示例代码默认基于 DeepSeek-V3、GPT-4o、Claude 3.5 等主流模型；文中涉及的端点、合作伙伴数量、版本号均以发布时（2025-04）官方公布为准，后续 A2A 1.0 &#x2F; v0.3 草案可能微调，请以最新规范文档为准。</p>
+<hr>
+<h2 id="一、为什么需要-A2A-协议"><a href="#一、为什么需要-A2A-协议" class="headerlink" title="一、为什么需要 A2A 协议"></a>一、为什么需要 A2A 协议</h2><p>2024-11 Anthropic 发布 MCP 协议之后，「Agent ↔ 工具」的单向调用有了标准答案。但半年之内，业界撞上了第二道墙：不同框架（LangGraph、AutoGen、CrewAI）、不同公司、不同语言写的 Agent 之间，怎么对话？</p>
+<p>你当然可以走 HTTP 自己封一个，可是这就回到了 1990 年代的混乱状态：每个团队一套私有协议、每家公司一套鉴权方案、没有标准的能力描述、没有可观测的任务状态。Google 显然看到了这个问题，于是 2025-04 联合 50+ 头部企业推出了 <strong>A2A 协议（Agent-to-Agent）</strong>——一个基于 JSON-RPC 2.0 + SSE 的开放协议，让 Agent 之间能互相发现、协商能力、协同完成任务。</p>
+<h3 id="1-1-时间坐标"><a href="#1-1-时间坐标" class="headerlink" title="1.1 时间坐标"></a>1.1 时间坐标</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2024-11  Anthropic 发布 MCP（工具协议）</span><br><span class="line">2025-01  Google 提出 A2A 草案</span><br><span class="line">2025-04-09  Google 正式发布 A2A 协议 + 50+ 合作伙伴</span><br><span class="line">2025-05  LangGraph / CrewAI / AutoGen 集成 A2A</span><br><span class="line">2025-08  A2A 1.0 稳定版（v0.3 草案）</span><br><span class="line">2026-Q1  预计 A2A 成为跨框架 Agent 协作标准</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-一句话定义"><a href="#1-2-一句话定义" class="headerlink" title="1.2 一句话定义"></a>1.2 一句话定义</h3><p><strong>A2A 是一个基于 JSON-RPC 2.0 + SSE 的开放协议，让不同框架、不同语言、不同云厂商的 Agent 能够互相发现、协商能力、协同完成任务。</strong> 它的目标不是替代 MCP，而是和 MCP 形成互补：MCP 管工具调用，A2A 管 Agent 协作。</p>
+<hr>
+<h2 id="二、A2A-核心概念"><a href="#二、A2A-核心概念" class="headerlink" title="二、A2A 核心概念"></a>二、A2A 核心概念</h2><h3 id="2-1-A2A-vs-MCP"><a href="#2-1-A2A-vs-MCP" class="headerlink" title="2.1 A2A vs MCP"></a>2.1 A2A vs MCP</h3><p>两套协议解决的问题完全不同，但互为补充，缺一不可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MCP（Anthropic 2024-11）</span><br><span class="line">  解决：LLM ↔ 工具</span><br><span class="line">        Agent → Tool</span><br><span class="line">        单向：Agent 调用工具</span><br><span class="line"></span><br><span class="line">A2A（Google 2025-04）</span><br><span class="line">  解决：Agent ↔ Agent</span><br><span class="line">        Agent → Agent</span><br><span class="line">        双向：跨框架 Agent 协作</span><br></pre></td></tr></table></figure>
+
+<p>一个现实的例子：你想让一个 LangGraph 写的「主 Agent」去调用一个用 Python 写的「研究 Agent」、再用 Claude 跑的「写稿 Agent」生成文章。在这个工作流里：</p>
+<ul>
+<li>主 Agent → 研究 Agent → 写稿 Agent：这是 <strong>A2A</strong>（Agent 之间的对话）</li>
+<li>研究 Agent 调用 arxiv API：这是 <strong>MCP</strong>（Agent 调用工具）</li>
+</ul>
+<p>用一张表把生态位对齐：</p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>类比</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MCP</td>
+<td>USB-C</td>
+<td>Agent 与工具连接</td>
+</tr>
+<tr>
+<td>A2A</td>
+<td>HTTP &#x2F; gRPC</td>
+<td>Agent 与 Agent 通信</td>
+</tr>
+<tr>
+<td>LangGraph</td>
+<td>React</td>
+<td>单 Agent 状态管理</td>
+</tr>
+<tr>
+<td>OpenAPI</td>
+<td>OpenAPI</td>
+<td>RESTful 服务调用</td>
+</tr>
+</tbody></table>
+<p>可以看到，A2A 的位置正好是 HTTP&#x2F;gRPC 在分布式系统中的位置——它是「Agent 互联网」的传输层标准。</p>
+<h3 id="2-2-A2A-核心设计原则"><a href="#2-2-A2A-核心设计原则" class="headerlink" title="2.2 A2A 核心设计原则"></a>2.2 A2A 核心设计原则</h3><p>A2A 协议设计上有五条核心原则，每一条都对应真实工程中的痛点：</p>
+<ol>
+<li><strong>Agent Discovery（发现）</strong>——A2A 客户端能动态发现 A2A server。类似 DNS，不写死 endpoint。</li>
+<li><strong>Capability Negotiation（能力协商）</strong>——Agent 互相知道对方能做什么，避免「能不能行」靠猜。</li>
+<li><strong>Task Lifecycle（任务生命周期）</strong>——任务状态可追踪、可恢复，长任务不怕断。</li>
+<li><strong>Streaming（流式）</strong>——基于 SSE 的实时进度推送，避免客户端轮询。</li>
+<li><strong>Multi-modal（多模态）</strong>——支持 text &#x2F; image &#x2F; file 等 parts，不再局限于纯文本。</li>
+</ol>
+<hr>
+<h2 id="三、A2A-协议格式详解"><a href="#三、A2A-协议格式详解" class="headerlink" title="三、A2A 协议格式详解"></a>三、A2A 协议格式详解</h2><h3 id="3-1-Agent-Card（代理名片）"><a href="#3-1-Agent-Card（代理名片）" class="headerlink" title="3.1 Agent Card（代理名片）"></a>3.1 Agent Card（代理名片）</h3><p>Agent Card 是 A2A 的「身份卡」，类似 OAuth 的 metadata 文档，也类似 OpenAPI 的 service description：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ResearchAgent&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;研究专家，可执行深度搜索&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;capabilities&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;web_search&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;arxiv_search&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;summarize&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://research-agent.example.com/a2a&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;auth&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;oauth2&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;scopes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;research.read&quot;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>典型流程</strong>：</p>
+<ul>
+<li>客户端先 <code>GET /.well-known/a2a-agent.json</code> 拉取 Agent Card（标准 well-known 路径）</li>
+<li>根据 <code>capabilities</code> 判断该 Agent 能不能用（能力匹配）</li>
+<li>通过 <code>auth</code> 字段完成 OAuth 2.0 授权</li>
+<li>调用对应 capability 发起任务</li>
+</ul>
+<p>这种「先看名片，再对话」的模式和现实世界非常像：你要找律师，先看他名片上写不写「公司法」，再看收费区间，再打电话。</p>
+<h3 id="3-2-A2A-消息格式（JSON-RPC-2-0）"><a href="#3-2-A2A-消息格式（JSON-RPC-2-0）" class="headerlink" title="3.2 A2A 消息格式（JSON-RPC 2.0）"></a>3.2 A2A 消息格式（JSON-RPC 2.0）</h3><p>A2A 复用了成熟的 JSON-RPC 2.0 协议，每个请求有唯一 <code>task_id</code>，方便后续关联：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;jsonrpc&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;method&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tasks/send&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;params&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;task&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;task-uuid-1234&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;message&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;role&quot;</span><span class="punctuation">:</span> <span class="string">&quot;user&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;parts&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">          <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;text&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;content&quot;</span><span class="punctuation">:</span> <span class="string">&quot;请研究 DeepSeek-V3 的技术架构&quot;</span></span><br><span class="line">          <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">]</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>关键设计点</strong>：</p>
+<ul>
+<li>标准化远程调用，复用现有 JSON-RPC 生态（库、调试工具、文档）</li>
+<li><code>parts</code> 数组天然支持多模态（text &#x2F; image &#x2F; file），未来加 audio &#x2F; video 也不用改协议</li>
+<li><code>task_id</code> 是 UUID，用于关联后续所有状态事件和结果</li>
+</ul>
+<h3 id="3-3-任务生命周期"><a href="#3-3-任务生命周期" class="headerlink" title="3.3 任务生命周期"></a>3.3 任务生命周期</h3><p>A2A 任务有 6 个标准状态机，覆盖从提交到终止的完整生命周期：</p>
+<p>$$T_{\text{lifecycle}} &#x3D; \text{submitted} \to \text{working} \to \text{input-required} \to \text{completed&#x2F;failed}$$</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>submitted</code></td>
+<td>任务已提交，等待 Agent 接单</td>
+</tr>
+<tr>
+<td><code>working</code></td>
+<td>Agent 处理中，可能伴随 artifact 流式输出</td>
+</tr>
+<tr>
+<td><code>input-required</code></td>
+<td>需要用户输入，常见于交互式 Agent</td>
+</tr>
+<tr>
+<td><code>completed</code></td>
+<td>任务成功完成</td>
+</tr>
+<tr>
+<td><code>failed</code></td>
+<td>任务失败，可附带 error code</td>
+</tr>
+<tr>
+<td><code>canceled</code></td>
+<td>任务被取消</td>
+</tr>
+</tbody></table>
+<p>这种显式状态机的好处是：客户端可以精确知道任务走到哪一步，断线重连后可以从 <code>working</code> 继续，而不是从头再来。</p>
+<h3 id="3-4-流式通信（SSE）"><a href="#3-4-流式通信（SSE）" class="headerlink" title="3.4 流式通信（SSE）"></a>3.4 流式通信（SSE）</h3><p>长任务（比如论文综述、代码生成）用 SSE 推送进度，避免客户端轮询：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">A2A Server → A2A Client:</span><br><span class="line"></span><br><span class="line">  HTTP/1.1 200 OK</span><br><span class="line">  Content-Type: text/event-stream</span><br><span class="line"></span><br><span class="line">  event: task.status</span><br><span class="line">  data: &#123;&quot;task_id&quot;: &quot;task-uuid&quot;, &quot;status&quot;: &quot;working&quot;&#125;</span><br><span class="line"></span><br><span class="line">  event: task.artifact</span><br><span class="line">  data: &#123;&quot;type&quot;: &quot;text&quot;, &quot;content&quot;: &quot;正在搜索...&quot;&#125;</span><br><span class="line"></span><br><span class="line">  event: task.status</span><br><span class="line">  data: &#123;&quot;task_id&quot;: &quot;task-uuid&quot;, &quot;status&quot;: &quot;completed&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>SSE 的优势</strong>：</p>
+<ul>
+<li>实时推送进度，客户端零轮询，省电省带宽</li>
+<li>适合小时级的长任务（论文综述、代码生成、数据分析）</li>
+<li>基于 HTTP，复用现有基础设施（反向代理、CDN、WAF 都支持）</li>
+<li>比 WebSocket 简单，单向即可，不需要双向协议握手</li>
+</ul>
+<hr>
+<h2 id="四、跨框架协作场景"><a href="#四、跨框架协作场景" class="headerlink" title="四、跨框架协作场景"></a>四、跨框架协作场景</h2><h3 id="4-1-研究-写作流水线"><a href="#4-1-研究-写作流水线" class="headerlink" title="4.1 研究 + 写作流水线"></a>4.1 研究 + 写作流水线</h3><p>主 Agent 用 LangGraph 编排，对外调度两个不同公司的 A2A server：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> a2a <span class="keyword">import</span> A2AClient</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 发现研究 Agent</span></span><br><span class="line">research_agent = A2AClient.discover(<span class="string">&quot;https://research-agent.com&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 调用研究能力</span></span><br><span class="line">research_result = <span class="keyword">await</span> research_agent.call(</span><br><span class="line">    capability=<span class="string">&quot;deep_research&quot;</span>,</span><br><span class="line">    topic=<span class="string">&quot;DeepSeek-V3 架构&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 发现写作 Agent</span></span><br><span class="line">writing_agent = A2AClient.discover(<span class="string">&quot;https://writing-agent.com&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 调用写作能力</span></span><br><span class="line">article = <span class="keyword">await</span> writing_agent.call(</span><br><span class="line">    capability=<span class="string">&quot;write_article&quot;</span>,</span><br><span class="line">    <span class="built_in">input</span>=research_result,</span><br><span class="line">    style=<span class="string">&quot;莫兰迪&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>值得注意</strong>：</p>
+<ul>
+<li>两个 Agent 可以用不同的语言、不同的框架实现（甚至跨云厂商）</li>
+<li>主 Agent 不需要知道 ResearchAgent 是 Python 还是 Go</li>
+<li>失败重试、负载均衡都由 A2A SDK 处理</li>
+</ul>
+<h3 id="4-2-代码审查-自动修复"><a href="#4-2-代码审查-自动修复" class="headerlink" title="4.2 代码审查 + 自动修复"></a>4.2 代码审查 + 自动修复</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Bug 检测 Agent（团队 A 实现）</span></span><br><span class="line">bug_report = <span class="keyword">await</span> bug_detector.call(</span><br><span class="line">    capability=<span class="string">&quot;detect_bugs&quot;</span>,</span><br><span class="line">    code=my_code</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动修复 Agent（团队 B 实现）</span></span><br><span class="line">fix = <span class="keyword">await</span> code_fixer.call(</span><br><span class="line">    capability=<span class="string">&quot;fix_bugs&quot;</span>,</span><br><span class="line">    bugs=bug_report</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>重点是</strong>：两个 Agent 可以用不同语言、不同框架实现，只要遵守 A2A 协议即可互相调用。这给企业带来了巨大的灵活性——可以让最擅长的团队做最擅长的事，不必为了「统一技术栈」而妥协。</p>
+<hr>
+<h2 id="五、A2A-与主流框架对比"><a href="#五、A2A-与主流框架对比" class="headerlink" title="五、A2A 与主流框架对比"></a>五、A2A 与主流框架对比</h2><h3 id="5-1-维度对比"><a href="#5-1-维度对比" class="headerlink" title="5.1 维度对比"></a>5.1 维度对比</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>A2A</th>
+<th>LangGraph</th>
+<th>AutoGen</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>范围</strong></td>
+<td>跨框架 Agent</td>
+<td>单 Agent 状态机</td>
+<td>多 Agent 对话</td>
+</tr>
+<tr>
+<td><strong>协议</strong></td>
+<td>JSON-RPC + SSE</td>
+<td>Python 代码</td>
+<td>Python 代码</td>
+</tr>
+<tr>
+<td><strong>异构支持</strong></td>
+<td>跨语言 &#x2F; 跨平台</td>
+<td>Python 为主</td>
+<td>Python 为主</td>
+</tr>
+<tr>
+<td><strong>任务粒度</strong></td>
+<td>完整任务</td>
+<td>节点 + 边</td>
+<td>对话回合</td>
+</tr>
+<tr>
+<td><strong>状态管理</strong></td>
+<td>任务状态 + 历史</td>
+<td>图状态</td>
+<td>对话历史</td>
+</tr>
+<tr>
+<td><strong>适用范围</strong></td>
+<td>跨公司 &#x2F; 跨云</td>
+<td>单一应用</td>
+<td>实验 &#x2F; 教学</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-互补关系"><a href="#5-2-互补关系" class="headerlink" title="5.2 互补关系"></a>5.2 互补关系</h3><p>三者在生态中是分层关系，不互斥，可以同时存在：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A2A 负责：跨框架 Agent 通信</span><br><span class="line">  ↓</span><br><span class="line">  LangGraph / AutoGen 负责：单框架 Agent 内部逻辑</span><br><span class="line">    ↓</span><br><span class="line">    MCP 负责：Agent 调用工具</span><br></pre></td></tr></table></figure>
+
+<p>一个典型的企业级 Agent 应用很可能同时用到三层：内部用 LangGraph 编排状态，通过 A2A 与外部 Agent 协作，通过 MCP 调用底层工具。这三层不是竞争关系，而是「协议栈」一样的分工——每一层解决自己的问题，互不替代。</p>
+<hr>
+<h2 id="六、实际应用案例"><a href="#六、实际应用案例" class="headerlink" title="六、实际应用案例"></a>六、实际应用案例</h2><h3 id="6-1-企业-AI-助手"><a href="#6-1-企业-AI-助手" class="headerlink" title="6.1 企业 AI 助手"></a>6.1 企业 AI 助手</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">用户: &quot;帮我分析 Q3 销售数据&quot;</span><br><span class="line">    ↓</span><br><span class="line">Orchestrator Agent (LangGraph)</span><br><span class="line">    ↓</span><br><span class="line">  ├─ 调用 A2A → 数据查询 Agent (Python)</span><br><span class="line">  │           返回 Q3 SQL 结果</span><br><span class="line">  │</span><br><span class="line">  ├─ 调用 A2A → 数据可视化 Agent (另一公司)</span><br><span class="line">  │           返回图表</span><br><span class="line">  │</span><br><span class="line">  └─ 调用 A2A → 报告写作 Agent (Anthropic Claude)</span><br><span class="line">              返回完整报告</span><br></pre></td></tr></table></figure>
+
+<p>这个流程里的亮点是<strong>异构</strong>：</p>
+<ul>
+<li>数据查询 Agent 是公司内部 Python 团队写的，跑在私有云</li>
+<li>数据可视化 Agent 是第三方 SaaS</li>
+<li>报告写作 Agent 是 Anthropic Claude</li>
+</ul>
+<p>三个 Agent 完全异构，但通过 A2A 协议无缝协作，这就是协议标准化带来的红利。</p>
+<h3 id="6-2-研究-工程协作"><a href="#6-2-研究-工程协作" class="headerlink" title="6.2 研究 + 工程协作"></a>6.2 研究 + 工程协作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">研究 Agent (A2A Server)</span><br><span class="line">  - 能力：arxiv_search, paper_summarize</span><br><span class="line">  - 框架：AutoGen</span><br><span class="line"></span><br><span class="line">代码 Agent (A2A Server)</span><br><span class="line">  - 能力：github_search, code_implement</span><br><span class="line">  - 框架：LangGraph</span><br><span class="line"></span><br><span class="line">主 Agent (A2A Client)</span><br><span class="line">  - 框架：自定义</span><br><span class="line">  - 任务：复现论文算法</span><br><span class="line">  - 流程：先研究后实现</span><br></pre></td></tr></table></figure>
+
+<p>这个架构特别适合学术复现、工业研发类场景。研究 Agent 负责读论文，代码 Agent 负责实现，主 Agent 负责串起来——三个 Agent 各司其职，由 A2A 协议保证通信清晰、可追溯。</p>
+<hr>
+<h2 id="七、关键挑战"><a href="#七、关键挑战" class="headerlink" title="七、关键挑战"></a>七、关键挑战</h2><h3 id="7-1-安全与认证"><a href="#7-1-安全与认证" class="headerlink" title="7.1 安全与认证"></a>7.1 安全与认证</h3><p>跨公司的 Agent 协作，安全是首要问题。认证信息在 A2A 中通常这样传递：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># A2A 认证</span></span><br><span class="line">auth = &#123;</span><br><span class="line">    <span class="string">&quot;type&quot;</span>: <span class="string">&quot;oauth2&quot;</span>,</span><br><span class="line">    <span class="string">&quot;client_id&quot;</span>: <span class="string">&quot;&lt;YOUR_CLIENT_ID&gt;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;client_secret&quot;</span>: <span class="string">&quot;&lt;YOUR_CLIENT_SECRET&gt;&quot;</span>,</span><br><span class="line">    <span class="string">&quot;scopes&quot;</span>: [<span class="string">&quot;research.read&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>主要威胁</strong>：</p>
+<ul>
+<li><strong>Agent Card 伪造</strong>——恶意方伪造知名 Agent 卡片，诱导客户端调用</li>
+<li><strong>任务参数注入</strong>——任务消息中嵌入恶意指令，劫持下游 Agent</li>
+<li><strong>结果篡改</strong>——中间人攻击篡改任务结果</li>
+<li><strong>拒绝服务攻击</strong>——恶意调用消耗 Agent 资源</li>
+</ul>
+<p><strong>应对策略</strong>：</p>
+<ul>
+<li>OAuth 2.0 + scope 细粒度授权，限制每个 Agent 能做什么</li>
+<li>任务签名验证（HMAC &#x2F; 数字签名），确保任务来源可信</li>
+<li>结果审计日志（谁在什么时候调了什么），出事后能溯源</li>
+<li>速率限制与配额管理，防止被滥用</li>
+</ul>
+<h3 id="7-2-任务编排"><a href="#7-2-任务编排" class="headerlink" title="7.2 任务编排"></a>7.2 任务编排</h3><p>复杂任务需要多 Agent 并行 &#x2F; 串行协作，单靠 A2A 协议本身还不够：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">任务: &quot;产品发布的市场分析&quot;</span><br><span class="line">  ↓</span><br><span class="line">  Orchestrator Agent</span><br><span class="line">    ↓</span><br><span class="line">    ├─ 竞品分析 Agent</span><br><span class="line">    ├─ 用户调研 Agent</span><br><span class="line">    ├─ 营销文案 Agent</span><br><span class="line">    └─ 数据可视化 Agent</span><br></pre></td></tr></table></figure>
+
+<p><strong>核心难点</strong>：</p>
+<ul>
+<li><strong>任务依赖管理</strong>——并行 &#x2F; 串行 &#x2F; DAG 编排，谁先谁后、谁等谁</li>
+<li><strong>失败重试</strong>——单个 Agent 挂了不能拖垮全流程，需要局部降级</li>
+<li><strong>上下文共享</strong>——A2A 任务之间如何传递上下文、避免重复输入</li>
+<li><strong>结果合并</strong>——多个 Agent 的输出格式可能不同，需要归一化</li>
+</ul>
+<h3 id="7-3-调试与可观测性"><a href="#7-3-调试与可观测性" class="headerlink" title="7.3 调试与可观测性"></a>7.3 调试与可观测性</h3><p>跨框架调用一旦出问题，定位极难——你面对的是「黑盒 + 黑盒 + 黑盒」的串联：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">A2A Task Trace:</span><br><span class="line">  - task-uuid-1234 submitted → research-agent (2.3s)</span><br><span class="line">  - task-uuid-5678 submitted → writing-agent (4.5s)</span><br><span class="line">  - 依赖关系 + 性能监控</span><br></pre></td></tr></table></figure>
+
+<p><strong>关键工具链</strong>：</p>
+<ul>
+<li><strong>OpenTelemetry</strong>——trace 标准化，把所有 Agent 调用串成一个 trace</li>
+<li><strong>LangSmith</strong>——LangGraph 框架的可观测平台</li>
+<li><strong>Helicone</strong>——LLM 调用的成本与性能监控</li>
+<li><strong>自建 dashboard</strong>——业务指标可视化（成功率、平均耗时、token 消耗）</li>
+</ul>
+<p>可观测性是 A2A 落地的「最后一公里」，没有它，跨 Agent 调用出问题就只能靠猜。</p>
+<hr>
+<h2 id="八、必读论文"><a href="#八、必读论文" class="headerlink" title="八、必读论文"></a>八、必读论文</h2><h3 id="8-1-核心-2-篇"><a href="#8-1-核心-2-篇" class="headerlink" title="8.1 核心 2 篇"></a>8.1 核心 2 篇</h3><ol>
+<li><strong>Google 2025-04《A2A Protocol Spec》⭐⭐⭐</strong>——官方规范，必读</li>
+<li><strong>Google 2025-04《A2A: A New Protocol for Agent Collaboration》</strong>——设计哲学</li>
+</ol>
+<h3 id="8-2-进阶-2-篇"><a href="#8-2-进阶-2-篇" class="headerlink" title="8.2 进阶 2 篇"></a>8.2 进阶 2 篇</h3><ol start="3">
+<li><strong>Anthropic 2024-11《MCP Spec》⭐⭐⭐</strong>——理解 A2A 的对照面</li>
+<li><strong>LangChain 2024-10《LangGraph + A2A Integration》</strong>——落地实践</li>
+</ol>
+<h3 id="8-3-对比-1-篇"><a href="#8-3-对比-1-篇" class="headerlink" title="8.3 对比 1 篇"></a>8.3 对比 1 篇</h3><ol start="5">
+<li><strong>Microsoft 2024《AutoGen: Enabling Next-Gen LLM Applications》</strong>——Multi-Agent 范式对照</li>
+</ol>
+<hr>
+<h2 id="九、关键洞察与讨论"><a href="#九、关键洞察与讨论" class="headerlink" title="九、关键洞察与讨论"></a>九、关键洞察与讨论</h2><h3 id="9-1-关键洞察"><a href="#9-1-关键洞察" class="headerlink" title="9.1 关键洞察"></a>9.1 关键洞察</h3><ol>
+<li><strong>A2A 是 Agent 时代的”HTTP”</strong>——跨框架通信标准，让异构 Agent 互联互通</li>
+<li><strong>与 MCP 互补</strong>——MCP 管工具调用，A2A 管 Agent 协作，缺一不可</li>
+<li><strong>Google + Anthropic 双标准</strong>——A2A vs MCP，未来存在融合的可能</li>
+<li><strong>2025 是 Agent 协作元年</strong>——50+ 头部企业加入，生态正在快速形成</li>
+<li><strong>跨框架协作成为 Agent 规模化关键</strong>——单 Agent 能力有限，多 Agent 协作才能解决真实业务问题</li>
+</ol>
+<h3 id="9-2-经典讨论题"><a href="#9-2-经典讨论题" class="headerlink" title="9.2 经典讨论题"></a>9.2 经典讨论题</h3><ul>
+<li><strong>Q1.</strong> A2A vs MCP 哪个更重要？短期内谁更可能成为事实标准？</li>
+<li><strong>Q2.</strong> A2A 与 LangGraph &#x2F; AutoGen 的关系？是替代还是共存？</li>
+<li><strong>Q3.</strong> 跨公司 Agent 协作需要什么安全机制？签名、授权、审计？</li>
+<li><strong>Q4.</strong> A2A 会成为 W3C &#x2F; IETF 级别的国际标准吗？</li>
+<li><strong>Q5.</strong> 多 Agent 任务编排的难点？DAG 引擎、状态机还是 LLM 决策？</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>2025-04 关键节点</strong>：Google 发布 A2A 协议，与 Anthropic MCP 形成”工具层 + Agent 层”的双协议格局。Agent 互联网正在形成。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/A2A/" rel="tag">A2A</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Google/" rel="tag">Google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LLM/" rel="tag">LLM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MCP/" rel="tag">MCP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" rel="tag">协议标准</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" rel="tag">多智能体</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/16/2026/2026-10-17-teamai-cli/">TeamAI CLI 团队 AI 原生化</a><a class="next" href="/2026/10/15/2026/2026-10-16-agent-2025-2026-trends/">2025 Agent 演进全景</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/Vue/" style="font-size: 15px;">Vue</a> <a href="/tags/algorithm/" style="font-size: 15px;">algorithm</a> <a href="/tags/book/" style="font-size: 15px;">book</a> <a href="/tags/boosting/" style="font-size: 15px;">boosting</a> <a href="/tags/Kaggle/" style="font-size: 15px;">Kaggle</a> <a href="/tags/c/" style="font-size: 15px;">c++</a> <a href="/tags/sklearn/" style="font-size: 15px;">sklearn</a> <a href="/tags/flask/" style="font-size: 15px;">flask</a> <a href="/tags/time-series/" style="font-size: 15px;">time_series</a> <a href="/tags/ensemble-learning/" style="font-size: 15px;">ensemble_learning</a> <a href="/tags/bp-nn/" style="font-size: 15px;">bp_nn</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/iview/" style="font-size: 15px;">iview</a> <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/bootstrap2-0/" style="font-size: 15px;">bootstrap2.0</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/laravel/" style="font-size: 15px;">laravel</a> <a href="/tags/machine-learning/" style="font-size: 15px;">machine_learning</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/pandas/" style="font-size: 15px;">pandas</a> <a href="/tags/session/" style="font-size: 15px;">session</a> <a href="/tags/cookie/" style="font-size: 15px;">cookie</a> <a href="/tags/slam/" style="font-size: 15px;">slam</a> <a href="/tags/Linux-device/" style="font-size: 15px;">Linux_device</a> <a href="/tags/log/" style="font-size: 15px;">log</a> <a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/ai-news-radar/" style="font-size: 15px;">ai-news-radar</a> <a href="/tags/RSS/" style="font-size: 15px;">RSS</a> <a href="/tags/cron/" style="font-size: 15px;">cron</a> <a href="/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/" style="font-size: 15px;">改造方案</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/" style="font-size: 15px;">信息聚合</a> <a href="/tags/GitHub-Actions/" style="font-size: 15px;">GitHub Actions</a> <a href="/tags/Agent-Skill/" style="font-size: 15px;">Agent Skill</a> <a href="/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/" style="font-size: 15px;">工具调研</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-9-image-aesthetic-skills/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-ai-writing-style-distillation/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/2026/2026-10-18-github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
