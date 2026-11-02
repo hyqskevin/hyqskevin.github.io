@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/live2dw/assets/haruto.model.json</loc>
+    <loc>https://hyqskevin.github.io/live2dw/assets/haruto.physics.json</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/live2dw/assets/haruto.physics.json</loc>
+    <loc>https://hyqskevin.github.io/live2dw/assets/haruto.model.json</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/categories/notes/index.html</loc>
+    <loc>https://hyqskevin.github.io/categories/paper/index.html</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/categories/paper/index.html</loc>
+    <loc>https://hyqskevin.github.io/categories/notes/index.html</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -92,7 +92,61 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/youth-community-1/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/youth-community-3/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/youth-community-2/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/about/index.html</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/wechat-ai-weekly-agent-ontology/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2026/09/17/wechat-ai-weekly-frontier/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/17/wechat-ai-weekly-agent/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -119,6 +173,15 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/09/20/xhs-xsec-token-reverse/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2026/09/11/workbuddy-mcp-bridge/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -137,61 +200,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/20/xhs-xsec-token-reverse/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2026/09/01/xiaohongshu-api/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/youth-community-1/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/youth-community-2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/youth-community-3/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/about/index.html</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/trae-ai-tutorial/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -290,60 +299,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/wechat-ai-weekly-agent-ontology/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/17/wechat-ai-weekly-agent/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/03/16/sort/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/spring-ai-intro/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/spring-ai-repos/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2020/05/11/swiper/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2026/09/01/tailscale-frp/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -380,7 +335,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/tencent-research-2026q2/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/01/thought-verification-1/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -389,7 +344,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/thought-verification-1/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/07/tencent-research-2026q2/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -443,70 +398,16 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/trae-ai-tutorial/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2018/10/27/tp-print/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/19/rag-enterprise-cases/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/rag-enterprise-deployment/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/rag-enterprise-knowledge/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/19/rag-learning-path/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/react-framework-summary/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/04/react-framework/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/16/rsi-agent/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -551,15 +452,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/self-hosted-ui-ux-mcp-d2c/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2019/02/27/session-cookie/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -578,7 +470,169 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/self-hosted-ui-ux-mcp-d2c/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/01/09/slam-rgbd/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/16/sort/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/spring-ai-repos/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/07/spring-ai-intro/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2020/05/11/swiper/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/pinia-v4/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/02/php-notes3/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/15/process-reward-model/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/rag-enterprise-cases-2/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/04/04/ptr/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/19/rag-enterprise-cases/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/react-framework-summary/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/07/rag-enterprise-knowledge/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/19/rag-learning-path/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/04/react-framework/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/rag-enterprise-deployment/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/16/rsi-agent/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/07/palantir-sompo/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -605,15 +659,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/07/palantir-tampa-general/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2026/10/07/palantir-wfp/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -632,7 +677,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/28/paper/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/07/palantir-tampa-general/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -659,52 +704,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/03/02/php-notes3/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/pinia-v4/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/15/process-reward-model/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/04/04/ptr/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/rag-enterprise-cases-2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/07/palantir-axel-springer/</loc>
+    <loc>https://hyqskevin.github.io/2019/02/28/paper/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -776,7 +776,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/07/palantir-ontology-cases/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/07/palantir-ringier/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -794,52 +794,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/07/palantir-ringier/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/07/palantir-sompo/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-portfolio/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-positioning/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-product-matrix/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-quality-market/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/07/palantir-ontology-cases/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -857,7 +812,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-quality-standard/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/17/opc-star-founders/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -866,7 +821,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/opc-star-founders/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-quality-standard/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -884,7 +839,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-tech-quality/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-zero-path/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -893,7 +848,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-zero-path/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-tech-quality/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -938,52 +893,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/obsidian-llm-wiki/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/office-agent-tools-2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/14/office-agent-tools/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/oh-my-opencode-agent-config/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/05/oh-my-opencode/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/ontology-rsi-autoresearch/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/07/palantir-axel-springer/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1010,15 +920,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-challenges/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2026/09/09/opc-commercialization/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -1028,7 +929,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-communities/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-challenges/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1037,7 +938,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/09/opc-feasibility/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-communities/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1082,7 +983,142 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-feasibility/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-positioning/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-portfolio/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-product-matrix/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/09/opc-quality-market/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/node-beginner/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/obsidian-llm-wiki/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/npmrc-cheatsheet/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/office-agent-tools-2/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/14/office-agent-tools/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/oh-my-opencode-agent-config/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/ontology-rsi-autoresearch/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/05/oh-my-opencode/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/26/migration/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2019/02/13/move-to-windows/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/01/14/ml-api/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1118,15 +1154,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/multi-agent-cluster/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2026/10/15/multi-agent-collaboration/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -1136,7 +1163,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/15/multimodal-sota-2025/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/07/multi-agent-cluster/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1145,7 +1172,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/22/mysql-regular/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/15/multimodal-sota-2025/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1172,7 +1199,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/ningbo-ai-ecosystem/</loc>
+    <loc>https://hyqskevin.github.io/2019/02/22/mysql-regular/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1190,25 +1217,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/node-beginner/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/npmrc-cheatsheet/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/15/llm-prompt-injection-defense/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/01/ningbo-ai-ecosystem/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1235,15 +1244,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/mac-config-tips/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/2019/10/12/maven-lifecycle/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -1253,7 +1253,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/10/27/maven-pom/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/01/mac-config-tips/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1280,7 +1280,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/microsoft-skill-recorder-2/</loc>
+    <loc>https://hyqskevin.github.io/2019/10/27/maven-pom/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1298,43 +1298,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/26/migration/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/01/14/ml-api/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/08/22/iview-note-2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/09/19/iview-note-3/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/08/15/iview-note/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/17/microsoft-skill-recorder-2/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1361,7 +1325,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2020/05/09/js%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/17/kimi-claw/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1371,15 +1335,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/2026/09/03/kimi-claw-usage/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/kimi-claw/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1415,7 +1370,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/glm-5-3-tech-report/</loc>
+    <loc>https://hyqskevin.github.io/2020/05/09/js%E5%90%8C%E6%AD%A5%E5%92%8C%E5%BC%82%E6%AD%A5/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1424,61 +1379,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/glm-5-3/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/hangzhou-three-spaces/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/03/18/hashtable/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/27/hello-hexo/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2018/10/09/hello-world/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/05/22/hello/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/hermes-vs-openclaw-gateway-1/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/15/llm-prompt-injection-defense/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1514,7 +1415,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/home-multi-device-remote-2/</loc>
+    <loc>https://hyqskevin.github.io/2019/02/28/hunger-game/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1523,7 +1424,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/02/28/hunger-game/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/01/home-multi-device-remote-2/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1568,7 +1469,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/diffusion/</loc>
+    <loc>https://hyqskevin.github.io/2019/08/22/iview-note-2/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1577,7 +1478,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2019/03/20/divide/</loc>
+    <loc>https://hyqskevin.github.io/2019/09/19/iview-note-3/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1586,88 +1487,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/domestic-prototyping-tools/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/13/enterprise-ai-trinity/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/05/20/fantasy-top100/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/03/30/flask-learning1/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/04/10/flask-learning2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2019/02/19/fund-flow/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/gated-dsa-1/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/gated-dsa-2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/github-awesome-codex-skills/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/05/github-codex-skills/</loc>
+    <loc>https://hyqskevin.github.io/2019/08/15/iview-note/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1712,7 +1532,187 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/15/constitutional-ai/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/07/glm-5-3/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/glm-5-3-tech-report/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/hangzhou-three-spaces/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/18/hashtable/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/09/hello-world/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2018/10/27/hello-hexo/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/05/22/hello/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/hermes-vs-openclaw-gateway-1/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/15/diffusion-llm/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/diffusion/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/20/divide/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/domestic-prototyping-tools/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/13/enterprise-ai-trinity/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/03/30/flask-learning1/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/04/10/flask-learning2/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/05/20/fantasy-top100/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2019/02/19/fund-flow/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/gated-dsa-1/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/github-awesome-codex-skills/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/gated-dsa-2/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/05/github-codex-skills/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1748,7 +1748,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/cross-platform-stack-1/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/01/cross-platform-stack-2/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1757,7 +1757,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/cross-platform-stack-2/</loc>
+    <loc>https://hyqskevin.github.io/2026/09/01/cross-platform-stack-1/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1785,69 +1785,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/2026/10/15/deep-research-paradigm/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/15/diffusion-llm/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/ai-trainer-cert/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/ai-trainer-exam-summary/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/ai-workshop-v3/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/ai-writing-style-distillation-2/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/07/ai-writing-style-distillation/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/apibridge-mcp-platform/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -1964,52 +1901,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-pricing/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-revenue-structure/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-team-profiles/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/16/ai-native-sdlc-playbook/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/ai-news-radar-booster-skills/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/ai-news-radar-cron-integration/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/15/constitutional-ai/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2063,7 +1955,142 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/09/07/ai-trainer-cert/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2026/09/01/ai-source-tools/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/ai-trainer-exam-summary/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/ai-writing-style-distillation-2/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/ai-workshop-v3/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/07/ai-writing-style-distillation/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/apibridge-mcp-platform/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/ai-knowledge-workshop/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-case-gossip/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-pricing/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-revenue-structure/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/16/ai-native-sdlc-playbook/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-industry-turning-point/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-team-profiles/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/10/17/ai-news-radar-booster-skills/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/ai-news-radar-cron-integration/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2144,6 +2171,15 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/2026/10/12/ai-assistant-ecosystem/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/2026/09/16/ai-agent-ontology/</loc>
     
     <lastmod>2026-11-02</lastmod>
@@ -2154,51 +2190,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/2026/10/12/ai-assistant-comparison/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/12/ai-assistant-ecosystem/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/10/17/ai-knowledge-workshop/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-case-gossip/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/24/ai-media-industry-turning-point/</loc>
-    
-    <lastmod>2026-11-02</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/2026/09/01/302ai-newapi/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2324,7 +2315,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2020/06/27/Webpack_1/</loc>
+    <loc>https://hyqskevin.github.io/2020/07/12/Webpack_3/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2342,7 +2333,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2020/07/12/Webpack_3/</loc>
+    <loc>https://hyqskevin.github.io/2026/10/15/a2a-protocol/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2351,7 +2342,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/2026/10/15/a2a-protocol/</loc>
+    <loc>https://hyqskevin.github.io/2020/06/27/Webpack_1/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2397,6 +2388,15 @@
   
   <url>
     <loc>https://hyqskevin.github.io/2026/09/01/agent-basics-1/</loc>
+    
+    <lastmod>2026-11-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/2026/09/01/302ai-newapi/</loc>
     
     <lastmod>2026-11-02</lastmod>
     
@@ -2808,14 +2808,14 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Webpack/</loc>
+    <loc>https://hyqskevin.github.io/tags/Babel/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Babel/</loc>
+    <loc>https://hyqskevin.github.io/tags/Webpack/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3172,62 +3172,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/AI-Agent/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E9%80%89%E5%9E%8B%E5%86%B3%E7%AD%96/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/OS-Copilot/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E7%AB%AF%E4%BE%A7AI/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%A4%9AAgent/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%86%B3%E7%AD%96%E6%A0%91/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/LangChain/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3277,6 +3221,20 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3285,6 +3243,48 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E7%9F%A5%E8%AF%86%E6%B5%8B%E8%AF%95/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/AI-Agent/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E9%80%89%E5%9E%8B%E5%86%B3%E7%AD%96/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/OS-Copilot/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E7%AB%AF%E4%BE%A7AI/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%A4%9AAgent/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%86%B3%E7%AD%96%E6%A0%91/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3333,34 +3333,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E8%A1%8C%E4%B8%9A%E6%8B%90%E7%82%B9/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%90%AF%E7%A4%BA/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%85%AC%E4%BC%97%E5%8F%B7/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E5%B9%BF%E5%91%8A/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3389,20 +3361,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%9B%A2%E9%98%9F%E7%94%BB%E5%83%8F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/AI-Native-SDLC/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3425,6 +3383,48 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E8%90%BD%E5%9C%B0%E5%AE%9E%E6%88%98/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E8%A1%8C%E4%B8%9A%E6%8B%90%E7%82%B9/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%90%AF%E7%A4%BA/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%85%AC%E4%BC%97%E5%8F%B7/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%9B%A2%E9%98%9F%E7%94%BB%E5%83%8F/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3480,27 +3480,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/cron/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Python/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E4%BF%A1%E6%BA%90%E4%BD%93%E7%B3%BB/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3523,6 +3502,27 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E5%B7%A5%E5%85%B7%E8%B0%83%E7%A0%94/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/cron/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%94%B9%E9%80%A0%E6%96%B9%E6%A1%88/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Python/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3599,34 +3599,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Crawler/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Firecrawl/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Exa/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Tavily/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E8%AE%AD%E7%BB%83%E5%B8%88/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3676,14 +3648,35 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/PyTorch/</loc>
+    <loc>https://hyqskevin.github.io/tags/Crawler/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E9%A1%B9%E7%9B%AE%E6%96%B9%E6%A1%88/</loc>
+    <loc>https://hyqskevin.github.io/tags/Firecrawl/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Exa/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Tavily/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/PyTorch/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3705,6 +3698,13 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E9%A1%B9%E7%9B%AE%E6%96%B9%E6%A1%88/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -3914,6 +3914,27 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/Prompt-Engineering/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Lost-in-the-Middle/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Manus-AI/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/Constitutional-AI/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3949,27 +3970,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Prompt-Engineering/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Lost-in-the-Middle/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Manus-AI/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/c/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -3978,13 +3978,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/Taro/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Vue3/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4005,20 +3998,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%90%8E%E5%8F%B0/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E7%9B%91%E6%8E%A7/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -4027,6 +4006,27 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/monorepo/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Vue3/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%90%8E%E5%8F%B0/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4292,20 +4292,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/vLLM/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%AE%9E%E8%B7%B5/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/Awesome/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -4314,6 +4300,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/AI-%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/vLLM/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%AE%9E%E8%B7%B5/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4404,7 +4404,28 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/%E5%90%8E%E8%AE%AD%E7%BB%83/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E7%A8%80%E7%96%8F%E6%B3%A8%E6%84%8F%E5%8A%9B/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4426,27 +4447,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E7%A8%80%E7%96%8F%E6%B3%A8%E6%84%8F%E5%8A%9B/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4747,14 +4747,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Kimi-Claw/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/CLI/</loc>
+    <loc>https://hyqskevin.github.io/tags/Kimi/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4768,7 +4761,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Kimi/</loc>
+    <loc>https://hyqskevin.github.io/tags/CLI/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4776,6 +4769,13 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E6%8F%92%E4%BB%B6/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Kimi-Claw/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -4880,41 +4880,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Prompt-Injection/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%AE%89%E5%85%A8/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/OWASP/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E9%98%B2%E5%BE%A1/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E7%BA%A2%E9%98%9F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -4964,6 +4929,48 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/Prompt-Injection/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%AE%89%E5%85%A8/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/OWASP/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E9%98%B2%E5%BE%A1/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E7%BA%A2%E9%98%9F/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Maven/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/Mac/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -4993,13 +5000,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Maven/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5041,20 +5041,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/arXiv/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/Microsoft/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5077,6 +5063,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/laravel/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/arXiv/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%B7%A5%E7%A8%8B%E5%8C%96/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5174,20 +5174,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E7%A4%BE%E5%8C%BA/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%88%9B%E4%B8%9A/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E4%B8%80%E4%BA%BA%E5%85%AC%E5%8F%B8/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5203,6 +5189,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E8%AE%BF%E5%AE%A2%E6%8A%A5%E5%91%8A/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E7%A4%BE%E5%8C%BA/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%88%9B%E4%B8%9A/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5231,6 +5231,41 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E6%96%B0%E6%89%8B/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Obsidian/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/LLM-Wiki/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Workflow/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Knowledge-Base/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/iCloud/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5287,41 +5322,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/Process-Reward-Model/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Obsidian/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/LLM-Wiki/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Workflow/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Knowledge-Base/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/iCloud/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5405,20 +5405,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Oh-My-OpenCode/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%A4%9A%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E4%B8%89%E5%89%91%E5%AE%A2/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5427,6 +5413,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A7%91%E7%A0%94/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Oh-My-OpenCode/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%A4%9A%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5482,6 +5482,13 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/AI%E5%88%9B%E4%B8%9A/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/%E6%8C%91%E6%88%98/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5510,13 +5517,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/AI%E5%88%9B%E4%B8%9A/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E5%88%9B%E4%B8%9A%E7%A4%BE%E5%8C%BA/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5525,27 +5525,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E5%9B%AD%E5%8C%BA/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E8%A1%A5%E5%BC%BA%E9%A1%B9%E7%9B%AE/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/PMF/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E8%A7%82%E7%8C%B9/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5594,14 +5573,21 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%85%A5%E9%A9%BB%E9%A1%B9%E7%9B%AE/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E8%A1%A5%E5%BC%BA%E9%A1%B9%E7%9B%AE/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%B5%B7%E6%9B%99/</loc>
+    <loc>https://hyqskevin.github.io/tags/PMF/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E8%A7%82%E7%8C%B9/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5616,6 +5602,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E5%8D%95%E4%BA%BA%E5%88%9B%E4%B8%9A/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%85%A5%E9%A9%BB%E9%A1%B9%E7%9B%AE/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%B5%B7%E6%9B%99/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5685,13 +5685,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%90%AB%E9%87%91%E9%87%8F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E6%98%8E%E6%98%9F%E5%88%9B%E4%B8%9A%E8%80%85/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5706,14 +5699,7 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%8A%80%E6%9C%AF%E5%90%AB%E9%87%91%E9%87%8F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E8%AF%84%E4%BC%B0/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E5%90%AB%E9%87%91%E9%87%8F/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5728,6 +5714,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/90%E5%A4%A9%E9%80%9F%E6%88%90/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%8A%80%E6%9C%AF%E5%90%AB%E9%87%91%E9%87%8F/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E8%AF%84%E4%BC%B0/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -5818,34 +5818,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Axel-Springer/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%AA%92%E4%BD%93%E5%87%BA%E7%89%88/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E8%AE%A2%E9%98%85LTV/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/Hospital-360/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5896,6 +5868,34 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E6%95%B0%E6%8D%AE%E6%B2%BB%E7%90%86/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Axel-Springer/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%AA%92%E4%BD%93%E5%87%BA%E7%89%88/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E8%AE%A2%E9%98%85LTV/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6049,14 +6049,14 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E4%BC%81%E4%B8%9A%E6%A1%88%E4%BE%8B/</loc>
+    <loc>https://hyqskevin.github.io/tags/Ringier/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%95%B0%E5%AD%97%E5%8C%96%E8%BD%AC%E5%9E%8B/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E5%AA%92%E4%BD%93%E6%95%B0%E5%AD%97%E5%8C%96/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6077,14 +6077,14 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Ringier/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E6%95%B0%E5%AD%97%E5%8C%96%E8%BD%AC%E5%9E%8B/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%AA%92%E4%BD%93%E6%95%B0%E5%AD%97%E5%8C%96/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E4%BC%81%E4%B8%9A%E6%A1%88%E4%BE%8B/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6182,20 +6182,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/AIP/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/Hospital-Sync/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/WFP/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -6232,6 +6218,20 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/pandas/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/AIP/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Hospital-Sync/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6315,35 +6315,35 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/</loc>
+    <loc>https://hyqskevin.github.io/tags/ReAct/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/FoRAG/</loc>
+    <loc>https://hyqskevin.github.io/tags/CoT/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/KAPE/</loc>
+    <loc>https://hyqskevin.github.io/tags/DSPy/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/RioRAG/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E5%A4%9A%E5%B7%A5%E5%85%B7/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%90%BD%E5%9C%B0/</loc>
+    <loc>https://hyqskevin.github.io/tags/%E6%8E%A8%E7%90%86%E8%8C%83%E5%BC%8F/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6392,42 +6392,42 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/ReAct/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/CoT/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/DSPy/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%A4%9A%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E6%8E%A8%E7%90%86%E8%8C%83%E5%BC%8F/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E6%8E%A8%E7%90%86/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/FoRAG/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/KAPE/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/RioRAG/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E4%BC%81%E4%B8%9A%E7%BA%A7%E8%90%BD%E5%9C%B0/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6567,6 +6567,13 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/%E4%BB%93%E5%BA%93%E7%9B%98%E7%82%B9/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/Java/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -6575,13 +6582,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E5%AE%9E%E6%88%98%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E4%BB%93%E5%BA%93%E7%9B%98%E7%82%B9/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6756,13 +6756,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/Linux-device/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/Trae-AI/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -6778,6 +6771,13 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/Cursor/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/Linux-device/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -6910,6 +6910,34 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/%E7%9F%A5%E8%AF%86%E6%9C%AC%E4%BD%93/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E4%BC%81%E4%B8%9A%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/%E5%BE%AE%E4%BF%A1-AI-%E5%91%A8%E6%8A%A5/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -6939,34 +6967,6 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E7%BC%96%E7%A8%8B%E6%99%BA%E8%83%BD%E4%BD%93/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E7%9F%A5%E8%AF%86%E6%9C%AC%E4%BD%93/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E4%BC%81%E4%B8%9A%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -7029,6 +7029,34 @@
   </url>
   
   <url>
+    <loc>https://hyqskevin.github.io/tags/xsec-token/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/%E5%8A%A0%E5%AF%86/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://hyqskevin.github.io/tags/mcp/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -7078,41 +7106,6 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/tags/xsec-token/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%AE%89%E5%85%A8%E7%A0%94%E7%A9%B6/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/%E5%8A%A0%E5%AF%86/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://hyqskevin.github.io/tags/API/</loc>
-    <lastmod>2026-11-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://hyqskevin.github.io/tags/%E8%B7%B3%E6%B5%B7/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -7128,6 +7121,13 @@
   
   <url>
     <loc>https://hyqskevin.github.io/tags/%E6%96%B9%E6%B3%95%E8%AE%BA/</loc>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://hyqskevin.github.io/tags/API/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -7451,14 +7451,14 @@
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/</loc>
+    <loc>https://hyqskevin.github.io/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://hyqskevin.github.io/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/</loc>
+    <loc>https://hyqskevin.github.io/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/</loc>
     <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
