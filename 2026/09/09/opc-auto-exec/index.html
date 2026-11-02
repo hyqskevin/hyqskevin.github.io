@@ -1,0 +1,565 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>OPC AI 自主执行架构 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2">  <link rel="canonical" href="https://hyqskevin.github.io/2026/09/09/opc-auto-exec/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="OPC AI 自主执行架构 | MonoShow">
+  <meta property="og:description" content="Kevin W build this air-castle to collect infos &amp;amp; photos">
+  <meta property="og:url" content="https://hyqskevin.github.io/2026/09/09/opc-auto-exec/">
+  <meta property="og:site_name" content="MonoShow">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://hyqskevin.github.io/about/#person","name":"Kevin W","alternateName":["hyqskevin","Kevin"],"url":"https://hyqskevin.github.io/about/","image":"https://hyqskevin.github.io/img/avatar.png","description":"Kevin W 是聚焦 AI Agent 落地与知识工坊实践的 AI 从业者，运营 706 AI 学习路径与 AI 知识工坊，持续产出大模型工程、RAG、Agent 架构与 AI 政策类深度内容。","jobTitle":"AI 从业者","knowsAbout":["AI Agent","RAG","大模型工程","AI 知识工坊","MCP","上下文工程"],"worksFor":{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI"},"knowsLanguage":["zh-CN","en"],"sameAs":["https://hyqskevin.github.io/about/","https://github.com/hyqskevin","https://twitter.com/hyqskevin","https://instagram.com/hyqskevin"]},{"@type":"WebSite","@id":"https://hyqskevin.github.io/#website","url":"https://hyqskevin.github.io/","name":"MonoShow","description":"Kevin W build this air-castle to collect infos & photos","inLanguage":"zh-CN","publisher":{"@id":"https://hyqskevin.github.io/#organization"},"author":{"@id":"https://hyqskevin.github.io/about/#person"}},{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI","url":"https://hyqskevin.github.io/","founder":{"@id":"https://hyqskevin.github.io/about/#person"},"sameAs":["https://github.com/hyqskevin"]},{"@type":"Article","@id":"https://hyqskevin.github.io/2026/09/09/opc-auto-exec/#article","headline":"OPC AI 自主执行架构","description":"Kevin W build this air-castle to collect infos &amp; photos","url":"https://hyqskevin.github.io/2026/09/09/opc-auto-exec/","datePublished":"2026-09-09T16:00:00.000Z","dateModified":"2026-11-02T03:42:33.506Z","author":{"@id":"https://hyqskevin.github.io/about/#person"},"publisher":{"@id":"https://hyqskevin.github.io/#organization"},"inLanguage":"zh-CN"}]}</script>
+</head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">OPC AI 自主执行架构</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">OPC AI 自主执行架构</h1><div class="post-meta">2026-09-09<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2.9k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 11</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><blockquote>
+<p>系列：OPC 宁波甬创 9 条（16&#x2F;18）— 第 1 期 <a href="https://hyqskevin.github.io/2026/09/08/2026/09/08/opc-ningbo-policy/">政策全景</a> · 本期 OPC AI 自主执行架构</p>
+</blockquote>
+<blockquote>
+<p><strong>你的约束</strong>：有本职工作，需要 AI 自主执行<br><strong>核心目标</strong>：<strong>90% 的运营 &#x3D; AI 自动化</strong>，你每天投入 1-2 小时<br><strong>架构转向</strong>：从”咨询 + 平台（人工撮合）” → “AI 自动化运营 + 异步交付”</p>
+</blockquote>
+<h2 id="一、架构转向-·-4-个关键变化"><a href="#一、架构转向-·-4-个关键变化" class="headerlink" title="一、架构转向 · 4 个关键变化"></a>一、架构转向 · 4 个关键变化</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>V3 兼职不可行</th>
+<th>V4 AI 自主执行 ✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>资源对接</strong></td>
+<td>人工撮合（<strong>你在线</strong>）</td>
+<td>AI 自动标签匹配 + 自动撮合通知</td>
+</tr>
+<tr>
+<td><strong>PMF 评分</strong></td>
+<td>你手动访谈 + 写报告</td>
+<td>用户自助填写 → AI 自动生成报告</td>
+</tr>
+<tr>
+<td><strong>政策雷达</strong></td>
+<td>你手动编辑推送</td>
+<td>cron + LLM + 自动推送（<strong>完全自主</strong>）</td>
+</tr>
+<tr>
+<td><strong>大赛陪跑</strong></td>
+<td>你手动改稿</td>
+<td>用户提交 → AI 自动改稿 + 生成 BP</td>
+</tr>
+<tr>
+<td><strong>内容营销</strong></td>
+<td>你手动写公众号</td>
+<td>AI Agent 自动生成 + 自动发文</td>
+</tr>
+<tr>
+<td><strong>客户服务</strong></td>
+<td>你手动回微信</td>
+<td>微信群机器人自动回复</td>
+</tr>
+<tr>
+<td><strong>每日投入</strong></td>
+<td>4-6 小时</td>
+<td><strong>1-2 小时</strong>（晚上 + 周末）</td>
+</tr>
+</tbody></table>
+<h2 id="二、9-个模块的自动化分级"><a href="#二、9-个模块的自动化分级" class="headerlink" title="二、9 个模块的自动化分级"></a>二、9 个模块的自动化分级</h2><h3 id="2-1-完全自动化（90-AI-执行，零人工）"><a href="#2-1-完全自动化（90-AI-执行，零人工）" class="headerlink" title="2.1 完全自动化（90%+ AI 执行，零人工）"></a>2.1 完全自动化（90%+ AI 执行，零人工）</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>模块</th>
+<th>自动化路径</th>
+<th>你的投入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>AI PPT 生成</strong>（+ OPC 大赛模板）</td>
+<td>用户上传草稿 → 自动生成 PPT</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>AI 数据分析</strong>（+ OPC 行业数据）</td>
+<td>用户上传数据 → 自动出分析报告</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>AI 深度调研</strong>（+ OPC 政策库）</td>
+<td>用户提问 → AI 自动检索+回答</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>AI 文档撰写</strong>（+ BP 模板）</td>
+<td>用户输入要点 → AI 自动成稿</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>OPC-PMF 评分卡</strong></td>
+<td>用户填写 5 题 → AI 自动出 30 页报告</td>
+<td>0</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>OPC 政策雷达</strong></td>
+<td>cron 每日 8:30 → LLM 摘要 → 自动推送</td>
+<td>0</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>OPC 大赛陪跑</strong></td>
+<td>用户输入草稿 → AI 自动改稿 + 生成 BP&#x2F;PPT</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-半自动化（80-AI-执行，BD-审核需要人工）"><a href="#2-2-半自动化（80-AI-执行，BD-审核需要人工）" class="headerlink" title="2.2 半自动化（80% AI 执行，BD&#x2F;审核需要人工）"></a>2.2 半自动化（80% AI 执行，BD&#x2F;审核需要人工）</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>模块</th>
+<th>自动化路径</th>
+<th>你的投入</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>6</td>
+<td><strong>AI 工具栈体检</strong></td>
+<td>浏览器扩展自动扫描 → AI 出报告</td>
+<td><strong>0</strong>（完全自动）</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>OPC 资源对接平台</strong></td>
+<td>AI 自动标签匹配 → 撮合通知（BD 资源方需人工）</td>
+<td><strong>1-2h&#x2F;周</strong>（BD）</td>
+</tr>
+</tbody></table>
+<h2 id="三、AI-自主执行的-5-个核心-Agent"><a href="#三、AI-自主执行的-5-个核心-Agent" class="headerlink" title="三、AI 自主执行的 5 个核心 Agent"></a>三、AI 自主执行的 5 个核心 Agent</h2><h3 id="3-1-Agent-1-·-政策雷达-Agent（每天-8-30-自动跑）"><a href="#3-1-Agent-1-·-政策雷达-Agent（每天-8-30-自动跑）" class="headerlink" title="3.1 Agent 1 · 政策雷达 Agent（每天 8:30 自动跑）"></a>3.1 Agent 1 · 政策雷达 Agent（每天 8:30 自动跑）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">触发：cron</span> <span class="string">&quot;30 8 * * *&quot;</span></span><br><span class="line"><span class="string">任务：</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span> <span class="string">RSS</span> <span class="string">抓取（10</span> <span class="string">个政策源）</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span> <span class="string">WebFetch</span> <span class="string">兜底</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span> <span class="string">DeepSeek</span> <span class="string">API</span> <span class="string">摘要</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span> <span class="string">政策匹配（按</span> <span class="string">OPC</span> <span class="string">标签）</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span> <span class="string">微信公众号自动发文</span></span><br><span class="line">  <span class="number">6</span><span class="string">.</span> <span class="string">微信群机器人自动推送</span></span><br><span class="line">  <span class="number">7</span><span class="string">.</span> <span class="string">邮件订阅自动发送</span></span><br><span class="line"><span class="string">工具：RSS</span> <span class="string">/</span> <span class="string">WebFetch</span> <span class="string">/</span> <span class="string">DeepSeek</span> <span class="string">API</span> <span class="string">/</span> <span class="string">微信</span> <span class="string">API</span></span><br><span class="line"><span class="string">你的投入：0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-Agent-2-·-OPC-内容营销-Agent（每周一-三五-自动跑）"><a href="#3-2-Agent-2-·-OPC-内容营销-Agent（每周一-三五-自动跑）" class="headerlink" title="3.2 Agent 2 · OPC 内容营销 Agent（每周一&#x2F;三五 自动跑）"></a>3.2 Agent 2 · OPC 内容营销 Agent（每周一&#x2F;三五 自动跑）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">触发：cron</span> <span class="string">&quot;0 9 * * 1,3,5&quot;</span></span><br><span class="line"><span class="string">任务：</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span> <span class="string">抓取</span> <span class="string">OPC</span> <span class="string">行业最新动态</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span> <span class="string">AI</span> <span class="string">生成公众号文章（1500</span> <span class="string">字）</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span> <span class="string">AI</span> <span class="string">生成小红书图文</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span> <span class="string">自动发文（公众号</span> <span class="string">+</span> <span class="string">小红书</span> <span class="string">+</span> <span class="string">知乎）</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span> <span class="string">自动回复评论</span></span><br><span class="line"><span class="string">工具：DeepSeek</span> <span class="string">API</span> <span class="string">/</span> <span class="string">微信公众号</span> <span class="string">API</span> <span class="string">/</span> <span class="string">小红书</span> <span class="string">API</span></span><br><span class="line"><span class="string">你的投入：0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-Agent-3-·-PMF-评分自动化-Agent（用户提交后自动跑）"><a href="#3-3-Agent-3-·-PMF-评分自动化-Agent（用户提交后自动跑）" class="headerlink" title="3.3 Agent 3 · PMF 评分自动化 Agent（用户提交后自动跑）"></a>3.3 Agent 3 · PMF 评分自动化 Agent（用户提交后自动跑）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">触发：用户提交问卷</span></span><br><span class="line"><span class="string">任务：</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span> <span class="string">接收用户提交的</span> <span class="number">5</span> <span class="string">个核心问题</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span> <span class="string">调用</span> <span class="string">Sean</span> <span class="string">Ellis</span> <span class="string">算法计算</span> <span class="string">PMF</span> <span class="string">评分</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span> <span class="string">AI</span> <span class="string">生成</span> <span class="number">30</span> <span class="string">页</span> <span class="string">PDF</span> <span class="string">报告</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span> <span class="string">邮件自动发送报告</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span> <span class="string">微信通知用户</span></span><br><span class="line"><span class="string">工具：DeepSeek</span> <span class="string">API</span> <span class="string">/</span> <span class="string">PDF</span> <span class="string">生成</span> <span class="string">/</span> <span class="string">邮件</span> <span class="string">API</span> <span class="string">/</span> <span class="string">微信</span> <span class="string">API</span></span><br><span class="line"><span class="string">你的投入：0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-Agent-4-·-大赛陪跑-Agent（用户提交后自动跑）"><a href="#3-4-Agent-4-·-大赛陪跑-Agent（用户提交后自动跑）" class="headerlink" title="3.4 Agent 4 · 大赛陪跑 Agent（用户提交后自动跑）"></a>3.4 Agent 4 · 大赛陪跑 Agent（用户提交后自动跑）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">触发：用户提交大赛草稿</span></span><br><span class="line"><span class="string">任务：</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span> <span class="string">AI</span> <span class="string">读取用户提交的</span> <span class="string">BP</span> <span class="string">草稿</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span> <span class="string">检索金奖案例库（吴智帆</span> <span class="string">JFDOLL</span> <span class="string">等）</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span> <span class="string">AI</span> <span class="string">改稿（基于模板）</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span> <span class="string">AI</span> <span class="string">生成</span> <span class="string">PPT（基于模板）</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span> <span class="string">AI</span> <span class="string">生成答辩话术</span></span><br><span class="line">  <span class="number">6</span><span class="string">.</span> <span class="string">自动打包发送</span></span><br><span class="line"><span class="string">工具：DeepSeek</span> <span class="string">API</span> <span class="string">/</span> <span class="string">PPT</span> <span class="string">生成</span> <span class="string">/</span> <span class="string">文件打包</span></span><br><span class="line"><span class="string">你的投入：0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-Agent-5-·-OPC-资源对接-Agent（用户提交需求后自动跑）"><a href="#3-5-Agent-5-·-OPC-资源对接-Agent（用户提交需求后自动跑）" class="headerlink" title="3.5 Agent 5 · OPC 资源对接 Agent（用户提交需求后自动跑）"></a>3.5 Agent 5 · OPC 资源对接 Agent（用户提交需求后自动跑）</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">触发：用户提交对接需求</span></span><br><span class="line"><span class="string">任务：</span></span><br><span class="line">  <span class="number">1</span><span class="string">.</span> <span class="string">AI</span> <span class="string">读取</span> <span class="string">OPC</span> <span class="string">标签（行业</span> <span class="string">/</span> <span class="string">阶段</span> <span class="string">/</span> <span class="string">需求）</span></span><br><span class="line">  <span class="number">2</span><span class="string">.</span> <span class="string">匹配资源方数据库（标签匹配</span> <span class="string">+</span> <span class="string">LLM</span> <span class="string">评分）</span></span><br><span class="line">  <span class="number">3</span><span class="string">.</span> <span class="string">自动推送匹配结果给</span> <span class="string">OPC</span> <span class="string">+</span> <span class="string">资源方</span></span><br><span class="line">  <span class="number">4</span><span class="string">.</span> <span class="string">撮合成功后自动抽佣</span></span><br><span class="line">  <span class="number">5</span><span class="string">.</span> <span class="string">失败后自动重新匹配</span></span><br><span class="line"><span class="string">工具：DeepSeek</span> <span class="string">API</span> <span class="string">/</span> <span class="string">微信</span> <span class="string">API</span> <span class="string">/</span> <span class="string">支付</span> <span class="string">API</span></span><br><span class="line"><span class="string">你的投入：0（撮合自动化）+</span> <span class="number">1</span><span class="string">-2h/周（BD</span> <span class="string">资源方）</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="四、AI-自主执行的关键技术栈"><a href="#四、AI-自主执行的关键技术栈" class="headerlink" title="四、AI 自主执行的关键技术栈"></a>四、AI 自主执行的关键技术栈</h2><h3 id="4-1-自动化层（核心）"><a href="#4-1-自动化层（核心）" class="headerlink" title="4.1 自动化层（核心）"></a>4.1 自动化层（核心）</h3><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>用途</th>
+<th>成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Claude&#x2F;DeepSeek Agent</strong></td>
+<td>AI 自主决策</td>
+<td>月 200-500 元</td>
+</tr>
+<tr>
+<td><strong>cron job</strong>（GitHub Actions &#x2F; 阿里云函数计算）</td>
+<td>定时任务</td>
+<td>月 50-100 元</td>
+</tr>
+<tr>
+<td><strong>Webhook</strong>（Next.js API + 阿里云）</td>
+<td>事件触发</td>
+<td>月 50 元</td>
+</tr>
+<tr>
+<td><strong>邮件 API</strong>（SendGrid &#x2F; 阿里云邮件）</td>
+<td>自动邮件</td>
+<td>月 100 元</td>
+</tr>
+<tr>
+<td><strong>微信公众号 API</strong></td>
+<td>自动发文</td>
+<td>月 30 元</td>
+</tr>
+<tr>
+<td><strong>小红书 API</strong>（需要企业认证）</td>
+<td>自动笔记</td>
+<td>月 0 元</td>
+</tr>
+<tr>
+<td><strong>微信小程序客服</strong></td>
+<td>自动回复</td>
+<td>月 0 元</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-用户端（交付）"><a href="#4-2-用户端（交付）" class="headerlink" title="4.2 用户端（交付）"></a>4.2 用户端（交付）</h3><table>
+<thead>
+<tr>
+<th>技术</th>
+<th>用途</th>
+<th>成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Next.js + Supabase</strong></td>
+<td>Web 应用</td>
+<td>月 100 元</td>
+</tr>
+<tr>
+<td><strong>微信小程序（Taro）</strong></td>
+<td>移动端</td>
+<td>月 0 元</td>
+</tr>
+<tr>
+<td><strong>支付系统</strong>（微信支付 &#x2F; 支付宝）</td>
+<td>自动收款</td>
+<td>月 30 元</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-总成本估算（AI-自主执行版）"><a href="#4-3-总成本估算（AI-自主执行版）" class="headerlink" title="4.3 总成本估算（AI 自主执行版）"></a>4.3 总成本估算（AI 自主执行版）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>月成本</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DeepSeek API</td>
+<td>500 元</td>
+</tr>
+<tr>
+<td>cron job + Webhook</td>
+<td>100 元</td>
+</tr>
+<tr>
+<td>邮件 API</td>
+<td>100 元</td>
+</tr>
+<tr>
+<td>微信公众号 + 小红书</td>
+<td>30 元</td>
+</tr>
+<tr>
+<td>Next.js + 数据库</td>
+<td>100 元</td>
+</tr>
+<tr>
+<td>域名 + SSL</td>
+<td>50 元</td>
+</tr>
+<tr>
+<td>微信小程序认证</td>
+<td>300 元&#x2F;年</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>≈ 880 元&#x2F;月</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>比 V3 单跑多 380 元&#x2F;月，但<strong>省下 90% 的运营时间</strong>——这是兼职模式的核心 ROI。</p>
+</blockquote>
+<h2 id="五、你的实际工作流（兼职版）"><a href="#五、你的实际工作流（兼职版）" class="headerlink" title="五、你的实际工作流（兼职版）"></a>五、你的实际工作流（兼职版）</h2><h3 id="5-1-每日投入（1-2-小时）"><a href="#5-1-每日投入（1-2-小时）" class="headerlink" title="5.1 每日投入（1-2 小时）"></a>5.1 每日投入（1-2 小时）</h3><table>
+<thead>
+<tr>
+<th>时段</th>
+<th>时长</th>
+<th>任务</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>早上 8:30</strong>（通勤）</td>
+<td>5min</td>
+<td>看一眼政策雷达推送（无需操作，AI 已自动跑）</td>
+</tr>
+<tr>
+<td><strong>中午 12:00</strong>（午休）</td>
+<td>30min</td>
+<td>处理付费用户邮件（<strong>AI 已生成报告，你只需发送</strong>）</td>
+</tr>
+<tr>
+<td><strong>晚上 9:00</strong>（下班后）</td>
+<td>60min</td>
+<td>①审核 AI 自动生成的内容 ②BD 资源方 ③回答深度问题</td>
+</tr>
+<tr>
+<td><strong>周末</strong></td>
+<td>2-4h</td>
+<td>①开发新功能 ②深度访谈 OPC 客户 ③战略决策</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-每周固定动作"><a href="#5-2-每周固定动作" class="headerlink" title="5.2 每周固定动作"></a>5.2 每周固定动作</h3><table>
+<thead>
+<tr>
+<th>时间</th>
+<th>动作</th>
+<th>时长</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>周一</td>
+<td>审核 AI 内容营销 Agent 发的文章</td>
+<td>30min</td>
+</tr>
+<tr>
+<td>周三</td>
+<td>BD 资源方（政府&#x2F;资本&#x2F;客户）</td>
+<td>1h</td>
+</tr>
+<tr>
+<td>周五</td>
+<td>深度访谈 1 个 OPC 客户（<strong>用 PMF 评分卡换访谈</strong>）</td>
+<td>1h</td>
+</tr>
+<tr>
+<td>周末</td>
+<td>开发新功能 &#x2F; 战略复盘</td>
+<td>2-4h</td>
+</tr>
+</tbody></table>
+<h3 id="5-3-每月固定动作"><a href="#5-3-每月固定动作" class="headerlink" title="5.3 每月固定动作"></a>5.3 每月固定动作</h3><table>
+<thead>
+<tr>
+<th>时间</th>
+<th>动作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>月初</td>
+<td>审核 AI 自动生成的 OPC 行业月报</td>
+</tr>
+<tr>
+<td>月中</td>
+<td>客户回访（<strong>AI 已自动回访，你审核即可</strong>）</td>
+</tr>
+<tr>
+<td>月末</td>
+<td>财务对账（<strong>AI 已自动统计，你审核即可</strong>）</td>
+</tr>
+</tbody></table>
+<h2 id="六、AI-自主执行的转化漏斗"><a href="#六、AI-自主执行的转化漏斗" class="headerlink" title="六、AI 自主执行的转化漏斗"></a>六、AI 自主执行的转化漏斗</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">AI 自动化内容营销（公众号/小红书）</span><br><span class="line">   ↓</span><br><span class="line">OPC 创业者关注公众号</span><br><span class="line">   ↓</span><br><span class="line">免费用 OPC-PMF 评分卡（AI 自动出报告）</span><br><span class="line">   ↓</span><br><span class="line">付费升级到 OPC-PMF 深度陪跑（1-2 万/次）</span><br><span class="line">   ↓</span><br><span class="line">付费升级到 OPC 资源对接平台（年费 999-9999）</span><br><span class="line">   ↓</span><br><span class="line">付费升级到 OPC 大赛陪跑（1-3 万/次）</span><br><span class="line">   ↓</span><br><span class="line">高客单价 OPC 客户（5-20 万/年）</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>🔴 <strong>整个漏斗 &#x3D; AI 自动执行</strong>——你只审核关键节点，<strong>不需要全程在线</strong>。</p>
+</blockquote>
+<h2 id="七、关键-AI-自动化场景"><a href="#七、关键-AI-自动化场景" class="headerlink" title="七、关键 AI 自动化场景"></a>七、关键 AI 自动化场景</h2><h3 id="7-1-场景-1-·-用户付费-PMF-评分卡（1-2-万）"><a href="#7-1-场景-1-·-用户付费-PMF-评分卡（1-2-万）" class="headerlink" title="7.1 场景 1 · 用户付费 PMF 评分卡（1-2 万）"></a>7.1 场景 1 · 用户付费 PMF 评分卡（1-2 万）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">T0  用户在网页提交问卷</span><br><span class="line">T1  Webhook 触发 Agent 3</span><br><span class="line">T2  AI 自动生成 30 页报告</span><br><span class="line">T3  AI 自动发送邮件 + 微信通知</span><br><span class="line">T4  用户查收报告</span><br><span class="line">T5  你的投入：0 分钟</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-场景-2-·-政策雷达每日推送"><a href="#7-2-场景-2-·-政策雷达每日推送" class="headerlink" title="7.2 场景 2 · 政策雷达每日推送"></a>7.2 场景 2 · 政策雷达每日推送</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">T0  cron 触发（每天 8:30）</span><br><span class="line">T1  Agent 1 自动抓取政策</span><br><span class="line">T2  DeepSeek 自动摘要</span><br><span class="line">T3  AI 自动生成公众号文章</span><br><span class="line">T4  AI 自动推送微信群 + 邮件</span><br><span class="line">T5  你的投入：0 分钟（**完全自主**）</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-3-场景-3-·-大赛陪跑（1-3-万）"><a href="#7-3-场景-3-·-大赛陪跑（1-3-万）" class="headerlink" title="7.3 场景 3 · 大赛陪跑（1-3 万）"></a>7.3 场景 3 · 大赛陪跑（1-3 万）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">T0  用户在网页提交 BP 草稿</span><br><span class="line">T1  Webhook 触发 Agent 4</span><br><span class="line">T2  AI 检索金奖案例库</span><br><span class="line">T3  AI 自动改稿 + 生成 PPT</span><br><span class="line">T4  AI 自动打包发送</span><br><span class="line">T5  你的投入：0 分钟</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-4-场景-4-·-资源对接撮合"><a href="#7-4-场景-4-·-资源对接撮合" class="headerlink" title="7.4 场景 4 · 资源对接撮合"></a>7.4 场景 4 · 资源对接撮合</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">T0  OPC 提交对接需求</span><br><span class="line">T1  Webhook 触发 Agent 5</span><br><span class="line">T2  AI 标签匹配 + LLM 评分</span><br><span class="line">T3  AI 推送匹配结果给双方</span><br><span class="line">T4  双方确认后自动抽佣</span><br><span class="line">T5  你的投入：0 分钟（**BD 资源方每周 1-2h**）</span><br></pre></td></tr></table></figure>
+
+<h2 id="八、AI-自主执行的-4-大风险与对冲"><a href="#八、AI-自主执行的-4-大风险与对冲" class="headerlink" title="八、AI 自主执行的 4 大风险与对冲"></a>八、AI 自主执行的 4 大风险与对冲</h2><h3 id="8-1-风险-1-·-AI-自动生成内容质量"><a href="#8-1-风险-1-·-AI-自动生成内容质量" class="headerlink" title="8.1 风险 1 · AI 自动生成内容质量"></a>8.1 风险 1 · AI 自动生成内容质量</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>对冲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AI 改稿&#x2F;PPT 不够专业</td>
+<td><strong>人机协作</strong>——AI 生成初稿 + 你审核关键节点（每周 30min）</td>
+</tr>
+<tr>
+<td>AI 摘要不准确</td>
+<td><strong>小流量测试</strong>——先发小群测试，再发大群</td>
+</tr>
+<tr>
+<td>AI 推荐资源方不对</td>
+<td><strong>人工兜底</strong>——失败后你介入</td>
+</tr>
+</tbody></table>
+<h3 id="8-2-风险-2-·-自动化失败兜底"><a href="#8-2-风险-2-·-自动化失败兜底" class="headerlink" title="8.2 风险 2 · 自动化失败兜底"></a>8.2 风险 2 · 自动化失败兜底</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>对冲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cron 任务失败</td>
+<td><strong>异常监控</strong>——Agent 发邮件 + 微信通知你</td>
+</tr>
+<tr>
+<td>Webhook 失败</td>
+<td><strong>重试机制</strong>——3 次失败后人工介入</td>
+</tr>
+<tr>
+<td>支付失败</td>
+<td><strong>自动退款</strong>——用户可申请退款</td>
+</tr>
+</tbody></table>
+<h3 id="8-3-风险-3-·-AI-替代顾虑"><a href="#8-3-风险-3-·-AI-替代顾虑" class="headerlink" title="8.3 风险 3 · AI 替代顾虑"></a>8.3 风险 3 · AI 替代顾虑</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>对冲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>用户问”这是 AI 做的吗”</td>
+<td><strong>诚实</strong>——明确告知”AI 生成 + 人工审核”</td>
+</tr>
+<tr>
+<td>用户要求人工服务</td>
+<td><strong>分层服务</strong>——999 自动版 + 1 万人工陪跑版</td>
+</tr>
+</tbody></table>
+<h3 id="8-4-风险-4-·-内容违规"><a href="#8-4-风险-4-·-内容违规" class="headerlink" title="8.4 风险 4 · 内容违规"></a>8.4 风险 4 · 内容违规</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th>对冲</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>政策摘要有法律风险</td>
+<td><strong>添加免责声明</strong></td>
+</tr>
+<tr>
+<td>OPC 案例泄露</td>
+<td><strong>脱敏</strong>——只公开已授权的案例</td>
+</tr>
+</tbody></table>
+<h2 id="九、兼职模式下的-12-个月营收预测"><a href="#九、兼职模式下的-12-个月营收预测" class="headerlink" title="九、兼职模式下的 12 个月营收预测"></a>九、兼职模式下的 12 个月营收预测</h2><table>
+<thead>
+<tr>
+<th>引擎</th>
+<th>M1-M3</th>
+<th>M4-M6</th>
+<th>M7-M12</th>
+<th>M1-M12 累计</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TraeWork 4 个</strong>（SaaS）</td>
+<td>5 万</td>
+<td>15 万</td>
+<td>40 万</td>
+<td><strong>60 万</strong></td>
+</tr>
+<tr>
+<td><strong>PMF + 工具栈</strong>（AI 自动交付）</td>
+<td>15 万</td>
+<td>40 万</td>
+<td>120 万</td>
+<td><strong>175 万</strong></td>
+</tr>
+<tr>
+<td><strong>资源对接 + 政策 + 大赛</strong>（AI 自主执行）</td>
+<td>5 万</td>
+<td>25 万</td>
+<td>70 万</td>
+<td><strong>100 万</strong></td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>25 万</strong></td>
+<td><strong>80 万</strong></td>
+<td><strong>230 万</strong></td>
+<td><strong>≈ 335 万</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🔴 <strong>月均 28 万，年 335 万</strong>（与 V3 接近，因为自动化能承载更多客户）<br>🔴 <strong>你的每日投入 &#x3D; 1-2 小时</strong>（兼职友好）</p>
+</blockquote>
+<h2 id="十、立即可做的-3-件事"><a href="#十、立即可做的-3-件事" class="headerlink" title="十、立即可做的 3 件事"></a>十、立即可做的 3 件事</h2><table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>动作</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🔴</td>
+<td><strong>本周</strong> 把 TraeWork 4 个能力 + V3 5 个应用，<strong>全部设计成 AI 自主执行架构</strong>（Webhook + cron + Agent）</td>
+<td>7 天</td>
+</tr>
+<tr>
+<td>🔴</td>
+<td><strong>W1-W2</strong> 先上线最简单的<strong>政策雷达 Agent</strong>（每天 8:30 自动跑，零人工）</td>
+<td>14 天</td>
+</tr>
+<tr>
+<td>🔴</td>
+<td><strong>W3-W4</strong> 上线 <strong>PMF 评分卡 Agent</strong>（用户自助填写 → AI 自动出报告）</td>
+<td>1 个月</td>
+</tr>
+<tr>
+<td>🟡</td>
+<td><strong>W5-W6</strong> 上线 <strong>大赛陪跑 Agent</strong>（用户提交 → AI 自动改稿 + BP&#x2F;PPT）</td>
+<td>2 个月</td>
+</tr>
+<tr>
+<td>🟡</td>
+<td><strong>W7-W12</strong> 上线 <strong>资源对接 Agent</strong> + <strong>内容营销 Agent</strong></td>
+<td>3 个月</td>
+</tr>
+</tbody></table>
+<h2 id="十一、关键-AI-工具栈推荐（兼职友好）"><a href="#十一、关键-AI-工具栈推荐（兼职友好）" class="headerlink" title="十一、关键 AI 工具栈推荐（兼职友好）"></a>十一、关键 AI 工具栈推荐（兼职友好）</h2><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>用途</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Claude API &#x2F; DeepSeek</strong></td>
+<td>AI 自主决策</td>
+<td>DeepSeek（<strong>国内便宜 + 中文强</strong>）</td>
+</tr>
+<tr>
+<td><strong>Dify</strong></td>
+<td>AI Agent 编排平台</td>
+<td>国内开源，免费</td>
+</tr>
+<tr>
+<td><strong>GitHub Actions</strong></td>
+<td>自动化 cron</td>
+<td>免费</td>
+</tr>
+<tr>
+<td><strong>阿里云函数计算</strong></td>
+<td>中国版 serverless</td>
+<td>0.0003 元&#x2F;次</td>
+</tr>
+<tr>
+<td><strong>Next.js + Supabase</strong></td>
+<td>Web 应用 + 数据库</td>
+<td>免费层够用</td>
+</tr>
+<tr>
+<td><strong>微信小程序（Taro）</strong></td>
+<td>移动端</td>
+<td>国内生态必选</td>
+</tr>
+<tr>
+<td><strong>n8n</strong>（开源）&#x2F; Make</td>
+<td>工作流自动化</td>
+<td>替代 Zapier，<strong>免费</strong></td>
+</tr>
+</tbody></table>
+<h2 id="十二、核心洞察（兼职-AI-自主执行）"><a href="#十二、核心洞察（兼职-AI-自主执行）" class="headerlink" title="十二、核心洞察（兼职 + AI 自主执行）"></a>十二、核心洞察（兼职 + AI 自主执行）</h2><blockquote>
+<p>✅ <strong>90% 的运营 &#x3D; AI 自动化</strong>——你每天投入 1-2 小时</p>
+<p>✅ <strong>9 个模块全部 AI 自主执行</strong>——用户自助使用，AI 自动交付</p>
+<p>✅ <strong>月成本 880 元</strong>（比 V3 多 380 元，但省 90% 运营时间）</p>
+<p>✅ <strong>12 个月预期营收 ≈ 335 万</strong>（与 V3 接近，因为能承载更多客户）</p>
+<p>✅ <strong>核心原则</strong>：<strong>只有关键节点人工审核</strong>，其余全部 AI 跑</p>
+</blockquote>
+<h2 id="十三、最终定位（V4-兼职版）"><a href="#十三、最终定位（V4-兼职版）" class="headerlink" title="十三、最终定位（V4 兼职版）"></a>十三、最终定位（V4 兼职版）</h2><blockquote>
+<p><strong>“OPC 创业者的 AI 自主执行办公平台”</strong></p>
+<p><strong>9 个模块全部 AI 自主执行</strong>——用户付费 → AI 自动交付 → 零人工</p>
+<p><strong>兼职友好</strong>——你每天投入 1-2 小时，<strong>AI 跑 90% 的活</strong></p>
+<p><strong>核心壁垒</strong>：OPC 行业 know-how + 数据资产 + AI 自动化能力</p>
+</blockquote>
+<p><strong>结论</strong>：</p>
+<ul>
+<li>✅ <strong>9 个模块全部 AI 自主执行</strong></li>
+<li>✅ <strong>90% 运营自动化</strong>，你每天 1-2 小时</li>
+<li>✅ <strong>月成本 880 元</strong>（比 V3 多 380 元）</li>
+<li>✅ <strong>12 个月预期营收 ≈ 335 万</strong></li>
+<li>✅ <strong>兼职友好</strong>——有工作也能跑</li>
+<li>✅ <strong>本周就能启动</strong>（从最简单的政策雷达 Agent 开始）</li>
+</ul>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI%E8%87%AA%E4%B8%BB%E6%89%A7%E8%A1%8C/" rel="tag">AI自主执行</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OPC/" rel="tag">OPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webhook/" rel="tag">Webhook</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cron/" rel="tag">cron</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%85%BC%E8%81%8C/" rel="tag">兼职</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%94%AC%E5%88%9B9%E6%9D%A1/" rel="tag">甬创9条</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/09/09/opc-advisory/">OPC 咨询评估与对接</a><a class="next" href="/2026/09/09/opc-commercialization/">OPC 商业化与落地评估</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%AE%A1%E7%BE%8E/" style="font-size: 15px;">图像审美</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI-Skill</a> <a href="/tags/%E6%B5%B7%E6%8A%A5%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">海报设计</a> <a href="/tags/%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93/" style="font-size: 15px;">开源仓库</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">设计</a> <a href="/tags/%E6%B5%B7%E6%8A%A5/" style="font-size: 15px;">海报</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/A2A/" style="font-size: 15px;">A2A</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 15px;">多智能体</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" style="font-size: 15px;">协议标准</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%A7%91%E7%A0%94%E5%AD%A6%E6%9C%AF/" style="font-size: 15px;">科研学术</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15px;">论文</a> <a href="/tags/Zotero/" style="font-size: 15px;">Zotero</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI Skill</a> <a href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" style="font-size: 15px;">文献综述</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" style="font-size: 15px;">资源精选</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Prompt-Injection/" style="font-size: 15px;">Prompt Injection</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/Loop-Engineering/" style="font-size: 15px;">Loop Engineering</a> <a href="/tags/Harness/" style="font-size: 15px;">Harness</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 15px;">Codex</a> <a href="/tags/2026Q2/" style="font-size: 15px;">2026Q2</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" style="font-size: 15px;">记忆系统</a> <a href="/tags/MemGPT/" style="font-size: 15px;">MemGPT</a> <a href="/tags/Reflexion/" style="font-size: 15px;">Reflexion</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/AGI/" style="font-size: 15px;">AGI</a> <a href="/tags/%E5%A4%9A-Agent/" style="font-size: 15px;">多 Agent</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%BF%E7%94%A8/" style="font-size: 15px;">计算机使用</a> <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA/" style="font-size: 15px;">检索增强</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">知识图谱</a> <a href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" style="font-size: 15px;">本体论</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/9-image-aesthetic-skills-2/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-writing-style-distillation-2/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

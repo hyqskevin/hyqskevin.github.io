@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>Context Engineering 上下文工程 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2">  <link rel="canonical" href="https://hyqskevin.github.io/2026/10/15/context-engineering/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Context Engineering 上下文工程 | MonoShow">
+  <meta property="og:description" content="Kevin W build this air-castle to collect infos &amp;amp; photos">
+  <meta property="og:url" content="https://hyqskevin.github.io/2026/10/15/context-engineering/">
+  <meta property="og:site_name" content="MonoShow">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://hyqskevin.github.io/about/#person","name":"Kevin W","alternateName":["hyqskevin","Kevin"],"url":"https://hyqskevin.github.io/about/","image":"https://hyqskevin.github.io/img/avatar.png","description":"Kevin W 是聚焦 AI Agent 落地与知识工坊实践的 AI 从业者，运营 706 AI 学习路径与 AI 知识工坊，持续产出大模型工程、RAG、Agent 架构与 AI 政策类深度内容。","jobTitle":"AI 从业者","knowsAbout":["AI Agent","RAG","大模型工程","AI 知识工坊","MCP","上下文工程"],"worksFor":{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI"},"knowsLanguage":["zh-CN","en"],"sameAs":["https://hyqskevin.github.io/about/","https://github.com/hyqskevin","https://twitter.com/hyqskevin","https://instagram.com/hyqskevin"]},{"@type":"WebSite","@id":"https://hyqskevin.github.io/#website","url":"https://hyqskevin.github.io/","name":"MonoShow","description":"Kevin W build this air-castle to collect infos & photos","inLanguage":"zh-CN","publisher":{"@id":"https://hyqskevin.github.io/#organization"},"author":{"@id":"https://hyqskevin.github.io/about/#person"}},{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI","url":"https://hyqskevin.github.io/","founder":{"@id":"https://hyqskevin.github.io/about/#person"},"sameAs":["https://github.com/hyqskevin"]},{"@type":"Article","@id":"https://hyqskevin.github.io/2026/10/15/context-engineering/#article","headline":"Context Engineering 上下文工程","description":"Kevin W build this air-castle to collect infos &amp; photos","url":"https://hyqskevin.github.io/2026/10/15/context-engineering/","datePublished":"2026-10-15T16:00:00.000Z","dateModified":"2026-11-02T03:42:33.500Z","author":{"@id":"https://hyqskevin.github.io/about/#person"},"publisher":{"@id":"https://hyqskevin.github.io/#organization"},"inLanguage":"zh-CN"}]}</script>
+</head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Context Engineering 上下文工程</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Context Engineering 上下文工程</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2.6k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 10</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><h2 id="一、Context-Engineering-的提出与演进"><a href="#一、Context-Engineering-的提出与演进" class="headerlink" title="一、Context Engineering 的提出与演进"></a>一、Context Engineering 的提出与演进</h2><h3 id="1-1-时间坐标-从-Prompt-到-Context"><a href="#1-1-时间坐标-从-Prompt-到-Context" class="headerlink" title="1.1 时间坐标:从 Prompt 到 Context"></a>1.1 时间坐标:从 Prompt 到 Context</h3><p>2024 年之前,行业主流做法是 Prompt Engineering:把精心调过的提示词一次性塞给 LLM,期待它给出好结果。这种方式在单轮对话场景下够用,但一旦进入 Agent 时代——任务多轮、工具频繁调用、上下文不断累积——传统 Prompt Engineering 就捉襟见肘了。</p>
+<p>从 2024 年中开始,Anthropic 工程师 Lance Martin 率先提出 “Context Engineering” 这一术语,随后在 2024 年 9 月的《Building Effective Agents with LLMs》博客里被正式确立为 Agent 系统设计的关键学科。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">2024-06  Anthropic 工程师 Lance Martin 提出 &quot;Context Engineering&quot;</span><br><span class="line">2024-09  Anthropic 博客《Building Effective Agents with LLMs》</span><br><span class="line">2024-10  LangChain 跟进 &quot;Context Engineering&quot; 概念</span><br><span class="line">2024-12  Manus AI 凭 Context Engineering 爆火</span><br><span class="line">2025-02  DeepResearch 全面采用 Context Engineering</span><br><span class="line">2025-06  Anthropic 发布 &quot;Effective Context Engineering for AI Agents&quot;</span><br><span class="line">2025-08  Cursor / Claude Code 全面实践 Context Engineering</span><br></pre></td></tr></table></figure>
+
+<p>短短一年多,Context Engineering 从一个工程术语,演变成所有 Agent 框架的标配。</p>
+<h3 id="1-2-核心定义-Anthropic-怎么说"><a href="#1-2-核心定义-Anthropic-怎么说" class="headerlink" title="1.2 核心定义:Anthropic 怎么说"></a>1.2 核心定义:Anthropic 怎么说</h3><p>Anthropic 给出的官方表述是:</p>
+<blockquote>
+<p>“Context Engineering is the discipline of designing and managing the information that flows into an LLM’s context window during inference.”</p>
+</blockquote>
+<p>翻译过来:上下文工程是<strong>设计和管理在推理过程中流入 LLM 上下文窗口的信息</strong>的学科。它不再是写好一句话提示词,而是把”喂给模型的全部信息”当作一个工程系统来对待。</p>
+<p>用一句更直白的话说:<strong>Prompt Engineering 关心”怎么问”,Context Engineering 关心”喂什么”</strong>。</p>
+<h3 id="1-3-上下文的-4-大来源"><a href="#1-3-上下文的-4-大来源" class="headerlink" title="1.3 上下文的 4 大来源"></a>1.3 上下文的 4 大来源</h3><p>Anthropic 在论文里把 Context 拆解为四个来源,用一个公式表达:</p>
+<p>$$C_{\text{total}} &#x3D; C_{\text{system}} + C_{\text{tools}} + C_{\text{docs}} + C_{\text{history}}$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>典型 token 量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$C_{\text{system}}$</td>
+<td>system prompt</td>
+<td>1-2K</td>
+</tr>
+<tr>
+<td>$C_{\text{tools}}$</td>
+<td>工具定义</td>
+<td>1-5K</td>
+</tr>
+<tr>
+<td>$C_{\text{docs}}$</td>
+<td>RAG 检索结果</td>
+<td>5-50K</td>
+</tr>
+<tr>
+<td>$C_{\text{history}}$</td>
+<td>对话历史</td>
+<td>10-100K</td>
+</tr>
+<tr>
+<td>$C_{\text{total}}$</td>
+<td>总上下文</td>
+<td>&lt; 200K</td>
+</tr>
+</tbody></table>
+<p>Context Engineering 要解决的核心问题就是:<strong>让每个 token 的信息密度最大化,把重要信息放在模型最关注的位置,避免”Lost in the Middle”现象</strong>。</p>
+<hr>
+<h2 id="二、Lost-in-the-Middle-被忽略的中间地带"><a href="#二、Lost-in-the-Middle-被忽略的中间地带" class="headerlink" title="二、Lost in the Middle:被忽略的中间地带"></a>二、Lost in the Middle:被忽略的中间地带</h2><h3 id="2-1-Liu-2023-的经典实验"><a href="#2-1-Liu-2023-的经典实验" class="headerlink" title="2.1 Liu 2023 的经典实验"></a>2.1 Liu 2023 的经典实验</h3><p>Liu 等人在 2023 年发表的 <em>Lost in the Middle</em> 论文揭示了一个反直觉的现象:LLM 对超长上下文中<strong>开头和结尾</strong>的信息最敏感,而<strong>中间位置</strong>的信息几乎被忽略。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">给 LLM 50 段文档</span><br><span class="line">其中关键信息分别位于:</span><br><span class="line">  - 位置 A:开头</span><br><span class="line">  - 位置 B:中间</span><br><span class="line">  - 位置 C:结尾</span><br><span class="line"></span><br><span class="line">测试 LLM 在不同位置提取关键信息的准确率</span><br></pre></td></tr></table></figure>
+
+<p>实验结果如下:</p>
+<table>
+<thead>
+<tr>
+<th>关键信息位置</th>
+<th>准确率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开头</td>
+<td>70%</td>
+</tr>
+<tr>
+<td><strong>中间</strong></td>
+<td><strong>40%</strong> ❌</td>
+</tr>
+<tr>
+<td>结尾</td>
+<td>70%</td>
+</tr>
+</tbody></table>
+<p>中间位置的准确率骤降到 40%,这意味着当你以为把关键证据塞进 RAG 结果里就行时,其实有一半概率模型根本”看不见”。</p>
+<p><img src="https://hyqskevin.github.io/pic/agent/lost-in-the-middle.png" alt="Lost in the Middle 现象示意"></p>
+<p>这个现象的根因与 Transformer 的注意力机制有关:首尾的 token 在 attention 计算时会反复被 query 引用,容易获得稳定的注意力权重;而中段的 token 容易被”上下文稀释”,最终在 softmax 时被压平。</p>
+<h3 id="2-2-信息密度函数"><a href="#2-2-信息密度函数" class="headerlink" title="2.2 信息密度函数"></a>2.2 信息密度函数</h3><p>为了量化 Context Engineering 的目标,可以定义单位 token 的有用信息密度:</p>
+<p>$$\rho_{\text{info}} &#x3D; \frac{I_{\text{useful}}(C)}{L_{\text{tokens}}(C)}$$</p>
+<p>其中 $I_{\text{useful}}(C)$ 是 context $C$ 中对当前任务有用的信息量,$L_{\text{tokens}}(C)$ 是其 token 长度。Context Engineering 的目标就是<strong>最大化 $\rho_{\text{info}}$</strong>——同样的 token 预算,装下更多”对当前决策有用”的信息。</p>
+<h3 id="2-3-应对策略"><a href="#2-3-应对策略" class="headerlink" title="2.3 应对策略"></a>2.3 应对策略</h3><p>针对 Lost in the Middle,工程师们总结出三条应对策略:</p>
+<ul>
+<li><strong>关键信息放在开头或结尾</strong>,避免丢进中间</li>
+<li><strong>重新排序 RAG 检索结果</strong>——把最相关的放首尾,最不相关的放中段</li>
+<li><strong>用显式标记强调</strong>——比如 <code>&lt;important&gt;...&lt;/important&gt;</code>,把模型的注意力锚定到关键内容</li>
+</ul>
+<p>这三条本质上都在”操纵模型的注意力分布”,是 Context Engineering 最朴素也最有效的技巧。</p>
+<hr>
+<h2 id="三、四大策略-Write-Select-Compress-Isolate"><a href="#三、四大策略-Write-Select-Compress-Isolate" class="headerlink" title="三、四大策略:Write &#x2F; Select &#x2F; Compress &#x2F; Isolate"></a>三、四大策略:Write &#x2F; Select &#x2F; Compress &#x2F; Isolate</h2><p>Context Engineering 的全部实操,可以归纳为四类动作:<strong>写入、选择、压缩、隔离</strong>。</p>
+<h3 id="3-1-Write-Context-写入"><a href="#3-1-Write-Context-写入" class="headerlink" title="3.1 Write Context(写入)"></a>3.1 Write Context(写入)</h3><p>主动把工具结果、用户偏好、中间结论<strong>写回</strong> context,让模型在后续轮次仍然能看到这些信息。最简单的实现是把工具调用结果追加到 messages 列表:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 工具结果保存到 context</span></span><br><span class="line">messages.append(&#123;</span><br><span class="line">    <span class="string">&quot;role&quot;</span>: <span class="string">&quot;tool&quot;</span>,</span><br><span class="line">    <span class="string">&quot;content&quot;</span>: json.dumps(tool_result)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>写入时的关键设计:</p>
+<ul>
+<li>工具结果<strong>结构化存储</strong>(JSON 而非纯文本)</li>
+<li>重要信息<strong>加标注</strong>(<code>&lt;important&gt;...&lt;/important&gt;</code>)</li>
+<li>避免<strong>冗余信息</strong>(同一信息不重复出现)</li>
+</ul>
+<p>写入是 Context Engineering 的”地基”:如果连关键信息都没写进去,后面的选择和压缩都无从谈起。</p>
+<h3 id="3-2-Select-Context-选择"><a href="#3-2-Select-Context-选择" class="headerlink" title="3.2 Select Context(选择)"></a>3.2 Select Context(选择)</h3><p>从海量候选中筛出最相关的内容塞进上下文。RAG 是典型的 Select 场景,通常分为三层:</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>工具</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>粗排</td>
+<td>向量检索(BM25 &#x2F; Embedding)</td>
+<td>高召回</td>
+</tr>
+<tr>
+<td>精排</td>
+<td>Reranker(bge-reranker)</td>
+<td>高精度</td>
+</tr>
+<tr>
+<td>摘要</td>
+<td>LLM 压缩</td>
+<td>保留关键</td>
+</tr>
+</tbody></table>
+<p>执行流程是:<strong>任务分类 → 决定需要哪些信息 → 检索过滤 → 摘要压缩 → 去重去噪</strong>。</p>
+<p>Select 的难点在于”刚刚好”:选少了模型缺信息,选多了触发 Lost in the Middle。实际工程里通常配合 rerank 分数做阈值截断,而不是固定 top-K。</p>
+<h3 id="3-3-Compress-Context-压缩"><a href="#3-3-Compress-Context-压缩" class="headerlink" title="3.3 Compress Context(压缩)"></a>3.3 Compress Context(压缩)</h3><p>当 context 接近上限,必须主动压缩。一个常见的实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">compress_context</span>(<span class="params">messages</span>):</span><br><span class="line">    <span class="keyword">if</span> count_tokens(messages) &gt; MAX_TOKENS:</span><br><span class="line">        <span class="comment"># 用 LLM 摘要早期消息</span></span><br><span class="line">        old_messages = messages[:-<span class="number">5</span>]  <span class="comment"># 保留最近 5 轮</span></span><br><span class="line">        summary = llm(<span class="string">f&quot;摘要以下对话:\n<span class="subst">&#123;old_messages&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> [summary_message] + messages[-<span class="number">5</span>:]</span><br><span class="line">    <span class="keyword">return</span> messages</span><br></pre></td></tr></table></figure>
+
+<p>压缩策略:</p>
+<ul>
+<li><strong>早期消息摘要</strong>——保留关键信息</li>
+<li><strong>工具结果截断</strong>——只保留关键字段</li>
+<li><strong>结构化转文本</strong>——JSON → 表格</li>
+<li><strong>删除冗余</strong>——相同信息不重复</li>
+</ul>
+<p>注意压缩是有损操作,要做的事后检查:压缩后的 summary 是否仍包含模型继续推理所需的关键事实(如用户偏好、已完成步骤、中间结论)。</p>
+<h3 id="3-4-Isolate-Context-隔离"><a href="#3-4-Isolate-Context-隔离" class="headerlink" title="3.4 Isolate Context(隔离)"></a>3.4 Isolate Context(隔离)</h3><p>通过多 Agent 分工,把不同任务的 context 隔离在各自的子 Agent 里,避免互相污染:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">orchestrator_agent</span>(<span class="params">task</span>):</span><br><span class="line">    <span class="comment"># 调度</span></span><br><span class="line">    sub_result_1 = research_agent.do(task.part1)</span><br><span class="line">    sub_result_2 = code_agent.do(task.part2)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 隔离:子 Agent 的 context 不污染主 Agent</span></span><br><span class="line">    <span class="keyword">return</span> combine(sub_result_1, sub_result_2)</span><br></pre></td></tr></table></figure>
+
+<p>这种方式让每个 Agent 专注自己任务,减少 context 互相干扰,也更容易调试和并行化。</p>
+<p>隔离的本质是<strong>用架构复杂度换 context 清晰度</strong>:每个子 Agent 只看自己那一小段 context,自然不容易”被中间地带干扰”。</p>
+<hr>
+<h2 id="四、工业实践-Manus-AI、Cursor、Claude-Code"><a href="#四、工业实践-Manus-AI、Cursor、Claude-Code" class="headerlink" title="四、工业实践:Manus AI、Cursor、Claude Code"></a>四、工业实践:Manus AI、Cursor、Claude Code</h2><h3 id="4-1-Manus-AI-的爆火"><a href="#4-1-Manus-AI-的爆火" class="headerlink" title="4.1 Manus AI 的爆火"></a>4.1 Manus AI 的爆火</h3><p>2024 年 12 月,Manus AI 横空出世并迅速拿到数亿融资,背后正是 Context Engineering 的极致实践:</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>实施方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>任务分解</td>
+<td>复杂任务 → 多步子任务</td>
+</tr>
+<tr>
+<td>虚拟环境</td>
+<td>沙箱执行代码(隔离)</td>
+</tr>
+<tr>
+<td>工具路由</td>
+<td>LLM 决定调用哪个工具</td>
+</tr>
+<tr>
+<td>Memory Bank</td>
+<td>关键信息结构化存储</td>
+</tr>
+<tr>
+<td>Context Compaction</td>
+<td>长任务定期压缩</td>
+</tr>
+</tbody></table>
+<p>Manus 给行业留下的最重要的 insight 是:<strong>Context Engineering 不是”提示技巧”——是 Agent 系统设计的核心工程问题</strong>。它第一次让大众看到,当 context 被当作”系统资源”认真管理时,Agent 能爆发出怎样的能力。</p>
+<h3 id="4-2-Cursor-的-引用与多-Workspace"><a href="#4-2-Cursor-的-引用与多-Workspace" class="headerlink" title="4.2 Cursor 的 @ 引用与多 Workspace"></a>4.2 Cursor 的 @ 引用与多 Workspace</h3><p>Cursor 1.0+ 的实现路径:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. @ 符号引用文件 / 代码块</span><br><span class="line">2. 自动 RAG 当前项目代码</span><br><span class="line">3. 工具调用:grep / read / edit / run</span><br><span class="line">4. 长对话定期压缩</span><br><span class="line">5. 多 Tab / 多 Workspace</span><br></pre></td></tr></table></figure>
+
+<p>通过 @ 引用,用户主动把指定文件注入上下文(Write);自动 RAG 是 Select;长对话压缩是 Compress;多 Workspace 是 Isolate——四种策略一个不少。</p>
+<h3 id="4-3-Claude-Code-的工程化落地"><a href="#4-3-Claude-Code-的工程化落地" class="headerlink" title="4.3 Claude Code 的工程化落地"></a>4.3 Claude Code 的工程化落地</h3><p>Claude Code 把 Context Engineering 工程化做得更彻底:</p>
+<ul>
+<li>每次对话独立 context</li>
+<li>工具调用结果保存为结构化 JSON</li>
+<li>长任务通过 <code>/clear</code> 重置 context</li>
+<li>子任务通过 Agent 工具分发,context 互相隔离</li>
+</ul>
+<p>特别值得一提的是 <code>/clear</code>:它把”重置 context”做成了一个用户可显式触发的动作。这反映出 Claude Code 的设计哲学——<strong>context 不是越多越好,而是越精准越好</strong>。</p>
+<hr>
+<h2 id="五、公式汇总与关键洞察"><a href="#五、公式汇总与关键洞察" class="headerlink" title="五、公式汇总与关键洞察"></a>五、公式汇总与关键洞察</h2><h3 id="5-1-三个核心公式"><a href="#5-1-三个核心公式" class="headerlink" title="5.1 三个核心公式"></a>5.1 三个核心公式</h3><p><strong>公式 · 上下文窗口利用率</strong></p>
+<p>$$\eta_{\text{context}} &#x3D; \frac{\text{有用 tokens}}{\text{总 tokens}}$$</p>
+<p>目标:$\eta_{\text{context}} &gt; 0.7$,即 70% 以上的 token 都是有用的。</p>
+<p><strong>公式 · 工具结果压缩</strong></p>
+<p>$$C_{\text{compressed}} &#x3D; f_{\text{compress}}(C_{\text{raw}}, \text{ratio})$$</p>
+<p>典型压缩率:</p>
+<ul>
+<li>原始 JSON → 文本表格:5-10x 压缩</li>
+<li>长文档 → 关键句:10-50x 压缩</li>
+<li>对话历史 → 摘要:5-20x 压缩</li>
+</ul>
+<p><strong>公式 · Rerank 位置优化</strong></p>
+<p>$$C_{\text{ordered}} &#x3D; \text{Reorder}(C_{\text{retrieved}})$$</p>
+<p>排序策略:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[Most Relevant] [Highly Relevant] [Less Relevant] [Less] ...</span><br><span class="line">   ↑               ↑                                ↑</span><br><span class="line">位置 1          位置 2                       位置 N</span><br><span class="line"></span><br><span class="line">问题:模型关注位置 1 和位置 N,忽略中间</span><br><span class="line">解法:让最相关的放位置 1,最次相关的放位置 N/2</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-关键洞察"><a href="#5-2-关键洞察" class="headerlink" title="5.2 关键洞察"></a>5.2 关键洞察</h3><ol>
+<li><strong>Context Engineering &#x3D; Agent 时代的新学科</strong>(2024 提出),正在替代 Prompt Engineering 成为新的工程重心</li>
+<li><strong>Lost in the Middle</strong>——LLM 关注首尾、忽略中间,这是物理层面的注意力限制</li>
+<li><strong>Anthropic 2024-09 是 Context Engineering 的奠基论文</strong>,后续所有实践都受其影响</li>
+<li><strong>Manus AI &#x2F; Cursor &#x2F; Claude Code</strong> 都在深度实践,工业界已达成共识</li>
+<li><strong>未来所有 Agent 框架都会引入 Context Engineering 标准</strong>——它会和”system prompt”一样,成为 Agent 开发的基础设施</li>
+</ol>
+<h3 id="5-3-必读论文与延伸思考"><a href="#5-3-必读论文与延伸思考" class="headerlink" title="5.3 必读论文与延伸思考"></a>5.3 必读论文与延伸思考</h3><p>核心 3 篇:</p>
+<ol>
+<li><strong>Anthropic 2024-09《Building Effective Agents with LLMs》</strong> ⭐⭐⭐</li>
+<li><strong>Anthropic 2025-06《Effective Context Engineering for AI Agents》</strong></li>
+<li><strong>Liu et al. 2023《Lost in the Middle》</strong> ⭐⭐</li>
+</ol>
+<p>延伸思考题:</p>
+<ul>
+<li>Q1. Context Engineering 与 Prompt Engineering 的本质区别是什么?</li>
+<li>Q2. 为什么 LLM 会”丢失中间信息”?</li>
+<li>Q3. 200K context window 是不是越多越好?</li>
+<li>Q4. 如何压缩 context 但不损失关键信息?</li>
+<li>Q5. Multi-Agent 怎么避免 context 互相污染?</li>
+</ul>
+<hr>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>⚠️ <strong>以发布时为准</strong>:本文涉及的模型名称、token 上限、工具版本均按 2024-2025 年公开资料整理。Claude、Cursor、Manus 等产品更新频繁,具体能力可能随版本变化,请以发布时官方文档为准。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Claude-Code/" rel="tag">Claude Code</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Context-Engineering/" rel="tag">Context Engineering</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lost-in-the-Middle/" rel="tag">Lost in the Middle</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Manus-AI/" rel="tag">Manus AI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Prompt-Engineering/" rel="tag">Prompt Engineering</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/15/agent-2025-2026-trends/">2025 Agent 演进全景</a><a class="next" href="/2026/10/15/constitutional-ai/">宪法AI对齐范式</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%AE%A1%E7%BE%8E/" style="font-size: 15px;">图像审美</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI-Skill</a> <a href="/tags/%E6%B5%B7%E6%8A%A5%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">海报设计</a> <a href="/tags/%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93/" style="font-size: 15px;">开源仓库</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">设计</a> <a href="/tags/%E6%B5%B7%E6%8A%A5/" style="font-size: 15px;">海报</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/A2A/" style="font-size: 15px;">A2A</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 15px;">多智能体</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" style="font-size: 15px;">协议标准</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%A7%91%E7%A0%94%E5%AD%A6%E6%9C%AF/" style="font-size: 15px;">科研学术</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15px;">论文</a> <a href="/tags/Zotero/" style="font-size: 15px;">Zotero</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI Skill</a> <a href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" style="font-size: 15px;">文献综述</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" style="font-size: 15px;">资源精选</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Prompt-Injection/" style="font-size: 15px;">Prompt Injection</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/Loop-Engineering/" style="font-size: 15px;">Loop Engineering</a> <a href="/tags/Harness/" style="font-size: 15px;">Harness</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 15px;">Codex</a> <a href="/tags/2026Q2/" style="font-size: 15px;">2026Q2</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" style="font-size: 15px;">记忆系统</a> <a href="/tags/MemGPT/" style="font-size: 15px;">MemGPT</a> <a href="/tags/Reflexion/" style="font-size: 15px;">Reflexion</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/AGI/" style="font-size: 15px;">AGI</a> <a href="/tags/%E5%A4%9A-Agent/" style="font-size: 15px;">多 Agent</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%BF%E7%94%A8/" style="font-size: 15px;">计算机使用</a> <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA/" style="font-size: 15px;">检索增强</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">知识图谱</a> <a href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" style="font-size: 15px;">本体论</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/9-image-aesthetic-skills-2/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-writing-style-distillation-2/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

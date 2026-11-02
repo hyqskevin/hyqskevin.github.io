@@ -1,0 +1,503 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>AI 原生 SDLC 实战 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2">  <link rel="canonical" href="https://hyqskevin.github.io/2026/10/16/ai-native-sdlc-playbook/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI 原生 SDLC 实战 | MonoShow">
+  <meta property="og:description" content="Kevin W build this air-castle to collect infos &amp;amp; photos">
+  <meta property="og:url" content="https://hyqskevin.github.io/2026/10/16/ai-native-sdlc-playbook/">
+  <meta property="og:site_name" content="MonoShow">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://hyqskevin.github.io/about/#person","name":"Kevin W","alternateName":["hyqskevin","Kevin"],"url":"https://hyqskevin.github.io/about/","image":"https://hyqskevin.github.io/img/avatar.png","description":"Kevin W 是聚焦 AI Agent 落地与知识工坊实践的 AI 从业者，运营 706 AI 学习路径与 AI 知识工坊，持续产出大模型工程、RAG、Agent 架构与 AI 政策类深度内容。","jobTitle":"AI 从业者","knowsAbout":["AI Agent","RAG","大模型工程","AI 知识工坊","MCP","上下文工程"],"worksFor":{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI"},"knowsLanguage":["zh-CN","en"],"sameAs":["https://hyqskevin.github.io/about/","https://github.com/hyqskevin","https://twitter.com/hyqskevin","https://instagram.com/hyqskevin"]},{"@type":"WebSite","@id":"https://hyqskevin.github.io/#website","url":"https://hyqskevin.github.io/","name":"MonoShow","description":"Kevin W build this air-castle to collect infos & photos","inLanguage":"zh-CN","publisher":{"@id":"https://hyqskevin.github.io/#organization"},"author":{"@id":"https://hyqskevin.github.io/about/#person"}},{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI","url":"https://hyqskevin.github.io/","founder":{"@id":"https://hyqskevin.github.io/about/#person"},"sameAs":["https://github.com/hyqskevin"]},{"@type":"Article","@id":"https://hyqskevin.github.io/2026/10/16/ai-native-sdlc-playbook/#article","headline":"AI 原生 SDLC 实战","description":"Kevin W build this air-castle to collect infos &amp; photos","url":"https://hyqskevin.github.io/2026/10/16/ai-native-sdlc-playbook/","datePublished":"2026-10-16T16:00:00.000Z","dateModified":"2026-11-02T03:42:33.498Z","author":{"@id":"https://hyqskevin.github.io/about/#person"},"publisher":{"@id":"https://hyqskevin.github.io/#organization"},"inLanguage":"zh-CN"}]}</script>
+</head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AI 原生 SDLC 实战</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AI 原生 SDLC 实战</h1><div class="post-meta">2026-10-16<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3.7k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 15</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>AI-Native SDLC 不是「让 Copilot 帮写几行代码」，而是把 AI 当成软件开发生命周期的<strong>第一公民</strong>。2026 年 Anthropic 联合 Atlassian、Adobe、UST、Augment Code 等厂商把这条路径摊开成一份公开 Playbook，本文围绕源稿里的 <strong>12 个 GitHub 高星仓库 + 24 个商业案例</strong> 拆解它。</p>
+<h2 id="一、AI-Native-SDLC-是什么"><a href="#一、AI-Native-SDLC-是什么" class="headerlink" title="一、AI-Native SDLC 是什么"></a>一、AI-Native SDLC 是什么</h2><h3 id="1-1-与传统-SDLC-的差异"><a href="#1-1-与传统-SDLC-的差异" class="headerlink" title="1.1 与传统 SDLC 的差异"></a>1.1 与传统 SDLC 的差异</h3><p>传统 SDLC（瀑布 &#x2F; 敏捷 &#x2F; DevOps）的核心假设是：<strong>人写代码、机器跑流水线</strong>。需求、设计、构建、测试、部署、运维六阶段都由人主导，工具只负责加速。</p>
+<p>AI-Native SDLC 把假设反过来：<strong>人和 Agent 共同写代码，但 Agent 是生产链路上的常驻节点</strong>。人负责定义意图、设边界、做判断；Agent 负责检索上下文、生成代码、跑测试、提 PR、看监控、起草 RCA。</p>
+<h3 id="1-2-与近义概念的边界"><a href="#1-2-与近义概念的边界" class="headerlink" title="1.2 与近义概念的边界"></a>1.2 与近义概念的边界</h3><p>业界至少有四个相似名词，容易混用：</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>AI 角色</th>
+<th>典型场景</th>
+<th>关键差异</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AI-Assisted SDLC</td>
+<td>副驾驶（Copilot）</td>
+<td>IDE 内补全代码</td>
+<td>AI 仅在 Build 阶段辅助，需求&#x2F;测试仍靠人</td>
+</tr>
+<tr>
+<td>Vibe Coding</td>
+<td>玩具</td>
+<td>用自然语言指挥 AI 一次成型</td>
+<td>无工程化、无测试、无评审，不适合生产</td>
+</tr>
+<tr>
+<td>Agentic SDLC</td>
+<td>单 Agent &#x2F; 多 Agent</td>
+<td>自动跑通完整任务</td>
+<td>强调 Agent 自主性，但范围可能窄于全链路</td>
+</tr>
+<tr>
+<td>AI-Native SDLC</td>
+<td>整套生产链路</td>
+<td>重塑 6 个阶段</td>
+<td>AI 是「第一公民」，流程、度量、文化都围着 AI 重构</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>简单记：<strong>AI-Assisted 是工具，Vibe Coding 是玩具，Agentic 是组件，AI-Native 是方法论</strong>。</p>
+</blockquote>
+<h3 id="1-3-一句话定义"><a href="#1-3-一句话定义" class="headerlink" title="1.3 一句话定义"></a>1.3 一句话定义</h3><p>AI-Native SDLC &#x3D; <strong>以大模型与 Agent 为第一公民，重新设计的软件开发生命周期</strong>。它不是「在老流程上贴 AI」，而是「先按 AI 重画流程，再把工具&#x2F;度量&#x2F;文化补齐」。</p>
+<h2 id="二、Stage-by-Stage-六阶段框架"><a href="#二、Stage-by-Stage-六阶段框架" class="headerlink" title="二、Stage-by-Stage 六阶段框架"></a>二、Stage-by-Stage 六阶段框架</h2><p>Anthropic 官方把 AI-Native SDLC 拆成 <strong>Discovery → Design → Build → Test → Deploy → Operate</strong> 六个阶段。每个阶段的 AI 角色、关键产物、风险点都不同，下表是合并自 Anthropic、Atlassian、Augment Code、agenticaiarch 等多家解读后的统一版本。</p>
+<h3 id="2-1-Discovery（发现）"><a href="#2-1-Discovery（发现）" class="headerlink" title="2.1 Discovery（发现）"></a>2.1 Discovery（发现）</h3><ul>
+<li><strong>AI 角色</strong>：需求澄清 Agent、用户访谈 Agent、竞品扫描 Agent</li>
+<li><strong>关键产物</strong>：用户故事卡、约束清单、风险登记册</li>
+<li><strong>典型工具</strong>：<code>obra/superpowers</code>、<code>K-Dense-AI/scientific-agent-skills</code></li>
+<li><strong>踩坑</strong>：让 AI 直接替业务方拍板需求；正确做法是 AI 出草稿、人审边界</li>
+</ul>
+<h3 id="2-2-Design（设计）"><a href="#2-2-Design（设计）" class="headerlink" title="2.2 Design（设计）"></a>2.2 Design（设计）</h3><ul>
+<li><strong>AI 角色</strong>：架构师 Agent、ADR 起草 Agent、原型生成 Agent</li>
+<li><strong>关键产物</strong>：架构图、ADR（架构决策记录）、可点击原型</li>
+<li><strong>典型工具</strong>：<code>anthropics/claude-plugins-official</code>、<code>HKUDS/CLI-Anything</code></li>
+<li><strong>踩坑</strong>：AI 给出方案但不解释取舍；必须强制 ADR 留痕</li>
+</ul>
+<h3 id="2-3-Build（构建）"><a href="#2-3-Build（构建）" class="headerlink" title="2.3 Build（构建）"></a>2.3 Build（构建）</h3><ul>
+<li><strong>AI 角色</strong>：编码 Agent、Review Agent、Refactor Agent</li>
+<li><strong>关键产物</strong>：PR、单元测试、Code Review 评论</li>
+<li><strong>典型工具</strong>：<code>cursor/plugins</code>、<code>ruvnet/ruflo</code>、<code>mksglu/context-mode</code></li>
+<li><strong>踩坑</strong>：盲目信任 AI 写的代码；CI 必须强制跑 lint&#x2F;测试&#x2F;security scan</li>
+</ul>
+<h3 id="2-4-Test（测试）"><a href="#2-4-Test（测试）" class="headerlink" title="2.4 Test（测试）"></a>2.4 Test（测试）</h3><ul>
+<li><strong>AI 角色</strong>：用例生成 Agent、变异测试 Agent、探索性测试 Agent</li>
+<li><strong>关键产物</strong>：测试用例、覆盖率报告、缺陷预测</li>
+<li><strong>典型工具</strong>：Claude Code 子命令、<code>affaan-m/ECC</code></li>
+<li><strong>踩坑</strong>：测试用例只覆盖 happy path；让 AI 主动生成对抗用例</li>
+</ul>
+<h3 id="2-5-Deploy（部署）"><a href="#2-5-Deploy（部署）" class="headerlink" title="2.5 Deploy（部署）"></a>2.5 Deploy（部署）</h3><ul>
+<li><strong>AI 角色</strong>：灰度发布 Agent、回滚决策 Agent、合规审查 Agent</li>
+<li><strong>关键产物</strong>：部署单、灰度策略、回滚预案</li>
+<li><strong>典型工具</strong>：<code>android/skills</code>、<code>debpalash/VoiceStudio</code></li>
+<li><strong>踩坑</strong>：把灰度策略写死在配置里；应让 AI 根据错误率动态调整</li>
+</ul>
+<h3 id="2-6-Operate（运维）"><a href="#2-6-Operate（运维）" class="headerlink" title="2.6 Operate（运维）"></a>2.6 Operate（运维）</h3><ul>
+<li><strong>AI 角色</strong>：监控解读 Agent、On-call 助理、RCA 起草 Agent</li>
+<li><strong>关键产物</strong>：事故报告、SLO 报告、改进 backlog</li>
+<li><strong>典型工具</strong>：<code>MadsLorentzen/ai-job-search</code>、<code>hmjz100/LinkSwift</code>（数据聚合场景）</li>
+<li><strong>踩坑</strong>：只让 AI 看监控不看代码；必须把代码 + 日志 + 监控一起喂给 AI</li>
+</ul>
+<h3 id="2-7-与传统-DevOps-的关键差异"><a href="#2-7-与传统-DevOps-的关键差异" class="headerlink" title="2.7 与传统 DevOps 的关键差异"></a>2.7 与传统 DevOps 的关键差异</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统 DevOps</th>
+<th>AI-Native SDLC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>流水线主导</td>
+<td>人写 YAML</td>
+<td>Agent 编排，人审</td>
+</tr>
+<tr>
+<td>度量对象</td>
+<td>部署频率 &#x2F; 失败率</td>
+<td>加 AI 接受率、回滚率、token 成本</td>
+</tr>
+<tr>
+<td>失败处理</td>
+<td>人值班</td>
+<td>Agent 起草 RCA，人确认</td>
+</tr>
+<tr>
+<td>文化</td>
+<td>「自动化一切」</td>
+<td>「让 Agent 干脏活」</td>
+</tr>
+</tbody></table>
+<h2 id="三、12-个-GitHub-高星仓库全景"><a href="#三、12-个-GitHub-高星仓库全景" class="headerlink" title="三、12 个 GitHub 高星仓库全景"></a>三、12 个 GitHub 高星仓库全景</h2><p>源稿统计的 12 个仓库横跨「<strong>官方插件 &#x2F; 科研 Agent &#x2F; 通用框架 &#x2F; 工程化 &#x2F; 垂直场景</strong>」五类。下表按用途分类，方便按需取用。</p>
+<h3 id="3-1-官方与基座（2-个）"><a href="#3-1-官方与基座（2-个）" class="headerlink" title="3.1 官方与基座（2 个）"></a>3.1 官方与基座（2 个）</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/anthropics/claude-plugins-official">anthropics&#x2F;claude-plugins-official</a></td>
+<td>40225</td>
+<td>Anthropic 官方插件集合，覆盖各阶段 Skill</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/K-Dense-AI/scientific-agent-skills">K-Dense-AI&#x2F;scientific-agent-skills</a></td>
+<td>51293</td>
+<td>科研场景的 Agent Skills 模板库</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-Agent-编排与-CLI-框架（2-个）"><a href="#3-2-Agent-编排与-CLI-框架（2-个）" class="headerlink" title="3.2 Agent 编排与 CLI 框架（2 个）"></a>3.2 Agent 编排与 CLI 框架（2 个）</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/HKUDS/CLI-Anything">HKUDS&#x2F;CLI-Anything</a></td>
+<td>53358</td>
+<td>把任意工具封装成 CLI Agent 可调用的能力</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/ruvnet/ruflo">ruvnet&#x2F;ruflo</a></td>
+<td>75527</td>
+<td>多 Agent 编排框架，强调 swarm 拓扑</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-Skills-与上下文工程（3-个）"><a href="#3-3-Skills-与上下文工程（3-个）" class="headerlink" title="3.3 Skills 与上下文工程（3 个）"></a>3.3 Skills 与上下文工程（3 个）</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/obra/superpowers">obra&#x2F;superpowers</a></td>
+<td>300533</td>
+<td>Agent Skills 工程化模板（⭐ 最高，可视为参考实现）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/mksglu/context-mode">mksglu&#x2F;context-mode</a></td>
+<td>30125</td>
+<td>Context Mode：让 Agent 在长任务中保持上下文</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/android/skills">android&#x2F;skills</a></td>
+<td>7971</td>
+<td>Android 平台定向 Skills 库</td>
+</tr>
+</tbody></table>
+<h3 id="3-4-IDE-与编辑器集成（1-个）"><a href="#3-4-IDE-与编辑器集成（1-个）" class="headerlink" title="3.4 IDE 与编辑器集成（1 个）"></a>3.4 IDE 与编辑器集成（1 个）</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/cursor/plugins">cursor&#x2F;plugins</a></td>
+<td>11856</td>
+<td>Cursor 插件体系，与 IDE 深度集成</td>
+</tr>
+</tbody></table>
+<h3 id="3-5-垂直场景（4-个）"><a href="#3-5-垂直场景（4-个）" class="headerlink" title="3.5 垂直场景（4 个）"></a>3.5 垂直场景（4 个）</h3><table>
+<thead>
+<tr>
+<th>仓库</th>
+<th>⭐</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/affaan-m/ECC">affaan-m&#x2F;ECC</a></td>
+<td>281198</td>
+<td>⭐ 数极高的复合项目（具体定位待补充，工程界普遍视为 Agent 工具集）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/debpalash/VoiceStudio">debpalash&#x2F;VoiceStudio</a></td>
+<td>70600</td>
+<td>语音 &#x2F; 多媒体生成场景的 Agent 工作台</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/MadsLorentzen/ai-job-search">MadsLorentzen&#x2F;ai-job-search</a></td>
+<td>48145</td>
+<td>求职场景 Agent，展示垂直域 Skill 编排</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/hmjz100/LinkSwift">hmjz100&#x2F;LinkSwift</a></td>
+<td>23562</td>
+<td>链接聚合 &#x2F; 数据采集场景的轻量 Agent</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-怎么挑仓库"><a href="#3-6-怎么挑仓库" class="headerlink" title="3.6 怎么挑仓库"></a>3.6 怎么挑仓库</h3><p>挑仓库别只看 ⭐，先回答三个问题：</p>
+<ol>
+<li><strong>你想覆盖哪一阶段？</strong> Discovery&#x2F;Design 优先看 <code>claude-plugins-official</code> 和 <code>superpowers</code>；Build&#x2F;Test 看 <code>cursor/plugins</code> 和 <code>affaan-m/ECC</code>；Deploy&#x2F;Operate 看 <code>ruflo</code> 和 <code>context-mode</code>。</li>
+<li><strong>你跑通用任务还是垂直任务？</strong> 通用走 <code>obra/superpowers</code> + <code>mksglu/context-mode</code>；垂直（Android &#x2F; 语音 &#x2F; 求职）走对应专项仓库。</li>
+<li><strong>你要的是 Skill 还是框架？</strong> Skill 是「教 Agent 怎么做」；框架是「让 Agent 自己组织」。前者选 <code>superpowers</code> &#x2F; <code>claude-plugins-official</code>，后者选 <code>ruvnet/ruflo</code> &#x2F; <code>HKUDS/CLI-Anything</code>。</li>
+</ol>
+<h2 id="四、24-个商业案例梳理"><a href="#四、24-个商业案例梳理" class="headerlink" title="四、24 个商业案例梳理"></a>四、24 个商业案例梳理</h2><p>源稿里的 24 条信息源覆盖<strong>方法论官方 &#x2F; 大厂工程实践 &#x2F; 咨询白皮书 &#x2F; 创业工具 &#x2F; 测量与质疑</strong>五类视角。下面按类别挑 8 个有代表性的展开，其余以索引表收尾。</p>
+<h3 id="4-1-方法论官方（3-条）"><a href="#4-1-方法论官方（3-条）" class="headerlink" title="4.1 方法论官方（3 条）"></a>4.1 方法论官方（3 条）</h3><ol>
+<li><p><strong>The AI-Native SDLC Playbook · Anthropic 官方文章</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://claude.com/resources/articles/the-ai-native-sdlc-playbook">claude.com</a></li>
+<li>价值：原定义出处，6 阶段框架的「正典」。</li>
+</ul>
+</li>
+<li><p><strong>The AI-native SDLC Playbook · Claude Academy 课程</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://academy.claude.com/courses/ai-native-sdlc-playbook/introduction">academy.claude.com</a></li>
+<li>价值：把方法论拆成可上手的章节，配案例演示。</li>
+</ul>
+</li>
+<li><p><strong>AI-Native SDLC Playbook, Mapped Stage by Stage</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://agenticaiarch.com/ai-native-sdlc-playbook">agenticaiarch.com</a></li>
+<li>价值：第三方把 6 阶段映射到真实工程团队产出，补充 Anthropic 没覆盖的「产出物清单」。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-2-大厂工程实践（3-条）"><a href="#4-2-大厂工程实践（3-条）" class="headerlink" title="4.2 大厂工程实践（3 条）"></a>4.2 大厂工程实践（3 条）</h3><ol start="4">
+<li><p><strong>The AI SDLC transformation playbook · Atlassian</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/ai-at-work/ai-sdlc-transformation-playbook">atlassian.com</a></li>
+<li>价值：Jira &#x2F; Bitbucket 厂商自家转型经验，强调「流程改造优先于工具替换」。</li>
+</ul>
+</li>
+<li><p><strong>Atlassian brings the AI-native SDLC from playbook to production</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/company-news/team26-europe-ai-sdlc">atlassian.com</a></li>
+<li>价值：把 Playbook 落到 Rovo &#x2F; Bitbucket Pipelines 的具体功能列表。</li>
+</ul>
+</li>
+<li><p><strong>Transforming the SDLC: How UST Enables AI-Native Software Delivery at Enterprise</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://www.ust.com/content/dam/ust/documents/ust-accelerated-cloud-whitepaper.pdf">ust.com</a></li>
+<li>价值：大型咨询公司在金融 &#x2F; 制造客户的落地白皮书，重点是合规与变更管理。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-3-咨询与白皮书（3-条）"><a href="#4-3-咨询与白皮书（3-条）" class="headerlink" title="4.3 咨询与白皮书（3 条）"></a>4.3 咨询与白皮书（3 条）</h3><ol start="7">
+<li><p><strong>AI-SDLC — From Code to Intent · Thinkia</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://thinkia.com/downloads/whitepapers/Thinkia.AI-SDLC.Playbook.en.pdf">thinkia.com</a></li>
+<li>价值：提出「从 Code 到 Intent」的范式跃迁，强调需求侧而不是实现侧。</li>
+</ul>
+</li>
+<li><p><strong>AI SDLC Framework: A CTO Reference Architecture · Augment Code</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://www.augmentcode.com/guides/ai-sdlc-framework-reference-architecture">augmentcode.com</a></li>
+<li>价值：给 CTO 看的参考架构，包含技术选型矩阵。</li>
+</ul>
+</li>
+<li><p><strong>The Agentic SDLC Reference Architecture · Daniel Meppiel</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://danielmeppiel.github.io/agentic-sdlc-handbook/handbook/ch04-the-reference-architecture.html">danielmeppiel.github.io</a></li>
+<li>价值：把 Agentic SDLC 与 AI-Native SDLC 并列对比，给出参考架构图。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-4-创业工具与质疑（4-条）"><a href="#4-4-创业工具与质疑（4-条）" class="headerlink" title="4.4 创业工具与质疑（4 条）"></a>4.4 创业工具与质疑（4 条）</h3><ol start="10">
+<li><p><strong>AI-Native SDLC and Its Impact on Development Practices · Ness</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://www.ness.com/blog/ai-native-sdlc-explained">ness.com</a></li>
+<li>价值：偏科普的解读，适合给非技术高管做汇报。</li>
+</ul>
+</li>
+<li><p><strong>Anthropic’s AI-Native SDLC Playbook has a missing layer: measurement · Waydev</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://waydev.co/anthropics-ai-native-sdlc-playbook-has-a-missing-layer-measurement">waydev.co</a></li>
+<li>价值：点名 Playbook 的「测量缺失」问题（详见第六节踩坑）。</li>
+</ul>
+</li>
+<li><p><strong>What Anthropic’s AI-Native SDLC Playbook Needs for the Enterprise · Candidly</strong></p>
+<ul>
+<li>来源：<a target="_blank" rel="noopener" href="https://getcandidly.com/what-anthropics-ai-native-sdlc-playbook-needs-for-the-enterprise/">getcandidly.com</a></li>
+<li>价值：从企业落地视角补 Playbook 缺的安全 &#x2F; 合规 &#x2F; 多团队协同。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-5-其余-12-条索引"><a href="#4-5-其余-12-条索引" class="headerlink" title="4.5 其余 12 条索引"></a>4.5 其余 12 条索引</h3><table>
+<thead>
+<tr>
+<th>#</th>
+<th>标题</th>
+<th>来源</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>13</td>
+<td>What Is an AI-Native SDLC? A 2026 Playbook</td>
+<td>DeployProAI</td>
+<td><a target="_blank" rel="noopener" href="https://www.deployproai.com/resources/ai-native-sdlc">link</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td>AI-Native SDLC: A 90-Day Adoption Playbook for CIOs</td>
+<td>appinventiv</td>
+<td><a target="_blank" rel="noopener" href="https://appinventiv.com/blog/ai-native-sdlc">link</a></td>
+</tr>
+<tr>
+<td>15</td>
+<td>Implementing the Anthropic AI-Native SDLC Playbook</td>
+<td>port.io</td>
+<td><a target="_blank" rel="noopener" href="https://www.port.io/blog/anthropic-ai-native-sdlc-playbook">link</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Claude Code: The Complete AI-Native SDLC Guide</td>
+<td>YouTube</td>
+<td><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6CaQ9ZFuuKI">link</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td>BGV and EAIGG Release Second Edition of the AI Native Startup Playbook</td>
+<td>Yahoo Finance</td>
+<td><a target="_blank" rel="noopener" href="https://finance.yahoo.com/news/bgv-eaigg-release-second-edition-150000360.html">link</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td>AI-Native Startup Playbook Launch – Silicon Valley 2026</td>
+<td>Yahoo Finance</td>
+<td><a target="_blank" rel="noopener" href="https://finance.yahoo.com/news/ai-native-startup-playbook-launch-190000386.html">link</a></td>
+</tr>
+<tr>
+<td>19</td>
+<td>AI-Native Startup Playbook Launch – Silicon Valley 2026</td>
+<td>Markets Insider</td>
+<td><a target="_blank" rel="noopener" href="https://markets.businessinsider.com/news/stocks/ai-native-startup-playbook-launch-silicon-valley-2026-1035756825">link</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td>ai-sdlc.io Architecture</td>
+<td>AI-SDLC</td>
+<td><a target="_blank" rel="noopener" href="https://ai-sdlc.io/docs/architecture">link</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td>Visdom by VirtusLab</td>
+<td>VirtusLab</td>
+<td><a target="_blank" rel="noopener" href="https://visdom.virtuslab.com/">link</a></td>
+</tr>
+<tr>
+<td>22</td>
+<td>The AI-native SDLC playbook (exa 索引)</td>
+<td>Claude Academy</td>
+<td><a target="_blank" rel="noopener" href="https://academy.claude.com/courses/ai-native-sdlc-playbook">link</a></td>
+</tr>
+<tr>
+<td>23</td>
+<td>The AI SDLC transformation playbook (exa 索引)</td>
+<td>Atlassian</td>
+<td><a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/ai-at-work/the-ai-sdlc-transformation-playbook">link</a></td>
+</tr>
+<tr>
+<td>24</td>
+<td>Implementing the Anthropic AI-Native SDLC Playbook (exa 索引)</td>
+<td>port.io</td>
+<td><a target="_blank" rel="noopener" href="https://www.port.io/blog/anthropic-ai-native-sdlc-playbook">link</a></td>
+</tr>
+</tbody></table>
+<h2 id="五、90-天企业导入路径"><a href="#五、90-天企业导入路径" class="headerlink" title="五、90 天企业导入路径"></a>五、90 天企业导入路径</h2><p>Anthropic 自己没给完整 90 天方案，但合并 appinventiv &#x2F; port.io &#x2F; Candidly &#x2F; UST 的实操经验，可以拼出一条 <strong>「Day 0-30 试点 → Day 31-60 扩展 → Day 61-90 度量与固化」</strong> 的标准节奏。</p>
+<h3 id="5-1-Day-0-30：选场景、定基线"><a href="#5-1-Day-0-30：选场景、定基线" class="headerlink" title="5.1 Day 0-30：选场景、定基线"></a>5.1 Day 0-30：选场景、定基线</h3><ul>
+<li><strong>挑一个高频、低风险、有清晰验收标准</strong>的内部场景（建议：内部工具的 CRUD + 测试 + 部署）。</li>
+<li><strong>定基线</strong>：部署频率、PR 周转时间、生产缺陷率、AI 接受率（被采纳的 AI 建议 &#x2F; 总 AI 建议）。</li>
+<li><strong>小团队（3-5 人）跑通一条端到端流水线</strong>：需求从 Slack 进 → Agent 出 PR → 人 review → 部署到测试环境。</li>
+<li><strong>交付物</strong>：1 份 PoC 报告 + 1 份工具选型清单（GitHub 仓库对照第三节）。</li>
+</ul>
+<h3 id="5-2-Day-31-60：扩团队、扩场景"><a href="#5-2-Day-31-60：扩团队、扩场景" class="headerlink" title="5.2 Day 31-60：扩团队、扩场景"></a>5.2 Day 31-60：扩团队、扩场景</h3><ul>
+<li><strong>加入跨职能</strong>：把产品 &#x2F; QA &#x2F; SRE 拉进来，验证 Design &#x2F; Test &#x2F; Operate 三阶段。</li>
+<li><strong>引入 Skills 仓库</strong>：从 <code>obra/superpowers</code> 起步，把公司内部约定写成 Skill（命名、错误处理、日志格式）。</li>
+<li><strong>上度量</strong>：把 Waydev 提出的「测量缺失」补上——AI 接受率、回滚率、token 成本、开发者 NPS。</li>
+<li><strong>交付物</strong>：1 份阶段扩展示例 + 1 份度量看板。</li>
+</ul>
+<h3 id="5-3-Day-61-90：固化流程、规模化"><a href="#5-3-Day-61-90：固化流程、规模化" class="headerlink" title="5.3 Day 61-90：固化流程、规模化"></a>5.3 Day 61-90：固化流程、规模化</h3><ul>
+<li><strong>写入团队手册</strong>：6 阶段 + 度量看板成为标准动作，而非「实验」。</li>
+<li><strong>接 CI&#x2F;CD</strong>：让 Agent 出的 PR 强制过 lint &#x2F; 测试 &#x2F; 安全扫描，把 Anthropic Playbook 缺的「灰度策略」补齐。</li>
+<li><strong>跨团队复制</strong>：从 1 个团队复制到 3-5 个团队，验证可复用性。</li>
+<li><strong>交付物</strong>：1 份组织级 Playbook v1.0 + 1 份下一季度路线图。</li>
+</ul>
+<h3 id="5-4-几个真实样本对照"><a href="#5-4-几个真实样本对照" class="headerlink" title="5.4 几个真实样本对照"></a>5.4 几个真实样本对照</h3><table>
+<thead>
+<tr>
+<th>来源</th>
+<th>节奏</th>
+<th>重点场景</th>
+<th>度量做法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>appinventiv</td>
+<td>90 天 &#x2F; CIO 视角</td>
+<td>跨业务线</td>
+<td>业务 KPI（上线速度）+ 工程 KPI</td>
+</tr>
+<tr>
+<td>port.io</td>
+<td>阶段化（PoC → Pilot → Prod）</td>
+<td>单一产品线</td>
+<td>DORA + AI 接受率</td>
+</tr>
+<tr>
+<td>UST</td>
+<td>3-6 个月</td>
+<td>金融 &#x2F; 制造强合规</td>
+<td>合规审查通过率、变更失败率</td>
+</tr>
+<tr>
+<td>Anthropic Academy</td>
+<td>自学课程节奏</td>
+<td>通用</td>
+<td>偏方法论，无具体 KPI</td>
+</tr>
+</tbody></table>
+<h2 id="六、踩坑清单"><a href="#六、踩坑清单" class="headerlink" title="六、踩坑清单"></a>六、踩坑清单</h2><p>Anthropic Playbook 没明说、但工程团队普遍会踩的坑，按「<strong>测量 &#x2F; 灰度 &#x2F; 工具切换 &#x2F; 安全 &#x2F; 文化</strong>」五类汇总。</p>
+<h3 id="6-1-测量缺失（Waydev-点名）"><a href="#6-1-测量缺失（Waydev-点名）" class="headerlink" title="6.1 测量缺失（Waydev 点名）"></a>6.1 测量缺失（Waydev 点名）</h3><p>Playbook 只给了框架，没给 KPI。常见症状：</p>
+<ul>
+<li>只追「部署频率」这种传统 DORA 指标，看不出 AI 到底帮了多少。</li>
+<li>不跟踪「AI 接受率」，结果团队对 AI 工具失去信任。</li>
+<li>不算 token 成本，结果账单爆炸才发现。</li>
+</ul>
+<p><strong>应对</strong>：从 Day 31 起强制上 <strong>AI 接受率、回滚率、token 单 PR 成本</strong> 三个核心指标。</p>
+<h3 id="6-2-灰度策略没写"><a href="#6-2-灰度策略没写" class="headerlink" title="6.2 灰度策略没写"></a>6.2 灰度策略没写</h3><p>很多团队直接让 Agent 出的 PR 走主干，缺灰度。常见症状：</p>
+<ul>
+<li>一个 Bug 直接影响 100% 用户。</li>
+<li>回滚要靠人肉判断，没自动化兜底。</li>
+</ul>
+<p><strong>应对</strong>：Deploy 阶段必须 <strong>强制小流量灰度 + 自动回滚阈值</strong>，参考 Atlassian Bitbucket Pipelines 的灰度模板。</p>
+<h3 id="6-3-工具切换成本被低估"><a href="#6-3-工具切换成本被低估" class="headerlink" title="6.3 工具切换成本被低估"></a>6.3 工具切换成本被低估</h3><p>从 Copilot 切到 Claude Code &#x2F; Cursor &#x2F; Rufus 时，常见症状：</p>
+<ul>
+<li>团队抵触「又换工具」。</li>
+<li>旧的 IDE 插件、prompt 库、Skill 全部作废。</li>
+<li>学习曲线被压成「一周上手」，实际要一个月。</li>
+</ul>
+<p><strong>应对</strong>：用 <strong>obra&#x2F;superpowers 这类 Skills 仓库</strong> 把知识沉淀下来，工具切换时只换底层，不换 Skill。</p>
+<h3 id="6-4-安全与合规盲区"><a href="#6-4-安全与合规盲区" class="headerlink" title="6.4 安全与合规盲区"></a>6.4 安全与合规盲区</h3><p>Candidly 和 UST 都点过这个问题：</p>
+<ul>
+<li>Agent 自动提的 PR 可能携带 secrets。</li>
+<li>自动生成的代码可能引入 GPL 等传染协议。</li>
+<li>合规审计需要可追溯的「谁让 AI 干了什么」。</li>
+</ul>
+<p><strong>应对</strong>：CI 必须有 <strong>secret 扫描 + license 扫描 + Agent 行为日志</strong> 三件套；参考 <code>mksglu/context-mode</code> 的上下文审计模式。</p>
+<h3 id="6-5-文化冲突"><a href="#6-5-文化冲突" class="headerlink" title="6.5 文化冲突"></a>6.5 文化冲突</h3><p>AI-Native SDLC 要求开发者接受「<strong>我的工作是定义意图，不是写代码</strong>」，冲突常见于：</p>
+<ul>
+<li>资深开发者抵触「让 AI 替我做判断」。</li>
+<li>管理层期望「一周见效」，实际需要 2-3 个月文化适应。</li>
+</ul>
+<p><strong>应对</strong>：把 AI 工具定位为 <strong>副驾驶 + 实习生</strong>——副驾驶帮你提速，实习生帮你干脏活，<strong>决策权永远在人</strong>。</p>
+<h2 id="七、五大关键启示"><a href="#七、五大关键启示" class="headerlink" title="七、五大关键启示"></a>七、五大关键启示</h2><h3 id="7-1-AI-Native-SDLC-是方法论，不是工具"><a href="#7-1-AI-Native-SDLC-是方法论，不是工具" class="headerlink" title="7.1 AI-Native SDLC 是方法论，不是工具"></a>7.1 AI-Native SDLC 是方法论，不是工具</h3><p>别把它当成「再买一个 Copilot 席位」。它要求流程、度量、文化一起改，工具只是最后一公里。</p>
+<h3 id="7-2-6-阶段不必一步到位"><a href="#7-2-6-阶段不必一步到位" class="headerlink" title="7.2 6 阶段不必一步到位"></a>7.2 6 阶段不必一步到位</h3><p>Anthropic 给的 Discovery → Operate 六阶段，可以<strong>只先做 Build + Test</strong>，其余阶段保留。90 天跑通 2-3 个阶段，比 6 个月硬上 6 阶段更现实。</p>
+<h3 id="7-3-Skills-仓库是真正的护城河"><a href="#7-3-Skills-仓库是真正的护城河" class="headerlink" title="7.3 Skills 仓库是真正的护城河"></a>7.3 Skills 仓库是真正的护城河</h3><p><code>obra/superpowers</code>、<code>anthropics/claude-plugins-official</code> 这些仓库值钱不在 ⭐，在于它们把 <strong>「怎么让 Agent 在你公司干活」</strong> 沉淀成了可复用资产。<strong>早点把内部约定写成 Skill，比多买 GPU 重要</strong>。</p>
+<h3 id="7-4-度量比框架更难"><a href="#7-4-度量比框架更难" class="headerlink" title="7.4 度量比框架更难"></a>7.4 度量比框架更难</h3><p>Anthropic 给的框架是「正典」，但 Waydev &#x2F; Candidly 指出的「测量缺失」才是真实落地的拦路虎。<strong>没有度量的 AI 改造，就是靠信仰在推</strong>。</p>
+<h3 id="7-5-文化先于技术"><a href="#7-5-文化先于技术" class="headerlink" title="7.5 文化先于技术"></a>7.5 文化先于技术</h3><p>开发者愿不愿意让 Agent 替自己做决策，决定了 90 天导入的成败。<strong>先培训、再试点、再扩展</strong>，比反过来健康得多。</p>
+<h2 id="八、模型版本说明"><a href="#八、模型版本说明" class="headerlink" title="八、模型版本说明"></a>八、模型版本说明</h2><p>本文涉及的模型 &#x2F; 工具版本，均以发布时（2026-10-17）为准：</p>
+<blockquote>
+<p>⚠️ 文中提到的 Claude &#x2F; Anthropic &#x2F; Cursor &#x2F; Rufus &#x2F; Claude Code 等产品版本号、定价、能力边界均可能在数月内变化；建议落地前以官方文档为准。</p>
+</blockquote>
+<p>API key &#x2F; token 在所有示例中均已脱敏为 <code>&lt;YOUR_API_KEY&gt;</code> &#x2F; <code>&lt;YOUR_TOKEN&gt;</code>，请勿提交到任何公共仓库。</p>
+<hr>
+<p><strong>参考链接索引</strong></p>
+<ul>
+<li>Anthropic 官方：<a target="_blank" rel="noopener" href="https://claude.com/resources/articles/the-ai-native-sdlc-playbook">claude.com</a> &#x2F; <a target="_blank" rel="noopener" href="https://academy.claude.com/courses/ai-native-sdlc-playbook">academy.claude.com</a></li>
+<li>大厂实践：<a target="_blank" rel="noopener" href="https://www.atlassian.com/blog/company-news/team26-europe-ai-sdlc">atlassian.com</a> &#x2F; <a target="_blank" rel="noopener" href="https://www.ust.com/content/dam/ust/documents/ust-accelerated-cloud-whitepaper.pdf">ust.com</a></li>
+<li>白皮书：<a target="_blank" rel="noopener" href="https://www.augmentcode.com/guides/ai-sdlc-framework-reference-architecture">augmentcode.com</a> &#x2F; <a target="_blank" rel="noopener" href="https://thinkia.com/downloads/whitepapers/Thinkia.AI-SDLC.Playbook.en.pdf">thinkia.com</a></li>
+<li>落地与质疑：<a target="_blank" rel="noopener" href="https://www.port.io/blog/anthropic-ai-native-sdlc-playbook">port.io</a> &#x2F; <a target="_blank" rel="noopener" href="https://appinventiv.com/blog/ai-native-sdlc">appinventiv.com</a> &#x2F; <a target="_blank" rel="noopener" href="https://waydev.co/anthropics-ai-native-sdlc-playbook-has-a-missing-layer-measurement">waydev.co</a> &#x2F; <a target="_blank" rel="noopener" href="https://getcandidly.com/what-anthropics-ai-native-sdlc-playbook-needs-for-the-enterprise/">getcandidly.com</a></li>
+</ul>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI-Native-SDLC/" rel="tag">AI-Native SDLC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Agent/" rel="tag">Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Anthropic/" rel="tag">Anthropic</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%90%BD%E5%9C%B0%E5%AE%9E%E6%88%98/" rel="tag">落地实战</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag">软件工程</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/17/wechat-ai-weekly-workbuddy-skill/">WorkBuddy Skill 实战 6 讲</a><a class="next" href="/2026/10/16/opendesign-ai-design/">OpenDesign 设计协作</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%AE%A1%E7%BE%8E/" style="font-size: 15px;">图像审美</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI-Skill</a> <a href="/tags/%E6%B5%B7%E6%8A%A5%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">海报设计</a> <a href="/tags/%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93/" style="font-size: 15px;">开源仓库</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">设计</a> <a href="/tags/%E6%B5%B7%E6%8A%A5/" style="font-size: 15px;">海报</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/A2A/" style="font-size: 15px;">A2A</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 15px;">多智能体</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" style="font-size: 15px;">协议标准</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%A7%91%E7%A0%94%E5%AD%A6%E6%9C%AF/" style="font-size: 15px;">科研学术</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15px;">论文</a> <a href="/tags/Zotero/" style="font-size: 15px;">Zotero</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI Skill</a> <a href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" style="font-size: 15px;">文献综述</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" style="font-size: 15px;">资源精选</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Prompt-Injection/" style="font-size: 15px;">Prompt Injection</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/Loop-Engineering/" style="font-size: 15px;">Loop Engineering</a> <a href="/tags/Harness/" style="font-size: 15px;">Harness</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 15px;">Codex</a> <a href="/tags/2026Q2/" style="font-size: 15px;">2026Q2</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" style="font-size: 15px;">记忆系统</a> <a href="/tags/MemGPT/" style="font-size: 15px;">MemGPT</a> <a href="/tags/Reflexion/" style="font-size: 15px;">Reflexion</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/AGI/" style="font-size: 15px;">AGI</a> <a href="/tags/%E5%A4%9A-Agent/" style="font-size: 15px;">多 Agent</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%BF%E7%94%A8/" style="font-size: 15px;">计算机使用</a> <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA/" style="font-size: 15px;">检索增强</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">知识图谱</a> <a href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" style="font-size: 15px;">本体论</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/9-image-aesthetic-skills-2/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-writing-style-distillation-2/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>GPT-3规模化训练 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2">  <link rel="canonical" href="https://hyqskevin.github.io/2026/10/15/gpt3-scaling/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="GPT-3规模化训练 | MonoShow">
+  <meta property="og:description" content="Kevin W build this air-castle to collect infos &amp;amp; photos">
+  <meta property="og:url" content="https://hyqskevin.github.io/2026/10/15/gpt3-scaling/">
+  <meta property="og:site_name" content="MonoShow">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://hyqskevin.github.io/about/#person","name":"Kevin W","alternateName":["hyqskevin","Kevin"],"url":"https://hyqskevin.github.io/about/","image":"https://hyqskevin.github.io/img/avatar.png","description":"Kevin W 是聚焦 AI Agent 落地与知识工坊实践的 AI 从业者，运营 706 AI 学习路径与 AI 知识工坊，持续产出大模型工程、RAG、Agent 架构与 AI 政策类深度内容。","jobTitle":"AI 从业者","knowsAbout":["AI Agent","RAG","大模型工程","AI 知识工坊","MCP","上下文工程"],"worksFor":{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI"},"knowsLanguage":["zh-CN","en"],"sameAs":["https://hyqskevin.github.io/about/","https://github.com/hyqskevin","https://twitter.com/hyqskevin","https://instagram.com/hyqskevin"]},{"@type":"WebSite","@id":"https://hyqskevin.github.io/#website","url":"https://hyqskevin.github.io/","name":"MonoShow","description":"Kevin W build this air-castle to collect infos & photos","inLanguage":"zh-CN","publisher":{"@id":"https://hyqskevin.github.io/#organization"},"author":{"@id":"https://hyqskevin.github.io/about/#person"}},{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI","url":"https://hyqskevin.github.io/","founder":{"@id":"https://hyqskevin.github.io/about/#person"},"sameAs":["https://github.com/hyqskevin"]},{"@type":"Article","@id":"https://hyqskevin.github.io/2026/10/15/gpt3-scaling/#article","headline":"GPT-3规模化训练","description":"Kevin W build this air-castle to collect infos &amp; photos","url":"https://hyqskevin.github.io/2026/10/15/gpt3-scaling/","datePublished":"2026-10-15T16:00:00.000Z","dateModified":"2026-10-16T18:34:24.000Z","author":{"@id":"https://hyqskevin.github.io/about/#person"},"publisher":{"@id":"https://hyqskevin.github.io/#organization"},"inLanguage":"zh-CN"}]}</script>
+</head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">GPT-3规模化训练</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">GPT-3规模化训练</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3.8k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 16</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p>如果说 Transformer 解决了”能不能学”，那么 2020 年 Brown 等 31 人发表的 GPT-3 则回答了另一个更关键的问题——<strong>“要学多大”</strong>。175B 参数 + 300B tokens 的训练规模、$4.6M 的训练成本、以及”In-context Learning”这个核心概念，把整个 NLP 领域推向了规模化的新阶段。本文基于《Language Models are Few-Shot Learners》这篇里程碑式论文，按 11 课时的脉络，把 GPT-3 规模化训练背后的算法、工程、数学一次性梳理清楚，并新增第 11 课时「知识蒸馏（DeepSeek-R1 关键）」收束整条规模化训练闭环。</p>
+<h2 id="一、GPT-3-的规模化革命"><a href="#一、GPT-3-的规模化革命" class="headerlink" title="一、GPT-3 的规模化革命"></a>一、GPT-3 的规模化革命</h2><h3 id="1-1-戏剧冲突：从-GPT-1-到-GPT-3"><a href="#1-1-戏剧冲突：从-GPT-1-到-GPT-3" class="headerlink" title="1.1 戏剧冲突：从 GPT-1 到 GPT-3"></a>1.1 戏剧冲突：从 GPT-1 到 GPT-3</h3><p>GPT 的演化史，是一部不断追问”模型到底要多大”的历史：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2018  GPT-1（117M）  → 太弱，每个任务都要微调</span><br><span class="line">2019  GPT-2（1.5B）  → 涌现零样本能力，OpenAI 选择不开源</span><br><span class="line">2020  GPT-3（175B）  → Brown 等 31 人，标题即为答案</span><br><span class="line">                    → 核心创新：In-context Learning</span><br><span class="line">                    → 训练成本 $4.6M（2020 年价）</span><br></pre></td></tr></table></figure>
+
+<p>GPT-3 论文的标题《Language Models are Few-Shot Learners》本身就是论文的结论——只要模型够大、训练数据够多，就能在 prompt 里给几个例子完成新任务，无需任何梯度更新。</p>
+<h3 id="1-2-故事线：从前传到落地"><a href="#1-2-故事线：从前传到落地" class="headerlink" title="1.2 故事线：从前传到落地"></a>1.2 故事线：从前传到落地</h3><p>GPT-3 不是凭空出现的，它站在三代技术的肩膀上：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">幕前（基础）：</span><br><span class="line">  - Word2Vec 词向量（2013）</span><br><span class="line">  - ELMo / GPT-1（2018）</span><br><span class="line">  - BERT（2018）</span><br><span class="line"></span><br><span class="line">幕中（高潮）：</span><br><span class="line">  - 2020 GPT-3 ⭐⭐</span><br><span class="line">  - Scaling Law 验证</span><br><span class="line">  - 300B token 数据 Pipeline</span><br><span class="line">  - 分布式训练 3D Parallelism</span><br><span class="line"></span><br><span class="line">幕后（落地）：</span><br><span class="line">  - 2021 Codex / GitHub Copilot</span><br><span class="line">  - 2022 ChatGPT</span><br><span class="line">  - 2023 GPT-4</span><br><span class="line">  - 2024 GPT-4o / o1</span><br><span class="line">  - 2025 DeepSeek-V3 14.8T tokens</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、In-context-Learning：GPT-3-的真正创新"><a href="#二、In-context-Learning：GPT-3-的真正创新" class="headerlink" title="二、In-context Learning：GPT-3 的真正创新"></a>二、In-context Learning：GPT-3 的真正创新</h2><blockquote>
+<p>“GPT-3 的真正革命不是’175B’——而是’In-context Learning’。模型不再需要微调，在 prompt 里给几个例子就能学会新任务。”</p>
+</blockquote>
+<h3 id="2-1-三种学习范式"><a href="#2-1-三种学习范式" class="headerlink" title="2.1 三种学习范式"></a>2.1 三种学习范式</h3><p>GPT-3 论文系统对比了三种 Prompt 设定：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zero-shot    直接给任务描述，0 个例子</span><br><span class="line">one-shot     1 个示例</span><br><span class="line">few-shot     10-100 个示例（K-shot）</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-与-Fine-tuning-的本质区别"><a href="#2-2-与-Fine-tuning-的本质区别" class="headerlink" title="2.2 与 Fine-tuning 的本质区别"></a>2.2 与 Fine-tuning 的本质区别</h3><p>传统 fine-tuning 需要：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 准备任务数据集</span><br><span class="line">2. 计算梯度</span><br><span class="line">3. 更新模型参数</span><br><span class="line">4. 每个任务存一份 checkpoint</span><br></pre></td></tr></table></figure>
+
+<p>而 In-context Learning 完全不需要这些：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 准备几个 prompt 示例</span><br><span class="line">2. 前向推理一次</span><br><span class="line">3. 不更新任何参数</span><br><span class="line">4. 一个模型搞定所有任务</span><br></pre></td></tr></table></figure>
+
+<p>这是质的飞跃——模型第一次具备了”在推理时学习”的能力。后续的 prompt engineering、思维链（CoT）、Agent 工具调用，本质上都是 In-context Learning 的延伸。</p>
+<h2 id="三、Scaling-Law：从理论到参数选择"><a href="#三、Scaling-Law：从理论到参数选择" class="headerlink" title="三、Scaling Law：从理论到参数选择"></a>三、Scaling Law：从理论到参数选择</h2><blockquote>
+<p>“为什么是 175B？为什么是 300B token？这一讲从 Scaling Law 公式看 GPT-3 的参数是怎么定下来的。”</p>
+</blockquote>
+<h3 id="3-1-Kaplan-2020-早期结论"><a href="#3-1-Kaplan-2020-早期结论" class="headerlink" title="3.1 Kaplan 2020 早期结论"></a>3.1 Kaplan 2020 早期结论</h3><p>Kaplan 等人在 2020 年首次系统性地提出神经语言模型的 Scaling Law，核心发现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 模型大小比数据量更重要</span><br><span class="line">- 10x 模型只需 1.7x 数据就能达到同等性能</span><br><span class="line">- 这意味着 OpenAI 倾向&quot;大模型 + 相对少数据&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-Chinchilla-2022-修正-⭐⭐"><a href="#3-2-Chinchilla-2022-修正-⭐⭐" class="headerlink" title="3.2 Chinchilla 2022 修正 ⭐⭐"></a>3.2 Chinchilla 2022 修正 ⭐⭐</h3><p>Hoffmann 等人 2022 年的 Chinchilla 论文颠覆了上述结论：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">最佳配比：D / N = 20 tokens / param</span><br><span class="line"></span><br><span class="line">对比 GPT-3：</span><br><span class="line">  GPT-3     300B / 175B = 1.7   数据偏少</span><br><span class="line">  Chinchilla 70B  / 70B  = 20    训练计算最优</span><br></pre></td></tr></table></figure>
+
+<p>这就是为什么后来 LLaMA、Qwen、DeepSeek 都按 Chinchilla 比例训练的原因。</p>
+<h3 id="3-3-公式推导"><a href="#3-3-公式推导" class="headerlink" title="3.3 公式推导"></a>3.3 公式推导</h3><p>Chinchilla 给出了损失函数的标度律形式：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">L(N, D) = E + A/N^α + B/D^β + C/N^β</span><br><span class="line"></span><br><span class="line">E   不可约损失（语言熵下限）</span><br><span class="line">A/N^α  参数不足带来的损失</span><br><span class="line">B/D^β  数据不足带来的损失</span><br></pre></td></tr></table></figure>
+
+<p>在给定算力预算 <code>C ≈ 6ND</code> 的约束下，最优配比满足：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">N_opt ∝ C^a</span><br><span class="line">D_opt ∝ C^b</span><br><span class="line">其中 a ≈ 0.5, b ≈ 0.5</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-现代-Scaling-Law-演进"><a href="#3-4-现代-Scaling-Law-演进" class="headerlink" title="3.4 现代 Scaling Law 演进"></a>3.4 现代 Scaling Law 演进</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DeepSeek-V3     14.8T / 671B  = 22   （含 MoE 激活参数）</span><br><span class="line">LLaMA-3 70B     15T   / 70B   = 214  远超 Chinchilla</span><br></pre></td></tr></table></figure>
+
+<p>现代实践已经跳出 Chinchilla 严格比例，进入”数据越多越好”的新阶段——因为高质量数据的边际收益还在。</p>
+<h2 id="四、Tokenization-与训练目标"><a href="#四、Tokenization-与训练目标" class="headerlink" title="四、Tokenization 与训练目标"></a>四、Tokenization 与训练目标</h2><h3 id="4-1-BPE-算法"><a href="#4-1-BPE-算法" class="headerlink" title="4.1 BPE 算法"></a>4.1 BPE 算法</h3><p>GPT-3 使用 50K 大小的 BPE 词表，但 LLaMA-3 用 128K、Qwen-2.5 用 152K。为什么？</p>
+<p>BPE（Byte Pair Encoding）算法流程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">bpe_train</span>(<span class="params">corpus, k</span>):</span><br><span class="line">    vocab = initial_chars(corpus)</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(k):</span><br><span class="line">        pairs = count_adjacent_pairs(corpus)</span><br><span class="line">        best_pair = argmax(pairs)</span><br><span class="line">        vocab.add(merge(best_pair))</span><br><span class="line">        corpus = merge_in_corpus(corpus, best_pair)</span><br><span class="line">    <span class="keyword">return</span> vocab</span><br><span class="line"></span><br><span class="line"><span class="comment"># 词表大小 = 初始字符数 + 合并次数 k</span></span><br></pre></td></tr></table></figure>
+
+<p>主流 LLM 词表对比：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>词表大小</th>
+<th>特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GPT-2</td>
+<td>50K</td>
+<td>英文友好</td>
+</tr>
+<tr>
+<td>LLaMA-2</td>
+<td>32K</td>
+<td>多语言平衡</td>
+</tr>
+<tr>
+<td>LLaMA-3</td>
+<td>128K</td>
+<td>128K 大词表</td>
+</tr>
+<tr>
+<td>Qwen-2.5</td>
+<td>152K</td>
+<td>中文增强</td>
+</tr>
+<tr>
+<td>DeepSeek-V3</td>
+<td>128K</td>
+<td>多语言</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-压缩率与中文支持"><a href="#4-2-压缩率与中文支持" class="headerlink" title="4.2 压缩率与中文支持"></a>4.2 压缩率与中文支持</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">英文  1 token ≈ 4 chars</span><br><span class="line">中文  1 token ≈ 2.3 chars（Qwen 词表）</span><br></pre></td></tr></table></figure>
+
+<p>中文分词仍是挑战——同样的语料，中文 token 数是英文的 1.5-2 倍，直接影响训练效率。</p>
+<h3 id="4-3-自回归训练目标"><a href="#4-3-自回归训练目标" class="headerlink" title="4.3 自回归训练目标"></a>4.3 自回归训练目标</h3><p>GPT-3 用的是”预测下一个 token”这个简单目标：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">最大化：P(x_1, x_2, ..., x_T)</span><br><span class="line">       = Π_&#123;t=1&#125;^&#123;T&#125; P(x_t | x_1, ..., x_&#123;t-1&#125;)</span><br><span class="line">损失 = 负对数似然</span><br><span class="line">     = -Σ log P(x_t | x_&#123;&lt;t&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>为什么这个简单目标如此强大？</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 训练信号丰富：每个 token 都是一个监督信号</span><br><span class="line">- 自然涌现能力：模型规模上去后自动出现</span><br><span class="line">- 与 In-context Learning 天然兼容：next-token 预测可建模任意序列模式</span><br></pre></td></tr></table></figure>
+
+<p>三大训练目标对比：</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>代表</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>自回归 LM</td>
+<td>GPT</td>
+<td>只能单向，生成强</td>
+</tr>
+<tr>
+<td>MLM</td>
+<td>BERT</td>
+<td>双向上下文，理解强</td>
+</tr>
+<tr>
+<td>Prefix LM</td>
+<td>T5</td>
+<td>编码-解码统一</td>
+</tr>
+</tbody></table>
+<h2 id="五、数据-Pipeline：从-100TB-到-300B-tokens"><a href="#五、数据-Pipeline：从-100TB-到-300B-tokens" class="headerlink" title="五、数据 Pipeline：从 100TB 到 300B tokens"></a>五、数据 Pipeline：从 100TB 到 300B tokens</h2><blockquote>
+<p>“LIMA 论文震撼发现：1K 精选数据 SFT 能 SOTA。但 Pre-training 仍需 300B+ tokens——数据 Pipeline 是规模化训练的第一关。”</p>
+</blockquote>
+<h3 id="5-1-数据决定上限"><a href="#5-1-数据决定上限" class="headerlink" title="5.1 数据决定上限"></a>5.1 数据决定上限</h3><p>LIMA 论文核心结论：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1K 精选 vs 100K 随机</span><br><span class="line">   ↓</span><br><span class="line">精选数据 SFT 效果反而更好</span><br><span class="line">   ↓</span><br><span class="line">质量 &gt; 数量（对齐阶段）</span><br></pre></td></tr></table></figure>
+
+<p>但预训练阶段仍需海量数据。</p>
+<h3 id="5-2-Pre-training-六步-Pipeline"><a href="#5-2-Pre-training-六步-Pipeline" class="headerlink" title="5.2 Pre-training 六步 Pipeline"></a>5.2 Pre-training 六步 Pipeline</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">原始 100TB</span><br><span class="line">   ↓ HTML 解析</span><br><span class="line">  80TB  (-20%)</span><br><span class="line">   ↓ 语言检测</span><br><span class="line">  56TB  (-30%)</span><br><span class="line">   ↓ 质量过滤</span><br><span class="line">  34TB  (-40%)</span><br><span class="line">   ↓ 去重</span><br><span class="line">  17TB  (-50%)</span><br><span class="line">   ↓ PII 移除</span><br><span class="line">  17TB  (-1%)</span><br><span class="line">   ↓</span><br><span class="line">最终 ~15-20TB 高质量语料</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-质量评分：KenLM-Perplexity"><a href="#5-3-质量评分：KenLM-Perplexity" class="headerlink" title="5.3 质量评分：KenLM Perplexity"></a>5.3 质量评分：KenLM Perplexity</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PPL &lt; 150    高质量</span><br><span class="line">PPL 150-1000  中等</span><br><span class="line">PPL &gt; 1000   垃圾</span><br></pre></td></tr></table></figure>
+
+<p>The Pile、FineWeb 等数据集都用 Perplexity 做初筛。</p>
+<h3 id="5-4-去重：MinHash-LSH"><a href="#5-4-去重：MinHash-LSH" class="headerlink" title="5.4 去重：MinHash + LSH"></a>5.4 去重：MinHash + LSH</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">文档 → MinHash 签名 → LSH 桶 → Jaccard 相似度</span><br><span class="line">   ↓</span><br><span class="line">相似度 &gt; 0.8 视为重复</span><br><span class="line">   ↓</span><br><span class="line">50% 去重后 loss 反而下降（避免过拟合）</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-5-主流数据集对比"><a href="#5-5-主流数据集对比" class="headerlink" title="5.5 主流数据集对比"></a>5.5 主流数据集对比</h3><table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>发布</th>
+<th>大小</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WebText</td>
+<td>OpenAI</td>
+<td>40GB</td>
+<td>GPT-2&#x2F;3 训练</td>
+</tr>
+<tr>
+<td>The Pile</td>
+<td>Gao 2020</td>
+<td>825GB</td>
+<td>多源混合</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>Google</td>
+<td>750GB</td>
+<td>Common Crawl 清洗</td>
+</tr>
+<tr>
+<td>RedPajama</td>
+<td>Together 2023</td>
+<td>1.2T</td>
+<td>LLaMA 复刻</td>
+</tr>
+<tr>
+<td>Dolma</td>
+<td>AI2 2024</td>
+<td>6T tokens</td>
+<td>多语言</td>
+</tr>
+<tr>
+<td>FineWeb</td>
+<td>HuggingFace 2024</td>
+<td>15T tokens</td>
+<td>最新高质量</td>
+</tr>
+</tbody></table>
+<h2 id="六、分布式训练-3D-Parallelism"><a href="#六、分布式训练-3D-Parallelism" class="headerlink" title="六、分布式训练 3D Parallelism"></a>六、分布式训练 3D Parallelism</h2><blockquote>
+<p>“175B 模型单卡装不下——必须 TP+PP+DP 三种并行同时使用。这一讲算清楚：每种并行做什么，通信开销多大。”</p>
+</blockquote>
+<h3 id="6-1-显存组成"><a href="#6-1-显存组成" class="headerlink" title="6.1 显存组成"></a>6.1 显存组成</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">总显存 M = Parameters + Gradients + Optimizer States + Activations</span><br><span class="line">        = P + G + K + A</span><br><span class="line"></span><br><span class="line">GPT-3 175B FP16：</span><br><span class="line">  P = 350 GB      (175B × 2 bytes)</span><br><span class="line">  G = 350 GB</span><br><span class="line">  K = 700 GB      (Adam 需 2 倍参数)</span><br><span class="line">  A = ~700 GB     (激活值)</span><br><span class="line"></span><br><span class="line">合计 ≈ 2.1 TB   单卡 V100 32GB 完全不够</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-三种并行策略"><a href="#6-2-三种并行策略" class="headerlink" title="6.2 三种并行策略"></a>6.2 三种并行策略</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">TP (Tensor Parallelism)    张量并行</span><br><span class="line">  - 切分单个矩阵乘法</span><br><span class="line">  - 节点内 NVLink 通信</span><br><span class="line">  - 适合：层内并行</span><br><span class="line"></span><br><span class="line">PP (Pipeline Parallelism)  流水线并行</span><br><span class="line">  - 切分模型层</span><br><span class="line">  - 节点间 InfiniBand 通信</span><br><span class="line">  - 适合：跨节点扩展</span><br><span class="line"></span><br><span class="line">DP (Data Parallelism)      数据并行</span><br><span class="line">  - 复制模型 + 切分 batch</span><br><span class="line">  - AllReduce 同步梯度</span><br><span class="line">  - 适合：数据维度扩展</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-ZeRO-三大阶段"><a href="#6-3-ZeRO-三大阶段" class="headerlink" title="6.3 ZeRO 三大阶段"></a>6.3 ZeRO 三大阶段</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZeRO-1  优化器状态分片    显存 ×1/4</span><br><span class="line">ZeRO-2  + 梯度分片        显存 ×1/8</span><br><span class="line">ZeRO-3  + 参数分片        显存 ×1/N</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-4-现代-100B-训练配置"><a href="#6-4-现代-100B-训练配置" class="headerlink" title="6.4 现代 100B+ 训练配置"></a>6.4 现代 100B+ 训练配置</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GPT-3          2048 × V100   TP=8  PP=4  DP=64</span><br><span class="line">LLaMA-3.1 405B 16384 × H100  TP=8  PP=16 DP=128</span><br><span class="line">DeepSeek-V3     2048 × H800   MoE 架构</span><br></pre></td></tr></table></figure>
+
+<h2 id="七、MoE：参数与算力的解耦"><a href="#七、MoE：参数与算力的解耦" class="headerlink" title="七、MoE：参数与算力的解耦"></a>七、MoE：参数与算力的解耦</h2><blockquote>
+<p>“Dense 模型 175B 用 175B 算力。MoE 671B 总参数但只激活 37B——DeepSeek-V3 是怎么做到的？”</p>
+</blockquote>
+<h3 id="7-1-MoE-核心思想"><a href="#7-1-MoE-核心思想" class="headerlink" title="7.1 MoE 核心思想"></a>7.1 MoE 核心思想</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">每个 token 只激活部分专家（Expert）</span><br><span class="line">   ↓</span><br><span class="line">Top-K 路由（如 K=2 / K=8）</span><br><span class="line">   ↓</span><br><span class="line">总参数大 → 容量大</span><br><span class="line">激活参数少 → 算力省</span><br></pre></td></tr></table></figure>
+
+<p>关键平衡：Load Balancing Loss 防止专家退化。</p>
+<h3 id="7-2-MoE-发展时间轴"><a href="#7-2-MoE-发展时间轴" class="headerlink" title="7.2 MoE 发展时间轴"></a>7.2 MoE 发展时间轴</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1991  Jacobs           MoE 起源</span><br><span class="line">2017  Shazeer 137B     LSTM-MoE ⭐</span><br><span class="line">2020  GShard           Google 大规模 MoE</span><br><span class="line">2021  Switch Transformer  简化路由</span><br><span class="line">2023  Mixtral 8x7B     开源 MoE</span><br><span class="line">2024  DeepSeek-V3      671B/37B ⭐⭐⭐</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-3-DeepSeek-V3-MoE-三大创新"><a href="#7-3-DeepSeek-V3-MoE-三大创新" class="headerlink" title="7.3 DeepSeek-V3 MoE 三大创新"></a>7.3 DeepSeek-V3 MoE 三大创新</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1. 细粒度专家（256 个）</span><br><span class="line">   传统：8 大专家</span><br><span class="line">   DeepSeek：256 细粒度，更灵活</span><br><span class="line"></span><br><span class="line">2. 共享专家分离</span><br><span class="line">   部分专家被所有 token 共用</span><br><span class="line">   其余专家按需激活</span><br><span class="line"></span><br><span class="line">3. 无辅助损失（auxiliary-loss-free）</span><br><span class="line">   不用 Load Balancing Loss</span><br><span class="line">   用动态偏置项平衡负载</span><br><span class="line">   训练损失曲线更平滑</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-4-MoE-vs-Dense-对比"><a href="#7-4-MoE-vs-Dense-对比" class="headerlink" title="7.4 MoE vs Dense 对比"></a>7.4 MoE vs Dense 对比</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Dense 175B</th>
+<th>MoE 671B&#x2F;37B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总参数</td>
+<td>175B</td>
+<td>671B</td>
+</tr>
+<tr>
+<td>激活参数</td>
+<td>175B</td>
+<td>37B</td>
+</tr>
+<tr>
+<td>训练算力</td>
+<td>极高</td>
+<td>中等</td>
+</tr>
+<tr>
+<td>训练成本</td>
+<td>$4.6M (GPT-3)</td>
+<td>$6M (DeepSeek-V3)</td>
+</tr>
+</tbody></table>
+<p>注意 DeepSeek-V3 训练的 671B MoE 只花了 $6M，是 GPT-4 训练成本的约 1&#x2F;10。</p>
+<h2 id="八、训练工程：KV-Cache、Flash-Attention-与-AdamW"><a href="#八、训练工程：KV-Cache、Flash-Attention-与-AdamW" class="headerlink" title="八、训练工程：KV-Cache、Flash Attention 与 AdamW"></a>八、训练工程：KV-Cache、Flash Attention 与 AdamW</h2><h3 id="8-1-KV-Cache-显存公式"><a href="#8-1-KV-Cache-显存公式" class="headerlink" title="8.1 KV-Cache 显存公式"></a>8.1 KV-Cache 显存公式</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">M = 2 × n_layers × n_heads × d_head × n_seq × 2 bytes</span><br><span class="line"></span><br><span class="line">以 128K 上下文为例：</span><br><span class="line">  80 层 × 96 头 × 128 dim × 131072 seq</span><br><span class="line">  ≈ 25 GB 单 token 缓存</span><br></pre></td></tr></table></figure>
+
+<p>优化方案对比：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>头数</th>
+<th>KV 缓存</th>
+<th>代表</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MHA</td>
+<td>n_heads</td>
+<td>1×</td>
+<td>GPT-3</td>
+</tr>
+<tr>
+<td>MQA</td>
+<td>1</td>
+<td>0.01×</td>
+<td>PaLM</td>
+</tr>
+<tr>
+<td>GQA</td>
+<td>n_kv</td>
+<td>0.3×</td>
+<td>LLaMA-2</td>
+</tr>
+<tr>
+<td>MLA</td>
+<td>压缩</td>
+<td>0.1×</td>
+<td>DeepSeek-V2</td>
+</tr>
+</tbody></table>
+<h3 id="8-2-Flash-Attention-内存层级"><a href="#8-2-Flash-Attention-内存层级" class="headerlink" title="8.2 Flash Attention 内存层级"></a>8.2 Flash Attention 内存层级</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HBM (高带宽内存)  3 TB/s</span><br><span class="line">SRAM (片上缓存)  19 TB/s</span><br><span class="line">   ↓</span><br><span class="line">6.3x 速度差距</span><br><span class="line">   ↓</span><br><span class="line">Tiling + Online Softmax</span><br><span class="line">   ↓</span><br><span class="line">训练加速 3.8x</span><br></pre></td></tr></table></figure>
+
+<p>Flash Attention 通过把 attention 计算从 HBM 搬到 SRAM，避免大量中间结果存取。</p>
+<h3 id="8-3-AdamW-与训练稳定配置"><a href="#8-3-AdamW-与训练稳定配置" class="headerlink" title="8.3 AdamW 与训练稳定配置"></a>8.3 AdamW 与训练稳定配置</h3><p>GPT-3 &#x2F; LLaMA 训练的标准配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">optimizer = AdamW(</span><br><span class="line">    params,</span><br><span class="line">    lr=<span class="number">3e-4</span>,</span><br><span class="line">    betas=(<span class="number">0.9</span>, <span class="number">0.95</span>),     <span class="comment"># GPT-3 用 β2=0.95</span></span><br><span class="line">    weight_decay=<span class="number">0.1</span>,</span><br><span class="line">    eps=<span class="number">1e-8</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">scheduler = CosineAnnealing(</span><br><span class="line">    warmup_steps=<span class="number">2000</span>,</span><br><span class="line">    max_steps=total_steps</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键稳定性技巧</span></span><br><span class="line">torch.nn.utils.clip_grad_norm_(params, max_norm=<span class="number">1.0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Pre-LN vs Post-LN：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Post-LN（原始 Transformer） 深层训练易梯度爆炸</span><br><span class="line">Pre-LN（GPT-2 / LLaMA）     100+ 层训练稳定</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-4-Loss-Spike-处理"><a href="#8-4-Loss-Spike-处理" class="headerlink" title="8.4 Loss Spike 处理"></a>8.4 Loss Spike 处理</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">监控指标：</span><br><span class="line">  - grad_norm（梯度范数）</span><br><span class="line">  - loss 突增（loss spike）</span><br><span class="line"></span><br><span class="line">应对策略：</span><br><span class="line">  1. 自动降 LR（lr × 0.5）</span><br><span class="line">  2. Skip bad batches</span><br><span class="line">  3. Checkpoint 重启</span><br><span class="line">  4. warmup 延长</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、训练监控与-Scaling-实践"><a href="#九、训练监控与-Scaling-实践" class="headerlink" title="九、训练监控与 Scaling 实践"></a>九、训练监控与 Scaling 实践</h2><blockquote>
+<p>“训练 GPT-3 175B 14 天，1000+ 卡——任何环节出错都是百万美元损失。”</p>
+</blockquote>
+<h3 id="9-1-四大监控维度"><a href="#9-1-四大监控维度" class="headerlink" title="9.1 四大监控维度"></a>9.1 四大监控维度</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. Loss 曲线      train loss / val loss</span><br><span class="line">2. 梯度           grad_norm / grad_var</span><br><span class="line">3. 算力           GPU util / throughput / MFU</span><br><span class="line">4. 数据           tokens/s / dataloader queue</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-2-Token-Throughput-公式"><a href="#9-2-Token-Throughput-公式" class="headerlink" title="9.2 Token Throughput 公式"></a>9.2 Token Throughput 公式</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">T = N_gpu × batch_per_gpu × seq_len / step_time</span><br><span class="line"></span><br><span class="line">LLaMA-3 405B 例子：</span><br><span class="line">  T = 92B tokens/day</span><br><span class="line"></span><br><span class="line">训练 30T tokens 需要：</span><br><span class="line">  30T / 92B ≈ 325 天</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-3-监控工具实战"><a href="#9-3-监控工具实战" class="headerlink" title="9.3 监控工具实战"></a>9.3 监控工具实战</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># W&amp;B 监控配置示例</span></span><br><span class="line"><span class="attr">project:</span> <span class="string">gpt3-training</span></span><br><span class="line"><span class="attr">config:</span></span><br><span class="line">  <span class="attr">model_size:</span> <span class="string">175B</span></span><br><span class="line">  <span class="attr">total_tokens:</span> <span class="string">300B</span></span><br><span class="line">  <span class="attr">num_gpus:</span> <span class="number">2048</span></span><br><span class="line"></span><br><span class="line"><span class="attr">watch:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">loss</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">grad_norm</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">learning_rate</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">throughput_tokens_per_sec</span></span><br><span class="line"></span><br><span class="line"><span class="attr">alerts:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">metric:</span> <span class="string">loss</span></span><br><span class="line">    <span class="attr">threshold:</span> <span class="string">spike_ratio</span> <span class="string">&gt;</span> <span class="number">1.5</span></span><br><span class="line">    <span class="attr">action:</span> <span class="string">notify</span> <span class="string">+</span> <span class="string">checkpoint</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="9-4-Scaling-实践经验"><a href="#9-4-Scaling-实践经验" class="headerlink" title="9.4 Scaling 实践经验"></a>9.4 Scaling 实践经验</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">数据多时 → 训练 Chinchilla Optimal 之外（更多 token）</span><br><span class="line">参数大时 → MoE 解耦（容量与算力分离）</span><br><span class="line">算力小时 → Test-Time Scaling（推理时扩展）</span><br></pre></td></tr></table></figure>
+
+<h2 id="十、学习目标与经典讨论"><a href="#十、学习目标与经典讨论" class="headerlink" title="十、学习目标与经典讨论"></a>十、学习目标与经典讨论</h2><h3 id="10-1-学习目标"><a href="#10-1-学习目标" class="headerlink" title="10.1 学习目标"></a>10.1 学习目标</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">✅ 1. 解释 GPT-3 的 In-context Learning 创新</span><br><span class="line">✅ 2. 推导 Chinchilla Scaling Law</span><br><span class="line">✅ 3. 解释 BPE 算法</span><br><span class="line">✅ 4. 解释 3D Parallelism</span><br><span class="line">✅ 5. 解释 MoE 工作原理</span><br><span class="line">✅ 6. 解释 GPT-3 训练成本</span><br><span class="line">✅ 7. 用 W&amp;B 监控训练</span><br><span class="line">✅ 8. 解释知识蒸馏（DeepSeek-R1 关键）</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2-经典讨论题"><a href="#10-2-经典讨论题" class="headerlink" title="10.2 经典讨论题"></a>10.2 经典讨论题</h3><p><strong>Q1：GPT-3 的核心创新是 175B 参数还是 In-context Learning？</strong></p>
+<p>提示：175B 是必要条件，但 In-context Learning 才是充分条件。</p>
+<p><strong>Q2：Chinchilla 告诉我们什么？GPT-3 数据用多了还是少了？</strong></p>
+<p>提示：300B &#x2F; 175B &#x3D; 1.7，远低于 20 的最优比例——GPT-3 数据偏少。</p>
+<p><strong>Q3：BPE 算法为什么有效？</strong></p>
+<p>提示：高频对合并，本质是 Huffman 编码的贪心版本。</p>
+<p><strong>Q4：为什么必须用分布式训练 175B 模型？</strong></p>
+<p>提示：175B × 2 bytes × 4（参数+梯度+优化器）≈ 1.4 TB，远超单卡显存。</p>
+<p><strong>Q5：MoE 为什么能省算力？</strong></p>
+<p>提示：总参数与激活参数解耦，671B 总参数只激活 37B。</p>
+<h2 id="十一、知识蒸馏：规模化训练的”输出”环节（DeepSeek-R1-关键）🆕"><a href="#十一、知识蒸馏：规模化训练的”输出”环节（DeepSeek-R1-关键）🆕" class="headerlink" title="十一、知识蒸馏：规模化训练的”输出”环节（DeepSeek-R1 关键）🆕"></a>十一、知识蒸馏：规模化训练的”输出”环节（DeepSeek-R1 关键）🆕</h2><blockquote>
+<p>“Pre-training 把模型’做大’，蒸馏把大模型的能力’传递’给小模型——这是规模化训练的最后一公里，也是 2025 年 DeepSeek-R1 推动 LLM 进入’推理时代’的关键技术。”</p>
+</blockquote>
+<h3 id="11-1-蒸馏：规模化训练的”输出”环节"><a href="#11-1-蒸馏：规模化训练的”输出”环节" class="headerlink" title="11.1 蒸馏：规模化训练的”输出”环节"></a>11.1 蒸馏：规模化训练的”输出”环节</h3><p>经过前 10 课时，我们已经能训练 175B+ 级别的大模型，但要真正落地工业应用还差最后一步——把大模型的能力”传递”给小模型。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">规模化训练闭环：</span><br><span class="line"></span><br><span class="line">  Pre-training  →  SFT/RLHF  →  Distillation</span><br><span class="line">    (做大)           (对齐)         (传递/再分发)</span><br><span class="line">    GPT-3 175B       ChatGPT         DeepSeek-R1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>Pre-training</strong>：学知识（175B+）</li>
+<li><strong>SFT&#x2F;RLHF</strong>：学对齐（人类偏好）</li>
+<li><strong>Distillation</strong> 🆕：把能力压缩到小模型</li>
+</ul>
+<p>蒸馏不是替代训练，而是<strong>训练结果的”再分发”</strong>——大模型打前锋，小模型进车间。</p>
+<h3 id="11-2-DeepSeek-R1：2025-蒸馏范式"><a href="#11-2-DeepSeek-R1：2025-蒸馏范式" class="headerlink" title="11.2 DeepSeek-R1：2025 蒸馏范式"></a>11.2 DeepSeek-R1：2025 蒸馏范式</h3><p>DeepSeek-R1（2025）是当前最具代表性的”教师-学生”蒸馏案例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">教师：DeepSeek-V3 671B / 37B（MoE 激活）</span><br><span class="line">   ↓</span><br><span class="line">蒸馏：DeepSeek-R1 的推理能力 → 小模型</span><br><span class="line">   ↓</span><br><span class="line">学生：Qwen / LLaMA 7B / 14B / 32B / 70B</span><br></pre></td></tr></table></figure>
+
+<p>开源社区用 DeepSeek-V3 蒸馏出的小尺寸模型，在多项推理基准上接近甚至超过部分闭源大模型——这是过去一年推理模型爆发的核心引擎，也是”开源追平闭源”叙事的硬支柱。</p>
+<h3 id="11-3-蒸馏-vs-传统训练"><a href="#11-3-蒸馏-vs-传统训练" class="headerlink" title="11.3 蒸馏 vs 传统训练"></a>11.3 蒸馏 vs 传统训练</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>传统训练</th>
+<th>蒸馏</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>目标</td>
+<td>学习新能力</td>
+<td>迁移已有能力</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>原始语料</td>
+<td>教师生成的高质量样本</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>数十万美元级别</td>
+<td>数万美元级别</td>
+</tr>
+<tr>
+<td>部署</td>
+<td>多卡甚至千卡</td>
+<td>单卡可部署</td>
+</tr>
+</tbody></table>
+<p>落到工程上，蒸馏让”175B+ 的能力装进消费级 GPU”成为现实——也让训练侧和推理侧的成本结构彻底分家。</p>
+<blockquote>
+<p><strong>课时定位</strong>：本节为新增 🆕 章节，详细技术细节（教师采样、SFT 格式、奖励建模、GRPO 等）见 <code>32-Peft-LoRA/02-知识蒸馏.md</code>。</p>
+</blockquote>
+<h3 id="关键论文"><a href="#关键论文" class="headerlink" title="关键论文"></a>关键论文</h3><ul>
+<li>DeepSeek-AI 2025《DeepSeek-R1》⭐⭐⭐</li>
+<li>Hinton et al. 2015《Distilling the Knowledge in a Neural Network》</li>
+</ul>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>⚠️ <strong>以发布时为准</strong>：本文涉及的模型版本和数据指标（GPT-3、GPT-4、LLaMA-2&#x2F;3、Qwen-2.5、DeepSeek-V3、o1、o3 等）均以其原始论文或官方发布版本为参考。后续如有新版本发布，相关指标可能发生变化（例如 DeepSeek 已发布 V3.1&#x2F;V3.2、OpenAI o 系列持续迭代），请以最新官方信息为准。</p>
+<hr>
+<p><strong>参考论文清单</strong></p>
+<ul>
+<li>Brown et al. 2020《Language Models are Few-Shot Learners》（GPT-3）⭐⭐⭐</li>
+<li>Kaplan et al. 2020《Scaling Laws for Neural LMs》</li>
+<li>Hoffmann et al. 2022《Chinchilla》⭐⭐</li>
+<li>Sennrich et al. 2016《BPE》</li>
+<li>Radford et al. 2018&#x2F;2019《GPT-1&#x2F;2》</li>
+<li>Devlin et al. 2018《BERT &#x2F; MLM》</li>
+<li>Raffel et al. 2020《T5》</li>
+<li>Rasley et al. 2020《DeepSpeed &#x2F; ZeRO》⭐⭐⭐</li>
+<li>Shoeybi et al. 2019《Megatron-LM》</li>
+<li>Shazeer et al. 2017《Outrageously Large Neural Networks》⭐⭐</li>
+<li>Fedus et al. 2021《Switch Transformer》</li>
+<li>DeepSeek 2024《DeepSeek-V3》⭐⭐⭐</li>
+<li>Dao et al. 2022《Flash Attention》⭐⭐</li>
+<li>Loshchilov &amp; Hutter 2017《AdamW》⭐⭐</li>
+<li>Zhou et al. 2023《LIMA》⭐⭐</li>
+<li>DeepSeek-AI 2025《DeepSeek-R1》⭐⭐⭐</li>
+</ul>
+<hr>
+<h2 id="更新记录（2026-10-17）"><a href="#更新记录（2026-10-17）" class="headerlink" title="更新记录（2026-10-17）"></a>更新记录（2026-10-17）</h2><p>源稿 v2 增补第 11 课时「知识蒸馏（DeepSeek-R1 关键）」章节：把”蒸馏”作为规模化训练的”输出”环节纳入主线，更新 10→11 课时脉络、tags、description、学习目标。新增 <code>## 十一</code> 章节详述 DeepSeek-R1 教师-学生蒸馏范式与工业级部署意义，并指向 <code>32-Peft-LoRA/02-知识蒸馏.md</code> 作为深度讲稿。第 1-10 课时原文不变，仅作结构对齐。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeepSeek-R1/" rel="tag">DeepSeek-R1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GPT-3/" rel="tag">GPT-3</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/In-context-Learning/" rel="tag">In-context Learning</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MoE/" rel="tag">MoE</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Scaling-Law/" rel="tag">Scaling Law</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tokenization/" rel="tag">Tokenization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%AD%E7%BB%83/" rel="tag">分布式训练</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" rel="tag">知识蒸馏</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%AD%E7%BB%83%E7%9B%91%E6%8E%A7/" rel="tag">训练监控</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/15/diffusion-llm/">扩散语言模型入门</a><a class="next" href="/2026/10/15/instructgpt-rlhf/">InstructGPT对齐革命</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%AE%A1%E7%BE%8E/" style="font-size: 15px;">图像审美</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI-Skill</a> <a href="/tags/%E6%B5%B7%E6%8A%A5%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">海报设计</a> <a href="/tags/%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93/" style="font-size: 15px;">开源仓库</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">设计</a> <a href="/tags/%E6%B5%B7%E6%8A%A5/" style="font-size: 15px;">海报</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/A2A/" style="font-size: 15px;">A2A</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 15px;">多智能体</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" style="font-size: 15px;">协议标准</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%A7%91%E7%A0%94%E5%AD%A6%E6%9C%AF/" style="font-size: 15px;">科研学术</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15px;">论文</a> <a href="/tags/Zotero/" style="font-size: 15px;">Zotero</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI Skill</a> <a href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" style="font-size: 15px;">文献综述</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" style="font-size: 15px;">资源精选</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Prompt-Injection/" style="font-size: 15px;">Prompt Injection</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/Loop-Engineering/" style="font-size: 15px;">Loop Engineering</a> <a href="/tags/Harness/" style="font-size: 15px;">Harness</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 15px;">Codex</a> <a href="/tags/2026Q2/" style="font-size: 15px;">2026Q2</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" style="font-size: 15px;">记忆系统</a> <a href="/tags/MemGPT/" style="font-size: 15px;">MemGPT</a> <a href="/tags/Reflexion/" style="font-size: 15px;">Reflexion</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/AGI/" style="font-size: 15px;">AGI</a> <a href="/tags/%E5%A4%9A-Agent/" style="font-size: 15px;">多 Agent</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%BF%E7%94%A8/" style="font-size: 15px;">计算机使用</a> <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA/" style="font-size: 15px;">检索增强</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">知识图谱</a> <a href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" style="font-size: 15px;">本体论</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/9-image-aesthetic-skills-2/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-writing-style-distillation-2/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>知识蒸馏从R1到工业 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2">  <link rel="canonical" href="https://hyqskevin.github.io/2026/10/15/knowledge-distillation/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="知识蒸馏从R1到工业 | MonoShow">
+  <meta property="og:description" content="Kevin W build this air-castle to collect infos &amp;amp; photos">
+  <meta property="og:url" content="https://hyqskevin.github.io/2026/10/15/knowledge-distillation/">
+  <meta property="og:site_name" content="MonoShow">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://hyqskevin.github.io/about/#person","name":"Kevin W","alternateName":["hyqskevin","Kevin"],"url":"https://hyqskevin.github.io/about/","image":"https://hyqskevin.github.io/img/avatar.png","description":"Kevin W 是聚焦 AI Agent 落地与知识工坊实践的 AI 从业者，运营 706 AI 学习路径与 AI 知识工坊，持续产出大模型工程、RAG、Agent 架构与 AI 政策类深度内容。","jobTitle":"AI 从业者","knowsAbout":["AI Agent","RAG","大模型工程","AI 知识工坊","MCP","上下文工程"],"worksFor":{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI"},"knowsLanguage":["zh-CN","en"],"sameAs":["https://hyqskevin.github.io/about/","https://github.com/hyqskevin","https://twitter.com/hyqskevin","https://instagram.com/hyqskevin"]},{"@type":"WebSite","@id":"https://hyqskevin.github.io/#website","url":"https://hyqskevin.github.io/","name":"MonoShow","description":"Kevin W build this air-castle to collect infos & photos","inLanguage":"zh-CN","publisher":{"@id":"https://hyqskevin.github.io/#organization"},"author":{"@id":"https://hyqskevin.github.io/about/#person"}},{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI","url":"https://hyqskevin.github.io/","founder":{"@id":"https://hyqskevin.github.io/about/#person"},"sameAs":["https://github.com/hyqskevin"]},{"@type":"Article","@id":"https://hyqskevin.github.io/2026/10/15/knowledge-distillation/#article","headline":"知识蒸馏从R1到工业","description":"Kevin W build this air-castle to collect infos &amp; photos","url":"https://hyqskevin.github.io/2026/10/15/knowledge-distillation/","datePublished":"2026-10-15T16:00:00.000Z","dateModified":"2026-11-02T03:42:33.503Z","author":{"@id":"https://hyqskevin.github.io/about/#person"},"publisher":{"@id":"https://hyqskevin.github.io/#organization"},"inLanguage":"zh-CN"}]}</script>
+</head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">知识蒸馏从R1到工业</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">知识蒸馏从R1到工业</h1><div class="post-meta">2026-10-15<span> | </span><span class="category"><a href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2.7k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 11</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><p><img src="https://hyqskevin.github.io/pic/knowledge-distillation/cover.png" alt="封面"></p>
+<blockquote>
+<p><strong>配套讲稿</strong>：本系列 PEFT&#x2F;LoRA 篇 · <strong>关键论文</strong>：Hinton 2015《Distilling the Knowledge》&#x2F; DeepSeek 2025《R1 Distillation》</p>
+</blockquote>
+<h2 id="一、什么是知识蒸馏"><a href="#一、什么是知识蒸馏" class="headerlink" title="一、什么是知识蒸馏"></a>一、什么是知识蒸馏</h2><h3 id="1-1-核心定义"><a href="#1-1-核心定义" class="headerlink" title="1.1 核心定义"></a>1.1 核心定义</h3><blockquote>
+<p><strong>知识蒸馏 &#x3D; 用大模型（Teacher）的输出训练小模型（Student），让小模型继承大模型的能力。</strong></p>
+</blockquote>
+<p>和传统监督学习不同，蒸馏过程中 Student 学的不只是「正确答案」，还包括 Teacher 对所有候选答案的「偏好分布」——也就是所谓的「暗知识」。</p>
+<h3 id="1-2-为什么需要蒸馏"><a href="#1-2-为什么需要蒸馏" class="headerlink" title="1.2 为什么需要蒸馏"></a>1.2 为什么需要蒸馏</h3><table>
+<thead>
+<tr>
+<th>原因</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>部署成本</strong></td>
+<td>7B 模型比 70B 模型便宜约 10x</td>
+</tr>
+<tr>
+<td><strong>推理延迟</strong></td>
+<td>7B 比 70B 推理快约 10x</td>
+</tr>
+<tr>
+<td><strong>端侧设备</strong></td>
+<td>手机&#x2F;边缘设备只能跑 1-4B 模型</td>
+</tr>
+<tr>
+<td><strong>能耗</strong></td>
+<td>同任务下能耗降低 10-100x</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-蒸馏-vs-微调"><a href="#1-3-蒸馏-vs-微调" class="headerlink" title="1.3 蒸馏 vs 微调"></a>1.3 蒸馏 vs 微调</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>微调（SFT）</th>
+<th>蒸馏</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>目标</strong></td>
+<td>学会任务</td>
+<td>模仿 Teacher</td>
+</tr>
+<tr>
+<td><strong>数据</strong></td>
+<td>人工标注</td>
+<td>Teacher 生成的软标签</td>
+</tr>
+<tr>
+<td><strong>效果上限</strong></td>
+<td>受限于任务标注质量</td>
+<td>受限于 Teacher 能力</td>
+</tr>
+</tbody></table>
+<p>简言之：<strong>微调让模型「会做」，蒸馏让模型「像 Teacher 那样做」</strong>。</p>
+<hr>
+<h2 id="二、Hinton-2015-经典蒸馏"><a href="#二、Hinton-2015-经典蒸馏" class="headerlink" title="二、Hinton 2015 经典蒸馏"></a>二、Hinton 2015 经典蒸馏</h2><h3 id="2-1-蒸馏损失公式"><a href="#2-1-蒸馏损失公式" class="headerlink" title="2.1 蒸馏损失公式"></a>2.1 蒸馏损失公式</h3><p>$$<br>L &#x3D; \alpha \cdot L_{\text{soft}} + (1 - \alpha) \cdot L_{\text{hard}}<br>$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>典型值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$L_{\text{soft}}$</td>
+<td>软标签损失（Teacher logits）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>$L_{\text{hard}}$</td>
+<td>硬标签损失（真实标签）</td>
+<td>—</td>
+</tr>
+<tr>
+<td>$\alpha$</td>
+<td>软标签权重</td>
+<td>0.7 – 0.9</td>
+</tr>
+</tbody></table>
+<p>软标签本质是 Teacher 输出概率分布与 Student 输出概率分布之间的 KL 散度。</p>
+<h3 id="2-2-软标签与温度"><a href="#2-2-软标签与温度" class="headerlink" title="2.2 软标签与温度"></a>2.2 软标签与温度</h3><p>软标签 $q_i$ 由温度 $T$ 调节：</p>
+<p>$$<br>q_i &#x3D; \frac{\exp(z_i &#x2F; T)}{\sum_j \exp(z_j &#x2F; T)}<br>$$</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>典型值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$z_i$</td>
+<td>Teacher 的 logit</td>
+<td>—</td>
+</tr>
+<tr>
+<td>$T$</td>
+<td>温度</td>
+<td>3 – 20</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Teacher 对&quot;猫 vs 狗 vs 虎&quot;：</span><br><span class="line">  - 硬标签：    猫（仅 1.0）</span><br><span class="line">  - 软标签 T=1：猫 0.6, 狗 0.3, 虎 0.1</span><br><span class="line">  - 软标签 T=10：猫 0.4, 狗 0.35, 虎 0.25   ← 更&quot;软&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-暗知识"><a href="#2-3-暗知识" class="headerlink" title="2.3 暗知识"></a>2.3 暗知识</h3><blockquote>
+<p>高温 $T$ 让概率分布更「软」——暴露 Teacher 的「暗知识」（dark knowledge）。</p>
+</blockquote>
+<p>直觉上，Teacher 知道「虎比狗更像猫」——软标签暴露这种类别间的相似性关系。Student 直接学习软标签，等于继承了 Teacher 的「推理过程」，而不仅是最终答案。</p>
+<hr>
+<h2 id="三、蒸馏的-4-大范式"><a href="#三、蒸馏的-4-大范式" class="headerlink" title="三、蒸馏的 4 大范式"></a>三、蒸馏的 4 大范式</h2><h3 id="3-1-Logit-Distillation（输出层蒸馏）"><a href="#3-1-Logit-Distillation（输出层蒸馏）" class="headerlink" title="3.1 Logit Distillation（输出层蒸馏）"></a>3.1 Logit Distillation（输出层蒸馏）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Teacher 前向（不计算梯度）</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    teacher_logits = teacher(input_ids)  <span class="comment"># (B, T, V)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Student 前向</span></span><br><span class="line">student_logits = student(input_ids)    <span class="comment"># (B, T, V)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 蒸馏损失</span></span><br><span class="line">soft_loss = F.kl_div(</span><br><span class="line">    F.log_softmax(student_logits / T, dim=-<span class="number">1</span>),</span><br><span class="line">    F.softmax(teacher_logits / T, dim=-<span class="number">1</span>),</span><br><span class="line">    reduction=<span class="string">&#x27;batchmean&#x27;</span></span><br><span class="line">) * (T ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">hard_loss = F.cross_entropy(</span><br><span class="line">    student_logits.view(-<span class="number">1</span>, V),</span><br><span class="line">    labels.view(-<span class="number">1</span>)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">loss = α * soft_loss + (<span class="number">1</span> - α) * hard_loss</span><br></pre></td></tr></table></figure>
+
+<p>适用场景：同任务、同 vocabulary——最经典范式。</p>
+<h3 id="3-2-Feature-Distillation（中间层蒸馏）"><a href="#3-2-Feature-Distillation（中间层蒸馏）" class="headerlink" title="3.2 Feature Distillation（中间层蒸馏）"></a>3.2 Feature Distillation（中间层蒸馏）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 中间层蒸馏</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">feature_loss</span>(<span class="params">student_features, teacher_features</span>):</span><br><span class="line">    <span class="comment"># 1x1 conv 对齐维度</span></span><br><span class="line">    s = align_conv(student_features)</span><br><span class="line">    t = teacher_features</span><br><span class="line">    <span class="keyword">return</span> F.mse_loss(s, t)</span><br></pre></td></tr></table></figure>
+
+<p>适用场景：Teacher 与 Student 同为 Transformer；隐藏层维度不同时需要投影层对齐。</p>
+<h3 id="3-3-Data-Free-Distillation（无数据蒸馏）"><a href="#3-3-Data-Free-Distillation（无数据蒸馏）" class="headerlink" title="3.3 Data-Free Distillation（无数据蒸馏）"></a>3.3 Data-Free Distillation（无数据蒸馏）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">无训练数据时：</span><br><span class="line">  - 用随机噪声作为输入</span><br><span class="line">  - 蒸馏 Teacher 在噪声上的输出</span><br><span class="line">  - 类似 GAN 的&quot;合成数据&quot;</span><br></pre></td></tr></table></figure>
+
+<p>适用场景：数据隐私要求严、训练数据不可获取的情况。</p>
+<h3 id="3-4-Self-Distillation（自蒸馏）"><a href="#3-4-Self-Distillation（自蒸馏）" class="headerlink" title="3.4 Self-Distillation（自蒸馏）"></a>3.4 Self-Distillation（自蒸馏）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Teacher = Student（同一模型），不同时间点：</span><br><span class="line">  - Step 1：训练 Student v1</span><br><span class="line">  - Step 2：Student v1 自己当 Teacher</span><br><span class="line">  - Step 3：用 v1 的输出训练 Student v2</span><br><span class="line"></span><br><span class="line">效果：Student v2 比 v1 更好（自提升）</span><br></pre></td></tr></table></figure>
+
+<p>这是当前 Self-Improvement 趋势的雏形。</p>
+<hr>
+<h2 id="四、DeepSeek-R1-蒸馏实战"><a href="#四、DeepSeek-R1-蒸馏实战" class="headerlink" title="四、DeepSeek-R1 蒸馏实战"></a>四、DeepSeek-R1 蒸馏实战</h2><h3 id="4-1-R1-蒸馏到-Qwen-Llama"><a href="#4-1-R1-蒸馏到-Qwen-Llama" class="headerlink" title="4.1 R1 蒸馏到 Qwen &#x2F; Llama"></a>4.1 R1 蒸馏到 Qwen &#x2F; Llama</h3><p><strong>背景</strong>：DeepSeek-R1（671B MoE）开源，但 R1 太大无法本地部署，需要把推理能力下放到小模型。</p>
+<p><strong>蒸馏流程</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Step 1: R1 生成训练数据</span></span><br><span class="line">training_data = []</span><br><span class="line"><span class="keyword">for</span> prompt <span class="keyword">in</span> seed_prompts:  <span class="comment"># 800K 样本</span></span><br><span class="line">    response = deepseek_r1.generate(</span><br><span class="line">        prompt,</span><br><span class="line">        <span class="comment"># 关键：让 R1 输出&quot;思考过程&quot;</span></span><br><span class="line">        include_reasoning=<span class="literal">True</span></span><br><span class="line">    )</span><br><span class="line">    training_data.append(&#123;</span><br><span class="line">        <span class="string">&quot;prompt&quot;</span>: prompt,</span><br><span class="line">        <span class="string">&quot;response&quot;</span>: response</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 2: 用 R1 数据 SFT 小模型</span></span><br><span class="line">model = QwenForCausalLM.from_pretrained(<span class="string">&quot;Qwen-7B&quot;</span>)</span><br><span class="line">trainer = SFTTrainer(model, training_data)</span><br><span class="line">trainer.train(</span><br><span class="line">    data=training_data,  <span class="comment"># 800K</span></span><br><span class="line">    epochs=<span class="number">3</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-蒸馏效果对比"><a href="#4-2-蒸馏效果对比" class="headerlink" title="4.2 蒸馏效果对比"></a>4.2 蒸馏效果对比</h3><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>AIME 2024</th>
+<th>MATH-500</th>
+<th>GPQA Diamond</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Qwen-7B（base）</td>
+<td>16%</td>
+<td>46%</td>
+<td>35%</td>
+</tr>
+<tr>
+<td><strong>Qwen-7B + R1 蒸馏</strong></td>
+<td><strong>55%</strong> ⭐</td>
+<td><strong>83%</strong></td>
+<td><strong>49%</strong></td>
+</tr>
+<tr>
+<td>Qwen-32B + R1 蒸馏</td>
+<td>72%</td>
+<td>94%</td>
+<td>62%</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>R1 的推理能力可以「蒸馏」到小模型——效果惊人。</strong><br><strong>32B 蒸馏模型超过 o1-mini。</strong></p>
+</blockquote>
+<h3 id="4-3-蒸馏的「推理能力」是什么"><a href="#4-3-蒸馏的「推理能力」是什么" class="headerlink" title="4.3 蒸馏的「推理能力」是什么"></a>4.3 蒸馏的「推理能力」是什么</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">R1 生成的数据包含：</span><br><span class="line">  - 思考过程（CoT）</span><br><span class="line">  - 自我反思</span><br><span class="line">  - 多步推理</span><br><span class="line">  - 错误修正</span><br><span class="line"></span><br><span class="line">Student 学会这些&quot;思考模式&quot;而不仅仅是最终答案</span><br></pre></td></tr></table></figure>
+
+<p>这是 R1 蒸馏与传统 SFT 的最大区别：<strong>传承的是「怎么想」，不是「答什么」</strong>。</p>
+<hr>
+<h2 id="五、蒸馏-vs-RLHF-关系"><a href="#五、蒸馏-vs-RLHF-关系" class="headerlink" title="五、蒸馏 vs RLHF 关系"></a>五、蒸馏 vs RLHF 关系</h2><h3 id="5-1-DeepSeek-R1-三种训练方法对比"><a href="#5-1-DeepSeek-R1-三种训练方法对比" class="headerlink" title="5.1 DeepSeek-R1 三种训练方法对比"></a>5.1 DeepSeek-R1 三种训练方法对比</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>数据</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RL on Base</strong>（R1-Zero）</td>
+<td>仅 RL（无 SFT）</td>
+<td>涌现推理，但不稳定</td>
+</tr>
+<tr>
+<td><strong>RL + SFT</strong>（R1）</td>
+<td>SFT + RL 多阶段</td>
+<td>最强</td>
+</tr>
+<tr>
+<td><strong>纯 SFT on R1</strong>（蒸馏）</td>
+<td>R1 生成 800K 数据 SFT</td>
+<td>强，训练稳定</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>纯 SFT 蒸馏就能获得 R1 的大部分推理能力——比纯 RL 更稳定。</strong><br><strong>小模型 + 蒸馏 &#x3D; 推理能力下放。</strong></p>
+</blockquote>
+<p>RLHF 仍是对齐「价值观」的关键工具，而蒸馏负责对齐「能力与风格」。两者并不冲突，在工业实践中常常叠加使用。</p>
+<hr>
+<h2 id="六、工业蒸馏-Pipeline"><a href="#六、工业蒸馏-Pipeline" class="headerlink" title="六、工业蒸馏 Pipeline"></a>六、工业蒸馏 Pipeline</h2><h3 id="6-1-完整流程"><a href="#6-1-完整流程" class="headerlink" title="6.1 完整流程"></a>6.1 完整流程</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Step 1: 数据准备</span><br><span class="line">  ├─ 准备 seed prompts（10K-100K）</span><br><span class="line">  └─ 多样性 / 难度分布</span><br><span class="line"></span><br><span class="line">Step 2: Teacher 生成</span><br><span class="line">  ├─ 调用 Teacher LLM</span><br><span class="line">  ├─ 多 temperature 采样</span><br><span class="line">  └─ 过滤低质量样本</span><br><span class="line"></span><br><span class="line">Step 3: 数据增强</span><br><span class="line">  ├─ CoT 显式推理</span><br><span class="line">  ├─ 思考过程标注</span><br><span class="line">  └─ 多语言翻译</span><br><span class="line"></span><br><span class="line">Step 4: Student 训练</span><br><span class="line">  ├─ 选合适 Student 架构</span><br><span class="line">  ├─ SFT 阶段</span><br><span class="line">  └─ (可选) DPO / RLHF 阶段</span><br><span class="line"></span><br><span class="line">Step 5: 评估</span><br><span class="line">  ├─ 与 Teacher 对比</span><br><span class="line">  ├─ 多个 benchmark</span><br><span class="line">  └─ 人类评估</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-蒸馏的-4-大挑战"><a href="#6-2-蒸馏的-4-大挑战" class="headerlink" title="6.2 蒸馏的 4 大挑战"></a>6.2 蒸馏的 4 大挑战</h3><p><strong>1. Capacity Gap</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Teacher 70B  vs  Student 7B</span><br><span class="line">容量差距大，Student 学不全</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong>：</p>
+<ul>
+<li>中间尺寸先蒸馏（70B → 13B → 7B）</li>
+<li>只蒸馏关键能力（推理、数学）</li>
+</ul>
+<p><strong>2. Mode Collapse</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Student 只学 Teacher 的高频模式</span><br><span class="line">忽略低频但重要的模式</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong>：</p>
+<ul>
+<li>高温 + 多 temperature 采样</li>
+<li>数据增强</li>
+<li>对抗训练</li>
+</ul>
+<p><strong>3. Catastrophic Forgetting</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student 学新能力，忘掉旧能力</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong>：</p>
+<ul>
+<li>混合 SFT 数据</li>
+<li>EWC &#x2F; LwF 正则</li>
+<li>多任务学习</li>
+</ul>
+<p><strong>4. Evaluation Gap</strong></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Student 在 benchmark 上接近 Teacher</span><br><span class="line">但实际部署效果差</span><br></pre></td></tr></table></figure>
+
+<p><strong>解法</strong>：</p>
+<ul>
+<li>真实场景评估</li>
+<li>人类评估</li>
+<li>A&#x2F;B 测试</li>
+</ul>
+<hr>
+<h2 id="七、蒸馏的工程实践"><a href="#七、蒸馏的工程实践" class="headerlink" title="七、蒸馏的工程实践"></a>七、蒸馏的工程实践</h2><h3 id="7-1-选-Student-架构"><a href="#7-1-选-Student-架构" class="headerlink" title="7.1 选 Student 架构"></a>7.1 选 Student 架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">推荐：</span><br><span class="line">  7B   Student  ←  70B  Teacher（10x）</span><br><span class="line">  13B  Student  ←  70B  Teacher（5x）</span><br><span class="line">  70B  Student  ←  405B Teacher（6x）</span><br><span class="line">不推荐：</span><br><span class="line">  1B   Student  ←  70B  Teacher（70x） 容量差太大</span><br><span class="line">  405B Student  ←  70B  Teacher  没意义</span><br></pre></td></tr></table></figure>
+
+<p>经验法则是 <strong>容量比控制在 5-10x 以内</strong>。</p>
+<h3 id="7-2-温度选择"><a href="#7-2-温度选择" class="headerlink" title="7.2 温度选择"></a>7.2 温度选择</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不同任务的推荐温度</span></span><br><span class="line">temperature_map = &#123;</span><br><span class="line">    <span class="string">&quot;classification&quot;</span>: <span class="number">1</span>,    <span class="comment"># 硬标签够了</span></span><br><span class="line">    <span class="string">&quot;generation&quot;</span>:    <span class="number">4</span>,     <span class="comment"># 创造性</span></span><br><span class="line">    <span class="string">&quot;reasoning&quot;</span>:     <span class="number">1</span>,     <span class="comment"># 推理要确定性</span></span><br><span class="line">    <span class="string">&quot;code&quot;</span>:          <span class="number">1</span>,     <span class="comment"># 代码要精确</span></span><br><span class="line">    <span class="string">&quot;math&quot;</span>:          <span class="number">1</span>,     <span class="comment"># 数学要精确</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>推理、代码、数学类任务对错误容忍度低，温度通常不开高；生成类任务可以适当提高温度来传递多样性。</p>
+<h3 id="7-3-数据量"><a href="#7-3-数据量" class="headerlink" title="7.3 数据量"></a>7.3 数据量</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">最少：1K 样本</span><br><span class="line">推荐：10K-100K 样本</span><br><span class="line">上限：1M 样本</span><br><span class="line">超过：边际收益递减</span><br></pre></td></tr></table></figure>
+
+<p>实际工业里 <strong>「样本质量 &gt; 数量」</strong>，高质量 10K 往往比低质量 1M 更有效。</p>
+<h3 id="7-4-训练超参数"><a href="#7-4-训练超参数" class="headerlink" title="7.4 训练超参数"></a>7.4 训练超参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 蒸馏训练配置</span></span><br><span class="line">training_args = TrainingArguments(</span><br><span class="line">    num_train_epochs=<span class="number">3</span>,</span><br><span class="line">    per_device_train_batch_size=<span class="number">4</span>,</span><br><span class="line">    learning_rate=<span class="number">1e-5</span>,         <span class="comment"># 比 SFT 低</span></span><br><span class="line">    warmup_ratio=<span class="number">0.1</span>,</span><br><span class="line">    weight_decay=<span class="number">0.01</span>,</span><br><span class="line">    bf16=<span class="literal">True</span>,</span><br><span class="line">    temperature=<span class="number">4</span>,              <span class="comment"># 蒸馏温度</span></span><br><span class="line">    alpha=<span class="number">0.7</span>,                  <span class="comment"># 软标签权重</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>蒸馏的学习率通常比纯 SFT 略低，避免 Student 偏离 Base 太远导致遗忘。</p>
+<hr>
+<h2 id="八、蒸馏-vs-量化"><a href="#八、蒸馏-vs-量化" class="headerlink" title="八、蒸馏 vs 量化"></a>八、蒸馏 vs 量化</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>蒸馏</th>
+<th>量化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>原理</strong></td>
+<td>用小模型学大模型</td>
+<td>用低位表示原模型</td>
+</tr>
+<tr>
+<td><strong>架构</strong></td>
+<td>可以不同</td>
+<td>必须相同</td>
+</tr>
+<tr>
+<td><strong>效果</strong></td>
+<td>可能更好</td>
+<td>通常略差</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>推理快（更小）</td>
+<td>推理快（更小）</td>
+</tr>
+<tr>
+<td><strong>训练</strong></td>
+<td>需要训练</td>
+<td>不需要训练</td>
+</tr>
+<tr>
+<td><strong>硬件</strong></td>
+<td>训练需要 GPU</td>
+<td>仅需量化工具</td>
+</tr>
+</tbody></table>
+<p><strong>配合使用</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">70B Teacher</span><br><span class="line">   ↓ 蒸馏</span><br><span class="line">13B Student</span><br><span class="line">   ↓ 量化</span><br><span class="line">4-bit 13B（5GB）</span><br></pre></td></tr></table></figure>
+
+<p>蒸馏 + 量化可以叠加，实测压缩比可达 175x，是当前 70B → 消费级显卡部署的主路径。</p>
+<hr>
+<h2 id="九、未来蒸馏趋势"><a href="#九、未来蒸馏趋势" class="headerlink" title="九、未来蒸馏趋势"></a>九、未来蒸馏趋势</h2><h3 id="9-1-Self-Improvement-蒸馏"><a href="#9-1-Self-Improvement-蒸馏" class="headerlink" title="9.1 Self-Improvement 蒸馏"></a>9.1 Self-Improvement 蒸馏</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Step 1: 模型 V1</span><br><span class="line">Step 2: 用 V1 生成数据 → 训练 V2</span><br><span class="line">Step 3: V2 优于 V1</span><br><span class="line">Step 4: 用 V2 生成数据 → 训练 V3</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>意义在于「自提升循环」，避免对外部 Teacher 的依赖。</p>
+<h3 id="9-2-跨模态蒸馏"><a href="#9-2-跨模态蒸馏" class="headerlink" title="9.2 跨模态蒸馏"></a>9.2 跨模态蒸馏</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Vision-Language Teacher</span><br><span class="line">  ↓ 蒸馏</span><br><span class="line">  ├─ Vision-only Student</span><br><span class="line">  └─ Language-only Student</span><br></pre></td></tr></table></figure>
+
+<p>把多模态 Teacher 的能力分别下放到单模态 Student，是端侧多模态应用的关键。</p>
+<h3 id="9-3-推理能力蒸馏"><a href="#9-3-推理能力蒸馏" class="headerlink" title="9.3 推理能力蒸馏"></a>9.3 推理能力蒸馏</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">o1 / R1 Teacher（推理强）</span><br><span class="line">  ↓ 蒸馏</span><br><span class="line">小模型（推理能力下放）</span><br></pre></td></tr></table></figure>
+
+<p>这是 2025 年最关键的趋势——更多推理能力被「压缩」到小模型，让 70B 以下的模型也能拥有 o1 级推理。</p>
+<hr>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>⚠️ <strong>以发布时为准</strong></p>
+<p>本文涉及的模型、论文与工程实践均以 <strong>2026-10-16 发布日</strong> 的事实状态为准，包括但不限于：</p>
+<ul>
+<li><strong>Hinton 2015《Distilling the Knowledge in a Neural Network》</strong>——经典蒸馏开山论文。</li>
+<li><strong>DeepSeek-R1（2025-01）</strong>——671B MoE 推理模型，其蒸馏技术报告中的 32B Qwen&#x2F;Llama 蒸馏数据点为论文公开数值。</li>
+<li><strong>DeepSeek-V2.5（2024-08）</strong>——蒸馏 Llama 3 的早期实践。</li>
+<li><strong>Anthropic Claude（2025）</strong>——含蒸馏成分的对齐模型。</li>
+<li><strong>Llama 4（2025-03）</strong>——含大量蒸馏数据的开源&#x2F;半开源模型。</li>
+<li><strong>DistilBERT &#x2F; MobileBERT &#x2F; TinyBERT &#x2F; FitNets &#x2F; Born-Again Networks</strong>——NLP 蒸馏里程碑。</li>
+<li><strong>o1-mini &#x2F; Qwen 系列</strong>——表中对比数字均为对应论文或公开 benchmark 的报告值。</li>
+</ul>
+<p>后续模型迭代、benchmark 更新、训练范式演进可能影响文中结论，请以最新公开资料为准。</p>
+<hr>
+<h2 id="十、关键洞察"><a href="#十、关键洞察" class="headerlink" title="十、关键洞察"></a>十、关键洞察</h2><ol>
+<li><strong>Hinton 2015 经典论文</strong>——知识蒸馏的开山，软标签 + 温度是核心 trick。</li>
+<li><strong>暗知识（dark knowledge）</strong>——Teacher 的「软标签」暴露类别间相似性，比硬标签信息量大得多。</li>
+<li><strong>DeepSeek-R1 蒸馏</strong>让 32B 模型超过 o1-mini，证明了「推理能力可下放」。</li>
+<li><strong>纯 SFT 蒸馏</strong>比纯 RL 更稳定，是当下小模型获取推理能力的事实标准路径。</li>
+<li><strong>未来 &#x3D; Self-Improvement + 跨模态 + 推理蒸馏</strong>——大模型自我迭代 + 能力分发。</li>
+</ol>
+<hr>
+<h2 id="十一、思考题"><a href="#十一、思考题" class="headerlink" title="十一、思考题"></a>十一、思考题</h2><ul>
+<li><strong>Q1.</strong> 为什么蒸馏有用？背后的理论基础是什么？</li>
+<li><strong>Q2.</strong> 软标签和硬标签的区别？温度 $T$ 的作用？</li>
+<li><strong>Q3.</strong> 蒸馏 vs 量化——业务场景下选哪个？能否叠加？</li>
+<li><strong>Q4.</strong> Student 多大合适？Capacity Gap 如何控制？</li>
+<li><strong>Q5.</strong> R1 蒸馏的「推理能力」具体是什么？传统 SFT 为什么做不到？</li>
+<li><strong>Q6.</strong> 如何防止 Catastrophic Forgetting？EWC &#x2F; LwF 在 LLM 时代还适用吗？</li>
+</ul>
+<hr>
+<h2 id="必读论文"><a href="#必读论文" class="headerlink" title="必读论文"></a>必读论文</h2><ul>
+<li><strong>核心 3 篇</strong><ul>
+<li>Hinton et al. 2015《Distilling the Knowledge in a Neural Network》⭐⭐⭐</li>
+<li>DeepSeek 2025《R1 Distillation Technical Report》⭐⭐⭐</li>
+<li>Sanh et al. 2019《DistilBERT》⭐⭐</li>
+</ul>
+</li>
+<li><strong>进阶 2 篇</strong><ul>
+<li>Romero et al. 2015《FitNets》</li>
+<li>Jiao et al. 2020《TinyBERT》</li>
+</ul>
+</li>
+<li><strong>工程 1 篇</strong><ul>
+<li>Hugging Face 2024《Distillation Cookbook》</li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>2025-01 关键节点</strong>：DeepSeek 发布 R1 蒸馏技术报告，32B 蒸馏模型超过 o1-mini。这标志着「推理能力下放」成为开源 LLM 的关键路径——任何人都可以拥有 70B 以下的高性能推理模型。</p>
+</blockquote>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeepSeek-R1/" rel="tag">DeepSeek-R1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PEFT/" rel="tag">PEFT</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%8E%A8%E7%90%86%E8%83%BD%E5%8A%9B/" rel="tag">推理能力</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9A%97%E7%9F%A5%E8%AF%86/" rel="tag">暗知识</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/" rel="tag">模型压缩</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E8%92%B8%E9%A6%8F/" rel="tag">知识蒸馏</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/15/instructgpt-rlhf/">InstructGPT对齐革命</a><a class="next" href="/2026/10/15/llm-future-outlook/">大模型综合应用与AGI展望</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%AE%A1%E7%BE%8E/" style="font-size: 15px;">图像审美</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI-Skill</a> <a href="/tags/%E6%B5%B7%E6%8A%A5%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">海报设计</a> <a href="/tags/%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93/" style="font-size: 15px;">开源仓库</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">设计</a> <a href="/tags/%E6%B5%B7%E6%8A%A5/" style="font-size: 15px;">海报</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/A2A/" style="font-size: 15px;">A2A</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 15px;">多智能体</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" style="font-size: 15px;">协议标准</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%A7%91%E7%A0%94%E5%AD%A6%E6%9C%AF/" style="font-size: 15px;">科研学术</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15px;">论文</a> <a href="/tags/Zotero/" style="font-size: 15px;">Zotero</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI Skill</a> <a href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" style="font-size: 15px;">文献综述</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" style="font-size: 15px;">资源精选</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Prompt-Injection/" style="font-size: 15px;">Prompt Injection</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/Loop-Engineering/" style="font-size: 15px;">Loop Engineering</a> <a href="/tags/Harness/" style="font-size: 15px;">Harness</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 15px;">Codex</a> <a href="/tags/2026Q2/" style="font-size: 15px;">2026Q2</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" style="font-size: 15px;">记忆系统</a> <a href="/tags/MemGPT/" style="font-size: 15px;">MemGPT</a> <a href="/tags/Reflexion/" style="font-size: 15px;">Reflexion</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/AGI/" style="font-size: 15px;">AGI</a> <a href="/tags/%E5%A4%9A-Agent/" style="font-size: 15px;">多 Agent</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%BF%E7%94%A8/" style="font-size: 15px;">计算机使用</a> <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA/" style="font-size: 15px;">检索增强</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">知识图谱</a> <a href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" style="font-size: 15px;">本体论</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/9-image-aesthetic-skills-2/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-writing-style-distillation-2/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>

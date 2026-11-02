@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Kevin W build this air-castle to collect infos &amp; photos"><title>AI Agent与本体周报 | MonoShow</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=1.0.0"><link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/pure-min.css"><link rel="stylesheet" type="text/css" href="https://unpkg.com/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="https://unpkg.com/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="https://unpkg.com/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="https://unpkg.com/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="https://unpkg.com/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 8.1.2">  <link rel="canonical" href="https://hyqskevin.github.io/2026/10/17/wechat-ai-weekly-agent-ontology/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="AI Agent与本体周报 | MonoShow">
+  <meta property="og:description" content="Kevin W build this air-castle to collect infos &amp;amp; photos">
+  <meta property="og:url" content="https://hyqskevin.github.io/2026/10/17/wechat-ai-weekly-agent-ontology/">
+  <meta property="og:site_name" content="MonoShow">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://hyqskevin.github.io/about/#person","name":"Kevin W","alternateName":["hyqskevin","Kevin"],"url":"https://hyqskevin.github.io/about/","image":"https://hyqskevin.github.io/img/avatar.png","description":"Kevin W 是聚焦 AI Agent 落地与知识工坊实践的 AI 从业者，运营 706 AI 学习路径与 AI 知识工坊，持续产出大模型工程、RAG、Agent 架构与 AI 政策类深度内容。","jobTitle":"AI 从业者","knowsAbout":["AI Agent","RAG","大模型工程","AI 知识工坊","MCP","上下文工程"],"worksFor":{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI"},"knowsLanguage":["zh-CN","en"],"sameAs":["https://hyqskevin.github.io/about/","https://github.com/hyqskevin","https://twitter.com/hyqskevin","https://instagram.com/hyqskevin"]},{"@type":"WebSite","@id":"https://hyqskevin.github.io/#website","url":"https://hyqskevin.github.io/","name":"MonoShow","description":"Kevin W build this air-castle to collect infos & photos","inLanguage":"zh-CN","publisher":{"@id":"https://hyqskevin.github.io/#organization"},"author":{"@id":"https://hyqskevin.github.io/about/#person"}},{"@type":"Organization","@id":"https://hyqskevin.github.io/#organization","name":"706 AI","url":"https://hyqskevin.github.io/","founder":{"@id":"https://hyqskevin.github.io/about/#person"},"sameAs":["https://github.com/hyqskevin"]},{"@type":"Article","@id":"https://hyqskevin.github.io/2026/10/17/wechat-ai-weekly-agent-ontology/#article","headline":"AI Agent与本体周报","description":"Kevin W build this air-castle to collect infos &amp; photos","url":"https://hyqskevin.github.io/2026/10/17/wechat-ai-weekly-agent-ontology/","datePublished":"2026-10-17T16:00:00.000Z","dateModified":"2026-11-02T03:42:33.512Z","author":{"@id":"https://hyqskevin.github.io/about/#person"},"publisher":{"@id":"https://hyqskevin.github.io/#organization"},"inLanguage":"zh-CN"}]}</script>
+</head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">AI Agent与本体周报</h1><a id="logo" href="/.">MonoShow</a><p class="description">Monologue from Hanamaki</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/categories/repo/"><i class="fa fa-file-text"> repo</i></a><a href="/photo/"><i class="fa fa-camera"> photo</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">AI Agent与本体周报</h1><div class="post-meta">2026-10-17<span> | </span><span class="category"><a href="/categories/notes/">notes</a></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-clock-o"></i><span class="post-count"> 11</span><span class="post-meta-item-text"> 分钟</span></span></span></div><div class="post-content"><blockquote>
+<p>本文整理自 2026-09-09 ~ 2026-09-14 推送的 5 条 AI Agent &#x2F; 知识本体相关文章，覆盖可观测性、长程上下文管理、本体实操与开源语义平台。</p>
+</blockquote>
+<h2 id="一、Agent-可观测性：Trace-Event-Log-Eval-闭环"><a href="#一、Agent-可观测性：Trace-Event-Log-Eval-闭环" class="headerlink" title="一、Agent 可观测性：Trace &#x2F; Event Log &#x2F; Eval 闭环"></a>一、Agent 可观测性：Trace &#x2F; Event Log &#x2F; Eval 闭环</h2><blockquote>
+<p><strong>没有 trace 的 Agent 不可调试，没有 eval 的 Agent 不可迭代，没有 event log 的 Agent 不可审计。</strong></p>
+</blockquote>
+<p>生产 Agent 最可怕的一句话不是「它答错了」，而是「它为什么这么做，我们不知道」。</p>
+<h3 id="1-1-Agent-vs-传统服务可观测性"><a href="#1-1-Agent-vs-传统服务可观测性" class="headerlink" title="1.1 Agent vs 传统服务可观测性"></a>1.1 Agent vs 传统服务可观测性</h3><table>
+<thead>
+<tr>
+<th>传统服务</th>
+<th>Agent 还要多看一层</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务是否在线</td>
+<td>模型为什么选择这一步？</td>
+</tr>
+<tr>
+<td>接口是否超时</td>
+<td>工具调用是否符合意图？</td>
+</tr>
+<tr>
+<td>错误率</td>
+<td>上下文里有什么证据？</td>
+</tr>
+<tr>
+<td>CPU &#x2F; 内存</td>
+<td>状态如何变化？评估为什么通过或失败？</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-四类观测信号（缺一不可）"><a href="#1-2-四类观测信号（缺一不可）" class="headerlink" title="1.2 四类观测信号（缺一不可）"></a>1.2 四类观测信号（缺一不可）</h3><table>
+<thead>
+<tr>
+<th>信号</th>
+<th>回答什么</th>
+<th>关键</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Trace</strong>（过程树）</td>
+<td>这次任务经历了哪些步骤，每步多久 &#x2F; 输入输出 &#x2F; 谁接过 &#x2F; 调了哪些工具</td>
+<td>Span 分类：generation &#x2F; function &#x2F; handoff &#x2F; guardrail &#x2F; approval &#x2F; eval</td>
+</tr>
+<tr>
+<td><strong>Event Log</strong>（账本）</td>
+<td>这个调用是否真的产生了外部副作用？receipt 是什么？状态变了没？</td>
+<td>幂等 key + receipt 是审计的「证据」</td>
+</tr>
+<tr>
+<td><strong>Metrics</strong>（趋势）</td>
+<td>任务成功率 &#x2F; 工具调用成功率 &#x2F; token 消耗 &#x2F; guardrail 命中率 &#x2F; 越权尝试次数</td>
+<td>别只盯 token 成本</td>
+</tr>
+<tr>
+<td><strong>Eval</strong>（质量）</td>
+<td>这版 prompt &#x2F; tool &#x2F; policy 有没有变好？真实流量里哪些任务质量下降？</td>
+<td>Deterministic + LLM-as-judge + End-state + Process + Regression 五类</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-Trace-→-Eval-改进飞轮"><a href="#1-3-Trace-→-Eval-改进飞轮" class="headerlink" title="1.3 Trace → Eval 改进飞轮"></a>1.3 Trace → Eval 改进飞轮</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">生产 trace 发现失败 → 定位失败 span → 抽取失败样本</span><br><span class="line">归类失败类型 → 加入 eval dataset → 修改 prompt/tool/policy</span><br><span class="line">跑回归 eval → 灰度发布 → 继续监控</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-6-类-Debug-问题树（按优先级）"><a href="#1-4-6-类-Debug-问题树（按优先级）" class="headerlink" title="1.4 6 类 Debug 问题树（按优先级）"></a>1.4 6 类 Debug 问题树（按优先级）</h3><ol>
+<li><strong>route wrong</strong> —— Router 把任务交给错误 Agent？</li>
+<li><strong>context missing</strong> —— 缺少关键资料？</li>
+<li><strong>tool misused</strong> —— 工具选错 &#x2F; 参数错 &#x2F; 返回异常？</li>
+<li><strong>permission blocked</strong> —— 权限策略挡住？</li>
+<li><strong>model uncertain</strong> —— 表达过不确定或多次改写不稳定？</li>
+<li><strong>final verifier weak</strong> —— 评估器没挡住错误？</li>
+</ol>
+<h3 id="1-5-敏感数据不能裸进-Trace"><a href="#1-5-敏感数据不能裸进-Trace" class="headerlink" title="1.5 敏感数据不能裸进 Trace"></a>1.5 敏感数据不能裸进 Trace</h3><p>Trace 本身也是数据泄露面（用户输入、模型输出、工具参数、客户数据、内部文档、审批意见）。必须：</p>
+<ul>
+<li>PII 脱敏 + 敏感字段哈希</li>
+<li>原文采样率限制</li>
+<li>按角色查看 trace</li>
+<li>高风险任务单独审计</li>
+<li>日志保留周期 + 导出权限控制</li>
+</ul>
+<h3 id="1-6-最小落地方案"><a href="#1-6-最小落地方案" class="headerlink" title="1.6 最小落地方案"></a>1.6 最小落地方案</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span><span class="string">.</span> <span class="string">所有任务有</span> <span class="string">trace_id</span> <span class="string">+</span> <span class="string">thread_id</span></span><br><span class="line"><span class="number">2</span><span class="string">.</span> <span class="string">每次模型调用记录</span> <span class="string">generation</span> <span class="string">span</span></span><br><span class="line"><span class="number">3</span><span class="string">.</span> <span class="string">每次工具调用记录</span> <span class="string">function</span> <span class="string">span</span> <span class="string">+</span> <span class="string">event</span> <span class="string">log</span></span><br><span class="line"><span class="number">4</span><span class="string">.</span> <span class="string">每次</span> <span class="string">handoff</span> <span class="string">/</span> <span class="string">guardrail</span> <span class="string">/</span> <span class="string">approval</span> <span class="string">写</span> <span class="string">span</span></span><br><span class="line"><span class="number">5</span><span class="string">.</span> <span class="string">最终结果跑一个</span> <span class="string">end-state</span> <span class="string">eval</span></span><br><span class="line"><span class="number">6</span><span class="string">.</span> <span class="string">失败样本自动入</span> <span class="string">review</span> <span class="string">queue</span></span><br><span class="line"><span class="number">7</span><span class="string">.</span> <span class="string">每周把失败样本沉淀到</span> <span class="string">regression</span> <span class="string">eval</span></span><br><span class="line"><span class="number">8</span><span class="string">.</span> <span class="string">发布前跑回归</span> <span class="string">eval，发布后看生产指标</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二、长程智能体主动上下文管理"><a href="#二、长程智能体主动上下文管理" class="headerlink" title="二、长程智能体主动上下文管理"></a>二、长程智能体主动上下文管理</h2><p><strong>上下文管理从「被动截断」提升为「主动编辑」</strong>。长程智能体任务中工作上下文会持续增长，全塞进窗口既浪费 token 又稀释关键信息。</p>
+<h3 id="2-1-现有方法的三大痛点"><a href="#2-1-现有方法的三大痛点" class="headerlink" title="2.1 现有方法的三大痛点"></a>2.1 现有方法的三大痛点</h3><table>
+<thead>
+<tr>
+<th>现有方法的问题</th>
+<th>改进方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工具集只给「搜索&#x2F;删除&#x2F;摘要」三件套</td>
+<td>四类 <strong>18 个工具</strong> + <strong>17 态 FSM</strong> 约束每步可调用的能力</td>
+</tr>
+<tr>
+<td>把不同编辑动作当同质决策</td>
+<td>在 FSM 约束下调用工具完成规划 &#x2F; 索引 &#x2F; 检索 &#x2F; 阅读 &#x2F; 记忆 &#x2F; 清理</td>
+</tr>
+<tr>
+<td>RL 训练把整条轨迹最终奖励平摊给所有中间动作</td>
+<td><strong>Context-aware Partial Rollout</strong>：只对关键编辑点分支采样，信用分配更精准</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-四类-18-个工具"><a href="#2-2-四类-18-个工具" class="headerlink" title="2.2 四类 18 个工具"></a>2.2 四类 18 个工具</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>规划</strong>（3）</td>
+<td>analyzeText &#x2F; plan &#x2F; buildIndex</td>
+</tr>
+<tr>
+<td><strong>检索</strong>（6）</td>
+<td>searchEngine（BM25）&#x2F; hybridSearch（BM25+向量）&#x2F; semanticSearch &#x2F; readChunk &#x2F; readMultiChunks</td>
+</tr>
+<tr>
+<td><strong>长期记忆</strong>（7）</td>
+<td>memorize &#x2F; updateMemory &#x2F; note &#x2F; updateNote &#x2F; readNote &#x2F; loadMemory</td>
+</tr>
+<tr>
+<td><strong>软卸载</strong>（5）</td>
+<td>deleteContext &#x2F; truncateContext &#x2F; summarizeContext &#x2F; compressContext &#x2F; restoreContext</td>
+</tr>
+</tbody></table>
+<h3 id="2-3-17-态-FSM-关键约束示例"><a href="#2-3-17-态-FSM-关键约束示例" class="headerlink" title="2.3 17 态 FSM 关键约束示例"></a>2.3 17 态 FSM 关键约束示例</h3><ul>
+<li><code>S4_READ</code>：必须读过 ≥ 2 个 chunk 才能调用 memorize&#x2F;note</li>
+<li><code>S6/S6_5</code>：强制模型读取刚写入的笔记或记忆，避免「写完就忘」</li>
+<li>连续空检索达到 6 次 → 自动进入收尾阶段</li>
+</ul>
+<h3 id="2-4-Context-aware-Partial-Rollout-三步"><a href="#2-4-Context-aware-Partial-Rollout-三步" class="headerlink" title="2.4 Context-aware Partial Rollout 三步"></a>2.4 Context-aware Partial Rollout 三步</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 敏感动作识别：完整 rollout 后，计算每个编辑动作的 context 变化 + 熵变化</span></span><br><span class="line"><span class="comment">#    (context_weight=1.0, entropy_weight=1.0, entropy_top_k=10)</span></span><br><span class="line"><span class="comment"># 2. 分支采样：从选定父状态快照发展出多条后续轨迹</span></span><br><span class="line"><span class="comment">#    (max_concurrent_branches=64)</span></span><br><span class="line"><span class="comment"># 3. 信用回填：每个快照奖励 = 所有下游终止轨迹奖励均值</span></span><br><span class="line"><span class="comment">#    工具调用失败或超预算 → R_pen = -0.5</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-5-默认训练配置"><a href="#2-5-默认训练配置" class="headerlink" title="2.5 默认训练配置"></a>2.5 默认训练配置</h3><ul>
+<li>8 GPU &#x2F; batch size 16 &#x2F; n_rollout 8</li>
+<li>单轮最大 token 2048 &#x2F; 模型长度上限 40960</li>
+<li>学习率 1e-6 &#x2F; KL 系数 0.001</li>
+<li>共 5 epoch &#x2F; 128 步</li>
+</ul>
+<h3 id="2-6-适用边界"><a href="#2-6-适用边界" class="headerlink" title="2.6 适用边界"></a>2.6 适用边界</h3><ul>
+<li>不是开箱即用的应用，需 vLLM + Elasticsearch + 8 卡训练资源</li>
+<li>LongMemEval &#x2F; BrowseComp+ 数据通过 Git LFS 管理；NovelQA 需单独申请</li>
+<li>工具调用失败 &#x2F; context 长度超 <code>budget_token_limit=26000</code> &#x2F; 轮数超 <code>max_assistant_turns=100</code> → 触发惩罚</li>
+</ul>
+<h2 id="三、本体实操演示：12306-购票-A-B-C-对比"><a href="#三、本体实操演示：12306-购票-A-B-C-对比" class="headerlink" title="三、本体实操演示：12306 购票 A&#x2F;B&#x2F;C 对比"></a>三、本体实操演示：12306 购票 A&#x2F;B&#x2F;C 对比</h2><p><strong>本体不是 PPT 概念，而是「结构保证」</strong>。同一个大模型配不同工具（AI+本体 &#x2F; AI+SQL）+ 传统固定功能系统，三组同时回答同一个问题，<strong>本体到底有什么用一比就知道</strong>。</p>
+<h3 id="3-1-三组对比"><a href="#3-1-三组对比" class="headerlink" title="3.1 三组对比"></a>3.1 三组对比</h3><table>
+<thead>
+<tr>
+<th>组</th>
+<th>形态</th>
+<th>关键能力</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>AI + 本体</td>
+<td>7 个本体工具：概览 &#x2F; 检索 &#x2F; 回源 &#x2F; 关系 &#x2F; 账本 &#x2F; 校验 &#x2F; 执行</td>
+</tr>
+<tr>
+<td>B</td>
+<td>AI + 裸 SQL</td>
+<td>只有 execute_sql 一个工具</td>
+</tr>
+<tr>
+<td>C</td>
+<td>传统查询</td>
+<td>无 AI，开发预写页面</td>
+</tr>
+</tbody></table>
+<h3 id="3-2-4-组实验结论"><a href="#3-2-4-组实验结论" class="headerlink" title="3.2 4 组实验结论"></a>3.2 4 组实验结论</h3><table>
+<thead>
+<tr>
+<th>实验</th>
+<th>A 组（AI+本体）</th>
+<th>B 组（AI+SQL）</th>
+<th>C 组（传统）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>无资质买学生票</strong></td>
+<td>闸门拦截，结构化原因，事务层根本不执行</td>
+<td>模型「自觉」拒绝，但 execute_sql 技术上能直接 INSERT，靠模型自觉</td>
+<td>后端校验拦截</td>
+</tr>
+<tr>
+<td><strong>越权改账</strong></td>
+<td>平台上根本不存在这个动作，白名单只有购票 &#x2F; 退票</td>
+<td>模型这次选了拒绝，但换个对齐更弱的模型屏障就没了</td>
+<td>没这个入口，天然挡住</td>
+</tr>
+<tr>
+<td><strong>合法购票</strong></td>
+<td>12 次工具调用，两步完成，票价 &#x2F; 订单 &#x2F; 账页扣减 &#x2F; 索引回流一次到位</td>
+<td>必须自己重新发明事务逻辑，20 次 SQL（含试错），成败靠模型发挥</td>
+<td>一次出票</td>
+</tr>
+<tr>
+<td><strong>跨表问答</strong></td>
+<td>沿本体关系链（订单 → 车票 → 开行）自动遍历</td>
+<td>先探索表结构，再手写多表 JOIN</td>
+<td>没这功能</td>
+</tr>
+</tbody></table>
+<h3 id="3-3-三大设计原则"><a href="#3-3-三大设计原则" class="headerlink" title="3.3 三大设计原则"></a>3.3 三大设计原则</h3><ol>
+<li><strong>数据映射——语义进本体，数据留源系统</strong>：本体只存语义骨架，业务数据当前值永远留在源系统里</li>
+<li><strong>读路径——每个值都有出处</strong>：字段值都带证据标注（来源系统·表·列），随时回源核对</li>
+<li><strong>数据库审计——三类违规实时检测</strong>：无资质学生票 &#x2F; 重复出票 &#x2F; 账本篡改，任何绕过闸门的写操作都会现形</li>
+</ol>
+<h3 id="3-4-方法论小结"><a href="#3-4-方法论小结" class="headerlink" title="3.4 方法论小结"></a>3.4 方法论小结</h3><blockquote>
+<p><strong>本体把「一次业务动作的正确做法」固化成 AI 可直接调用的对象</strong>——A 组的每一步都有语义依据且必然正确，B 组的每一步都是模型的猜测与试错。</p>
+</blockquote>
+<p>适合给 AI 应用加「业务闸门」的系统架构师 &#x2F; 数据治理负责人。</p>
+<h2 id="四、开源轻量级语义层平台"><a href="#四、开源轻量级语义层平台" class="headerlink" title="四、开源轻量级语义层平台"></a>四、开源轻量级语义层平台</h2><p><strong>某开源平台 &#x3D; 语义层（Semantic Layer）平台</strong>。平台只维护「概念 → 属性 → 物理表列」的映射与值字典，在此之上提供本体建模、版本化发布、规则 &#x2F; 指标口径管理、链路追溯、根因分析和 AI 客服。</p>
+<h3 id="4-1-架构四层结构"><a href="#4-1-架构四层结构" class="headerlink" title="4.1 架构四层结构"></a>4.1 架构四层结构</h3><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>内容</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>L1</td>
+<td>业务概念</td>
+<td>语义资产（48 概念 &#x2F; 44 关系）</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>业务规则</td>
+<td>语义资产（公理结构化存储）</td>
+</tr>
+<tr>
+<td>L3</td>
+<td>物理表映射</td>
+<td>映射桥接（9 数据源 &#x2F; 42 物理表 &#x2F; 83% 映射覆盖度）</td>
+</tr>
+<tr>
+<td>L4</td>
+<td>业务数据库</td>
+<td>真实业务库（不搬家，靠 L3 反查）</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-核心设计哲学"><a href="#4-2-核心设计哲学" class="headerlink" title="4.2 核心设计哲学"></a>4.2 核心设计哲学</h3><blockquote>
+<p><strong>物理自治、逻辑统一</strong>。数据留在各业务库里，平台只做语义映射与实时反查——避开了数据搬迁和图数据库两头的成本。</p>
+</blockquote>
+<h3 id="4-3-七步业务流程"><a href="#4-3-七步业务流程" class="headerlink" title="4.3 七步业务流程"></a>4.3 七步业务流程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 前三步搭语义层</span></span><br><span class="line">本体建模 → 概念定义 → 数据源映射</span><br><span class="line"><span class="comment"># 第四步发版把门</span></span><br><span class="line">版本化发布（红色虚线 = 发布门禁打回）</span><br><span class="line"><span class="comment"># 后三步消费与生长</span></span><br><span class="line">5. AI 客服语义问答</span><br><span class="line">6. 链路追溯（双向 BFS 还原异常来龙去脉）</span><br><span class="line">7. 扩展提案回流（搜索未命中 / 映射失败 / 客服问答未命中）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-亮点能力"><a href="#4-4-亮点能力" class="headerlink" title="4.4 亮点能力"></a>4.4 亮点能力</h3><table>
+<thead>
+<tr>
+<th>能力</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>数据源绑定</strong></td>
+<td>注册 9 个业务库连接，一键扫描 information_schema 建物理快照</td>
+</tr>
+<tr>
+<td><strong>AI 客服语义问答</strong></td>
+<td>「没缴费可以发药吗？」结构依据来自本体公理，探针 SQL 实时验证</td>
+</tr>
+<tr>
+<td><strong>链路追溯</strong></td>
+<td>医嘱 → 计费 → 缴费 → 发药 &#x2F; 检验全链路可视</td>
+</tr>
+<tr>
+<td><strong>业务闭环演示</strong></td>
+<td>入院 → 医嘱 → 计费 → 缴费 → 检验 &#x2F; 发药 → 出院结算</td>
+</tr>
+</tbody></table>
+<p>适合做数据整合、想给 AI 应用找「懂业务底座」的团队，演示场景以医疗行业为主（病历 &#x2F; 医嘱 &#x2F; 发药 &#x2F; 上报）。</p>
+<h2 id="五、开源企业级世界模型"><a href="#五、开源企业级世界模型" class="headerlink" title="五、开源企业级世界模型"></a>五、开源企业级世界模型</h2><p><strong>某开源项目 &#x3D; 企业级知识世界模型</strong>，是基于本体、能够从持续接入的资料中学习并治理知识的知识工程平台。把时间感知和本体论融入底层，让知识体系随新资料不断演进。</p>
+<h3 id="5-1-五大功能特点"><a href="#5-1-五大功能特点" class="headerlink" title="5.1 五大功能特点"></a>5.1 五大功能特点</h3><table>
+<thead>
+<tr>
+<th>特点</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>用业务概念组织知识</strong></td>
+<td>本体工作台 + 预置本体包，业务概念和关系定义清楚</td>
+</tr>
+<tr>
+<td><strong>发现知识中的冲突</strong></td>
+<td>旧材料互相矛盾 &#x2F; 事实违反规则 → 冲突检测和处理入口</td>
+</tr>
+<tr>
+<td><strong>推理结果能够追溯前提</strong></td>
+<td>派生事实默认关闭，派生结果与直接抽取分开存储</td>
+</tr>
+<tr>
+<td><strong>文档知识 + 数据库查询结合</strong></td>
+<td>数据库映射 + 自然语言问数</td>
+</tr>
+<tr>
+<td><strong>双时态记录</strong></td>
+<td>事实什么时候成立 + 系统什么时候知道它</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-一句话定位"><a href="#5-2-一句话定位" class="headerlink" title="5.2 一句话定位"></a>5.2 一句话定位</h3><blockquote>
+<p>不希望将此项目视为某商业平台的复刻——但它确实是某商业平台的开源简化版：把企业分散的数据、业务逻辑、可执行动作、安全规则映射成统一的对象、关系和决策模型，相当于建一个人和 AI 都能理解、都能直接动手的数字孪生。</p>
+</blockquote>
+<h3 id="5-3-关键-Demo：双时态追溯"><a href="#5-3-关键-Demo：双时态追溯" class="headerlink" title="5.3 关键 Demo：双时态追溯"></a>5.3 关键 Demo：双时态追溯</h3><p>几个月后再问 AI「当时为什么这样处理？」光找最新文件解释不清。<strong>双时态</strong>让更正一个事实时系统保留旧版本，关联新版本，让变化可追溯。</p>
+<h3 id="5-4-适用场景"><a href="#5-4-适用场景" class="headerlink" title="5.4 适用场景"></a>5.4 适用场景</h3><p>中大型企业（业务关系复杂、规则变更频繁、需要可追溯可审计）：合同管理 &#x2F; 制度更新 &#x2F; 项目负责人变更 &#x2F; 供应链关系 &#x2F; 客户关系管理。</p>
+<h2 id="六、主题总结：从概念到实操"><a href="#六、主题总结：从概念到实操" class="headerlink" title="六、主题总结：从概念到实操"></a>六、主题总结：从概念到实操</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">概念层</span>  <span class="string">→</span> <span class="string">开源语义层平台</span>    <span class="string">轻量级</span> <span class="string">Semantic</span> <span class="string">Layer（业务域</span> <span class="string">→</span> <span class="string">概念</span> <span class="string">→</span> <span class="string">关系）</span></span><br><span class="line"><span class="string">实战层</span>  <span class="string">→</span> <span class="string">开源世界模型</span>      <span class="string">企业级</span> <span class="string">Ontology</span> <span class="string">知识图谱（双时态</span> <span class="string">+</span> <span class="string">业务推理）</span></span><br><span class="line"><span class="string">演示层</span>  <span class="string">→</span> <span class="number">12306</span> <span class="string">演示</span>        <span class="string">本体</span> <span class="string">vs</span> <span class="string">裸</span> <span class="string">SQL</span> <span class="string">vs</span> <span class="string">传统（结构保证</span> <span class="string">vs</span> <span class="string">模型自觉）</span></span><br><span class="line"><span class="string">方法论</span>  <span class="string">→</span> <span class="string">ContextPilot</span>      <span class="string">主动上下文管理（FSM</span> <span class="string">+</span> <span class="string">工具</span> <span class="string">+</span> <span class="string">信用分配）</span></span><br><span class="line"><span class="string">可观测</span>  <span class="string">→</span> <span class="string">Agent</span> <span class="string">Observability</span>  <span class="string">Trace</span> <span class="string">/</span> <span class="string">Event</span> <span class="string">Log</span> <span class="string">/</span> <span class="string">Eval</span> <span class="string">闭环</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>核心信号</strong>：本体论在 2026 Q3 已从「PPT 概念」进入「代码可跑」阶段。两个开源项目均为 Apache-2.0 类开源协议，12306 演示公开可访问，企业落地有了参考路径。</p>
+<h2 id="模型版本说明"><a href="#模型版本说明" class="headerlink" title="模型版本说明"></a>模型版本说明</h2><p>⚠️ 本文所提及的模型名称与版本（如 Qwen3-8B &#x2F; 14B 等）以文章发布时的实际情况为准。后续如有迭代，功能边界与性能指标可能调整，请以官方最新发布为准。</p>
+</div><div class="tags"><ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AI-Agent/" rel="tag">AI Agent</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" rel="tag">上下文管理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BC%81%E4%B8%9A%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" rel="tag">企业知识图谱</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7/" rel="tag">可观测性</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" rel="tag">本体论</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%9F%A5%E8%AF%86%E6%9C%AC%E4%BD%93/" rel="tag">知识本体</a></li></ul></div><div class="post-nav"><a class="pre" href="/2026/10/17/wechat-ai-weekly-2026-q3/">2026 Q3 AI 前沿速览</a><a class="next" href="/2026/10/17/wechat-ai-weekly-workbuddy-skill/">WorkBuddy Skill 实战 6 讲</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><div class="search-form"><input id="local-search-input" placeholder="Search" type="text" name="q" results="0"/><div id="local-search-result"></div></div></div><div class="widget"><div class="author-info"><a class="info-avatar" href="/about/" title="关于"><img class="nofancybox" src="/img/avatar.png"/></a><p>To be a better man.</p><a class="info-icon" href="https://twitter.com/hyqskevin" title="Twitter" target="_blank" style="margin-inline:5px"> <i class="fa fa-twitter-square" style="margin-inline:5px"></i></a><a class="info-icon" href="mailto:kevin@hyqskevin.github.io" title="Email" target="_blank" style="margin-inline:5px"> <i class="fa fa-envelope-square" style="margin-inline:5px"></i></a><a class="info-icon" href="https://github.com/hyqskevin" title="Github" target="_blank" style="margin-inline:5px"> <i class="fa fa-github-square" style="margin-inline:5px"></i></a><a class="info-icon" href="/atom.xml" title="RSS" target="_blank" style="margin-inline:5px"> <i class="fa fa-rss-square" style="margin-inline:5px"></i></a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/">AI</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%A4%A7%E6%A8%A1%E5%9E%8B/%E5%BC%80%E6%BA%90/">开源</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E8%AE%BE%E8%AE%A1/">设计</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI/%E9%80%89%E5%9E%8B/">选型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/">AI 周报</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%91%A8%E6%8A%A5/%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%B2%BF/">行业前沿</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E5%B7%A5%E7%A8%8B/">AI 工程</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%AE%BA%E6%96%87/">AI 论文</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI-%E8%B5%84%E8%AE%AF/">AI 资讯</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%8A%80%E6%9C%AF/">AI技术</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/AI%E6%94%BF%E7%AD%96/">AI政策</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/">Palantir</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%9C%AC%E4%BD%93%E8%AE%BA%E6%A1%88%E4%BE%8B/">本体论案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Palantir-%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90/">Palantir 案例分析</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RAG/">RAG</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Skill-%E6%8E%A8%E8%8D%90/">Skill 推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/code/">code</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/notes/">notes</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/paper/">paper</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/repo/">repo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/security/">security</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/study/">study</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/">大模型</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B/Agent/">Agent</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80/">大模型基础</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90/">工具推荐</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">开发工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%BE%AE%E4%BF%A1AI%E5%91%A8%E6%8A%A5/">微信AI周报</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/AI-%E6%9E%B6%E6%9E%84/">AI 架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/Palantir-%E6%A1%88%E4%BE%8B/">Palantir 案例</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/">技术分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/AI-%E6%BC%94%E8%AE%B2%E8%AE%BE%E8%AE%A1/">AI 演讲设计</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E8%B0%83%E7%A0%94/">技术调研</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/">案例研究</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA/">本体论</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6/%E6%9C%AC%E4%BD%93%E8%AE%BA%E8%90%BD%E5%9C%B0/">本体论落地</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%94%AC%E5%88%9B9%E6%9D%A1/">甬创9条</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1/AI%E5%B7%A5%E5%85%B7/">AI工具</a></li></ul></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/302AI/" style="font-size: 15px;">302AI</a> <a href="/tags/New-API/" style="font-size: 15px;">New-API</a> <a href="/tags/%E5%95%86%E4%B8%9A%E5%8C%96/" style="font-size: 15px;">商业化</a> <a href="/tags/Docker/" style="font-size: 15px;">Docker</a> <a href="/tags/AI/" style="font-size: 15px;">AI</a> <a href="/tags/%E5%8F%98%E7%8E%B0/" style="font-size: 15px;">变现</a> <a href="/tags/706/" style="font-size: 15px;">706</a> <a href="/tags/%E6%8A%80%E8%83%BD%E6%A0%91/" style="font-size: 15px;">技能树</a> <a href="/tags/%E5%B7%A5%E4%BD%9C%E6%B5%81/" style="font-size: 15px;">工作流</a> <a href="/tags/AI-%E9%A1%B9%E7%9B%AE/" style="font-size: 15px;">AI 项目</a> <a href="/tags/%E5%88%86%E6%94%AF%E9%80%89%E6%8B%A9/" style="font-size: 15px;">分支选择</a> <a href="/tags/%E4%BC%81%E4%B8%9A%E5%B2%97%E4%BD%8D/" style="font-size: 15px;">企业岗位</a> <a href="/tags/AI-%E8%BD%AC%E5%9E%8B/" style="font-size: 15px;">AI 转型</a> <a href="/tags/%E8%81%8C%E4%B8%9A%E5%8F%91%E5%B1%95/" style="font-size: 15px;">职业发展</a> <a href="/tags/%E5%AE%81%E6%B3%A2/" style="font-size: 15px;">宁波</a> <a href="/tags/AI-%E6%99%BA%E5%9B%8A%E5%9B%A2/" style="font-size: 15px;">AI 智囊团</a> <a href="/tags/%E6%95%B4%E5%90%88/" style="font-size: 15px;">整合</a> <a href="/tags/%E6%96%B9%E6%A1%88/" style="font-size: 15px;">方案</a> <a href="/tags/%E8%90%BD%E5%9C%B0/" style="font-size: 15px;">落地</a> <a href="/tags/AI-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" style="font-size: 15px;">AI 学习路径</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">知识工坊</a> <a href="/tags/AI-%E7%9F%A5%E8%AF%86%E5%B7%A5%E5%9D%8A/" style="font-size: 15px;">AI 知识工坊</a> <a href="/tags/V2-%E5%AE%9E%E6%96%BD/" style="font-size: 15px;">V2 实施</a> <a href="/tags/%E6%94%BF%E7%AD%96/" style="font-size: 15px;">政策</a> <a href="/tags/%E6%A0%A1%E4%BC%81%E5%90%88%E4%BD%9C/" style="font-size: 15px;">校企合作</a> <a href="/tags/%E9%9D%92%E5%B9%B4%E7%A9%BA%E9%97%B4/" style="font-size: 15px;">青年空间</a> <a href="/tags/%E5%85%B1%E5%B1%85/" style="font-size: 15px;">共居</a> <a href="/tags/C2B/" style="font-size: 15px;">C2B</a> <a href="/tags/%E7%A4%BE%E7%BE%A4%E7%A0%94%E7%A9%B6/" style="font-size: 15px;">社群研究</a> <a href="/tags/%E8%BF%90%E8%90%A5/" style="font-size: 15px;">运营</a> <a href="/tags/%E4%B8%BB%E7%90%86%E4%BA%BA/" style="font-size: 15px;">主理人</a> <a href="/tags/SOP/" style="font-size: 15px;">SOP</a> <a href="/tags/%E6%89%A9%E5%BC%A0/" style="font-size: 15px;">扩张</a> <a href="/tags/%E5%8A%A0%E7%9B%9F/" style="font-size: 15px;">加盟</a> <a href="/tags/%E7%A4%BE%E7%BE%A4/" style="font-size: 15px;">社群</a> <a href="/tags/%E5%9B%BE%E5%83%8F%E5%AE%A1%E7%BE%8E/" style="font-size: 15px;">图像审美</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI-Skill</a> <a href="/tags/%E6%B5%B7%E6%8A%A5%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">海报设计</a> <a href="/tags/%E5%BC%80%E6%BA%90%E4%BB%93%E5%BA%93/" style="font-size: 15px;">开源仓库</a> <a href="/tags/GitHub/" style="font-size: 15px;">GitHub</a> <a href="/tags/Skill/" style="font-size: 15px;">Skill</a> <a href="/tags/others/" style="font-size: 15px;">others</a> <a href="/tags/%E8%AE%BE%E8%AE%A1/" style="font-size: 15px;">设计</a> <a href="/tags/%E6%B5%B7%E6%8A%A5/" style="font-size: 15px;">海报</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Webpack/" style="font-size: 15px;">Webpack</a> <a href="/tags/MTG/" style="font-size: 15px;">MTG</a> <a href="/tags/Babel/" style="font-size: 15px;">Babel</a> <a href="/tags/A2A/" style="font-size: 15px;">A2A</a> <a href="/tags/Agent/" style="font-size: 15px;">Agent</a> <a href="/tags/MCP/" style="font-size: 15px;">MCP</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93/" style="font-size: 15px;">多智能体</a> <a href="/tags/LLM/" style="font-size: 15px;">LLM</a> <a href="/tags/%E5%8D%8F%E8%AE%AE%E6%A0%87%E5%87%86/" style="font-size: 15px;">协议标准</a> <a href="/tags/AaaS/" style="font-size: 15px;">AaaS</a> <a href="/tags/%E8%AE%BA%E6%96%87%E9%80%9F%E8%AF%BB/" style="font-size: 15px;">论文速读</a> <a href="/tags/%E9%83%A8%E7%BD%B2/" style="font-size: 15px;">部署</a> <a href="/tags/%E7%A7%91%E7%A0%94%E5%AD%A6%E6%9C%AF/" style="font-size: 15px;">科研学术</a> <a href="/tags/%E8%AE%BA%E6%96%87/" style="font-size: 15px;">论文</a> <a href="/tags/Zotero/" style="font-size: 15px;">Zotero</a> <a href="/tags/AI-Skill/" style="font-size: 15px;">AI Skill</a> <a href="/tags/%E6%96%87%E7%8C%AE%E7%BB%BC%E8%BF%B0/" style="font-size: 15px;">文献综述</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 15px;">工具</a> <a href="/tags/%E8%B5%84%E6%BA%90%E7%B2%BE%E9%80%89/" style="font-size: 15px;">资源精选</a> <a href="/tags/Context-Engineering/" style="font-size: 15px;">Context Engineering</a> <a href="/tags/Multi-Agent/" style="font-size: 15px;">Multi-Agent</a> <a href="/tags/Prompt-Injection/" style="font-size: 15px;">Prompt Injection</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 15px;">基础</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 15px;">教程</a> <a href="/tags/Prompt/" style="font-size: 15px;">Prompt</a> <a href="/tags/Tool/" style="font-size: 15px;">Tool</a> <a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87/" style="font-size: 15px;">上下文</a> <a href="/tags/%E8%AE%B0%E5%BF%86/" style="font-size: 15px;">记忆</a> <a href="/tags/%E6%A1%86%E6%9E%B6/" style="font-size: 15px;">框架</a> <a href="/tags/%E7%BA%A6%E6%9D%9F/" style="font-size: 15px;">约束</a> <a href="/tags/AGENTS-md/" style="font-size: 15px;">AGENTS.md</a> <a href="/tags/%E9%80%89%E5%9E%8B/" style="font-size: 15px;">选型</a> <a href="/tags/Loop-Engineering/" style="font-size: 15px;">Loop Engineering</a> <a href="/tags/Harness/" style="font-size: 15px;">Harness</a> <a href="/tags/Claude-Code/" style="font-size: 15px;">Claude Code</a> <a href="/tags/Codex/" style="font-size: 15px;">Codex</a> <a href="/tags/2026Q2/" style="font-size: 15px;">2026Q2</a> <a href="/tags/AI-Agent/" style="font-size: 15px;">AI Agent</a> <a href="/tags/Hermes/" style="font-size: 15px;">Hermes</a> <a href="/tags/OpenClaw/" style="font-size: 15px;">OpenClaw</a> <a href="/tags/%E9%85%8D%E7%BD%AE/" style="font-size: 15px;">配置</a> <a href="/tags/%E8%AE%B0%E5%BF%86%E7%B3%BB%E7%BB%9F/" style="font-size: 15px;">记忆系统</a> <a href="/tags/MemGPT/" style="font-size: 15px;">MemGPT</a> <a href="/tags/Reflexion/" style="font-size: 15px;">Reflexion</a> <a href="/tags/agentScope/" style="font-size: 15px;">agentScope</a> <a href="/tags/CoD/" style="font-size: 15px;">CoD</a> <a href="/tags/RL/" style="font-size: 15px;">RL</a> <a href="/tags/%E8%B7%A8%E5%9F%9F%E6%B3%9B%E5%8C%96/" style="font-size: 15px;">跨域泛化</a> <a href="/tags/AGI/" style="font-size: 15px;">AGI</a> <a href="/tags/%E5%A4%9A-Agent/" style="font-size: 15px;">多 Agent</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%BF%E7%94%A8/" style="font-size: 15px;">计算机使用</a> <a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA/" style="font-size: 15px;">检索增强</a> <a href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" style="font-size: 15px;">知识图谱</a> <a href="/tags/%E6%9C%AC%E4%BD%93%E8%AE%BA/" style="font-size: 15px;">本体论</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/9-image-aesthetic-skills-2/">9个图像审美Skill</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/agent-news-2026-q2/">智能体 Q2 资讯合集</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-knowledge-workshop/">AI 知识工坊终极测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-news-radar-booster-skills/">AI信源雷达伯乐Skill体系</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-trainer-exam-summary/">人工智能训练师备考总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/ai-writing-style-distillation-2/">AI 仿写：风格蒸馏指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/apibridge-mcp-platform/">APIBridge MCP 平台实现原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/claude-code-speedup/">Claude Code 速度优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/domestic-prototyping-tools/">国内原型工具选型</a></li><li class="post-list-item"><a class="post-list-link" href="/2026/10/17/github-awesome-codex-skills/">GitHub Codex 技能精选</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2026 <a href="/." rel="nofollow">MonoShow.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=1.0.0" async></script><script type="text/javascript" src="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=1.0.0" async></script><link rel="stylesheet" type="text/css" href="https://unpkg.com/@fancyapps/fancybox/dist/jquery.fancybox.min.css"><link rel="stylesheet" type="text/css" href="/css/search.css?v=1.0.0"><script type="text/javascript" src="/js/search.js?v=1.0.0"></script><script>var search_path = 'search.xml';
+if (search_path.length == 0) {
+  search_path = 'search.xml';
+}
+var path = '/' + search_path;
+searchFunc(path, 'local-search-input', 'local-search-result');
+</script><script type="text/javascript" color="0,0,0" opacity="0.5" zIndex="-2" count="50" src="https://unpkg.com/canvas-nest.js/dist/canvas-nest.js"></script><script type="text/javascript" src="/js/copycode.js?v=1.0.0" successtext="复制成功！"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css?v=1.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=1.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=1.0.0"></script></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"left","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"wifes":["kanna","tororo","tsundere","urusulap"],"log":false});</script></body></html>
